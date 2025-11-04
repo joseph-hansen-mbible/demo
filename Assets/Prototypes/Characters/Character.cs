@@ -74,7 +74,7 @@ namespace Assets.Prototypes.Characters
         private Color _accentColor2 = Color.black;
 
         [Foldout("Visual"), SerializeField]
-        private Sprite[] _portraits;
+        private Portrait[] _portraits;
 
         [Foldout("Visual"), SerializeField]
         private Sprite[] _sprites;
@@ -163,7 +163,7 @@ namespace Assets.Prototypes.Characters
         public bool UseAccentColors => _useAccentColors;
         public Color AccentColor1 => _accentColor1;
         public Color AccentColor2 => _accentColor2;
-        public Sprite[] Portraits => _portraits;
+        public Portrait[] Portraits => _portraits;
         public Sprite[] Sprites => _sprites;
 
         public int Level => _level;
