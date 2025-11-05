@@ -162,14 +162,6 @@ Character type/allegiance identifier.
 | `Enemy` | Enemy/hostile unit |
 | `Friend` | Friendly/allied unit |
 
-### Usage
-
-```csharp
-if (character.Which == CharacterWhich.Enemy) {
-    // Enemy behavior
-}
-```
-
 ---
 
 ## SerializableDictionary<TKey, TValue>

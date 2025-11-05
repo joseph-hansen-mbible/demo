@@ -20,20 +20,6 @@ Unbounded stat with current value and bonus modifier.
 | `CurrentInt` | `int` | Base value as integer |
 | `BonusInt` | `int` | Bonus as integer |
 
-### Constructors
-
-```csharp
-CharacterStat()
-```
-Default constructor (Strength, 0 value).
-
-```csharp
-CharacterStat(float current = 0, UnboundedStatType statType = UnboundedStatType.Strength)
-```
-- **Parameters:**
-  - `current` - Initial value
-  - `statType` - Stat type
-
 ### Methods
 
 ```csharp
@@ -148,10 +134,25 @@ int hp = healthStat; // Automatically calls Get()
 ### UnboundedStatType
 Enum for stats without bounds:
 - `Strength` - Physical power and melee damage
+- `Defense` - Resistance to physical attacks
+- `Magic` - Magical power and spell damage
+- `Resistance` - Resistance to magical attacks
+- `Skill` - Accuracy and critical hit chance
+- `Speed` - Determines turn order and evasion
+- `Luck` - Affects various chance-based outcomes
+- `Dexterity` - Affects ranged attack accuracy and dodging
+- `Charm` - Influences interactions with NPCs
+- `Movement` - Number of tiles a character can move
+- `Endurance` - Affects stamina and resistance to fatigue
+- `Authority` - Influences leadership and command abilities
+- `CriticalAvoidance` - Reduces chance of receiving critical hits
 
 ### BoundedStatType
 Enum for stats with min/max:
+- `Level` - Character's current level
 - `Health` - Character's life force
+- `LevelExperience` - Experience points toward next level
+- `ClassExperience` - Experience points in current class
 
 Each type has extension methods:
 ```csharp
@@ -163,19 +164,6 @@ string description = statType.GetDescription();
 
 ## Usage Examples
 
-### Creating Stats
-```csharp
-// Unbounded
-var strength = new CharacterStat(10, UnboundedStatType.Strength);
-strength.SetBonus(5);
-int totalStr = strength.Get(); // 15
-
-// Bounded
-var health = new BoundedCharacterStat(100, 80, 0, BoundedStatType.Health);
-health.SetCurrent(50);
-int currentHp = health; // Implicit conversion to 50
-```
-
 ### In Character
 ```csharp
 Character character = GetCharacter();
@@ -186,15 +174,6 @@ CharacterStat str = character.GetUnboundedStat(UnboundedStatType.Strength);
 
 // Note: Character properties are read-only
 // Stats list manipulation must be done in Unity Inspector
-```
-
-### Progress Bars
-```csharp
-BoundedCharacterStat health = character.GetBoundedStat(BoundedStatType.Health);
-if (health != null) {
-    float fillAmount = health.Ratio; // 0.0 to 1.0
-    progressBar.fillAmount = fillAmount;
-}
 ```
 
 ## Notes

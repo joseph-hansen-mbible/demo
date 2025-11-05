@@ -21,6 +21,19 @@ namespace Assets.Prototypes.Characters
             {
                 _useAccentColors = settings.UseAccentColors;
             }
+
+            // Initialize stats from defaults if stats are empty
+            if (_boundedStats.Count == 0 && _unboundedStats.Count == 0)
+            {
+                var defaultStats = Resources.Load<DefaultCharacterStats>(
+                    "GameSettings/DefaultCharacterStats"
+                );
+                if (defaultStats != null)
+                {
+                    _boundedStats = defaultStats.CreateBoundedStats();
+                    _unboundedStats = defaultStats.CreateUnboundedStats();
+                }
+            }
         }
 
         [Foldout("Identity"), SerializeField]

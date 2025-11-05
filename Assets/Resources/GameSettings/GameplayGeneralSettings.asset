@@ -38,7 +38,7 @@ MonoBehaviour:
   CriticalHitMultiplier: 3
   Weight: 0
   WeightAffectsMovement: 0
-  Luck: 0
+  Luck: 1
   SeparateCriticalAvoidance: 0
   Authority: 0
   ExperienceWeaponTypes: []

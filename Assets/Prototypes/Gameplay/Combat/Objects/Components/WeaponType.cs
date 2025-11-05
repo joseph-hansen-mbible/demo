@@ -16,10 +16,10 @@ namespace Assets.Prototypes.Gameplay.Combat.Objects.Components
         private string _id;
 
         [SerializeField]
-        private int[] _ranges;
+        private bool _isMagic;
 
         [SerializeField]
-        private int _defaultRange;
+        private TrianglePosition _trianglePosition;
 
         public string Name
         {
@@ -39,16 +39,16 @@ namespace Assets.Prototypes.Gameplay.Combat.Objects.Components
             set => _id = value;
         }
 
-        public int[] Ranges
+        public bool IsMagic
         {
-            get => _ranges;
-            set => _ranges = value;
+            get => _isMagic;
+            set => _isMagic = value;
         }
 
-        public int DefaultRange
+        public TrianglePosition TrianglePosition
         {
-            get => _defaultRange;
-            set => _defaultRange = value;
+            get => _trianglePosition;
+            set => _trianglePosition = value;
         }
     }
 }

@@ -16,6 +16,7 @@ Complete API reference for Assets/Prototypes systems.
 
 ### Configuration
 - **[Settings](Configurations/Settings.md)** - CharacterPrototypeSettings, GraphicsPrototypesSettings
+- **[DefaultCharacterStats](Configurations/DefaultCharacterStats.md)** - Default stat initialization
 - **[ExperienceTypes](Configurations/Components/ExperienceTypes.md)** - Combat experience and weapon types
 
 ### Editor Tools
