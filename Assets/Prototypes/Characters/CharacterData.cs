@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Prototypes.Characters
 {
-    [CreateAssetMenu(fileName = "NewCharacterConfiguration", menuName = "Character/CharacterData")]
+    [CreateAssetMenu(fileName = "NewCharacterConfiguration", menuName = "CharacterData/CharacterData")]
     public class CharacterData : ScriptableObject
     {
         private void OnEnable()
@@ -75,17 +75,17 @@ namespace Assets.Prototypes.Characters
         [Foldout("Description"), SerializeField, ResizableTextArea]
         private string _notes = "Take private notes (only in the editor) about this unit";
 
-        [Foldout("Character Flags"), SerializeField]
+        [Foldout("CharacterData Flags"), SerializeField]
         [HorizontalLine(color: EColor.Green)]
         private bool _canSSupport = false;
 
-        [Foldout("Character Flags"), SerializeField]
+        [Foldout("CharacterData Flags"), SerializeField]
         private bool _canHaveChildren = false;
 
-        [Foldout("Character Flags"), SerializeField]
+        [Foldout("CharacterData Flags"), SerializeField]
         private bool _isRecruitable = false;
 
-        [Foldout("Character Flags"), SerializeField]
+        [Foldout("CharacterData Flags"), SerializeField]
         private bool _isUnique = false;
 
         [Foldout("Visual"), HideInInspector]
@@ -168,6 +168,10 @@ namespace Assets.Prototypes.Characters
 
         [Foldout("Heredity"), SerializeField]
         private CharacterData _childUnitId;
+
+        [Foldout("Attachments"), SerializeField]
+        [HorizontalLine(color: EColor.Black)]
+        private CharacterInventory _characterInventory;
         public CharacterWhich Which => _which;
         public string Name => _name;
         public string FullName => _fullName;
@@ -214,7 +218,9 @@ namespace Assets.Prototypes.Characters
         public List<SupportRelationship> SupportRelationships => _supportRelationships;
 
         public HereditaryTraits PassedDownTraits => _passedDownTraits;
-        public Character ChildUnitId => _childUnitId;
+        public CharacterData ChildUnitId => _childUnitId;
+
+        public CharacterInventory CharacterInventory => _characterInventory;
 
         // Helper methods for class experience
         public int GetClassExp(string classId)
@@ -241,12 +247,12 @@ namespace Assets.Prototypes.Characters
         }
 
         // Helper methods for support relationships
-        public SupportRelationship GetSupportRelationship(Character character)
+        public SupportRelationship GetSupportRelationship(CharacterData character)
         {
             return _supportRelationships.Find(s => s.Character == character);
         }
 
-        public void AddSupportRelationship(Character character)
+        public void AddSupportRelationship(CharacterData character)
         {
             if (_supportRelationships.Find(s => s.Character == character) == null)
             {
@@ -254,7 +260,7 @@ namespace Assets.Prototypes.Characters
             }
         }
 
-        public void RemoveSupportRelationship(Character character)
+        public void RemoveSupportRelationship(CharacterData character)
         {
             _supportRelationships.RemoveAll(s => s.Character == character);
         }

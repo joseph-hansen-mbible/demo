@@ -8,13 +8,13 @@ namespace Assets.Prototypes.Graphics.Portrait
     public class ImageStack : ScriptableObject
     {
         [SerializeField]
-        private Character _ownerCharacter;
+        private CharacterData _ownerCharacter;
 
         [SerializeField]
         private List<ImageStackLayer> _layers = new List<ImageStackLayer>();
 
         public List<ImageStackLayer> Layers => _layers;
-        public Character OwnerCharacter => _ownerCharacter;
+        public CharacterData OwnerCharacter => _ownerCharacter;
 
         public Texture2D PreRender()
         {

@@ -8,7 +8,7 @@ namespace Assets.Prototypes.Characters.Subclasses
     public class SupportRelationship
     {
         [SerializeField]
-        private Character _character;
+        private CharacterData _character;
 
         [SerializeField]
         private SupportLevels.Level _currentLevel = SupportLevels.Level.None;
@@ -22,7 +22,7 @@ namespace Assets.Prototypes.Characters.Subclasses
         [SerializeField]
         private int _supportSpeed = 1;
 
-        public Character Character
+        public CharacterData Character
         {
             get => _character;
             set => _character = value;

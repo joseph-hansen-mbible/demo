@@ -35,7 +35,7 @@ namespace Assets.Prototypes.Characters
             foreach (string guid in guids)
             {
                 string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-                Character character = UnityEditor.AssetDatabase.LoadAssetAtPath<Character>(path);
+                CharacterData character = UnityEditor.AssetDatabase.LoadAssetAtPath<CharacterData>(path);
 
                 if (character != null)
                 {

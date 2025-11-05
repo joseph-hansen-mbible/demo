@@ -6,7 +6,7 @@ namespace Assets.Prototypes.Characters.Subclasses.Editor
 {
     public class PortraitEditorWindow : EditorWindow
     {
-        private Character _currentCharacter;
+        private CharacterData _currentCharacter;
         private int _selectedPortraitIndex = 0;
         private Portrait _currentPortrait;
         private Vector2 _scrollPosition;
@@ -20,7 +20,7 @@ namespace Assets.Prototypes.Characters.Subclasses.Editor
             GetWindow<PortraitEditorWindow>("Portrait Editor");
         }
 
-        public static void OpenPortrait(Character character, int portraitIndex = 0)
+        public static void OpenPortrait(CharacterData character, int portraitIndex = 0)
         {
             var window = GetWindow<PortraitEditorWindow>("Portrait Editor");
             window._currentCharacter = character;
@@ -47,9 +47,9 @@ namespace Assets.Prototypes.Characters.Subclasses.Editor
                 EditorGUILayout.ObjectField(
                     "Character",
                     _currentCharacter,
-                    typeof(Character),
+                    typeof(CharacterData),
                     false
-                ) as Character;
+                ) as CharacterData;
 
             if (EditorGUI.EndChangeCheck())
             {
@@ -382,7 +382,7 @@ namespace Assets.Prototypes.Characters.Subclasses.Editor
 
             // Owner info
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.ObjectField("Owner", _currentPortrait.Owner, typeof(Character), false);
+            EditorGUILayout.ObjectField("Owner", _currentPortrait.Owner, typeof(CharacterData), false);
             EditorGUI.EndDisabledGroup();
 
             if (_currentPortrait.Owner == null)

@@ -11,7 +11,7 @@ namespace Assets.Prototypes.Characters.Subclasses
     public class Portrait
     {
         [SerializeField]
-        private Character _owner;
+        private CharacterData _owner;
 
         [SerializeField]
         private ImageStack _imageStack;
@@ -28,7 +28,7 @@ namespace Assets.Prototypes.Characters.Subclasses
 
         private Guid _id;
 
-        public Character Owner => _owner;
+        public CharacterData Owner => _owner;
         public ImageStack ImageStack => _imageStack;
         public string Key => _key;
 
@@ -37,7 +37,7 @@ namespace Assets.Prototypes.Characters.Subclasses
         public Guid Id => _id;
         public Color[] TintColors => _tintColors;
 
-        public void SetOwner(Character owner)
+        public void SetOwner(CharacterData owner)
         {
             _owner = owner;
             UpdateTintColorsFromOwner();

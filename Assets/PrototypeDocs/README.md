@@ -8,6 +8,7 @@ Complete API reference for Assets/Prototypes systems.
 - **[Character](Characters/Character.md)** - Main character configuration asset
 - **[CharacterStats](Characters/CharacterStats.md)** - Stat system (bounded and unbounded)
 - **[CharacterComponents](Characters/CharacterComponents.md)** - Pronouns, relationships, traits
+- **[CharacterInventory](Characters/CharacterInventory.md)** - Multi-slot equipment and inventory
 
 ### Portrait System
 - **[Portrait](Characters/Portraits/Portrait.md)** - Compositable character portraits
@@ -16,7 +17,7 @@ Complete API reference for Assets/Prototypes systems.
 
 ### Configuration
 - **[Settings](Configurations/Settings.md)** - CharacterPrototypeSettings, GraphicsPrototypesSettings
-- **[DefaultCharacterStats](Configurations/DefaultCharacterStats.md)** - Default stat initialization
+- **[DefaultCharacterStats](Characters/DefaultCharacterStats.md)** - Default stat initialization
 - **[ExperienceTypes](Configurations/Components/ExperienceTypes.md)** - Combat experience and weapon types
 
 ### Editor Tools
