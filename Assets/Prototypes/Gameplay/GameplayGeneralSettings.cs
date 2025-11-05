@@ -1,0 +1,133 @@
+using Assets.Prototypes.Gameplay.Combat.FundamentalComponents;
+using Assets.Prototypes.Gameplay.Combat.Objects.Components;
+using NaughtyAttributes;
+using UnityEngine;
+
+[CreateAssetMenu(
+    fileName = "GameplayGeneralSettings",
+    menuName = "Game Settings/Gameplay/General Settings"
+)]
+public class GameplayGeneralSettings : ScriptableObject
+{
+    [SerializeField, BoxGroup("General Gameplay"), HorizontalLine(color: EColor.Blue)]
+    private bool UseWeatherOnLevels;
+
+    [SerializeField, BoxGroup("General Gameplay")]
+    private bool UnitsCanHaveChildren;
+
+    [SerializeField, BoxGroup("General Gameplay")]
+    private bool WeaponsCanBeForged;
+
+    [SerializeField, BoxGroup("General Gameplay")]
+    private bool WeaponsCanBeRepaired;
+
+    [SerializeField, BoxGroup("General Gameplay")]
+    private bool UseExperienceSublevels;
+
+    [SerializeField, BoxGroup("General Gameplay")]
+    private bool UseExperienceAptitudes;
+
+    [SerializeField, BoxGroup("Combat Mechanics"), HorizontalLine(color: EColor.Yellow)]
+    private bool CombatArts;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private int CombatArtLimit = 3;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool WeaponTriangle;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool ExpandedWeaponTriangle;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private int WeaponTriangleAdvantage = 20;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private int WeaponTriangleDisadvantage = -20;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool MagicTriangle;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private int MagicTriangleAdvantage = 20;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private int MagicTriangleDisadvantage = -20;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool Battalions;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private int BattalionLimit = 1;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool BattalionEndurance;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool PairUp;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool Adjutants;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool AdjutantHeal;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool AdjutantGuard;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private bool AdjutantAttack;
+
+    [SerializeField, BoxGroup("Combat Mechanics")]
+    private float CriticalHitMultiplier = 3f;
+
+    [SerializeField, BoxGroup("Extra Unit Stats"), HorizontalLine(color: EColor.Green)]
+    private bool Weight;
+
+    [SerializeField, BoxGroup("Extra Unit Stats"), ShowIf("Weight")]
+    private bool WeightAffectsMovement;
+
+    [SerializeField, BoxGroup("Extra Unit Stats")]
+    private bool Luck;
+
+    [SerializeField, BoxGroup("Extra Unit Stats")]
+    private bool SeparateCriticalAvoidance;
+
+    [SerializeField, BoxGroup("Extra Unit Stats")]
+    private bool Authority;
+
+    [SerializeField, BoxGroup("Experience Types"), HorizontalLine(color: EColor.Red)]
+    private ExperienceType[] ExperienceWeaponTypes;
+
+    [SerializeField, BoxGroup("Extra Experience Types"), HorizontalLine(color: EColor.Orange)]
+    private ExperienceType RidingExperienceType = new ExperienceType
+    {
+        Name = "Riding",
+        Enabled = false,
+        HasWeaponType = false,
+    };
+
+    [SerializeField, BoxGroup("Extra Experience Types")]
+    private ExperienceType FlyingExperienceType = new ExperienceType
+    {
+        Name = "Flying",
+        Enabled = false,
+        HasWeaponType = false,
+    };
+
+    [SerializeField, BoxGroup("Extra Experience Types")]
+    private ExperienceType ArmorExperienceType = new ExperienceType
+    {
+        Name = "Armor",
+        Enabled = false,
+        HasWeaponType = false,
+    };
+
+    [SerializeField, BoxGroup("Extra Experience Types")]
+    private ExperienceType AuthorityExperienceType = new ExperienceType
+    {
+        Name = "Authority",
+        Enabled = false,
+        HasWeaponType = false,
+    };
+}

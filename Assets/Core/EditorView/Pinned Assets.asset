@@ -20,6 +20,12 @@ MonoBehaviour:
   display:
     profile:
       name: New Profile 1
-      assets: []
-    assets: []
+      assets:
+      - {fileID: 11400000, guid: 001ab3d0155ae6244952d1affe1de66d, type: 2}
+      - {fileID: 11400000, guid: c0550419a809a2c48b1f3d45b9eeef5c, type: 2}
+      - {fileID: 11400000, guid: d95a9206f521d444b8e73241cfc0c804, type: 2}
+    assets:
+    - {fileID: 11400000, guid: 001ab3d0155ae6244952d1affe1de66d, type: 2}
+    - {fileID: 11400000, guid: c0550419a809a2c48b1f3d45b9eeef5c, type: 2}
+    - {fileID: 11400000, guid: d95a9206f521d444b8e73241cfc0c804, type: 2}
     filter: 

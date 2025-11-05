@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03a896db8f43bba419fac15576b362f2, type: 3}
+  m_Name: GameplayGeneralSettings
+  m_EditorClassIdentifier: 
+  UseWeatherOnLevels: 0
+  UnitsCanHaveChildren: 0
+  WeaponsCanBeForged: 0
+  WeaponsCanBeRepaired: 0
+  UseExperienceSublevels: 0
+  UseExperienceAptitudes: 0
+  CombatArts: 0
+  CombatArtLimit: 3
+  WeaponTriangle: 0
+  ExpandedWeaponTriangle: 0
+  WeaponTriangleAdvantage: 20
+  WeaponTriangleDisadvantage: -20
+  MagicTriangle: 0
+  MagicTriangleAdvantage: 20
+  MagicTriangleDisadvantage: -20
+  Battalions: 0
+  BattalionLimit: 1
+  BattalionEndurance: 0
+  PairUp: 0
+  Adjutants: 0
+  AdjutantHeal: 0
+  AdjutantGuard: 0
+  AdjutantAttack: 0
+  CriticalHitMultiplier: 3
+  Weight: 0
+  WeightAffectsMovement: 0
+  Luck: 0
+  SeparateCriticalAvoidance: 0
+  Authority: 0
+  ExperienceWeaponTypes: []
+  RidingExperienceType:
+    _name: Riding
+    _id: riding
+    _enabled: 0
+    _associatedWeaponType: {fileID: 0}
+    _hasWeaponType: 0
+  FlyingExperienceType:
+    _name: Flying
+    _id: flying
+    _enabled: 0
+    _associatedWeaponType: {fileID: 0}
+    _hasWeaponType: 0
+  ArmorExperienceType:
+    _name: Armor
+    _id: armor
+    _enabled: 0
+    _associatedWeaponType: {fileID: 0}
+    _hasWeaponType: 0
+  AuthorityExperienceType:
+    _name: Authority
+    _id: authority
+    _enabled: 0
+    _associatedWeaponType: {fileID: 0}
+    _hasWeaponType: 0

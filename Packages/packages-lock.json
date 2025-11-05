@@ -47,6 +47,12 @@
       "dependencies": {},
       "hash": "4994b06df07f0467794417d9dc2abf8fa8f07ba6"
     },
+    "com.mischief.markdownviewer": {
+      "version": "file:UnityMarkdownViewer",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.24",
       "depth": 2,
