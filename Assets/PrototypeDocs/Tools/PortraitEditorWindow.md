@@ -6,90 +6,6 @@
 
 Editor tool for creating and editing character portraits with real-time preview.
 
-## Opening
-
-```csharp
-// Via menu
-Tools > Portrait Editor
-
-// Via code
-var window = EditorWindow.GetWindow<PortraitEditorWindow>();
-window.Show();
-```
-
-## Features
-
-### Character Selection
-- Dropdown list of all Character assets in project
-- Portrait index selector for multi-portrait characters
-- Create new portraits on existing characters
-
-### Portrait Configuration
-
-**ImageStack Assignment:**
-- ObjectField for assigning/creating ImageStack assets
-- Button to create new ImageStack
-- Reflection-based private field assignment
-
-**Key Management:**
-- Text field for portrait filename key
-- "Generate New Key" button (GUID-based)
-- Validates key before save
-
-**Portrait Identity:**
-- Displays unique portrait ID
-- Shows owner character name
-- Instance verification for debugging
-
-### Layer Management
-
-**Layer List:**
-- Reorderable list of ImageStackLayers
-- Add/Delete layer buttons
-- Per-layer controls:
-  - Sprite assignment
-  - Mask assignment
-  - Offset (Vector2)
-  - Scale (float)
-  - Rotation (float, not yet implemented in compositor)
-  - Order (int, render priority)
-
-### Tint Colors
-
-**Color Configuration:**
-- 3 color pickers for tint colors
-- Labels: "Tint 1/2/3 (Red/Green/Blue Channel)"
-- "Update from Character Colors" button
-- Auto-sync with character accent colors
-
-**Color Workflow:**
-1. Manual editing in window
-2. Or pull from Character.AccentColor1/2/3
-3. Colors preserved until manually changed
-4. Not overwritten on save
-
-### Preview
-
-**Live Preview:**
-- Real-time composited portrait display
-- 256x256 preview window
-- Updates on any change (if auto-refresh enabled)
-- Manual "Refresh Preview" button
-
-**Auto-Refresh Toggle:**
-- Checkbox to enable/disable auto-updates
-- Prevents performance issues with many layers
-
-### Save & Render
-
-**"Save & Render Portrait" Button:**
-- Validates key (must not be empty)
-- Calls `Portrait.Render()`
-- Saves PNG to disk
-- Creates sprite asset
-- Updates SavedSprite reference
-- Success/error dialogs
-
 ## Window Layout
 
 ```
@@ -135,32 +51,6 @@ window.Show();
 │ Auto Refresh: [✓]                   │
 └─────────────────────────────────────┘
 ```
-
-## API
-
-### Public Methods
-
-```csharp
-static void ShowWindow()
-```
-Opens/focuses the Portrait Editor window.
-
-### Key Features
-
-**Reflection Usage:**
-- Sets private `_imageStack` field on Portrait
-- Bypasses public API restrictions
-- Enables editor-only configuration
-
-**Asset Creation:**
-- Creates ImageStack assets with save dialog
-- Generates unique portrait keys
-- Initializes Portrait instances with proper GUID
-
-**Live Editing:**
-- All changes immediately reflected in preview
-- Undo/Redo support via `EditorUtility.SetDirty()`
-- Asset modifications auto-saved
 
 ## Workflow
 
