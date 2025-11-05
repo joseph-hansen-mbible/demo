@@ -4,13 +4,27 @@ using UnityEngine;
 public class CharacterInventory : ScriptableObject
 {
     [SerializeField]
-    private ObjectItem[] _inventoryItems;
+    private ObjectItem[] _inventoryItems = new ObjectItem[0];
+
+    [SerializeField]
     private int _capacity = 6;
+
+    [SerializeField]
     private int _currentItemCount;
+
+    [SerializeField]
     private int _currentWeight;
+
+    [SerializeField]
     private int[] _equippedItemIndices = new int[3] { -1, -1, -1 };
+
+    [SerializeField]
     private bool _isWeaponEquipped;
+
+    [SerializeField]
     private bool _isShieldEquipped;
+
+    [SerializeField]
     private bool _isAccessoryEquipped;
 
     public ObjectItem[] InventoryItems
