@@ -41,18 +41,6 @@ namespace Assets.Prototypes.Skills.Nodes.Editor
                     return NodeCategoryAttribute.GetCategoryColor(NodeCategory.Conditions);
                 }
             }
-
-            // Fallback: Check if node has NodeCategory attribute (for manual override)
-            var categoryAttr = target
-                .GetType()
-                .GetCustomAttributes(typeof(NodeCategoryAttribute), true);
-
-            if (categoryAttr != null && categoryAttr.Length > 0)
-            {
-                var attr = (NodeCategoryAttribute)categoryAttr[0];
-                return attr.GetTintColor();
-            }
-
             // Fall back to default tint
             return base.GetTint();
         }

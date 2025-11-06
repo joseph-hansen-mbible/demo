@@ -9,10 +9,6 @@ namespace Assets.Prototypes.Skills.Nodes
     /// </summary>
     public abstract class SkillNode : Node
     {
-        /// <summary>
-        /// Unity event fired when this node begins execution.
-        /// Use this to trigger animations, VFX, or other timed events.
-        /// </summary>
         public UnityEvent OnNodeExecute;
 
         protected override void Init()
@@ -47,13 +43,9 @@ namespace Assets.Prototypes.Skills.Nodes
         }
     }
 
-    /// <summary>
-    /// Socket types for different kinds of connections in the node graph.
-    /// </summary>
     [System.Serializable]
     public struct ExecutionFlow
     {
-        // Empty - just a type marker for execution sequence
     }
 
     [System.Serializable]
