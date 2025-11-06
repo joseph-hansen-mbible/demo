@@ -1,9 +1,9 @@
-﻿using Assets.Prototypes.Skills.Nodes;
+using Assets.Prototypes.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Triggers/Unit Attacks")]
-public class UnitAttacks : SkillNode
+[CreateNodeMenu("Triggers/Turn Ends")]
+public class TurnEnds : SkillNode
 {
     [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
     public ExecutionFlow flow;
