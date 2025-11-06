@@ -1,4 +1,5 @@
 using Assets.Prototypes.Skills.Components.Badges;
+using Assets.Prototypes.Skills.Nodes;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -48,6 +49,9 @@ public class Skill : ScriptableObject
     public string Description;
 
     [Foldout("Behavior"), HorizontalLine(color: EColor.Blue)]
+    public SkillGraph BehaviorGraph;
+
+    [Foldout("Behavior")]
     public UnityEvent ReadyToFire;
 
     [Foldout("Behavior")]
@@ -62,7 +66,19 @@ public class Skill : ScriptableObject
     [Foldout("Behavior")]
     public UnityEvent SkillUnequipped;
 
-    // TODO: Uncomment when NodeConnections and EventNodes are implemented
-    // private NodeConnections[] _internalConnections;
-    // private EventNodes[] _internalEventNodes;
+    /// <summary>
+    /// Execute this skill's behavior graph with the given context.
+    /// </summary>
+    public void ExecuteSkill(SkillExecutionContext context)
+    {
+        if (BehaviorGraph == null)
+        {
+            UnityEngine.Debug.LogWarning($"Skill {SkillName} has no BehaviorGraph assigned.");
+            return;
+        }
+
+        context.Skill = this;
+        SkillTriggered?.Invoke();
+        BehaviorGraph.Execute(context);
+    }
 }

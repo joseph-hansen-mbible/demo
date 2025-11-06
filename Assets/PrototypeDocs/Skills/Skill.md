@@ -36,6 +36,7 @@ Creates a new ScriptableObject asset named "NewSkill".
 
 | Property | Type | Description |
 |----------|------|-------------|
+| `BehaviorGraph` | `SkillGraph` | xNode graph defining skill execution logic (see Node System below) |
 | `ReadyToFire` | `UnityEvent` | Event triggered when skill is ready to use |
 | `SkillTriggered` | `UnityEvent` | Event triggered when skill is activated |
 | `ActionCompleted` | `UnityEvent` | Event triggered when skill execution finishes |
@@ -51,18 +52,29 @@ The skill's three accent colors directly map to the badge's tint colors:
 
 This allows skills to have visual identity that propagates to their badge graphics.
 
+## Node System
+
+Skills use xNode visual graphs for execution logic. Each skill references a `SkillGraph` that defines its runtime behavior through connected nodes.
+
+### Node Categories
+
+Nodes auto-tint based on subfolder location:
+- **Triggers** (`/Triggers/`) - Indigo tint - Entry points (e.g., UnitAttacks)
+- **Math** (`/Math/`) - Blue tint - Calculations and values
+- **Events** (`/Events/`) - Purple tint - Event handlers
+- **Conditions** (`/Conditions/`) - Violet tint - Branching logic
+
+### Execution Flow
+
+1. Graph starts at entry nodes (nodes with no ExecutionFlow inputs)
+2. Each node executes via `Execute(SkillExecutionContext)` method
+3. Node signals completion via `SignalComplete(context)`
+4. Executor follows ExecutionFlow connections to next nodes
+5. Graph completes when all execution paths finish
+
+See **[Node System](Nodes/README.md)** for detailed node architecture.
+
 ## Notes
-
-### Incomplete Features
-
-The following are commented out pending implementation:
-```csharp
-// TODO: Uncomment when NodeConnections and EventNodes are implemented
-// private NodeConnections[] _internalConnections;
-// private EventNodes[] _internalEventNodes;
-```
-
-These fields suggest future node-based behavior graph integration.
 
 ### Badge Workflow
 
