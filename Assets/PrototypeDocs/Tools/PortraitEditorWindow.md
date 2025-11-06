@@ -1,10 +1,42 @@
 # Portrait Editor Window
 
 **Namespace:** `Assets.Prototypes.Characters.Subclasses.Editor`  
-**Inherits:** `EditorWindow`  
-**Menu:** `Tools > Portrait Editor`
+**Inherits:** `StackedImageEditorWindow<CharacterData, Portrait>`  
+**Menu:** `Window > Portrait Editor`
 
-Editor tool for creating and editing character portraits with real-time preview.
+Editor tool for creating and editing character portraits with real-time preview. This is a concrete implementation of the generic `StackedImageEditorWindow` base class.
+
+## Architecture
+
+The `PortraitEditorWindow` is a minimal implementation (~30 lines) that extends `StackedImageEditorWindow<CharacterData, Portrait>`. All UI and functionality is inherited from the base class.
+
+### Implementation
+
+```csharp
+public class PortraitEditorWindow : StackedImageEditorWindow<CharacterData, Portrait>
+{
+    protected override string WindowTitle => "Portrait Editor";
+    protected override string OwnerFieldLabel => "Character";
+    
+    protected override Portrait[] GetImagesFromOwner(CharacterData owner)
+    {
+        return owner?.Portraits;
+    }
+}
+```
+
+## Opening the Window
+
+### Via Menu
+```
+Window > Portrait Editor
+```
+
+### Via Code
+```csharp
+// Open window with specific character and portrait
+PortraitEditorWindow.OpenPortrait(characterData, portraitIndex: 0);
+```
 
 ## Window Layout
 
@@ -84,6 +116,44 @@ Editor tool for creating and editing character portraits with real-time preview.
 
 ## Technical Details
 
+### Inherited Functionality
+
+All features are provided by `StackedImageEditorWindow<TOwner, TStackedImage>`:
+
+- **Image Selection**: Dropdown to select from owner's image array
+- **Metadata Editing**: Key (filename) editing and generation
+- **Image Stack Management**: Assign ImageStack, view layers
+- **Owner Management**: View/update owner reference
+- **Tint Colors**: Edit 3 tint colors, reset, update from owner
+- **Layer Inspection**: View layer properties (sprite, mask, order, offset, scale, rotation)
+- **Preview**: Real-time compositing with auto-refresh toggle
+- **Render & Save**: Export to PNG and create sprite asset
+
+### Creating Custom Editors
+
+To create a new stacked image editor for a different owner type:
+
+```csharp
+public class MyImageEditorWindow : StackedImageEditorWindow<MyOwnerType, MyImageType>
+{
+    protected override string WindowTitle => "My Image Editor";
+    protected override string OwnerFieldLabel => "My Owner";
+    
+    [MenuItem("Window/My Image Editor")]
+    public static void ShowWindow()
+    {
+        GetWindow<MyImageEditorWindow>("My Image Editor");
+    }
+    
+    protected override MyImageType[] GetImagesFromOwner(MyOwnerType owner)
+    {
+        return owner?.Images;
+    }
+}
+```
+
+### Performance Optimization
+
 ### Performance Optimization
 - Compositing triggered only on changes (if auto-refresh off)
 - Preview resolution lower than save resolution (256px vs 512px)
@@ -96,8 +166,18 @@ Editor tool for creating and editing character portraits with real-time preview.
 - Try-catch on save operation
 
 ### Integration Points
-- `Portrait.CompositeLayers()` - Generates preview
-- `Portrait.Render()` - Saves to disk
+- `StackedImage<T>.CompositeLayers()` - Generates preview texture
+- `StackedImage<T>.Render()` - Saves to disk and creates sprite asset
+- `Portrait.UpdateTintColorsFromOwner()` - Syncs tint colors from `CharacterData`
+
+---
+
+## See Also
+
+- **[StackedImage](../Characters/Portraits/StackedImage.md)** - Base stacked image system
+- **[Portrait](../Characters/Portraits/Portrait.md)** - Character-specific implementation
+- **[ImageStack](../Characters/Portraits/ImageStack.md)** - Layer container
+- **[ImageCompositor](ImageCompositor.md)** - Compositing utility
 - `ImageCompositor.CompositeImageStackLayers()` - Core rendering
 - `AssetDatabase` - Asset management
 
