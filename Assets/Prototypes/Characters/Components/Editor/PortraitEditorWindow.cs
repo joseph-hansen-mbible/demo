@@ -9,7 +9,7 @@ namespace Assets.Prototypes.Characters.Subclasses.Editor
         protected override string WindowTitle => "Portrait Editor";
         protected override string OwnerFieldLabel => "Character";
 
-        [MenuItem("Window/Portrait Editor")]
+        [MenuItem("Window/Turnroot/Portrait Editor")]
         public static void ShowWindow()
         {
             GetWindow<PortraitEditorWindow>("Portrait Editor");
@@ -20,7 +20,11 @@ namespace Assets.Prototypes.Characters.Subclasses.Editor
             var window = GetWindow<PortraitEditorWindow>("Portrait Editor");
             window._currentOwner = character;
             window._selectedImageIndex = portraitIndex;
-            if (character != null && character.Portraits != null && portraitIndex < character.Portraits.Length)
+            if (
+                character != null
+                && character.Portraits != null
+                && portraitIndex < character.Portraits.Length
+            )
             {
                 window._currentImage = character.Portraits[portraitIndex];
                 window.RefreshPreview();

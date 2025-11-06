@@ -5,9 +5,9 @@ using UnityEngine;
 
 [CreateAssetMenu(
     fileName = "GameplayGeneralSettings",
-    menuName = "Game Settings/Gameplay/General Settings"
+    menuName = "Turnroot/Game Settings/Gameplay/General Settings"
 )]
-public class GameplayGeneralSettings : ScriptableObject
+public class GameplayGeneralSettings : SingletonScriptableObject<GameplayGeneralSettings>
 {
     [SerializeField, BoxGroup("General Gameplay"), HorizontalLine(color: EColor.Blue)]
     private bool UseWeatherOnLevels;

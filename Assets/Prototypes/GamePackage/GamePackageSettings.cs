@@ -5,9 +5,9 @@ namespace Assets.Prototypes.GamePackage
 {
     [CreateAssetMenu(
         fileName = "GamePackageSettings",
-        menuName = "Game Settings/Game Package Settings"
+        menuName = "Turnroot/Game Settings/Game Package Settings"
     )]
-    public class GamePackageSettings : ScriptableObject
+    public class GamePackageSettings : SingletonScriptableObject<GamePackageSettings>
     {
         public string gameName;
 

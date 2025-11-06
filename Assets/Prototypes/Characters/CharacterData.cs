@@ -8,7 +8,10 @@ using UnityEngine;
 
 namespace Assets.Prototypes.Characters
 {
-    [CreateAssetMenu(fileName = "NewCharacterConfiguration", menuName = "Character/CharacterData")]
+    [CreateAssetMenu(
+        fileName = "NewCharacterConfiguration",
+        menuName = "Turnroot/Character/CharacterData"
+    )]
     public class CharacterData : ScriptableObject
     {
         private void OnEnable()

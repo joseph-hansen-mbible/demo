@@ -1,6 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewCharacterInventory", menuName = "Character/CharacterInventory")]
+[CreateAssetMenu(
+    fileName = "NewCharacterInventory",
+    menuName = "Turnroot/Character/CharacterInventory"
+)]
 public class CharacterInventory : ScriptableObject
 {
     [SerializeField]

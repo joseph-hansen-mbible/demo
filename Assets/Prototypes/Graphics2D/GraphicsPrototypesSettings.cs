@@ -3,9 +3,9 @@ using UnityEngine;
 
 [CreateAssetMenu(
     fileName = "GraphicsPrototypesSettings",
-    menuName = "Game Settings/GraphicsPrototypesSettings"
+    menuName = "Turnroot/Game Settings/GraphicsPrototypesSettings"
 )]
-public class GraphicsPrototypesSettings : ScriptableObject
+public class GraphicsPrototypesSettings : SingletonScriptableObject<GraphicsPrototypesSettings>
 {
     public int portraitRenderWidth = 512;
     public int portraitRenderHeight = 512;

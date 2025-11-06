@@ -4,9 +4,9 @@ namespace Assets.Prototypes.Characters
 {
     [CreateAssetMenu(
         fileName = "CharacterPrototypeSettings",
-        menuName = "Game Settings/CharacterPrototypeSettings"
+        menuName = "Turnroot/Game Settings/CharacterPrototypeSettings"
     )]
-    public class CharacterPrototypeSettings : ScriptableObject
+    public class CharacterPrototypeSettings : SingletonScriptableObject<CharacterPrototypeSettings>
     {
         public bool UseAccentColors = true;
         public Color AvatarHairColorDefault;

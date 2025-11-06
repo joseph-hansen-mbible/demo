@@ -6,9 +6,9 @@ namespace Assets.Prototypes.Characters
 {
     [CreateAssetMenu(
         fileName = "DefaultCharacterStats",
-        menuName = "Character/Default Character Stats"
+        menuName = "Turnroot/Character/Default Character Stats"
     )]
-    public class DefaultCharacterStats : ScriptableObject
+    public class DefaultCharacterStats : SingletonScriptableObject<DefaultCharacterStats>
     {
         [System.Serializable]
         public class DefaultBoundedStat

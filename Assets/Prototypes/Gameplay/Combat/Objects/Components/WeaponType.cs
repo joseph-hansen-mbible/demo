@@ -2,7 +2,10 @@ using UnityEngine;
 
 namespace Assets.Prototypes.Gameplay.Combat.Objects.Components
 {
-    [CreateAssetMenu(fileName = "WeaponType", menuName = "Game Settings/Gameplay/Weapon Type")]
+    [CreateAssetMenu(
+        fileName = "WeaponType",
+        menuName = "Turnroot/Game Settings/Gameplay/Weapon Type"
+    )]
     [System.Serializable]
     public class WeaponType : ScriptableObject
     {

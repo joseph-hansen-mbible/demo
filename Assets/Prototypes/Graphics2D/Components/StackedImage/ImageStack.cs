@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Assets.Prototypes.Graphics.Portrait
 {
-    [CreateAssetMenu(fileName = "NewImageStack", menuName = "Graphics/Portrait/ImageStack")]
+    [CreateAssetMenu(
+        fileName = "NewImageStack",
+        menuName = "Turnroot/Graphics/Portrait/ImageStack"
+    )]
     public class ImageStack : ScriptableObject
     {
         [SerializeField]
