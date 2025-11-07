@@ -110,3 +110,4 @@ InitTestScene*.unity*
 Assets/PrototypeDocs/copilot-instructions.md
 Assets/PrototypeDocs/copilot-instructions.md.meta
 Packages/UnityMarkdownViewer/
+/.github/instructions
