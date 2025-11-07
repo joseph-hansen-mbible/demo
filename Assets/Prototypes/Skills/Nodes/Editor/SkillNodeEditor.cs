@@ -14,6 +14,29 @@ namespace Assets.Prototypes.Skills.Nodes.Editor
     [CustomNodeEditor(typeof(SkillNode))]
     public class SkillNodeEditor : NodeEditor
     {
+        public override void OnHeaderGUI()
+        {
+            // Draw the default header first (node title)
+            base.OnHeaderGUI();
+
+            // Check if the node has a NodeLabel attribute
+            var nodeType = target.GetType();
+            var labelAttr =
+                System.Attribute.GetCustomAttribute(nodeType, typeof(NodeLabelAttribute))
+                as NodeLabelAttribute;
+
+            if (labelAttr != null)
+            {
+                // Create a word-wrapped style for the label
+                GUIStyle labelStyle = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
+                labelStyle.wordWrap = true;
+                labelStyle.alignment = TextAnchor.UpperCenter;
+
+                // Draw the custom label below the title with word wrap
+                GUILayout.Label(labelAttr.Label, labelStyle);
+            }
+        }
+
         public override Color GetTint()
         {
             // Get the script path for this node type
@@ -24,9 +47,9 @@ namespace Assets.Prototypes.Skills.Nodes.Editor
                 string scriptPath = AssetDatabase.GetAssetPath(script);
 
                 // Check if the path contains a category subfolder
-                if (scriptPath.Contains("/Triggers/"))
+                if (scriptPath.Contains("/Flow/"))
                 {
-                    return NodeCategoryAttribute.GetCategoryColor(NodeCategory.Triggers);
+                    return NodeCategoryAttribute.GetCategoryColor(NodeCategory.Flow);
                 }
                 else if (scriptPath.Contains("/Math/"))
                 {

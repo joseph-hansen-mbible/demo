@@ -59,7 +59,7 @@ Skills use xNode visual graphs for execution logic. Each skill references a `Ski
 ### Node Categories
 
 Nodes auto-tint based on subfolder location:
-- **Triggers** (`/Triggers/`) - Indigo tint - Entry points (e.g., UnitAttacks)
+- **Flow** (`/Flow/`) - Indigo tint - Entry points (e.g., UnitAttacks)
 - **Math** (`/Math/`) - Blue tint - Calculations and values
 - **Events** (`/Events/`) - Purple tint - Event handlers
 - **Conditions** (`/Conditions/`) - Violet tint - Branching logic

@@ -77,12 +77,12 @@ Nodes auto-tint based on subfolder:
 
 | Folder | Category | Color | Purpose |
 |--------|----------|-------|---------|
-| `Nodes/Triggers/` | Triggers | Indigo #3730a3 | Entry points, event listeners |
+| `Nodes/Flow/` | Flow | Indigo #3730a3 | Entry points, event listeners |
 | `Nodes/Math/` | Math | Blue #1e40af | Calculations, operations |
 | `Nodes/Events/` | Events | Purple #6b21a8 | Event firing, callbacks |
 | `Nodes/Conditions/` | Conditions | Violet #5b21b6 | Branching logic, comparisons |
 
-**Override**: Add `[NodeCategory(NodeCategory.Triggers)]` to manually set category.
+**Override**: Add `[NodeCategory(NodeCategory.Flow)]` to manually set category.
 
 ## Creating Custom Nodes
 

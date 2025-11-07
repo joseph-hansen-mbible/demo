@@ -13,7 +13,7 @@ namespace Assets.Prototypes.Skills.Nodes
         private SkillGraph graph;
         private SkillExecutionContext context;
         private HashSet<SkillNode> visitedNodes;
-        private SkillNode currentWaitingNode;
+        private SkillNode currentNode;
 
         public SkillGraphExecutor(SkillGraph graph)
         {
@@ -28,7 +28,7 @@ namespace Assets.Prototypes.Skills.Nodes
         {
             this.context = context;
             this.visitedNodes = new HashSet<SkillNode>();
-            this.currentWaitingNode = null;
+            this.currentNode = null;
 
             context.SkillGraph = graph;
             // Store executor in context so nodes can signal completion
@@ -49,6 +49,23 @@ namespace Assets.Prototypes.Skills.Nodes
             foreach (var entryNode in entryNodes)
             {
                 ExecuteNode(entryNode);
+            }
+        }
+
+        /// <summary>
+        /// Proceed to the next node(s) from the current node.
+        /// Call this from UnityEvents to advance execution after waiting for something (animation, etc).
+        /// </summary>
+        public void Proceed()
+        {
+            if (currentNode != null)
+            {
+                ContinueFromNode(currentNode);
+                currentNode = null;
+            }
+            else
+            {
+                Debug.LogWarning("No current node to proceed from.");
             }
         }
 
@@ -93,8 +110,8 @@ namespace Assets.Prototypes.Skills.Nodes
                 return;
             }
 
-            // Node will call SignalComplete() when ready to continue
-            // For simple nodes, SignalComplete is called automatically
+            // Store as current node - execution will wait here until Proceed() is called
+            currentNode = node;
         }
 
         /// <summary>

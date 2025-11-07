@@ -22,31 +22,58 @@ namespace Assets.Prototypes.Skills.Nodes
 
         /// <summary>
         /// Execute this node's logic with the given context.
-        /// Override this in child classes to implement node behavior.
+        /// Override this in child classes if you need to perform logic on execution.
+        /// Most execution flow nodes can leave this empty and rely on OnNodeExecute UnityEvent.
+        /// After execution, the graph will wait for Proceed() to be called (e.g., from a UnityEvent).
         /// </summary>
         /// <param name="context">Runtime execution context containing all needed data</param>
-        public abstract void Execute(SkillExecutionContext context);
+        public virtual void Execute(SkillExecutionContext context)
+        {
+            // Default: no-op. Override if you need custom logic.
+        }
 
         /// <summary>
-        /// Called by external systems (like animation events) to signal that this node can proceed.
-        /// Default implementation immediately continues to next nodes.
-        /// Override if you need to wait for something (animation, timing, etc).
+        /// Override to provide port values. By default returns null.
         /// </summary>
-        public virtual void SignalComplete(SkillExecutionContext context)
+        public override object GetValue(NodePort port)
         {
-            // Default: immediately execute next nodes
-            var executor = context.GetCustomData<SkillGraphExecutor>("_executor");
-            if (executor != null)
+            return null;
+        }
+
+        /// <summary>
+        /// Validate connections to ensure type safety.
+        /// Only allow connections between ports of the same type.
+        /// </summary>
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            // Enforce strict type matching
+            if (from.ValueType != to.ValueType)
             {
-                executor.ContinueFromNode(this);
+                Debug.LogWarning(
+                    $"Cannot connect {from.ValueType.Name} ({from.direction}) to {to.ValueType.Name} ({to.direction}). Types must match."
+                );
+                return; // Don't call base, prevents connection
             }
+
+            // Check if the target port (input) already has a connection
+            // Input ports should only have one connection
+            if (to.direction == NodePort.IO.Input && to.ConnectionCount > 0)
+            {
+                // Check if it's already connected to this exact port
+                if (!to.IsConnectedTo(from))
+                {
+                    // Clear existing connection before making new one
+                    to.ClearConnections();
+                    Debug.Log($"Replacing existing connection to input port {to.fieldName}");
+                }
+            }
+
+            base.OnCreateConnection(from, to);
         }
     }
 
     [System.Serializable]
-    public struct ExecutionFlow
-    {
-    }
+    public struct ExecutionFlow { }
 
     [System.Serializable]
     public struct BoolValue

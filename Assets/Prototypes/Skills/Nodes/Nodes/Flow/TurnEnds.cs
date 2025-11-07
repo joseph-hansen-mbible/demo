@@ -2,16 +2,12 @@ using Assets.Prototypes.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Triggers/Enemy Attacks")]
-public class EnemyAttacks : SkillNode
+[CreateNodeMenu("Flow/Start/Turn Ends")]
+[NodeLabel("Runs at the end of unit's turn")]
+public class TurnEnds : SkillNode
 {
     [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
     public ExecutionFlow flow;
-
-    public override void Execute(SkillExecutionContext context)
-    {
-        SignalComplete(context);
-    }
 
     public override object GetValue(NodePort port)
     {

@@ -29,17 +29,17 @@ namespace Assets.Prototypes.Skills.Nodes
         {
             return category switch
             {
-                // Tailwind indigo-800 (#3730a3)
-                NodeCategory.Triggers => new Color(55f / 255f, 48f / 255f, 163f / 255f),
+                // Tailwind green-900 (#14532d)
+                NodeCategory.Flow => new Color(20f / 255f, 83f / 255f, 45f / 255f),
 
-                // Tailwind blue-800 (#1e40af)
-                NodeCategory.Math => new Color(30f / 255f, 64f / 255f, 175f / 255f),
+                // Tailwind teal-900 (#134e4a)
+                NodeCategory.Math => new Color(19f / 255f, 78f / 255f, 74f / 255f),
 
-                // Tailwind purple-800 (#6b21a8)
-                NodeCategory.Events => new Color(107f / 255f, 33f / 255f, 168f / 255f),
+                // Tailwind sky-900 (#0c4a6e)
+                NodeCategory.Events => new Color(12f / 255f, 74f / 255f, 110f / 255f),
 
-                // Tailwind violet-800 (#5b21b6)
-                NodeCategory.Conditions => new Color(91f / 255f, 33f / 255f, 182f / 255f),
+                // Tailwind indigo-900 (#312e81)
+                NodeCategory.Conditions => new Color(49f / 255f, 46f / 255f, 129f / 255f),
 
                 _ => Color.gray,
             };
@@ -48,7 +48,7 @@ namespace Assets.Prototypes.Skills.Nodes
 
     public enum NodeCategory
     {
-        Triggers,
+        Flow,
         Math,
         Events,
         Conditions,

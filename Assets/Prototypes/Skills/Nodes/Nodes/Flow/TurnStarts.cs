@@ -2,16 +2,12 @@ using Assets.Prototypes.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Triggers/Turn Starts")]
+[CreateNodeMenu("Flow/Start/Turn Starts")]
+[NodeLabel("Runs at the start of unit's turn")]
 public class TurnStarts : SkillNode
 {
     [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
     public ExecutionFlow flow;
-
-    public override void Execute(SkillExecutionContext context)
-    {
-        SignalComplete(context);
-    }
 
     public override object GetValue(NodePort port)
     {

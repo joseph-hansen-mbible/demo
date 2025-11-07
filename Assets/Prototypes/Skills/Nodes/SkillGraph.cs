@@ -10,14 +10,32 @@ namespace Assets.Prototypes.Skills.Nodes
     [CreateAssetMenu(fileName = "NewSkillGraph", menuName = "Turnroot/Skills/Skill Graph")]
     public class SkillGraph : NodeGraph
     {
+        private SkillGraphExecutor activeExecutor;
+
         /// <summary>
         /// Execute this graph with the given context.
         /// Creates an executor and runs all connected nodes starting from entry points.
         /// </summary>
         public void Execute(SkillExecutionContext context)
         {
-            var executor = new SkillGraphExecutor(this);
-            executor.Execute(context);
+            activeExecutor = new SkillGraphExecutor(this);
+            activeExecutor.Execute(context);
+        }
+
+        /// <summary>
+        /// Proceed to the next node(s) in the execution flow.
+        /// Call this from UnityEvents (e.g., animation events) to advance execution.
+        /// </summary>
+        public void Proceed()
+        {
+            if (activeExecutor != null)
+            {
+                activeExecutor.Proceed();
+            }
+            else
+            {
+                Debug.LogWarning("Cannot proceed: No active executor. Call Execute() first.");
+            }
         }
     }
 }

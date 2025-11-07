@@ -2,16 +2,12 @@ using Assets.Prototypes.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Triggers/Unit Moves")]
+[CreateNodeMenu("Flow/Start/Unit Moves")]
+[NodeLabel("Runs when this unit moves")]
 public class UnitMoves : SkillNode
 {
     [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
     public ExecutionFlow flow;
-
-    public override void Execute(SkillExecutionContext context)
-    {
-        SignalComplete(context);
-    }
 
     public override object GetValue(NodePort port)
     {

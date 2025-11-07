@@ -2,16 +2,12 @@ using Assets.Prototypes.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Triggers/Enemy Defeated")]
+[CreateNodeMenu("Flow/Start/Enemy Defeated")]
+[NodeLabel("Runs when an enemy is defeated by this unit")]
 public class EnemyDefeated : SkillNode
 {
     [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
     public ExecutionFlow flow;
-
-    public override void Execute(SkillExecutionContext context)
-    {
-        SignalComplete(context);
-    }
 
     public override object GetValue(NodePort port)
     {

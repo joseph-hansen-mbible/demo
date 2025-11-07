@@ -2,16 +2,12 @@
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Triggers/Unit Attacks")]
+[CreateNodeMenu("Flow/Start/Unit Attacks")]
+[NodeLabel("Runs when this unit attacks")]
 public class UnitAttacks : SkillNode
 {
     [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
-    public ExecutionFlow flow;
-
-    public override void Execute(SkillExecutionContext context)
-    {
-        SignalComplete(context);
-    }
+    public ExecutionFlow execOut;
 
     public override object GetValue(NodePort port)
     {

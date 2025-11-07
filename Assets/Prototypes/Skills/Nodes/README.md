@@ -79,7 +79,7 @@ public class MyCustomNode : SkillNode
 
 ### 4. Nodes with Timing/Animation
 
-If a node triggers an animation that needs to complete before continuing:
+If a node Flow an animation that needs to complete before continuing:
 
 ```csharp
 public override void Execute(SkillExecutionContext context)
@@ -111,7 +111,7 @@ mySkill.ExecuteSkill(context);
 ## Node Examples
 
 ### Pure Sequence Node
-Just triggers something and continues (like "Play SFX"):
+Just Flow something and continues (like "Play SFX"):
 - Has execIn and execOut ports
 - Execute() does work, calls SignalComplete() immediately
 
