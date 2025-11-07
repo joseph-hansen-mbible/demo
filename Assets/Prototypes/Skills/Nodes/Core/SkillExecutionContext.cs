@@ -12,6 +12,8 @@ namespace Assets.Prototypes.Skills.Nodes
     public class SkillExecutionContext
     {
         public Skill Skill { get; set; }
+
+        public float SkillUseCount { get; set; }
         public CharacterInstance UnitInstance { get; set; }
         public List<CharacterInstance> Targets { get; set; }
         public SkillGraph SkillGraph { get; set; }

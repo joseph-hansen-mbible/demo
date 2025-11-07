@@ -41,10 +41,11 @@ public class EnemyStat : SkillNode
     {
         if (port.fieldName == "value")
         {
-            FloatValue statValue = new();
-
-            // In editor mode, return the test value
-            statValue.value = !Application.isPlaying ? test : GetRuntimeStatValue();
+            FloatValue statValue = new()
+            {
+                // In editor mode, return the test value
+                value = !Application.isPlaying ? test : GetRuntimeStatValue(),
+            };
 
             return statValue;
         }
@@ -61,18 +62,15 @@ public class EnemyStat : SkillNode
             {
                 // At runtime, get actual stat max from the first enemy
                 if (
-                    graph is SkillGraph skillGraph &&
-                    GetContextFromGraph(skillGraph) is var contextFromGraph &&
-                    contextFromGraph != null &&
-                    contextFromGraph.Targets != null &&
-                    contextFromGraph.Targets.Count > 0 &&
-                    contextFromGraph.Targets[0] is var characterInstance &&
-                    characterInstance != null &&
-                    isBoundedStat &&
-                    System.Enum.TryParse<BoundedStatType>(
-                        selectedStat,
-                        out var boundedType
-                    )
+                    graph is SkillGraph skillGraph
+                    && GetContextFromGraph(skillGraph) is var contextFromGraph
+                    && contextFromGraph != null
+                    && contextFromGraph.Targets != null
+                    && contextFromGraph.Targets.Count > 0
+                    && contextFromGraph.Targets[0] is var characterInstance
+                    && characterInstance != null
+                    && isBoundedStat
+                    && System.Enum.TryParse<BoundedStatType>(selectedStat, out var boundedType)
                 )
                 {
                     var stat = characterInstance.GetBoundedStat(boundedType);

@@ -21,7 +21,7 @@ public abstract class StatNodeEditorBase : NodeEditor
 
     public override int GetWidth()
     {
-        return 350;
+        return 300;
     }
 
     public override Color GetTint()

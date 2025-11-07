@@ -104,14 +104,16 @@ namespace Assets.Prototypes.Skills.Nodes.Editor
             // Check if this is a Flow node
             var script = MonoScript.FromScriptableObject(target);
             bool isFlowNode = false;
+            bool isEventsNode = false;
             if (script != null)
             {
                 string scriptPath = AssetDatabase.GetAssetPath(script);
                 isFlowNode = scriptPath.Contains("/Flow/");
+                isEventsNode = scriptPath.Contains("/Events/");
             }
 
             // If not a Flow node, we want to hide OnNodeExecute
-            if (!isFlowNode)
+            if (!(isFlowNode || isEventsNode))
             {
                 // Draw all ports and properties except OnNodeExecute
                 // Use reflection to get all port fields
