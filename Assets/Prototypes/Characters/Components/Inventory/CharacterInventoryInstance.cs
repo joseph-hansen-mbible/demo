@@ -68,14 +68,14 @@ public class CharacterInventoryInstance
         {
             // Get current value from settings
             int currentValue = GameplayGeneralSettings.Instance.GetMaxEquippedNonWeaponItems();
-            
+
             // If cached value changed, invalidate initialization
             if (_cachedMaxNonWeaponSlots != currentValue)
             {
                 _cachedMaxNonWeaponSlots = currentValue;
                 _isInitialized = false;
             }
-            
+
             return _cachedMaxNonWeaponSlots;
         }
     }
@@ -90,7 +90,8 @@ public class CharacterInventoryInstance
         int totalSlots = 1 + maxNonWeapon; // 1 weapon slot + N non-weapon slots
 
         // Check if we need to initialize/resize
-        bool needsResize = !_isInitialized
+        bool needsResize =
+            !_isInitialized
             || _equippedItemIndices == null
             || _equippedItemIndices.Length != totalSlots
             || _nonWeaponEquippedFlags == null
@@ -249,7 +250,10 @@ public class CharacterInventoryInstance
     /// <param name="subtype">The subtype to search for.</param>
     /// <param name="equipableType">The equipable type (only used if subtype is Equipable).</param>
     /// <returns>The inventory index of the equipped item, or -1 if not found.</returns>
-    public int GetEquippedItemIndex(ObjectSubtype subtype, EquipableObjectType equipableType = default)
+    public int GetEquippedItemIndex(
+        ObjectSubtype subtype,
+        EquipableObjectType equipableType = default
+    )
     {
         if (subtype == ObjectSubtype.Weapon)
         {

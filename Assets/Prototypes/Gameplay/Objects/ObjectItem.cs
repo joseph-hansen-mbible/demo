@@ -80,7 +80,8 @@ public class ObjectItem : ScriptableObject
     /// <summary>
     /// Gets whether this item can be equipped (weapons or equipable items).
     /// </summary>
-    public bool IsEquippable => _subtype == ObjectSubtype.Weapon || _subtype == ObjectSubtype.Equipable;
+    public bool IsEquippable =>
+        _subtype == ObjectSubtype.Weapon || _subtype == ObjectSubtype.Equipable;
 
     /// <summary>
     /// Gets the equipable type for this item. Only valid if Subtype is Equipable.
