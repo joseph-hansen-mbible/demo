@@ -151,7 +151,7 @@ MonoBehaviour:
     folderIcon: {fileID: 2800000, guid: 9eb3abe27b751d940897ed27d44dccc6, type: 3}
     overlayIcon: {fileID: 2800000, guid: ecfd6b56c677e80479ed87086882470b, type: 3}
   - folder: {fileID: 102900000, guid: eaa9ca2795934104e9b59c5dcf0bdb71, type: 3}
-    folderIcon: {fileID: 2800000, guid: 9eb3abe27b751d940897ed27d44dccc6, type: 3}
+    folderIcon: {fileID: 2800000, guid: 543f9e77e691c5e41af8c03cc62cb4ae, type: 3}
     overlayIcon: {fileID: 2800000, guid: ecfd6b56c677e80479ed87086882470b, type: 3}
   - folder: {fileID: 102900000, guid: 4a9bca02aa76e3a4e85f9769fe76146c, type: 3}
     folderIcon: {fileID: 2800000, guid: b51c66d17912a0144bee4ddec18ab83c, type: 3}
