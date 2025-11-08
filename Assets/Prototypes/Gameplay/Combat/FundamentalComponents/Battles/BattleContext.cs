@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Assets.Prototypes.Characters;
 using Assets.Prototypes.Gameplay.Combat.FundamentalComponents.Battles.Environment;
+using Assets.Prototypes.Gameplay.Combat.FundamentalComponents.Battles.Locations;
 using Assets.Prototypes.Skills.Nodes;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Assets.Prototypes.Gameplay.Combat.FundamentalComponents.Battles
         public List<Skill> ActiveSkills { get; set; }
         public List<SkillGraph> ActiveSkillGraphs { get; set; }
 
-        public float SkillUseCount { get; set; }
+        public Dictionary<Skill, int> SkillUseCount { get; set; }
         public CharacterInstance UnitInstance { get; set; }
         public List<CharacterInstance> Targets { get; set; }
         public List<CharacterInstance> Allies { get; set; }
@@ -41,6 +42,7 @@ namespace Assets.Prototypes.Gameplay.Combat.FundamentalComponents.Battles
             AdjacentUnits = new Adjacency();
             ActiveSkills = new List<Skill>();
             ActiveSkillGraphs = new List<SkillGraph>();
+            SkillUseCount = new Dictionary<Skill, int>();
         }
 
         // Get a custom data value, or default if not found

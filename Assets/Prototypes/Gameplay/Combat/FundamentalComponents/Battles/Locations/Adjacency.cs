@@ -1,23 +1,25 @@
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Prototypes.Characters;
-using Assets.Prototypes.Skills.Nodes;
 using UnityEngine;
 
-public enum Direction
+namespace Assets.Prototypes.Gameplay.Combat.FundamentalComponents.Battles.Locations
 {
-    Center,
-    TopLeft,
-    TopCenter,
-    TopRight,
-    CenterLeft,
-    CenterRight,
-    BottomLeft,
-    BottomCenter,
-    BottomRight,
-}
+    public enum Direction
+    {
+        Center,
+        TopLeft,
+        TopCenter,
+        TopRight,
+        CenterLeft,
+        CenterRight,
+        BottomLeft,
+        BottomCenter,
+        BottomRight,
+    }
 
-public class Adjacency
-{
+    public class Adjacency
+    {
     // Center position (the unit itself)
     public CharacterInstance Center { get; set; }
 
@@ -110,68 +112,45 @@ public class Adjacency
     // get adjacent allies
     public IEnumerable<CharacterInstance> GetAdjacentAllies(SkillExecutionContext context)
     {
-        foreach (var adjacent in GetAllAdjacent())
-        {
-            if (
+        return GetAllAdjacent()
+            .Where(adjacent => 
                 adjacent != null
                 && context.Allies != null
                 && context.Allies.Exists(ally => ally.Id == adjacent.Id)
-            )
-            {
-                yield return adjacent;
-            }
-        }
+            );
     }
 
     // get adjacent enemies
     public IEnumerable<CharacterInstance> GetAdjacentEnemies(SkillExecutionContext context)
     {
-        foreach (var adjacent in GetAllAdjacent())
-        {
-            if (
+        return GetAllAdjacent()
+            .Where(adjacent => 
                 adjacent != null
                 && context.Targets != null
                 && context.Targets.Exists(target => target.Id == adjacent.Id)
-            )
-            {
-                yield return adjacent;
-            }
-        }
+            );
     }
 
     // get adjacent ally count
     public int GetAdjacentAllyCount(SkillExecutionContext context)
     {
-        int count = 0;
-        foreach (var adjacent in GetAllAdjacent())
-        {
-            if (
+        return GetAllAdjacent()
+            .Count(adjacent => 
                 adjacent != null
                 && context.Allies != null
                 && context.Allies.Exists(ally => ally.Id == adjacent.Id)
-            )
-            {
-                count++;
-            }
-        }
-        return count;
+            );
     }
 
     // get adjacent enemy count
     public int GetAdjacentEnemyCount(SkillExecutionContext context)
     {
-        int count = 0;
-        foreach (var adjacent in GetAllAdjacent())
-        {
-            if (
+        return GetAllAdjacent()
+            .Count(adjacent => 
                 adjacent != null
                 && context.Targets != null
                 && context.Targets.Exists(target => target.Id == adjacent.Id)
-            )
-            {
-                count++;
-            }
-        }
-        return count;
+            );
+    }
     }
 }

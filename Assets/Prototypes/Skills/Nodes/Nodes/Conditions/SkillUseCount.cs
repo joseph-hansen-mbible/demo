@@ -20,9 +20,22 @@ public class SkillUseCount : SkillNode
                 return null;
             }
 
+            if (contextFromGraph.CurrentSkill == null)
+            {
+                Debug.LogError("CurrentSkill is null in SkillExecutionContext!");
+                return null;
+            }
+
+            int count = 0;
+            if (contextFromGraph.SkillUseCount != null && 
+                contextFromGraph.SkillUseCount.TryGetValue(contextFromGraph.CurrentSkill, out count))
+            {
+                // Found the count
+            }
+
             FloatValue skillCountValue = new()
             {
-                value = contextFromGraph.SkillUseCount[contextFromGraph.CurrentSkill],
+                value = count,
             };
             return skillCountValue;
         }

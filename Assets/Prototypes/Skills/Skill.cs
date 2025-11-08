@@ -1,3 +1,4 @@
+using Assets.Prototypes.Gameplay.Combat.FundamentalComponents.Battles;
 using Assets.Prototypes.Skills.Components.Badges;
 using Assets.Prototypes.Skills.Nodes;
 using NaughtyAttributes;
