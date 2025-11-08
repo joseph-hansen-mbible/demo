@@ -37,29 +37,8 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the reduction value
-            float reduction = testReduction;
-            var reductionPort = GetInputPort("reductionAmount");
-            if (reductionPort != null && reductionPort.IsConnected)
-            {
-                var inputValue = reductionPort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    reduction = floatValue.value;
-                }
-            }
-
-            // Get the affectAdjacentAllies value
-            bool shouldAffectAdjacent = testAffectAdjacent;
-            var affectAdjacentPort = GetInputPort("affectAdjacentAllies");
-            if (affectAdjacentPort != null && affectAdjacentPort.IsConnected)
-            {
-                var inputValue = affectAdjacentPort.GetInputValue();
-                if (inputValue is BoolValue boolValue)
-                {
-                    shouldAffectAdjacent = boolValue.value;
-                }
-            }
+            float reduction = GetInputFloat("reductionAmount", testReduction);
+            bool shouldAffectAdjacent = GetInputBool("affectAdjacentAllies", testAffectAdjacent);
 
             // Store in CustomData for combat system to apply during damage calculation
             // Key format: "DamageReduction_{CharacterInstanceId}"
@@ -68,18 +47,14 @@ namespace Assets.Prototypes.Skills.Nodes.Events
             if (shouldAffectAdjacent)
             {
                 // Get adjacent allies from context
-                if (context.AdjacentUnits == null || context.AdjacentUnits.Count == 0)
+                if (context.AdjacentUnits == null)
                 {
                     Debug.LogWarning("ReduceDamage: No adjacent units available in context");
                     return;
                 }
 
-                // Iterate through adjacent units and affect allies
-                var adjacentAllies = context.AdjacentUnits
-                    .Select(kvp => kvp.Value)
-                    .Where(adjacentUnit => adjacentUnit != null && 
-                           context.Allies != null && 
-                           context.Allies.Exists(ally => ally.Id == adjacentUnit.Id));
+                // Get all adjacent allies using helper method
+                var adjacentAllies = context.AdjacentUnits.GetAdjacentAllies(context);
 
                 int affectedCount = 0;
                 foreach (var adjacentUnit in adjacentAllies)

@@ -28,17 +28,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the killAllTargets value
-            bool shouldKillAll = testKillAll;
-            var killAllPort = GetInputPort("killAllTargets");
-            if (killAllPort != null && killAllPort.IsConnected)
-            {
-                var inputValue = killAllPort.GetInputValue();
-                if (inputValue is BoolValue boolValue)
-                {
-                    shouldKillAll = boolValue.value;
-                }
-            }
+            bool shouldKillAll = GetInputBool("killAllTargets", testKillAll);
 
             // Kill all targeted enemies or just the first one
             if (shouldKillAll)

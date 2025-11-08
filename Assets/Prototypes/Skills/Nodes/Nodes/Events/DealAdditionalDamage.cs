@@ -35,29 +35,8 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the damage value
-            float damage = testDamage;
-            var damagePort = GetInputPort("damageAmount");
-            if (damagePort != null && damagePort.IsConnected)
-            {
-                var inputValue = damagePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    damage = floatValue.value;
-                }
-            }
-
-            // Get the affectAllTargets value
-            bool shouldAffectAll = testAffectAll;
-            var affectAllPort = GetInputPort("affectAllTargets");
-            if (affectAllPort != null && affectAllPort.IsConnected)
-            {
-                var inputValue = affectAllPort.GetInputValue();
-                if (inputValue is BoolValue boolValue)
-                {
-                    shouldAffectAll = boolValue.value;
-                }
-            }
+            float damage = GetInputFloat("damageAmount", testDamage);
+            bool shouldAffectAll = GetInputBool("affectAllTargets", testAffectAll);
 
             // Deal damage to all targeted enemies or just the first one
             if (shouldAffectAll)

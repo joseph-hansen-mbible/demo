@@ -7,17 +7,29 @@ using XNode;
 public class IsFirstCombatOfTurn : SkillNode
 {
     [Output]
-    BoolValue IsFirstCombat;
+    public BoolValue IsFirstCombat;
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "IsFirstCombat")
+        if (port.fieldName != "IsFirstCombat")
+            return null;
+
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            BoolValue isFirstCombat = new();
-            // TODO: Implement runtime retrieval of first combat status
-            // This should check combat count for the current turn
-            return isFirstCombat;
+            return new BoolValue { value = true }; // Default to first combat in editor
         }
-        return null;
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null)
+        {
+            Debug.LogWarning("IsFirstCombatOfTurn: Could not retrieve context from graph");
+            return new BoolValue { value = true };
+        }
+
+        // TODO: Implement actual first combat check when turn tracking system is added
+        // This should check context.CombatCount or similar turn tracking
+        // Future implementation: return new BoolValue { value = context.CombatCountThisTurn == 1 };
+        return new BoolValue { value = true };
     }
 }

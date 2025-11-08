@@ -69,7 +69,7 @@ public class Skill : ScriptableObject
     /// <summary>
     /// Execute this skill's behavior graph with the given context.
     /// </summary>
-    public void ExecuteSkill(SkillExecutionContext context)
+    public void ExecuteSkill(BattleContext context)
     {
         if (BehaviorGraph == null)
         {
@@ -77,8 +77,17 @@ public class Skill : ScriptableObject
             return;
         }
 
-        context.Skill = this;
+        context.CurrentSkill = this;
+        context.CurrentSkillGraph = BehaviorGraph;
         SkillTriggered?.Invoke();
         BehaviorGraph.Execute(context);
+    }
+
+    /// <summary>
+    /// Backwards compatibility method. Use ExecuteSkill(BattleContext) for new code.
+    /// </summary>
+    public void ExecuteSkill(SkillExecutionContext context)
+    {
+        ExecuteSkill((BattleContext)context);
     }
 }

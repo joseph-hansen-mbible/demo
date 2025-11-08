@@ -40,29 +40,8 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the change value
-            float changeAmount = testChange;
-            var changePort = GetInputPort("change");
-            if (changePort != null && changePort.IsConnected)
-            {
-                var inputValue = changePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    changeAmount = floatValue.value;
-                }
-            }
-
-            // Get the affectAllEnemies value
-            bool shouldAffectAll = testAffectAll;
-            var affectAllPort = GetInputPort("affectAllEnemies");
-            if (affectAllPort != null && affectAllPort.IsConnected)
-            {
-                var inputValue = affectAllPort.GetInputValue();
-                if (inputValue is BoolValue boolValue)
-                {
-                    shouldAffectAll = boolValue.value;
-                }
-            }
+            float changeAmount = GetInputFloat("change", testChange);
+            bool shouldAffectAll = GetInputBool("affectAllTargets", testAffectAll);
 
             // Apply to all targeted enemies or just the first one
             if (shouldAffectAll)
@@ -72,8 +51,18 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 {
                     if (target != null)
                     {
-                        ApplyStatChange(target, changeAmount);
-                        affectedCount++;
+                        if (
+                            ApplyStatChange(
+                                target,
+                                selectedStat,
+                                isBoundedStat,
+                                changeAmount,
+                                "AffectEnemyStat"
+                            )
+                        )
+                        {
+                            affectedCount++;
+                        }
                     }
                 }
                 Debug.Log($"AffectEnemyStat: Affected {affectedCount} enemies");
@@ -86,65 +75,13 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                     Debug.LogWarning("AffectEnemyStat: Target is null");
                     return;
                 }
-                ApplyStatChange(target, changeAmount);
-            }
-        }
-
-        private void ApplyStatChange(
-            Assets.Prototypes.Characters.CharacterInstance target,
-            float changeAmount
-        )
-        {
-            // Apply the stat change
-            if (isBoundedStat)
-            {
-                if (System.Enum.TryParse<BoundedStatType>(selectedStat, out var boundedType))
-                {
-                    var stat = target.GetBoundedStat(boundedType);
-                    if (stat != null)
-                    {
-                        stat.SetCurrent(stat.Current + changeAmount);
-                        Debug.Log(
-                            $"AffectEnemyStat: Changed {selectedStat} by {changeAmount} (new value: {stat.Current})"
-                        );
-                    }
-                    else
-                    {
-                        Debug.LogWarning(
-                            $"AffectEnemyStat: Bounded stat {selectedStat} not found on enemy"
-                        );
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"AffectEnemyStat: Invalid bounded stat type: {selectedStat}");
-                }
-            }
-            else
-            {
-                if (System.Enum.TryParse<UnboundedStatType>(selectedStat, out var unboundedType))
-                {
-                    var stat = target.GetUnboundedStat(unboundedType);
-                    if (stat != null)
-                    {
-                        stat.SetCurrent(stat.Current + changeAmount);
-                        Debug.Log(
-                            $"AffectEnemyStat: Changed {selectedStat} by {changeAmount} (new value: {stat.Current})"
-                        );
-                    }
-                    else
-                    {
-                        Debug.LogWarning(
-                            $"AffectEnemyStat: Unbounded stat {selectedStat} not found on enemy"
-                        );
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        $"AffectEnemyStat: Invalid unbounded stat type: {selectedStat}"
-                    );
-                }
+                ApplyStatChange(
+                    target,
+                    selectedStat,
+                    isBoundedStat,
+                    changeAmount,
+                    "AffectEnemyStat"
+                );
             }
         }
     }

@@ -7,22 +7,22 @@ using XNode;
 public class WeaponDurability : SkillNode
 {
     [Output]
-    FloatValue CurrentUses;
+    public FloatValue CurrentUses;
 
     [Output]
-    FloatValue MaxUses;
+    public FloatValue MaxUses;
 
     [Output]
-    FloatValue UsesRemaining;
+    public FloatValue UsesRemaining;
 
     [Output]
-    FloatValue PercentRemaining;
+    public FloatValue PercentRemaining;
 
     [Output]
-    BoolValue IsBroken;
+    public BoolValue IsBroken;
 
     [Output]
-    BoolValue IsLowDurability;
+    public BoolValue IsLowDurability;
 
     [Tooltip("Threshold for low durability warning (percentage)")]
     [Range(0, 100)]
@@ -30,42 +30,49 @@ public class WeaponDurability : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "CurrentUses")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            FloatValue currentUses = new();
-            // TODO: Implement runtime retrieval of current weapon uses
-            return currentUses;
+            // Return defaults in editor mode
+            return port.fieldName switch
+            {
+                "CurrentUses" => new FloatValue { value = 30f },
+                "MaxUses" => new FloatValue { value = 50f },
+                "UsesRemaining" => new FloatValue { value = 20f },
+                "PercentRemaining" => new FloatValue { value = 60f },
+                "IsBroken" => new BoolValue { value = false },
+                "IsLowDurability" => new BoolValue { value = false },
+                _ => null,
+            };
         }
-        else if (port.fieldName == "MaxUses")
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null || context.UnitInstance == null)
         {
-            FloatValue maxUses = new();
-            // TODO: Implement runtime retrieval of maximum weapon uses
-            return maxUses;
+            Debug.LogWarning("WeaponDurability: Could not retrieve context or unit from graph");
+            return port.fieldName switch
+            {
+                "CurrentUses" or "MaxUses" or "UsesRemaining" or "PercentRemaining" =>
+                    new FloatValue { value = 0f },
+                _ => new BoolValue { value = false },
+            };
         }
-        else if (port.fieldName == "UsesRemaining")
+
+        // TODO: Implement weapon durability retrieval from equipped weapon when item system is added
+        // Future implementation: var weapon = context.UnitInstance.GetEquippedWeapon();
+        // Then return weapon.CurrentUses, weapon.MaxUses properties
+        // Calculate UsesRemaining (MaxUses - CurrentUses)
+        // Calculate PercentRemaining ((CurrentUses / MaxUses) * 100)
+        // IsBroken: CurrentUses <= 0
+        // IsLowDurability: PercentRemaining < lowDurabilityThreshold
+
+        return port.fieldName switch
         {
-            FloatValue usesRemaining = new();
-            // TODO: Implement runtime calculation of uses remaining
-            return usesRemaining;
-        }
-        else if (port.fieldName == "PercentRemaining")
-        {
-            FloatValue percentRemaining = new();
-            // TODO: Implement runtime calculation of percent remaining
-            return percentRemaining;
-        }
-        else if (port.fieldName == "IsBroken")
-        {
-            BoolValue isBroken = new();
-            // TODO: Implement runtime check if weapon is broken (uses <= 0)
-            return isBroken;
-        }
-        else if (port.fieldName == "IsLowDurability")
-        {
-            BoolValue isLowDurability = new();
-            // TODO: Implement runtime check if durability is below threshold
-            return isLowDurability;
-        }
-        return null;
+            "CurrentUses" or "MaxUses" or "UsesRemaining" or "PercentRemaining" => new FloatValue
+            {
+                value = 0f,
+            },
+            _ => new BoolValue { value = false },
+        };
     }
 }

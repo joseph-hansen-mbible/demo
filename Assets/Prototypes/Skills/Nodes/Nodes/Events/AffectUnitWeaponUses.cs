@@ -41,17 +41,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the uses change value
-            float change = testChange;
-            var changePort = GetInputPort("usesChange");
-            if (changePort != null && changePort.IsConnected)
-            {
-                var inputValue = changePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    change = floatValue.value;
-                }
-            }
+            float change = GetInputFloat("usesChange", testChange);
 
             // TODO: Integrate with actual weapon/inventory system
             context.SetCustomData("WeaponUsesChange", change);

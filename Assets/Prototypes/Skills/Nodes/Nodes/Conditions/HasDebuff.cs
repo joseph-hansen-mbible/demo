@@ -7,40 +7,64 @@ using XNode;
 public class HasDebuff : SkillNode
 {
     [Output]
-    BoolValue UnitHasDebuff;
+    public BoolValue UnitHasDebuff;
 
     [Output]
-    BoolValue EnemyHasDebuff;
+    public BoolValue EnemyHasDebuff;
 
     [Output]
-    BoolValue AllyHasDebuff;
+    public BoolValue AllyHasDebuff;
 
     [Tooltip("Specific debuff type to check (leave empty to check for any debuff)")]
     public string debuffType = "";
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "UnitHasDebuff")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            BoolValue unitHasDebuff = new();
-            // TODO: Implement runtime retrieval of unit debuff status
-            // Check context.UnitInstance for debuffs (specific type or any)
-            return unitHasDebuff;
+            // Return false in editor mode
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "EnemyHasDebuff")
+
+        // Get context
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null)
         {
-            BoolValue enemyHasDebuff = new();
-            // TODO: Implement runtime retrieval of enemy debuff status
-            // Check context.Targets[0] for debuffs (specific type or any)
-            return enemyHasDebuff;
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "AllyHasDebuff")
+
+        // Determine which character to check based on port
+        var character = port.fieldName switch
         {
-            BoolValue allyHasDebuff = new();
-            // TODO: Implement runtime retrieval of adjacent ally debuff status
-            // Check context.AdjacentUnits (filtered for allies) for debuffs
-            return allyHasDebuff;
+            "UnitHasDebuff" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Unit
+            ),
+            "EnemyHasDebuff" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Enemy
+            ),
+            "AllyHasDebuff" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Ally
+            ),
+            _ => null,
+        };
+
+        if (character == null)
+        {
+            return new BoolValue { value = false };
         }
-        return null;
+
+        // TODO: Implement actual debuff check when buff/debuff system is added
+        // Check context.CustomData or character.ActiveDebuffs for debuff presence
+        // If debuffType is specified, check for that specific debuff, otherwise check for any debuff
+        // Future implementation:
+        // if (string.IsNullOrEmpty(debuffType))
+        //     return new BoolValue { value = character.HasAnyDebuff() };
+        // else
+        //     return new BoolValue { value = character.HasDebuff(debuffType) };
+        return new BoolValue { value = false };
     }
 }

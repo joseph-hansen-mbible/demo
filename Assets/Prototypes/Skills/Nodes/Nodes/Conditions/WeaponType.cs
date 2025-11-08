@@ -7,97 +7,77 @@ using XNode;
 public class WeaponType : SkillNode
 {
     [Output]
-    StringValue TypeName;
+    public StringValue TypeName;
 
     [Output]
-    BoolValue IsSword;
+    public BoolValue IsSword;
 
     [Output]
-    BoolValue IsLance;
+    public BoolValue IsLance;
 
     [Output]
-    BoolValue IsAxe;
+    public BoolValue IsAxe;
 
     [Output]
-    BoolValue IsBow;
+    public BoolValue IsBow;
 
     [Output]
-    BoolValue IsTome;
+    public BoolValue IsTome;
 
     [Output]
-    BoolValue IsStaff;
+    public BoolValue IsStaff;
 
     [Output]
-    BoolValue IsDagger;
+    public BoolValue IsDagger;
 
     [Output]
-    BoolValue IsDragonstone;
+    public BoolValue IsDragonstone;
 
     [Output]
-    BoolValue IsBeaststone;
+    public BoolValue IsBeaststone;
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "TypeName")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            StringValue typeName = new();
-            // TODO: Implement runtime retrieval of weapon type name
-            return typeName;
+            // Return defaults in editor mode
+            return port.fieldName switch
+            {
+                "TypeName" => new StringValue { value = "Sword" },
+                "IsSword" => new BoolValue { value = true },
+                "IsLance" => new BoolValue { value = false },
+                "IsAxe" => new BoolValue { value = false },
+                "IsBow" => new BoolValue { value = false },
+                "IsTome" => new BoolValue { value = false },
+                "IsStaff" => new BoolValue { value = false },
+                "IsDagger" => new BoolValue { value = false },
+                "IsDragonstone" => new BoolValue { value = false },
+                "IsBeaststone" => new BoolValue { value = false },
+                _ => null,
+            };
         }
-        else if (port.fieldName == "IsSword")
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null || context.UnitInstance == null)
         {
-            BoolValue isSword = new();
-            // TODO: Implement runtime check for sword type
-            return isSword;
+            Debug.LogWarning("WeaponType: Could not retrieve context or unit from graph");
+            return port.fieldName switch
+            {
+                "TypeName" => new StringValue { value = "" },
+                _ => new BoolValue { value = false },
+            };
         }
-        else if (port.fieldName == "IsLance")
+
+        // TODO: Implement weapon type retrieval from equipped weapon when item system is added
+        // Future implementation: var weapon = context.UnitInstance.GetEquippedWeapon();
+        // Then check weapon.WeaponType property against WeaponType enum values
+        // Example: return new BoolValue { value = weapon.WeaponType == WeaponType.Sword };
+
+        return port.fieldName switch
         {
-            BoolValue isLance = new();
-            // TODO: Implement runtime check for lance type
-            return isLance;
-        }
-        else if (port.fieldName == "IsAxe")
-        {
-            BoolValue isAxe = new();
-            // TODO: Implement runtime check for axe type
-            return isAxe;
-        }
-        else if (port.fieldName == "IsBow")
-        {
-            BoolValue isBow = new();
-            // TODO: Implement runtime check for bow type
-            return isBow;
-        }
-        else if (port.fieldName == "IsTome")
-        {
-            BoolValue isTome = new();
-            // TODO: Implement runtime check for tome type
-            return isTome;
-        }
-        else if (port.fieldName == "IsStaff")
-        {
-            BoolValue isStaff = new();
-            // TODO: Implement runtime check for staff type
-            return isStaff;
-        }
-        else if (port.fieldName == "IsDagger")
-        {
-            BoolValue isDagger = new();
-            // TODO: Implement runtime check for dagger type
-            return isDagger;
-        }
-        else if (port.fieldName == "IsDragonstone")
-        {
-            BoolValue isDragonstone = new();
-            // TODO: Implement runtime check for dragonstone type
-            return isDragonstone;
-        }
-        else if (port.fieldName == "IsBeaststone")
-        {
-            BoolValue isBeaststone = new();
-            // TODO: Implement runtime check for beaststone type
-            return isBeaststone;
-        }
-        return null;
+            "TypeName" => new StringValue { value = "" },
+            _ => new BoolValue { value = false },
+        };
     }
 }

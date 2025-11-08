@@ -14,17 +14,30 @@ public class AdjacentEnemies : SkillNode
 
     public override object GetValue(NodePort port)
     {
+        // Get context from the graph
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null)
+        {
+            Debug.LogWarning("AdjacentEnemies: Could not get SkillGraph");
+            return port.fieldName == "value" ? new FloatValue() : (object)new BoolValue();
+        }
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context?.AdjacentUnits == null)
+        {
+            Debug.LogWarning("AdjacentEnemies: No adjacent units in context");
+            return port.fieldName == "value" ? new FloatValue() : (object)new BoolValue();
+        }
+
         if (port.fieldName == "value")
         {
-            FloatValue adjacentEnemiesCount = new();
-            // TODO: Implement runtime retrieval of adjacent enemies count
-            return adjacentEnemiesCount;
+            int count = context.AdjacentUnits.GetAdjacentEnemyCount(context);
+            return new FloatValue { value = count };
         }
         else if (port.fieldName == "adjacentEnemy")
         {
-            BoolValue hasAdjacentEnemy = new();
-            // TODO: Implement runtime retrieval of adjacent enemies presence
-            return hasAdjacentEnemy;
+            int count = context.AdjacentUnits.GetAdjacentEnemyCount(context);
+            return new BoolValue { value = count > 0 };
         }
         return null;
     }

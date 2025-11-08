@@ -36,102 +36,34 @@ public class UnitTerrainType : SkillNode
     [Output]
     BoolValue Stairs;
 
-    private static readonly System.Collections.Generic.Dictionary<
-        string,
-        System.Func<BoolValue>
-    > terrainTypeFactories = new System.Collections.Generic.Dictionary<
-        string,
-        System.Func<BoolValue>
-    >()
-    {
-        {
-            "Ground",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "ShallowWater",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "DeepWater",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "Sand",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "Snow",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "Forest",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "Bushes",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "Lava",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "Bridge",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-        {
-            "Stairs",
-            () =>
-            {
-                var v = new BoolValue(); /* TODO: Implement runtime retrieval of terrain type */
-                return v;
-            }
-        },
-    };
-
     public override object GetValue(NodePort port)
     {
-        if (terrainTypeFactories.TryGetValue(port.fieldName, out var factory))
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            return factory();
+            // Default to Ground in editor mode
+            return new BoolValue { value = port.fieldName == "Ground" };
         }
-        return null;
+
+        var context = GetContextFromGraph(skillGraph);
+        var unit = ConditionHelpers.GetCharacterFromContext(
+            context,
+            ConditionHelpers.CharacterSource.Unit
+        );
+
+        if (unit == null)
+        {
+            Debug.LogWarning("UnitTerrainType: Could not retrieve unit from context");
+            return new BoolValue { value = false };
+        }
+
+        // TODO: Implement terrain type retrieval when positioning/map system is added
+        // Future implementation:
+        // var position = context.GetUnitPosition();
+        // var terrainType = context.Map.GetTerrainAt(position);
+        // Then return new BoolValue { value = terrainType == TerrainType.Ground/Forest/etc };
+        // For now, return false for all terrain types
+
+        return new BoolValue { value = false };
     }
 }

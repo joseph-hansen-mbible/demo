@@ -16,7 +16,7 @@ namespace Assets.Prototypes.Skills.Nodes
         /// Execute this graph with the given context.
         /// Creates an executor and runs all connected nodes starting from entry points.
         /// </summary>
-        public void Execute(SkillExecutionContext context)
+        public void Execute(BattleContext context)
         {
             activeExecutor = new SkillGraphExecutor(this);
             activeExecutor.Execute(context);
@@ -36,7 +36,7 @@ namespace Assets.Prototypes.Skills.Nodes
             {
                 Debug.LogWarning("Cannot proceed: No active executor. Creating a new executor.");
                 activeExecutor = new SkillGraphExecutor(this);
-                activeExecutor.Execute(new SkillExecutionContext());
+                activeExecutor.Execute(new BattleContext());
                 activeExecutor.Proceed();
             }
         }

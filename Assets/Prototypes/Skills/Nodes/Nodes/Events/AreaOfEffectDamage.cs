@@ -33,29 +33,8 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the damage value
-            float damage = testDamage;
-            var damagePort = GetInputPort("damageAmount");
-            if (damagePort != null && damagePort.IsConnected)
-            {
-                var inputValue = damagePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    damage = floatValue.value;
-                }
-            }
-
-            // Get the radius value
-            float radius = testRadius;
-            var radiusPort = GetInputPort("aoeRadius");
-            if (radiusPort != null && radiusPort.IsConnected)
-            {
-                var inputValue = radiusPort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    radius = floatValue.value;
-                }
-            }
+            float damage = GetInputFloat("damageAmount", testDamage);
+            float radius = GetInputFloat("aoeRadius", testRadius);
 
             // Deal damage to all targeted enemies in the AoE
             int affectedCount = 0;

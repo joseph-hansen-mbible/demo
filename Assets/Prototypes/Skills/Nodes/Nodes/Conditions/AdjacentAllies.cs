@@ -14,17 +14,30 @@ public class AdjacentAllies : SkillNode
 
     public override object GetValue(NodePort port)
     {
+        // Get context from the graph
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null)
+        {
+            Debug.LogWarning("AdjacentAllies: Could not get SkillGraph");
+            return port.fieldName == "value" ? new FloatValue() : (object)new BoolValue();
+        }
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context?.AdjacentUnits == null)
+        {
+            Debug.LogWarning("AdjacentAllies: No adjacent units in context");
+            return port.fieldName == "value" ? new FloatValue() : (object)new BoolValue();
+        }
+
         if (port.fieldName == "value")
         {
-            FloatValue adjacentAlliesCount = new();
-            // TODO: Implement runtime retrieval of adjacent allies count
-            return adjacentAlliesCount;
+            int count = context.AdjacentUnits.GetAdjacentAllyCount(context);
+            return new FloatValue { value = count };
         }
         else if (port.fieldName == "adjacentAlly")
         {
-            BoolValue hasAdjacentAlly = new();
-            // TODO: Implement runtime retrieval of adjacent allies presence
-            return hasAdjacentAlly;
+            int count = context.AdjacentUnits.GetAdjacentAllyCount(context);
+            return new BoolValue { value = count > 0 };
         }
         return null;
     }

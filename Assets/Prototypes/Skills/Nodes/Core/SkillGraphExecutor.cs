@@ -24,13 +24,39 @@ namespace Assets.Prototypes.Skills.Nodes
         /// Execute the entire skill graph with the given context.
         /// Starts from entry nodes (nodes with no incoming execution connections).
         /// </summary>
-        public void Execute(SkillExecutionContext context)
+        public void Execute(BattleContext battleContext)
         {
-            this.context = context;
+            // Convert to SkillExecutionContext for compatibility with existing nodes
+            if (battleContext is SkillExecutionContext skillContext)
+            {
+                this.context = skillContext;
+            }
+            else
+            {
+                // Wrap BattleContext in SkillExecutionContext
+                this.context = new SkillExecutionContext
+                {
+                    CurrentSkill = battleContext.CurrentSkill,
+                    SkillUseCount = battleContext.SkillUseCount,
+                    UnitInstance = battleContext.UnitInstance,
+                    Targets = battleContext.Targets,
+                    Allies = battleContext.Allies,
+                    AdjacentUnits = battleContext.AdjacentUnits,
+                    CurrentSkillGraph = battleContext.CurrentSkillGraph,
+                    EnvironmentalConditions = battleContext.EnvironmentalConditions,
+                    IsInterrupted = battleContext.IsInterrupted,
+                };
+                // Copy custom data
+                foreach (var kvp in battleContext.CustomData)
+                {
+                    this.context.SetCustomData(kvp.Key, kvp.Value);
+                }
+            }
+
             this.visitedNodes = new HashSet<SkillNode>();
             this.currentNode = null;
 
-            context.SkillGraph = graph;
+            context.CurrentSkillGraph = graph;
             // Store executor in context so nodes can signal completion
             context.SetCustomData("_executor", this);
 

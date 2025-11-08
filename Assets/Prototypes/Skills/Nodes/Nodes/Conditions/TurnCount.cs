@@ -11,12 +11,24 @@ public class TurnCount : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "value")
+        if (port.fieldName != "value")
+            return null;
+
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            FloatValue turnCountValue = new();
-            // TODO: Implement runtime retrieval of turn count
-            return turnCountValue;
+            return new FloatValue { value = 1f }; // Default to turn 1 in editor
         }
-        return null;
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null)
+        {
+            Debug.LogWarning("TurnCount: Could not retrieve context from graph");
+            return new FloatValue { value = 1f };
+        }
+
+        // TODO: Implement actual turn count retrieval from battle system
+        // Future implementation: return new FloatValue { value = context.CurrentTurnNumber };
+        return new FloatValue { value = 1f };
     }
 }

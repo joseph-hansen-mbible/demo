@@ -7,52 +7,58 @@ using XNode;
 public class WeaponRange : SkillNode
 {
     [Output]
-    FloatValue MinRange;
+    public FloatValue MinRange;
 
     [Output]
-    FloatValue MaxRange;
+    public FloatValue MaxRange;
 
     [Output]
-    BoolValue IsMelee;
+    public BoolValue IsMelee;
 
     [Output]
-    BoolValue IsRanged;
+    public BoolValue IsRanged;
 
     [Output]
-    BoolValue CanCounterattack;
+    public BoolValue CanCounterattack;
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "MinRange")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            FloatValue minRange = new();
-            // TODO: Implement runtime retrieval of weapon minimum range
-            return minRange;
+            // Return defaults in editor mode
+            return port.fieldName switch
+            {
+                "MinRange" => new FloatValue { value = 1f },
+                "MaxRange" => new FloatValue { value = 1f },
+                "IsMelee" => new BoolValue { value = true },
+                "IsRanged" => new BoolValue { value = false },
+                "CanCounterattack" => new BoolValue { value = true },
+                _ => null,
+            };
         }
-        else if (port.fieldName == "MaxRange")
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null || context.UnitInstance == null)
         {
-            FloatValue maxRange = new();
-            // TODO: Implement runtime retrieval of weapon maximum range
-            return maxRange;
+            Debug.LogWarning("WeaponRange: Could not retrieve context or unit from graph");
+            return port.fieldName switch
+            {
+                "MinRange" or "MaxRange" => new FloatValue { value = 0f },
+                _ => new BoolValue { value = false },
+            };
         }
-        else if (port.fieldName == "IsMelee")
+
+        // TODO: Implement weapon range retrieval from equipped weapon when item system is added
+        // Future implementation: var weapon = context.UnitInstance.GetEquippedWeapon();
+        // Then return weapon.MinRange, weapon.MaxRange properties
+        // Calculate IsMelee (maxRange == 1), IsRanged (maxRange >= 2)
+        // CanCounterattack should check if weapon range covers combat distance
+
+        return port.fieldName switch
         {
-            BoolValue isMelee = new();
-            // TODO: Implement runtime check for melee range (typically range = 1)
-            return isMelee;
-        }
-        else if (port.fieldName == "IsRanged")
-        {
-            BoolValue isRanged = new();
-            // TODO: Implement runtime check for ranged weapon (range >= 2)
-            return isRanged;
-        }
-        else if (port.fieldName == "CanCounterattack")
-        {
-            BoolValue canCounterattack = new();
-            // TODO: Implement runtime check if unit can counterattack at current distance
-            return canCounterattack;
-        }
-        return null;
+            "MinRange" or "MaxRange" => new FloatValue { value = 0f },
+            _ => new BoolValue { value = false },
+        };
     }
 }

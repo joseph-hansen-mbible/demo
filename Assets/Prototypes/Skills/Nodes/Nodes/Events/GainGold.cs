@@ -26,17 +26,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the gold value
-            float gold = testGold;
-            var goldPort = GetInputPort("goldAmount");
-            if (goldPort != null && goldPort.IsConnected)
-            {
-                var inputValue = goldPort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    gold = floatValue.value;
-                }
-            }
+            float gold = GetInputFloat("goldAmount", testGold);
 
             // TODO: Integrate with actual gold/currency system
             context.SetCustomData("GoldGained", gold);

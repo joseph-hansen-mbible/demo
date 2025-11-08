@@ -1,3 +1,4 @@
+using System.Linq;
 using Assets.Prototypes.Characters;
 using Assets.Prototypes.Characters.Stats;
 using Assets.Prototypes.Skills.Nodes;
@@ -32,79 +33,27 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the change value
-            float changeAmount = testChange;
-            var changePort = GetInputPort("change");
-            if (changePort != null && changePort.IsConnected)
-            {
-                var inputValue = changePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    changeAmount = floatValue.value;
-                }
-            }
-
-            // Get adjacent allies from context
-            if (context.AdjacentUnits == null || context.AdjacentUnits.Count == 0)
+            if (context.AdjacentUnits == null)
             {
                 Debug.LogWarning("AffectAdjacentAllyStat: No adjacent units available in context");
                 return;
             }
 
+            float changeAmount = GetInputFloat("change", testChange);
+            var adjacentAllies = context.AdjacentUnits.GetAdjacentAllies(context);
+
             int affectedCount = 0;
-
-            // Iterate through adjacent units and affect allies
-            foreach (var kvp in context.AdjacentUnits)
+            foreach (var adjacentUnit in adjacentAllies)
             {
-                var adjacentUnit = kvp.Value;
-                if (adjacentUnit == null)
-                    continue;
-
-                // Skip if not an ally (compare with Allies list)
                 if (
-                    context.Allies == null
-                    || !context.Allies.Exists(ally => ally.Id == adjacentUnit.Id)
-                )
-                {
-                    continue;
-                }
-
-                // Apply the stat change
-                bool success = false;
-                if (isBoundedStat)
-                {
-                    if (System.Enum.TryParse<BoundedStatType>(selectedStat, out var boundedType))
-                    {
-                        var stat = adjacentUnit.GetBoundedStat(boundedType);
-                        if (stat != null)
-                        {
-                            stat.SetCurrent(stat.Current + changeAmount);
-                            success = true;
-                            Debug.Log(
-                                $"AffectAdjacentAllyStat: Changed {selectedStat} by {changeAmount} for ally at {kvp.Key} (new value: {stat.Current})"
-                            );
-                        }
-                    }
-                }
-                else
-                {
-                    if (
-                        System.Enum.TryParse<UnboundedStatType>(selectedStat, out var unboundedType)
+                    ApplyStatChange(
+                        adjacentUnit,
+                        selectedStat,
+                        isBoundedStat,
+                        changeAmount,
+                        "AffectAdjacentAllyStat"
                     )
-                    {
-                        var stat = adjacentUnit.GetUnboundedStat(unboundedType);
-                        if (stat != null)
-                        {
-                            stat.SetCurrent(stat.Current + changeAmount);
-                            success = true;
-                            Debug.Log(
-                                $"AffectAdjacentAllyStat: Changed {selectedStat} by {changeAmount} for ally at {kvp.Key} (new value: {stat.Current})"
-                            );
-                        }
-                    }
-                }
-
-                if (success)
+                )
                 {
                     affectedCount++;
                 }

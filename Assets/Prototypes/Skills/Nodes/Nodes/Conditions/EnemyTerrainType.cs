@@ -38,66 +38,32 @@ public class EnemyTerrainType : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "Ground")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            BoolValue ground = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return ground;
+            // Default to Ground in editor mode
+            return new BoolValue { value = port.fieldName == "Ground" };
         }
-        else if (port.fieldName == "ShallowWater")
+
+        var context = GetContextFromGraph(skillGraph);
+        var enemy = ConditionHelpers.GetCharacterFromContext(
+            context,
+            ConditionHelpers.CharacterSource.Enemy
+        );
+
+        if (enemy == null)
         {
-            BoolValue shallowWater = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return shallowWater;
+            Debug.LogWarning("EnemyTerrainType: Could not retrieve enemy from context");
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "DeepWater")
-        {
-            BoolValue deepWater = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return deepWater;
-        }
-        else if (port.fieldName == "Sand")
-        {
-            BoolValue sand = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return sand;
-        }
-        else if (port.fieldName == "Snow")
-        {
-            BoolValue snow = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return snow;
-        }
-        else if (port.fieldName == "Forest")
-        {
-            BoolValue forest = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return forest;
-        }
-        else if (port.fieldName == "Bushes")
-        {
-            BoolValue bushes = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return bushes;
-        }
-        else if (port.fieldName == "Lava")
-        {
-            BoolValue lava = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return lava;
-        }
-        else if (port.fieldName == "Bridge")
-        {
-            BoolValue bridge = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return bridge;
-        }
-        else if (port.fieldName == "Stairs")
-        {
-            BoolValue stairs = new();
-            // TODO: Implement runtime retrieval of terrain type
-            return stairs;
-        }
-        return null;
+
+        // TODO: Implement terrain type retrieval when positioning/map system is added
+        // Future implementation:
+        // var position = context.GetEnemyPosition();
+        // var terrainType = context.Map.GetTerrainAt(position);
+        // Then return new BoolValue { value = terrainType == TerrainType.Ground/Forest/etc };
+        // For now, return false for all terrain types
+
+        return new BoolValue { value = false };
     }
 }

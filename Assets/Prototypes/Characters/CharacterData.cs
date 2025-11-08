@@ -241,12 +241,12 @@ namespace Assets.Prototypes.Characters
         // Helper methods to get stats by type
         public BoundedCharacterStat GetBoundedStat(BoundedStatType type)
         {
-            return _boundedStats.Find(s => s.StatType == type);
+            return StatHelpers.GetBoundedStat(_boundedStats, type);
         }
 
         public CharacterStat GetUnboundedStat(UnboundedStatType type)
         {
-            return _unboundedStats.Find(s => s.StatType == type);
+            return StatHelpers.GetUnboundedStat(_unboundedStats, type);
         }
 
         // Helper methods for support relationships
@@ -257,7 +257,8 @@ namespace Assets.Prototypes.Characters
 
         public void AddSupportRelationship(CharacterData character)
         {
-            if (_supportRelationships.Find(s => s.Character == character) == null)
+            // Check if relationship already exists
+            if (GetSupportRelationship(character) == null)
             {
                 _supportRelationships.Add(new SupportRelationship { Character = character });
             }

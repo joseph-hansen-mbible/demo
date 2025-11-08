@@ -32,303 +32,76 @@ public class UnitStat : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "value")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            FloatValue statValue = new();
-
-            // In editor mode, return the test value
-            if (!Application.isPlaying)
+            // Return test values in editor mode
+            return port.fieldName switch
             {
-                statValue.value = test;
-            }
-            else
-            {
-                // At runtime, get actual stat from the UnitInstance
-                statValue.value = GetRuntimeStatValue();
-            }
-
-            return statValue;
-        }
-        else if (port.fieldName == "maxValue")
-        {
-            FloatValue statMaxValue = new();
-
-            // In editor mode, return the test value
-            if (!Application.isPlaying)
-            {
-                statMaxValue.value = test;
-            }
-            else
-            {
-                // At runtime, get actual stat max from the UnitInstance
-                if (graph is SkillGraph skillGraph)
-                {
-                    var contextFromGraph = GetContextFromGraph(skillGraph);
-                    if (contextFromGraph != null && contextFromGraph.UnitInstance != null)
-                    {
-                        var characterInstance = contextFromGraph.UnitInstance;
-                        if (characterInstance != null)
-                        {
-                            if (isBoundedStat)
-                            {
-                                // Try to parse as BoundedStatType
-                                if (
-                                    System.Enum.TryParse<BoundedStatType>(
-                                        selectedStat,
-                                        out var boundedType
-                                    )
-                                )
-                                {
-                                    var stat = characterInstance.GetBoundedStat(boundedType);
-                                    if (stat != null)
-                                    {
-                                        statMaxValue.value = stat.Max;
-                                        return statMaxValue;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Fallback to test value if context or stat not available
-                Debug.LogWarning(
-                    $"UnitStat: Unable to retrieve runtime max value for {selectedStat}, returning test value."
-                );
-                statMaxValue.value = test;
-            }
-
-            return statMaxValue;
-        }
-        else if (port.fieldName == "percentage")
-        {
-            FloatValue statPercentage = new();
-
-            // In editor mode, return 100%
-            if (!Application.isPlaying)
-            {
-                statPercentage.value = 100f;
-            }
-            else
-            {
-                // At runtime, get actual stat percentage from the UnitInstance
-                if (graph is SkillGraph skillGraph)
-                {
-                    var contextFromGraph = GetContextFromGraph(skillGraph);
-                    if (contextFromGraph != null && contextFromGraph.UnitInstance != null)
-                    {
-                        var characterInstance = contextFromGraph.UnitInstance;
-                        if (characterInstance != null)
-                        {
-                            if (isBoundedStat)
-                            {
-                                // Try to parse as BoundedStatType
-                                if (
-                                    System.Enum.TryParse<BoundedStatType>(
-                                        selectedStat,
-                                        out var boundedType
-                                    )
-                                )
-                                {
-                                    var stat = characterInstance.GetBoundedStat(boundedType);
-                                    if (stat != null)
-                                    {
-                                        statPercentage.value = stat.Ratio * 100f;
-                                        return statPercentage;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Fallback to 100% if context or stat not available
-                Debug.LogWarning(
-                    $"UnitStat: Unable to retrieve runtime percentage for {selectedStat}, returning 100%."
-                );
-                statPercentage.value = 100f;
-            }
-
-            return statPercentage;
-        }
-        else if (port.fieldName == "bonus")
-        {
-            FloatValue bonusValue = new();
-
-            // In editor mode, return 0
-            if (!Application.isPlaying)
-            {
-                bonusValue.value = 0f;
-            }
-            else
-            {
-                // At runtime, get actual bonus from the UnitInstance
-                if (graph is SkillGraph skillGraph)
-                {
-                    var contextFromGraph = GetContextFromGraph(skillGraph);
-                    if (contextFromGraph != null && contextFromGraph.UnitInstance != null)
-                    {
-                        var characterInstance = contextFromGraph.UnitInstance;
-                        if (characterInstance != null)
-                        {
-                            if (isBoundedStat)
-                            {
-                                if (
-                                    System.Enum.TryParse<BoundedStatType>(
-                                        selectedStat,
-                                        out var boundedType
-                                    )
-                                )
-                                {
-                                    var stat = characterInstance.GetBoundedStat(boundedType);
-                                    if (stat != null)
-                                    {
-                                        bonusValue.value = stat.Bonus;
-                                        return bonusValue;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (
-                                    System.Enum.TryParse<UnboundedStatType>(
-                                        selectedStat,
-                                        out var unboundedType
-                                    )
-                                )
-                                {
-                                    var stat = characterInstance.GetUnboundedStat(unboundedType);
-                                    if (stat != null)
-                                    {
-                                        bonusValue.value = stat.Bonus;
-                                        return bonusValue;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                bonusValue.value = 0f;
-            }
-
-            return bonusValue;
-        }
-        else if (port.fieldName == "bonusActive")
-        {
-            BoolValue bonusActiveValue = new();
-
-            // In editor mode, return false
-            if (!Application.isPlaying)
-            {
-                bonusActiveValue.value = false;
-            }
-            else
-            {
-                // At runtime, check if bonus is non-zero
-                if (graph is SkillGraph skillGraph)
-                {
-                    var contextFromGraph = GetContextFromGraph(skillGraph);
-                    if (contextFromGraph != null && contextFromGraph.UnitInstance != null)
-                    {
-                        var characterInstance = contextFromGraph.UnitInstance;
-                        if (characterInstance != null)
-                        {
-                            if (isBoundedStat)
-                            {
-                                if (
-                                    System.Enum.TryParse<BoundedStatType>(
-                                        selectedStat,
-                                        out var boundedType
-                                    )
-                                )
-                                {
-                                    var stat = characterInstance.GetBoundedStat(boundedType);
-                                    if (stat != null)
-                                    {
-                                        bonusActiveValue.value = stat.Bonus != 0;
-                                        return bonusActiveValue;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (
-                                    System.Enum.TryParse<UnboundedStatType>(
-                                        selectedStat,
-                                        out var unboundedType
-                                    )
-                                )
-                                {
-                                    var stat = characterInstance.GetUnboundedStat(unboundedType);
-                                    if (stat != null)
-                                    {
-                                        bonusActiveValue.value = stat.Bonus != 0;
-                                        return bonusActiveValue;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                bonusActiveValue.value = false;
-            }
-
-            return bonusActiveValue;
-        }
-        return null;
-    }
-
-    private float GetRuntimeStatValue()
-    {
-        if (graph is SkillGraph skillGraph)
-        {
-            var contextFromGraph = GetContextFromGraph(skillGraph);
-            if (contextFromGraph != null && contextFromGraph.UnitInstance != null)
-            {
-                var characterInstance = contextFromGraph.UnitInstance;
-                if (characterInstance != null)
-                {
-                    if (isBoundedStat)
-                    {
-                        // Try to parse as BoundedStatType
-                        if (
-                            System.Enum.TryParse<BoundedStatType>(selectedStat, out var boundedType)
-                        )
-                        {
-                            var stat = characterInstance.GetBoundedStat(boundedType);
-                            if (stat != null)
-                            {
-                                return stat.Current;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Try to parse as UnboundedStatType
-                        if (
-                            System.Enum.TryParse<UnboundedStatType>(
-                                selectedStat,
-                                out var unboundedType
-                            )
-                        )
-                        {
-                            var stat = characterInstance.GetUnboundedStat(unboundedType);
-                            if (stat != null)
-                            {
-                                return stat.Current;
-                            }
-                        }
-                    }
-                }
-            }
+                "value" => new FloatValue { value = test },
+                "maxValue" => new FloatValue { value = test },
+                "percentage" => new FloatValue { value = 100f },
+                "bonus" => new FloatValue { value = 0f },
+                "bonusActive" => new BoolValue { value = false },
+                _ => null,
+            };
         }
 
-        // Fallback to test value if context or stat not available
-        Debug.LogWarning(
-            $"UnitStat: Unable to retrieve runtime value for {selectedStat}, returning test value."
-        );
-        return test;
+        // Runtime mode - get actual values
+        return port.fieldName switch
+        {
+            "value" => new FloatValue
+            {
+                value = ConditionHelpers.GetStatCurrentValue(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Unit,
+                    selectedStat,
+                    isBoundedStat,
+                    test
+                ),
+            },
+            "maxValue" => new FloatValue
+            {
+                value = ConditionHelpers.GetStatMaxValue(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Unit,
+                    selectedStat,
+                    test
+                ),
+            },
+            "percentage" => new FloatValue
+            {
+                value = ConditionHelpers.GetStatPercentage(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Unit,
+                    selectedStat,
+                    100f
+                ),
+            },
+            "bonus" => new FloatValue
+            {
+                value = ConditionHelpers.GetStatBonus(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Unit,
+                    selectedStat,
+                    isBoundedStat
+                ),
+            },
+            "bonusActive" => new BoolValue
+            {
+                value = ConditionHelpers.GetStatBonusActive(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Unit,
+                    selectedStat,
+                    isBoundedStat
+                ),
+            },
+            _ => null,
+        };
     }
 }

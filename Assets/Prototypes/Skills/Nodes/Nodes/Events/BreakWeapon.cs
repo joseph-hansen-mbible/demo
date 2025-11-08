@@ -26,17 +26,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the affectAllTargets value
-            bool shouldAffectAll = testAffectAll;
-            var affectAllPort = GetInputPort("affectAllTargets");
-            if (affectAllPort != null && affectAllPort.IsConnected)
-            {
-                var inputValue = affectAllPort.GetInputValue();
-                if (inputValue is BoolValue boolValue)
-                {
-                    shouldAffectAll = boolValue.value;
-                }
-            }
+            bool shouldAffectAll = GetInputBool("affectAllTargets", testAffectAll);
 
             if (shouldAffectAll)
             {

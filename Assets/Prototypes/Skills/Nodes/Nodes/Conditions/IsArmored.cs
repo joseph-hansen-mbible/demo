@@ -17,24 +17,46 @@ public class IsArmored : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "UnitArmored")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            BoolValue unitArmored = new();
-            // TODO: Implement runtime retrieval of unit armored status
-            return unitArmored;
+            // Return false in editor mode
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "EnemyArmored")
+
+        // Get context
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null)
         {
-            BoolValue enemyArmored = new();
-            // TODO: Implement runtime retrieval of enemy armored status
-            return enemyArmored;
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "AdjacentAllyArmored")
+
+        // Determine which character to check based on port
+        var character = port.fieldName switch
         {
-            BoolValue adjacentAllyArmored = new();
-            // TODO: Implement runtime retrieval of adjacent ally armored status
-            return adjacentAllyArmored;
+            "UnitArmored" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Unit
+            ),
+            "EnemyArmored" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Enemy
+            ),
+            "AdjacentAllyArmored" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Ally
+            ),
+            _ => null,
+        };
+
+        if (character == null)
+        {
+            return new BoolValue { value = false };
         }
-        return null;
+
+        // TODO: Implement actual armored status check when movement type system is added
+        // For now, return false as placeholder
+        // Future implementation: return new BoolValue { value = character.IsArmored };
+        return new BoolValue { value = false };
     }
 }

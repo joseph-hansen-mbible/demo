@@ -20,8 +20,11 @@ public class SkillUseCount : SkillNode
                 return null;
             }
 
-            FloatValue turnCountValue = new() { value = contextFromGraph.SkillUseCount };
-            return turnCountValue;
+            FloatValue skillCountValue = new()
+            {
+                value = contextFromGraph.SkillUseCount[contextFromGraph.CurrentSkill],
+            };
+            return skillCountValue;
         }
         return null;
     }

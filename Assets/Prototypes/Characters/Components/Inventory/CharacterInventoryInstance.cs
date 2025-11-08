@@ -76,15 +76,43 @@ public class CharacterInventoryInstance
         _equippedItemIndices = new int[3] { -1, -1, -1 };
     }
 
-    public int GetEquippedItemIndex(ObjectItemType itemType)
+    /// <summary>
+    /// Converts an item type to its equipment slot index (0=Weapon, 1=Shield, 2=Accessory, -1=Invalid).
+    /// </summary>
+    private int GetSlotIndexForItemType(ObjectItemType itemType)
     {
         return itemType switch
         {
-            ObjectItemType.Weapon => _equippedItemIndices[0],
-            ObjectItemType.Shield => _equippedItemIndices[1],
-            ObjectItemType.Accessory => _equippedItemIndices[2],
+            ObjectItemType.Weapon => 0,
+            ObjectItemType.Shield => 1,
+            ObjectItemType.Accessory => 2,
             _ => -1,
         };
+    }
+
+    /// <summary>
+    /// Updates the equipped flag for a specific slot.
+    /// </summary>
+    private void SetEquippedFlag(int slotIndex, bool isEquipped)
+    {
+        switch (slotIndex)
+        {
+            case 0:
+                _isWeaponEquipped = isEquipped;
+                break;
+            case 1:
+                _isShieldEquipped = isEquipped;
+                break;
+            case 2:
+                _isAccessoryEquipped = isEquipped;
+                break;
+        }
+    }
+
+    public int GetEquippedItemIndex(ObjectItemType itemType)
+    {
+        int slotIndex = GetSlotIndexForItemType(itemType);
+        return slotIndex >= 0 ? _equippedItemIndices[slotIndex] : -1;
     }
 
     public bool IsItemEquipped(ObjectItem item)
@@ -130,18 +158,7 @@ public class CharacterInventoryInstance
             {
                 // Item was equipped, unequip it
                 _equippedItemIndices[i] = -1;
-                switch (i)
-                {
-                    case 0:
-                        _isWeaponEquipped = false;
-                        break;
-                    case 1:
-                        _isShieldEquipped = false;
-                        break;
-                    case 2:
-                        _isAccessoryEquipped = false;
-                        break;
-                }
+                SetEquippedFlag(i, false);
             }
             else if (_equippedItemIndices[i] > index)
             {
@@ -161,13 +178,7 @@ public class CharacterInventoryInstance
 
         ObjectItem itemToEquip = _inventoryItems[index];
 
-        int slotIndex = itemToEquip.ItemType switch
-        {
-            ObjectItemType.Weapon => 0,
-            ObjectItemType.Shield => 1,
-            ObjectItemType.Accessory => 2,
-            _ => -1,
-        };
+        int slotIndex = GetSlotIndexForItemType(itemToEquip.ItemType);
 
         if (slotIndex == -1)
         {
@@ -182,19 +193,7 @@ public class CharacterInventoryInstance
         }
 
         _equippedItemIndices[slotIndex] = index;
-
-        switch (itemToEquip.ItemType)
-        {
-            case ObjectItemType.Weapon:
-                _isWeaponEquipped = true;
-                break;
-            case ObjectItemType.Shield:
-                _isShieldEquipped = true;
-                break;
-            case ObjectItemType.Accessory:
-                _isAccessoryEquipped = true;
-                break;
-        }
+        SetEquippedFlag(slotIndex, true);
     }
 
     public void UnequipItem(int inventoryIndex)
@@ -223,19 +222,7 @@ public class CharacterInventoryInstance
             return;
 
         _equippedItemIndices[slotIndex] = -1;
-
-        switch (slotIndex)
-        {
-            case 0:
-                _isWeaponEquipped = false;
-                break;
-            case 1:
-                _isShieldEquipped = false;
-                break;
-            case 2:
-                _isAccessoryEquipped = false;
-                break;
-        }
+        SetEquippedFlag(slotIndex, false);
     }
 
     public void UnequipAllItems()

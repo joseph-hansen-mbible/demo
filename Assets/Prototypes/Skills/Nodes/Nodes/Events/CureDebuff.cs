@@ -33,22 +33,12 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the affectAdjacentAllies value
-            bool shouldAffectAdjacent = testAffectAdjacent;
-            var affectAdjacentPort = GetInputPort("affectAdjacentAllies");
-            if (affectAdjacentPort != null && affectAdjacentPort.IsConnected)
-            {
-                var inputValue = affectAdjacentPort.GetInputValue();
-                if (inputValue is BoolValue boolValue)
-                {
-                    shouldAffectAdjacent = boolValue.value;
-                }
-            }
+            bool shouldAffectAdjacent = GetInputBool("affectAdjacentAllies", testAffectAdjacent);
 
             if (shouldAffectAdjacent)
             {
                 // Get adjacent allies from context
-                if (context.AdjacentUnits == null || context.AdjacentUnits.Count == 0)
+                if (context.AdjacentUnits == null)
                 {
                     Debug.LogWarning("CureDebuff: No adjacent units available in context");
                     return;
@@ -56,14 +46,8 @@ namespace Assets.Prototypes.Skills.Nodes.Events
 
                 var cureData = new { Mode = cureMode, DebuffType = debuffTypePlaceholder };
 
-                // Iterate through adjacent units and affect allies
-                var adjacentAllies = context
-                    .AdjacentUnits.Select(kvp => kvp.Value)
-                    .Where(adjacentUnit =>
-                        adjacentUnit != null
-                        && context.Allies != null
-                        && context.Allies.Exists(ally => ally.Id == adjacentUnit.Id)
-                    );
+                // Get all adjacent allies using helper method
+                var adjacentAllies = context.AdjacentUnits.GetAdjacentAllies(context);
 
                 int affectedCount = 0;
                 foreach (var adjacentUnit in adjacentAllies)

@@ -43,17 +43,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the change amount
-            float change = testChange;
-            var changePort = GetInputPort("changeAmount");
-            if (changePort != null && changePort.IsConnected)
-            {
-                var inputValue = changePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    change = floatValue.value;
-                }
-            }
+            float change = GetInputFloat("changeAmount", testChange);
 
             // Store buff command in CustomData
             // Combat system will need to:

@@ -27,17 +27,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the reflection percentage
-            float reflectPercent = testReflectionPercent;
-            var reflectionPort = GetInputPort("reflectionPercent");
-            if (reflectionPort != null && reflectionPort.IsConnected)
-            {
-                var inputValue = reflectionPort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    reflectPercent = floatValue.value;
-                }
-            }
+            float reflectPercent = GetInputFloat("reflectionPercent", testReflectionPercent);
 
             // Clamp to valid percentage
             reflectPercent = Mathf.Clamp(reflectPercent, 0f, 100f);

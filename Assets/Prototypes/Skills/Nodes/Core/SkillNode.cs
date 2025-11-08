@@ -23,7 +23,7 @@ namespace Assets.Prototypes.Skills.Nodes
         /// <summary>
         /// Retrieves the current execution context from the given SkillGraph instance.
         /// </summary>
-        protected SkillExecutionContext GetContextFromGraph(SkillGraph skillGraph)
+        public SkillExecutionContext GetContextFromGraph(SkillGraph skillGraph)
         {
             // Use reflection to access the private activeExecutor field
             var executorField = typeof(SkillGraph).GetField(
@@ -49,6 +49,116 @@ namespace Assets.Prototypes.Skills.Nodes
         {
             return null;
         }
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Gets a float value from an input port, or returns the test value if not connected.
+        /// </summary>
+        protected float GetInputFloat(string portName, float testValue)
+        {
+            var port = GetInputPort(portName);
+            if (port != null && port.IsConnected)
+            {
+                var inputValue = port.GetInputValue();
+                if (inputValue is FloatValue floatValue)
+                {
+                    return floatValue.value;
+                }
+            }
+            return testValue;
+        }
+
+        /// <summary>
+        /// Gets a bool value from an input port, or returns the test value if not connected.
+        /// </summary>
+        protected bool GetInputBool(string portName, bool testValue)
+        {
+            var port = GetInputPort(portName);
+            if (port != null && port.IsConnected)
+            {
+                var inputValue = port.GetInputValue();
+                if (inputValue is BoolValue boolValue)
+                {
+                    return boolValue.value;
+                }
+            }
+            return testValue;
+        }
+
+        /// <summary>
+        /// Applies a stat change to a character. Handles both bounded and unbounded stats.
+        /// </summary>
+        /// <returns>True if the stat change was successful, false otherwise.</returns>
+        protected bool ApplyStatChange(
+            Assets.Prototypes.Characters.CharacterInstance character,
+            string statName,
+            bool isBoundedStat,
+            float changeAmount,
+            string nodeName = "Node"
+        )
+        {
+            if (character == null)
+            {
+                Debug.LogWarning($"{nodeName}: Character is null");
+                return false;
+            }
+
+            Assets.Prototypes.Characters.Stats.BaseCharacterStat stat = null;
+
+            if (isBoundedStat)
+            {
+                if (
+                    System.Enum.TryParse<Assets.Prototypes.Characters.Stats.BoundedStatType>(
+                        statName,
+                        out var boundedType
+                    )
+                )
+                {
+                    stat = character.GetBoundedStat(boundedType);
+                }
+                else
+                {
+                    Debug.LogWarning($"{nodeName}: Invalid bounded stat type: {statName}");
+                    return false;
+                }
+            }
+            else
+            {
+                if (
+                    System.Enum.TryParse<Assets.Prototypes.Characters.Stats.UnboundedStatType>(
+                        statName,
+                        out var unboundedType
+                    )
+                )
+                {
+                    stat = character.GetUnboundedStat(unboundedType);
+                }
+                else
+                {
+                    Debug.LogWarning($"{nodeName}: Invalid unbounded stat type: {statName}");
+                    return false;
+                }
+            }
+
+            if (stat != null)
+            {
+                float oldValue = stat.Current;
+                stat.SetCurrent(stat.Current + changeAmount);
+                Debug.Log(
+                    $"{nodeName}: Changed {statName} by {changeAmount} (from {oldValue} to {stat.Current})"
+                );
+                return true;
+            }
+            else
+            {
+                string statType = isBoundedStat ? "bounded" : "unbounded";
+                Debug.LogWarning($"{nodeName}: {statType} stat {statName} not found on character");
+                return false;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Validate connections to ensure type safety.

@@ -14,18 +14,32 @@ public class WeaponAdvantage : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "UnitAdvantage")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            BoolValue unitAdvantage = new();
-            // TODO: Implement runtime retrieval of unit advantage
-            return unitAdvantage;
+            // Return defaults in editor mode
+            return port.fieldName switch
+            {
+                "UnitAdvantage" => new BoolValue { value = false },
+                "SameType" => new BoolValue { value = true },
+                _ => null,
+            };
         }
-        else if (port.fieldName == "SameType")
+
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null || context.UnitInstance == null)
         {
-            BoolValue sameType = new();
-            // TODO: Implement runtime retrieval of same type
-            return sameType;
+            Debug.LogWarning("WeaponAdvantage: Could not retrieve context or unit from graph");
+            return new BoolValue { value = false };
         }
-        return null;
+
+        // TODO: Implement weapon advantage calculation when weapon triangle system is added
+        // Future implementation:
+        // var unitWeapon = context.UnitInstance.GetEquippedWeapon();
+        // var enemyWeapon = context.TargetInstance?.GetEquippedWeapon();
+        // UnitAdvantage: check weapon triangle (Sword > Axe > Lance > Sword)
+        // SameType: unitWeapon.WeaponType == enemyWeapon.WeaponType
+
+        return new BoolValue { value = false };
     }
 }

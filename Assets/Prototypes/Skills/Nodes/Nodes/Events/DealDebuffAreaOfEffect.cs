@@ -37,17 +37,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the radius value
-            float radius = testRadius;
-            var radiusPort = GetInputPort("aoeRadius");
-            if (radiusPort != null && radiusPort.IsConnected)
-            {
-                var inputValue = radiusPort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    radius = floatValue.value;
-                }
-            }
+            float radius = GetInputFloat("aoeRadius", testRadius);
 
             // Apply debuff to all targeted enemies in the AoE
             foreach (var target in context.Targets)

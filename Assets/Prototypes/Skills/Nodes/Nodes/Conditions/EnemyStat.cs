@@ -39,312 +39,76 @@ public class EnemyStat : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "value")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            FloatValue statValue = new()
+            // Return test values in editor mode
+            return port.fieldName switch
             {
-                // In editor mode, return the test value
-                value = !Application.isPlaying ? test : GetRuntimeStatValue(),
+                "value" => new FloatValue { value = test },
+                "maxValue" => new FloatValue { value = test },
+                "percentage" => new FloatValue { value = 100f },
+                "bonus" => new FloatValue { value = 0f },
+                "bonusActive" => new BoolValue { value = false },
+                _ => null,
             };
-
-            return statValue;
         }
-        else if (port.fieldName == "maxValue")
+
+        // Runtime mode - get actual values from first enemy
+        return port.fieldName switch
         {
-            FloatValue statMaxValue = new();
-
-            // In editor mode, return the test value
-            if (!Application.isPlaying)
+            "value" => new FloatValue
             {
-                statMaxValue.value = test;
-            }
-            else
+                value = ConditionHelpers.GetStatCurrentValue(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Enemy,
+                    selectedStat,
+                    isBoundedStat,
+                    test
+                ),
+            },
+            "maxValue" => new FloatValue
             {
-                // At runtime, get actual stat max from the first enemy
-                if (
-                    graph is SkillGraph skillGraph
-                    && GetContextFromGraph(skillGraph) is var contextFromGraph
-                    && contextFromGraph != null
-                    && contextFromGraph.Targets != null
-                    && contextFromGraph.Targets.Count > 0
-                    && contextFromGraph.Targets[0] is var characterInstance
-                    && characterInstance != null
-                    && isBoundedStat
-                    && System.Enum.TryParse<BoundedStatType>(selectedStat, out var boundedType)
-                )
-                {
-                    var stat = characterInstance.GetBoundedStat(boundedType);
-                    if (stat != null)
-                    {
-                        statMaxValue.value = stat.Max;
-                        return statMaxValue;
-                    }
-                }
-
-                // Fallback to test value if context or stat not available
-                Debug.LogWarning(
-                    $"EnemyStat: Unable to retrieve runtime max value for {selectedStat}, returning test value."
-                );
-                statMaxValue.value = test;
-            }
-
-            return statMaxValue;
-        }
-        else if (port.fieldName == "percentage")
-        {
-            FloatValue statPercentage = new();
-
-            // In editor mode, return 100%
-            if (!Application.isPlaying)
+                value = ConditionHelpers.GetStatMaxValue(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Enemy,
+                    selectedStat,
+                    test
+                ),
+            },
+            "percentage" => new FloatValue
             {
-                statPercentage.value = 100f;
-            }
-            else
+                value = ConditionHelpers.GetStatPercentage(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Enemy,
+                    selectedStat,
+                    100f
+                ),
+            },
+            "bonus" => new FloatValue
             {
-                // At runtime, get actual stat percentage from the first enemy
-                if (graph is SkillGraph skillGraph)
-                {
-                    var contextFromGraph = GetContextFromGraph(skillGraph);
-                    if (contextFromGraph != null && contextFromGraph.Targets != null)
-                    {
-                        var enemyInstances = contextFromGraph.Targets;
-                        if (enemyInstances != null && enemyInstances.Count > 0)
-                        {
-                            var characterInstance = enemyInstances[0];
-                            if (characterInstance != null)
-                            {
-                                if (isBoundedStat)
-                                {
-                                    // Try to parse as BoundedStatType
-                                    if (
-                                        System.Enum.TryParse<BoundedStatType>(
-                                            selectedStat,
-                                            out var boundedType
-                                        )
-                                    )
-                                    {
-                                        var stat = characterInstance.GetBoundedStat(boundedType);
-                                        if (stat != null)
-                                        {
-                                            statPercentage.value = stat.Ratio * 100f;
-                                            return statPercentage;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Fallback to 100% if context or stat not available
-                Debug.LogWarning(
-                    $"EnemyStat: Unable to retrieve runtime percentage for {selectedStat}, returning 100%."
-                );
-                statPercentage.value = 100f;
-            }
-
-            return statPercentage;
-        }
-        else if (port.fieldName == "bonus")
-        {
-            FloatValue bonusValue = new();
-
-            // In editor mode, return 0
-            if (!Application.isPlaying)
+                value = ConditionHelpers.GetStatBonus(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Enemy,
+                    selectedStat,
+                    isBoundedStat
+                ),
+            },
+            "bonusActive" => new BoolValue
             {
-                bonusValue.value = 0f;
-            }
-            else
-            {
-                // At runtime, get actual bonus from the first enemy
-                if (graph is SkillGraph skillGraph)
-                {
-                    var contextFromGraph = GetContextFromGraph(skillGraph);
-                    if (contextFromGraph != null && contextFromGraph.Targets != null)
-                    {
-                        var enemyInstances = contextFromGraph.Targets;
-                        if (enemyInstances != null && enemyInstances.Count > 0)
-                        {
-                            var characterInstance = enemyInstances[0];
-                            if (characterInstance != null)
-                            {
-                                if (isBoundedStat)
-                                {
-                                    if (
-                                        System.Enum.TryParse<BoundedStatType>(
-                                            selectedStat,
-                                            out var boundedType
-                                        )
-                                    )
-                                    {
-                                        var stat = characterInstance.GetBoundedStat(boundedType);
-                                        if (stat != null)
-                                        {
-                                            bonusValue.value = stat.Bonus;
-                                            return bonusValue;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (
-                                        System.Enum.TryParse<UnboundedStatType>(
-                                            selectedStat,
-                                            out var unboundedType
-                                        )
-                                    )
-                                    {
-                                        var stat = characterInstance.GetUnboundedStat(
-                                            unboundedType
-                                        );
-                                        if (stat != null)
-                                        {
-                                            bonusValue.value = stat.Bonus;
-                                            return bonusValue;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                bonusValue.value = 0f;
-            }
-
-            return bonusValue;
-        }
-        else if (port.fieldName == "bonusActive")
-        {
-            BoolValue bonusActiveValue = new();
-
-            // In editor mode, return false
-            if (!Application.isPlaying)
-            {
-                bonusActiveValue.value = false;
-            }
-            else
-            {
-                // At runtime, check if bonus is non-zero
-                if (graph is SkillGraph skillGraph)
-                {
-                    var contextFromGraph = GetContextFromGraph(skillGraph);
-                    if (contextFromGraph != null && contextFromGraph.Targets != null)
-                    {
-                        var enemyInstances = contextFromGraph.Targets;
-                        if (enemyInstances != null && enemyInstances.Count > 0)
-                        {
-                            var characterInstance = enemyInstances[0];
-                            if (characterInstance != null)
-                            {
-                                if (isBoundedStat)
-                                {
-                                    if (
-                                        System.Enum.TryParse<BoundedStatType>(
-                                            selectedStat,
-                                            out var boundedType
-                                        )
-                                    )
-                                    {
-                                        var stat = characterInstance.GetBoundedStat(boundedType);
-                                        if (stat != null)
-                                        {
-                                            bonusActiveValue.value = stat.Bonus != 0;
-                                            return bonusActiveValue;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (
-                                        System.Enum.TryParse<UnboundedStatType>(
-                                            selectedStat,
-                                            out var unboundedType
-                                        )
-                                    )
-                                    {
-                                        var stat = characterInstance.GetUnboundedStat(
-                                            unboundedType
-                                        );
-                                        if (stat != null)
-                                        {
-                                            bonusActiveValue.value = stat.Bonus != 0;
-                                            return bonusActiveValue;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                bonusActiveValue.value = false;
-            }
-
-            return bonusActiveValue;
-        }
-        return null;
-    }
-
-    private float GetRuntimeStatValue()
-    {
-        if (graph is SkillGraph skillGraph)
-        {
-            var contextFromGraph = GetContextFromGraph(skillGraph);
-            if (contextFromGraph != null && contextFromGraph.Targets != null)
-            {
-                var enemyInstances = contextFromGraph.Targets;
-                if (enemyInstances != null && enemyInstances.Count > 0)
-                {
-                    // return the stat of the first enemy instance
-                    var characterInstance = enemyInstances[0];
-                    if (characterInstance != null)
-                    {
-                        if (isBoundedStat)
-                        {
-                            // Try to parse as BoundedStatType
-                            if (
-                                System.Enum.TryParse(
-                                    selectedStat,
-                                    out BoundedStatType boundedStatType
-                                )
-                            )
-                            {
-                                var boundedStat = characterInstance.GetBoundedStat(boundedStatType);
-                                if (boundedStat != null)
-                                {
-                                    return boundedStat.Current;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            // Try to parse as UnboundedStatType
-                            if (
-                                System.Enum.TryParse(
-                                    selectedStat,
-                                    out UnboundedStatType unboundedStatType
-                                )
-                            )
-                            {
-                                var unboundedStat = characterInstance.GetUnboundedStat(
-                                    unboundedStatType
-                                );
-                                if (unboundedStat != null)
-                                {
-                                    return unboundedStat.Current;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // Fallback to default if context or stat not available
-        Debug.LogWarning(
-            $"EnemyStat: Unable to retrieve runtime value for {selectedStat}, returning test value."
-        );
-        return test;
+                value = ConditionHelpers.GetStatBonusActive(
+                    skillGraph,
+                    this,
+                    ConditionHelpers.CharacterSource.Enemy,
+                    selectedStat,
+                    isBoundedStat
+                ),
+            },
+            _ => null,
+        };
     }
 }

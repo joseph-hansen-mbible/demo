@@ -89,14 +89,19 @@ namespace Assets.Prototypes.Characters
 
             // Initialize skills from template
             _skillInstances = new List<SkillInstance>();
-            foreach (var skillTemplate in _characterTemplate.Skills)
-            {
-                if (skillTemplate != null)
-                {
-                    _skillInstances.Add(new SkillInstance(skillTemplate));
-                }
-            }
-            foreach (var skillTemplate in _characterTemplate.SpecialSkills)
+            InitializeSkillsFromTemplates(_characterTemplate.Skills);
+            InitializeSkillsFromTemplates(_characterTemplate.SpecialSkills);
+        }
+
+        /// <summary>
+        /// Helper method to add skill instances from a list of skill templates.
+        /// </summary>
+        private void InitializeSkillsFromTemplates(List<Skill> skillTemplates)
+        {
+            if (skillTemplates == null)
+                return;
+
+            foreach (var skillTemplate in skillTemplates)
             {
                 if (skillTemplate != null)
                 {
@@ -108,12 +113,12 @@ namespace Assets.Prototypes.Characters
         // Stat Access Methods
         public BoundedCharacterStat GetBoundedStat(BoundedStatType type)
         {
-            return _runtimeBoundedStats.Find(s => s.StatType == type);
+            return StatHelpers.GetBoundedStat(_runtimeBoundedStats, type);
         }
 
         public CharacterStat GetUnboundedStat(UnboundedStatType type)
         {
-            return _runtimeUnboundedStats.Find(s => s.StatType == type);
+            return StatHelpers.GetUnboundedStat(_runtimeUnboundedStats, type);
         }
 
         public void LevelUp()

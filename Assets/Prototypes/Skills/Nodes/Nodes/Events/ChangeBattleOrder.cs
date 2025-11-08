@@ -32,17 +32,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the speed modifier value
-            float speedMod = testSpeedMod;
-            var speedPort = GetInputPort("speedModifier");
-            if (speedPort != null && speedPort.IsConnected)
-            {
-                var inputValue = speedPort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    speedMod = floatValue.value;
-                }
-            }
+            float speedMod = GetInputFloat("speedModifier", testSpeedMod);
 
             // TODO: Integrate with actual combat system
             context.SetCustomData("AttackOrderSpeedModifier", speedMod);

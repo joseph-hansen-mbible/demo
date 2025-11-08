@@ -29,17 +29,7 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the move distance value
-            float distance = testDistance;
-            var distancePort = GetInputPort("moveDistance");
-            if (distancePort != null && distancePort.IsConnected)
-            {
-                var inputValue = distancePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    distance = floatValue.value;
-                }
-            }
+            float distance = GetInputFloat("moveDistance", testDistance);
 
             // TODO: Integrate with actual positioning/grid system
             context.SetCustomData("MoveDistance", distance);

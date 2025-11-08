@@ -17,24 +17,46 @@ public class IsRiding : SkillNode
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "UnitRiding")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            BoolValue unitRiding = new();
-            // TODO: Implement runtime retrieval of unit riding status
-            return unitRiding;
+            // Return false in editor mode
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "EnemyRiding")
+
+        // Get context
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null)
         {
-            BoolValue enemyRiding = new();
-            // TODO: Implement runtime retrieval of enemy riding status
-            return enemyRiding;
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "AdjacentAllyRiding")
+
+        // Determine which character to check based on port
+        var character = port.fieldName switch
         {
-            BoolValue adjacentAllyRiding = new();
-            // TODO: Implement runtime retrieval of adjacent ally riding status
-            return adjacentAllyRiding;
+            "UnitRiding" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Unit
+            ),
+            "EnemyRiding" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Enemy
+            ),
+            "AdjacentAllyRiding" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Ally
+            ),
+            _ => null,
+        };
+
+        if (character == null)
+        {
+            return new BoolValue { value = false };
         }
-        return null;
+
+        // TODO: Implement actual riding status check when movement type system is added
+        // For now, return false as placeholder
+        // Future implementation: return new BoolValue { value = character.IsRiding };
+        return new BoolValue { value = false };
     }
 }

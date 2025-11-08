@@ -7,40 +7,64 @@ using XNode;
 public class HasBuff : SkillNode
 {
     [Output]
-    BoolValue UnitHasBuff;
+    public BoolValue UnitHasBuff;
 
     [Output]
-    BoolValue EnemyHasBuff;
+    public BoolValue EnemyHasBuff;
 
     [Output]
-    BoolValue AllyHasBuff;
+    public BoolValue AllyHasBuff;
 
     [Tooltip("Specific buff type to check (leave empty to check for any buff)")]
     public string buffType = "";
 
     public override object GetValue(NodePort port)
     {
-        if (port.fieldName == "UnitHasBuff")
+        var skillGraph = graph as SkillGraph;
+        if (skillGraph == null || !Application.isPlaying)
         {
-            BoolValue unitHasBuff = new();
-            // TODO: Implement runtime retrieval of unit buff status
-            // Check context.UnitInstance for buffs (specific type or any)
-            return unitHasBuff;
+            // Return false in editor mode
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "EnemyHasBuff")
+
+        // Get context
+        var context = GetContextFromGraph(skillGraph);
+        if (context == null)
         {
-            BoolValue enemyHasBuff = new();
-            // TODO: Implement runtime retrieval of enemy buff status
-            // Check context.Targets[0] for buffs (specific type or any)
-            return enemyHasBuff;
+            return new BoolValue { value = false };
         }
-        else if (port.fieldName == "AllyHasBuff")
+
+        // Determine which character to check based on port
+        var character = port.fieldName switch
         {
-            BoolValue allyHasBuff = new();
-            // TODO: Implement runtime retrieval of adjacent ally buff status
-            // Check context.AdjacentUnits (filtered for allies) for buffs
-            return allyHasBuff;
+            "UnitHasBuff" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Unit
+            ),
+            "EnemyHasBuff" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Enemy
+            ),
+            "AllyHasBuff" => ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Ally
+            ),
+            _ => null,
+        };
+
+        if (character == null)
+        {
+            return new BoolValue { value = false };
         }
-        return null;
+
+        // TODO: Implement actual buff check when buff/debuff system is added
+        // Check context.CustomData or character.ActiveBuffs for buff presence
+        // If buffType is specified, check for that specific buff, otherwise check for any buff
+        // Future implementation:
+        // if (string.IsNullOrEmpty(buffType))
+        //     return new BoolValue { value = character.HasAnyBuff() };
+        // else
+        //     return new BoolValue { value = character.HasBuff(buffType) };
+        return new BoolValue { value = false };
     }
 }

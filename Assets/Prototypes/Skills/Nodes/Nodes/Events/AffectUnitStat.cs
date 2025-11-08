@@ -31,69 +31,14 @@ namespace Assets.Prototypes.Skills.Nodes.Events
                 return;
             }
 
-            // Get the change value
-            float changeAmount = testChange;
-            var changePort = GetInputPort("change");
-            if (changePort != null && changePort.IsConnected)
-            {
-                var inputValue = changePort.GetInputValue();
-                if (inputValue is FloatValue floatValue)
-                {
-                    changeAmount = floatValue.value;
-                }
-            }
-
-            // Apply the stat change
-            if (isBoundedStat)
-            {
-                if (System.Enum.TryParse<BoundedStatType>(selectedStat, out var boundedType))
-                {
-                    var stat = context.UnitInstance.GetBoundedStat(boundedType);
-                    if (stat != null)
-                    {
-                        stat.SetCurrent(stat.Current + changeAmount);
-                        Debug.Log(
-                            $"AffectUnitStat: Changed {selectedStat} by {changeAmount} (new value: {stat.Current})"
-                        );
-                    }
-                    else
-                    {
-                        Debug.LogWarning(
-                            $"AffectUnitStat: Bounded stat {selectedStat} not found on unit"
-                        );
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"AffectUnitStat: Invalid bounded stat type: {selectedStat}");
-                }
-            }
-            else
-            {
-                if (System.Enum.TryParse<UnboundedStatType>(selectedStat, out var unboundedType))
-                {
-                    var stat = context.UnitInstance.GetUnboundedStat(unboundedType);
-                    if (stat != null)
-                    {
-                        stat.SetCurrent(stat.Current + changeAmount);
-                        Debug.Log(
-                            $"AffectUnitStat: Changed {selectedStat} by {changeAmount} (new value: {stat.Current})"
-                        );
-                    }
-                    else
-                    {
-                        Debug.LogWarning(
-                            $"AffectUnitStat: Unbounded stat {selectedStat} not found on unit"
-                        );
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning(
-                        $"AffectUnitStat: Invalid unbounded stat type: {selectedStat}"
-                    );
-                }
-            }
+            float changeAmount = GetInputFloat("change", testChange);
+            ApplyStatChange(
+                context.UnitInstance,
+                selectedStat,
+                isBoundedStat,
+                changeAmount,
+                "AffectUnitStat"
+            );
         }
     }
 }
