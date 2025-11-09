@@ -1,0 +1,28 @@
+using Turnroot.Gameplay.Combat.FundamentalComponents.Battles;
+using Turnroot.Skills.Nodes;
+using UnityEngine;
+using XNode;
+
+namespace Turnroot.Skills.Nodes.Events
+{
+    [CreateNodeMenu("Events/Neutral/Take Another Turn")]
+    [NodeLabel("Allows the unit to take an additional turn immediately")]
+    public class TakeAnotherTurnNode : SkillNode
+    {
+        [Input]
+        public ExecutionFlow executionIn;
+
+        public override void Execute(BattleContext context)
+        {
+            if (context?.UnitInstance == null)
+            {
+                Debug.LogWarning("TakeAnotherTurn: No unit instance in context");
+                return;
+            }
+
+            // TODO: Integrate with actual turn order system
+            context.SetCustomData("TakeAnotherTurn", true);
+            Debug.Log($"TakeAnotherTurn: Unit will take another turn");
+        }
+    }
+}
