@@ -2,15 +2,18 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Flow/Start/Unit Moves")]
-[NodeLabel("Runs when this unit moves")]
-public class UnitMovesNode : SkillNode
+namespace Turnroot.Skills.Nodes.Flow
 {
-    [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
-    public ExecutionFlow flow;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Flow/Start/Unit Moves")]
+    [NodeLabel("Runs when this unit moves")]
+    public class UnitMovesNode : SkillNode
     {
-        return null;
+        [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
+        public ExecutionFlow flow;
+
+        public override object GetValue(NodePort port)
+        {
+            return null;
+        }
     }
 }

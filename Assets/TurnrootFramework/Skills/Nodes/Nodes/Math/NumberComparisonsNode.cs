@@ -2,59 +2,62 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-public enum NumberComparisonType
+namespace Turnroot.Skills.Nodes.Math
 {
-    GreaterThan,
-    LessThan,
-    EqualTo,
-    NotEqualTo,
-    GreaterThanOrEqualTo,
-    LessThanOrEqualTo,
-}
-
-[CreateNodeMenu("Math/Number Comparisons")]
-[NodeLabel("Compares two numbers, returning True or False")]
-public class NumberComparisonsNode : SkillNode
-{
-    [Input]
-    public FloatValue a;
-
-    [Input]
-    public FloatValue b;
-
-    [Output]
-    public BoolValue result;
-
-    public NumberComparisonType operationType;
-
-    public override object GetValue(NodePort port)
+    public enum NumberComparisonType
     {
-        FloatValue aValue = GetInputValue<FloatValue>("a", a);
-        FloatValue bValue = GetInputValue<FloatValue>("b", b);
-        BoolValue resultValue = new();
+        GreaterThan,
+        LessThan,
+        EqualTo,
+        NotEqualTo,
+        GreaterThanOrEqualTo,
+        LessThanOrEqualTo,
+    }
 
-        switch (operationType)
+    [CreateNodeMenu("Math/Number Comparisons")]
+    [NodeLabel("Compares two numbers, returning True or False")]
+    public class NumberComparisonsNode : SkillNode
+    {
+        [Input]
+        public FloatValue a;
+
+        [Input]
+        public FloatValue b;
+
+        [Output]
+        public BoolValue result;
+
+        public NumberComparisonType operationType;
+
+        public override object GetValue(NodePort port)
         {
-            case NumberComparisonType.GreaterThan:
-                resultValue.value = aValue.value > bValue.value;
-                break;
-            case NumberComparisonType.LessThan:
-                resultValue.value = aValue.value < bValue.value;
-                break;
-            case NumberComparisonType.EqualTo:
-                resultValue.value = Mathf.Approximately(aValue.value, bValue.value);
-                break;
-            case NumberComparisonType.NotEqualTo:
-                resultValue.value = !Mathf.Approximately(aValue.value, bValue.value);
-                break;
-            case NumberComparisonType.GreaterThanOrEqualTo:
-                resultValue.value = aValue.value >= bValue.value;
-                break;
-            case NumberComparisonType.LessThanOrEqualTo:
-                resultValue.value = aValue.value <= bValue.value;
-                break;
-        }
+            FloatValue aValue = GetInputValue<FloatValue>("a", a);
+            FloatValue bValue = GetInputValue<FloatValue>("b", b);
+            BoolValue resultValue = new();
 
-        return resultValue;
+            switch (operationType)
+            {
+                case NumberComparisonType.GreaterThan:
+                    resultValue.value = aValue.value > bValue.value;
+                    break;
+                case NumberComparisonType.LessThan:
+                    resultValue.value = aValue.value < bValue.value;
+                    break;
+                case NumberComparisonType.EqualTo:
+                    resultValue.value = Mathf.Approximately(aValue.value, bValue.value);
+                    break;
+                case NumberComparisonType.NotEqualTo:
+                    resultValue.value = !Mathf.Approximately(aValue.value, bValue.value);
+                    break;
+                case NumberComparisonType.GreaterThanOrEqualTo:
+                    resultValue.value = aValue.value >= bValue.value;
+                    break;
+                case NumberComparisonType.LessThanOrEqualTo:
+                    resultValue.value = aValue.value <= bValue.value;
+                    break;
+            }
+
+            return resultValue;
+        }
     }
 }

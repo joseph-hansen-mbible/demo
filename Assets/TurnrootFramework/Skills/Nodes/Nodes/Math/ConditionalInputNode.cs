@@ -2,28 +2,31 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Math/Conditional Input")]
-[NodeLabel("Outputs True or False")]
-public class ConditionalInputNode : SkillNode
+namespace Turnroot.Skills.Nodes.Math
 {
-    [Output]
-    public BoolValue True;
-
-    [Output]
-    public BoolValue False;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Math/Conditional Input")]
+    [NodeLabel("Outputs True or False")]
+    public class ConditionalInputNode : SkillNode
     {
-        if (port.fieldName == "True")
+        [Output]
+        public BoolValue True;
+
+        [Output]
+        public BoolValue False;
+
+        public override object GetValue(NodePort port)
         {
-            BoolValue trueValue = new() { value = true };
-            return trueValue;
+            if (port.fieldName == "True")
+            {
+                BoolValue trueValue = new() { value = true };
+                return trueValue;
+            }
+            else if (port.fieldName == "False")
+            {
+                BoolValue falseValue = new() { value = false };
+                return falseValue;
+            }
+            return null;
         }
-        else if (port.fieldName == "False")
-        {
-            BoolValue falseValue = new() { value = false };
-            return falseValue;
-        }
-        return null;
     }
 }

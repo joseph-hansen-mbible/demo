@@ -3,30 +3,33 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[NodeLabel("Proceed if condition is true")]
-[CreateNodeMenu("Flow/Flow If")]
-public class FlowIfNode : SkillNode
+namespace Turnroot.Skills.Nodes.Flow
 {
-    [Input(ShowBackingValue.Never, ConnectionType.Override)]
-    public ExecutionFlow InFlow;
-
-    [Input(ShowBackingValue.Always, ConnectionType.Override)]
-    public BoolValue condition;
-
-    [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
-    public ExecutionFlow OutFlow;
-
-    public override void Execute(BattleContext context)
+    [NodeLabel("Proceed if condition is true")]
+    [CreateNodeMenu("Flow/Flow If")]
+    public class FlowIfNode : SkillNode
     {
-        // Get the condition value from connected node
-        BoolValue conditionValue = GetInputValue<BoolValue>("condition", new BoolValue());
+        [Input(ShowBackingValue.Never, ConnectionType.Override)]
+        public ExecutionFlow InFlow;
 
-        // If condition is false, interrupt execution (don't proceed)
-        if (!conditionValue.value)
+        [Input(ShowBackingValue.Always, ConnectionType.Override)]
+        public BoolValue condition;
+
+        [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
+        public ExecutionFlow OutFlow;
+
+        public override void Execute(BattleContext context)
         {
-            context.IsInterrupted = true;
-            Debug.Log($"FlowIf condition is false, stopping execution.");
+            // Get the condition value from connected node
+            BoolValue conditionValue = GetInputValue<BoolValue>("condition", new BoolValue());
+
+            // If condition is false, interrupt execution (don't proceed)
+            if (!conditionValue.value)
+            {
+                context.IsInterrupted = true;
+                Debug.Log($"FlowIf condition is false, stopping execution.");
+            }
+            // If true, execution will proceed normally when Proceed() is called
         }
-        // If true, execution will proceed normally when Proceed() is called
     }
 }

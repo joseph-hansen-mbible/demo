@@ -2,23 +2,26 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Math/Number Input")]
-[NodeLabel("Outputs a number")]
-public class NumberInputNode : SkillNode
+namespace Turnroot.Skills.Nodes.Math
 {
-    [Output]
-    public FloatValue Number;
-
-    public float defaultValue = 0f;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Math/Number Input")]
+    [NodeLabel("Outputs a number")]
+    public class NumberInputNode : SkillNode
     {
-        if (port.fieldName == "Number")
+        [Output]
+        public FloatValue Number;
+
+        public float defaultValue = 0f;
+
+        public override object GetValue(NodePort port)
         {
-            FloatValue numberValue = new();
-            numberValue.value = defaultValue;
-            return numberValue;
+            if (port.fieldName == "Number")
+            {
+                FloatValue numberValue = new();
+                numberValue.value = defaultValue;
+                return numberValue;
+            }
+            return null;
         }
-        return null;
     }
 }

@@ -2,15 +2,18 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Flow/Start/Enemy Defeated")]
-[NodeLabel("Runs when an enemy is defeated by this unit")]
-public class EnemyDefeatedNode : SkillNode
+namespace Turnroot.Skills.Nodes.Flow
 {
-    [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
-    public ExecutionFlow flow;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Flow/Start/Enemy Defeated")]
+    [NodeLabel("Runs when an enemy is defeated by this unit")]
+    public class EnemyDefeatedNode : SkillNode
     {
-        return null;
+        [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
+        public ExecutionFlow flow;
+
+        public override object GetValue(NodePort port)
+        {
+            return null;
+        }
     }
 }

@@ -2,15 +2,18 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Flow/Start/Battle Starts")]
-[NodeLabel("Runs once at the start of battle")]
-public class BattleStartsNode : SkillNode
+namespace Turnroot.Skills.Nodes.Flow
 {
-    [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
-    public ExecutionFlow flow;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Flow/Start/Battle Starts")]
+    [NodeLabel("Runs once at the start of battle")]
+    public class BattleStartsNode : SkillNode
     {
-        return null;
+        [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
+        public ExecutionFlow flow;
+
+        public override object GetValue(NodePort port)
+        {
+            return null;
+        }
     }
 }

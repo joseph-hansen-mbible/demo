@@ -2,45 +2,48 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Conditions/Counters/Skill Use Count")]
-[NodeLabel("Gets the number of times the skill has been used in this battle")]
-public class SkillUseCountNode : SkillNode
+namespace Turnroot.Skills.Nodes.Conditions
 {
-    [Output]
-    FloatValue value;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Conditions/Counters/Skill Use Count")]
+    [NodeLabel("Gets the number of times the skill has been used in this battle")]
+    public class SkillUseCountNode : SkillNode
     {
-        if (port.fieldName == "value" && graph is SkillGraph skillGraph)
+        [Output]
+        FloatValue value;
+
+        public override object GetValue(NodePort port)
         {
-            var contextFromGraph = GetContextFromGraph(skillGraph);
-            if (contextFromGraph == null)
+            if (port.fieldName == "value" && graph is SkillGraph skillGraph)
             {
-                Debug.LogError("BattleContext not found in graph!");
-                return null;
-            }
+                var contextFromGraph = GetContextFromGraph(skillGraph);
+                if (contextFromGraph == null)
+                {
+                    Debug.LogError("BattleContext not found in graph!");
+                    return null;
+                }
 
-            if (contextFromGraph.CurrentSkill == null)
-            {
-                Debug.LogError("CurrentSkill is null in BattleContext!");
-                return null;
-            }
+                if (contextFromGraph.CurrentSkill == null)
+                {
+                    Debug.LogError("CurrentSkill is null in BattleContext!");
+                    return null;
+                }
 
-            int count = 0;
-            if (
-                contextFromGraph.SkillUseCount != null
-                && contextFromGraph.SkillUseCount.TryGetValue(
-                    contextFromGraph.CurrentSkill,
-                    out count
+                int count = 0;
+                if (
+                    contextFromGraph.SkillUseCount != null
+                    && contextFromGraph.SkillUseCount.TryGetValue(
+                        contextFromGraph.CurrentSkill,
+                        out count
+                    )
                 )
-            )
-            {
-                // Found the count
-            }
+                {
+                    // Found the count
+                }
 
-            FloatValue skillCountValue = new() { value = count };
-            return skillCountValue;
+                FloatValue skillCountValue = new() { value = count };
+                return skillCountValue;
+            }
+            return null;
         }
-        return null;
     }
 }

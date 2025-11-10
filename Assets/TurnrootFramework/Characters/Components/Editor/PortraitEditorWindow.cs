@@ -1,6 +1,4 @@
 using System.Linq;
-using Turnroot.Characters;
-using Turnroot.Characters.Subclasses;
 using Turnroot.Graphics2D.Editor;
 using UnityEditor;
 using UnityEditorInternal;

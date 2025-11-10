@@ -2,15 +2,18 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Flow/Start/Turn Ends")]
-[NodeLabel("Runs at the end of unit's turn")]
-public class TurnEndsNode : SkillNode
+namespace Turnroot.Skills.Nodes.Flow
 {
-    [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
-    public ExecutionFlow flow;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Flow/Start/Turn Ends")]
+    [NodeLabel("Runs at the end of unit's turn")]
+    public class TurnEndsNode : SkillNode
     {
-        return null;
+        [Output(ShowBackingValue.Never, ConnectionType.Multiple)]
+        public ExecutionFlow flow;
+
+        public override object GetValue(NodePort port)
+        {
+            return null;
+        }
     }
 }

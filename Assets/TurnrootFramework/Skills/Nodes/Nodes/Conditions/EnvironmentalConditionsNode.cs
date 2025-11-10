@@ -2,67 +2,70 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-public enum EnvironmentalCondition
+namespace Turnroot.Skills.Nodes.Conditions
 {
-    IsNight,
-
-    IsRaining,
-    IsFoggy,
-    IsDesert,
-    IsSnowing,
-    IsIndoors,
-}
-
-[CreateNodeMenu("Conditions/Environment/Environmental Conditions")]
-[NodeLabel("Checks environmental conditions")]
-public class EnvironmentalConditionsNode : SkillNode
-{
-    [Output]
-    public BoolValue Condition;
-    public EnvironmentalCondition conditionToCheck;
-
-    public override object GetValue(NodePort port)
+    public enum EnvironmentalCondition
     {
-        if (port.fieldName == "Condition" && graph is SkillGraph skillGraph)
+        IsNight,
+
+        IsRaining,
+        IsFoggy,
+        IsDesert,
+        IsSnowing,
+        IsIndoors,
+    }
+
+    [CreateNodeMenu("Conditions/Environment/Environmental Conditions")]
+    [NodeLabel("Checks environmental conditions")]
+    public class EnvironmentalConditionsNode : SkillNode
+    {
+        [Output]
+        public BoolValue Condition;
+        public EnvironmentalCondition conditionToCheck;
+
+        public override object GetValue(NodePort port)
         {
-            BoolValue result = new();
-            var contextFromGraph = GetContextFromGraph(skillGraph);
-            var envConditions = contextFromGraph?.EnvironmentalConditions;
-
-            if (envConditions != null)
+            if (port.fieldName == "Condition" && graph is SkillGraph skillGraph)
             {
-                switch (conditionToCheck)
+                BoolValue result = new();
+                var contextFromGraph = GetContextFromGraph(skillGraph);
+                var envConditions = contextFromGraph?.EnvironmentalConditions;
+
+                if (envConditions != null)
                 {
-                    case EnvironmentalCondition.IsNight:
-                        result.value = envConditions.IsNight;
-                        break;
-                    case EnvironmentalCondition.IsRaining:
-                        result.value = envConditions.IsRaining;
-                        break;
-                    case EnvironmentalCondition.IsFoggy:
-                        result.value = envConditions.IsFoggy;
-                        break;
-                    case EnvironmentalCondition.IsDesert:
-                        result.value = envConditions.IsDesert;
-                        break;
-                    case EnvironmentalCondition.IsSnowing:
-                        result.value = envConditions.IsSnowing;
-                        break;
-                    case EnvironmentalCondition.IsIndoors:
-                        result.value = envConditions.IsIndoors;
-                        break;
-                    default:
-                        result.value = false;
-                        break;
+                    switch (conditionToCheck)
+                    {
+                        case EnvironmentalCondition.IsNight:
+                            result.value = envConditions.IsNight;
+                            break;
+                        case EnvironmentalCondition.IsRaining:
+                            result.value = envConditions.IsRaining;
+                            break;
+                        case EnvironmentalCondition.IsFoggy:
+                            result.value = envConditions.IsFoggy;
+                            break;
+                        case EnvironmentalCondition.IsDesert:
+                            result.value = envConditions.IsDesert;
+                            break;
+                        case EnvironmentalCondition.IsSnowing:
+                            result.value = envConditions.IsSnowing;
+                            break;
+                        case EnvironmentalCondition.IsIndoors:
+                            result.value = envConditions.IsIndoors;
+                            break;
+                        default:
+                            result.value = false;
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                result.value = false;
-            }
+                else
+                {
+                    result.value = false;
+                }
 
-            return result;
+                return result;
+            }
+            return null;
         }
-        return null;
     }
 }

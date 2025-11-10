@@ -2,38 +2,41 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Conditions/Unit/Kill Count")]
-[NodeLabel("Gets the unit's kill count")]
-public class UnitKillCountNode : SkillNode
+namespace Turnroot.Skills.Nodes.Conditions
 {
-    [Output]
-    FloatValue value;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Conditions/Unit/Kill Count")]
+    [NodeLabel("Gets the unit's kill count")]
+    public class UnitKillCountNode : SkillNode
     {
-        if (port.fieldName != "value")
-            return null;
+        [Output]
+        FloatValue value;
 
-        var skillGraph = graph as SkillGraph;
-        if (skillGraph == null || !Application.isPlaying)
+        public override object GetValue(NodePort port)
         {
-            return new FloatValue { value = 0f }; // Default to 0 kills in editor
-        }
+            if (port.fieldName != "value")
+                return null;
 
-        var context = GetContextFromGraph(skillGraph);
-        var character = ConditionHelpers.GetCharacterFromContext(
-            context,
-            ConditionHelpers.CharacterSource.Unit
-        );
+            var skillGraph = graph as SkillGraph;
+            if (skillGraph == null || !Application.isPlaying)
+            {
+                return new FloatValue { value = 0f }; // Default to 0 kills in editor
+            }
 
-        if (character == null)
-        {
-            Debug.LogWarning("UnitKillCount: Could not retrieve unit from context");
+            var context = GetContextFromGraph(skillGraph);
+            var character = ConditionHelpers.GetCharacterFromContext(
+                context,
+                ConditionHelpers.CharacterSource.Unit
+            );
+
+            if (character == null)
+            {
+                Debug.LogWarning("UnitKillCount: Could not retrieve unit from context");
+                return new FloatValue { value = 0f };
+            }
+
+            // TODO: Implement actual kill count retrieval when tracking system is added
+            // Future implementation: return new FloatValue { value = character.KillCount };
             return new FloatValue { value = 0f };
         }
-
-        // TODO: Implement actual kill count retrieval when tracking system is added
-        // Future implementation: return new FloatValue { value = character.KillCount };
-        return new FloatValue { value = 0f };
     }
 }

@@ -2,59 +2,62 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-public enum BooleanComparisonType
+namespace Turnroot.Skills.Nodes.Math
 {
-    And,
-    Or,
-    NotAnd,
-    NotOr,
-    Equal,
-    NotEqual,
-}
-
-[CreateNodeMenu("Math/Conditional Comparisons")]
-[NodeLabel("Compares two True/False values based on the selected operation")]
-public class ConditionalComparisonsNode : SkillNode
-{
-    [Input]
-    public BoolValue a;
-
-    [Input]
-    public BoolValue b;
-
-    [Output]
-    public BoolValue result;
-
-    public BooleanComparisonType operationType;
-
-    public override object GetValue(NodePort port)
+    public enum BooleanComparisonType
     {
-        BoolValue aValue = GetInputValue<BoolValue>("a", a);
-        BoolValue bValue = GetInputValue<BoolValue>("b", b);
-        BoolValue resultValue = new();
+        And,
+        Or,
+        NotAnd,
+        NotOr,
+        Equal,
+        NotEqual,
+    }
 
-        switch (operationType)
+    [CreateNodeMenu("Math/Conditional Comparisons")]
+    [NodeLabel("Compares two True/False values based on the selected operation")]
+    public class ConditionalComparisonsNode : SkillNode
+    {
+        [Input]
+        public BoolValue a;
+
+        [Input]
+        public BoolValue b;
+
+        [Output]
+        public BoolValue result;
+
+        public BooleanComparisonType operationType;
+
+        public override object GetValue(NodePort port)
         {
-            case BooleanComparisonType.And:
-                resultValue.value = aValue.value && bValue.value;
-                break;
-            case BooleanComparisonType.Or:
-                resultValue.value = aValue.value || bValue.value;
-                break;
-            case BooleanComparisonType.NotAnd:
-                resultValue.value = !(aValue.value && bValue.value);
-                break;
-            case BooleanComparisonType.NotOr:
-                resultValue.value = !(aValue.value || bValue.value);
-                break;
-            case BooleanComparisonType.Equal:
-                resultValue.value = aValue.value == bValue.value;
-                break;
-            case BooleanComparisonType.NotEqual:
-                resultValue.value = aValue.value != bValue.value;
-                break;
-        }
+            BoolValue aValue = GetInputValue<BoolValue>("a", a);
+            BoolValue bValue = GetInputValue<BoolValue>("b", b);
+            BoolValue resultValue = new();
 
-        return resultValue;
+            switch (operationType)
+            {
+                case BooleanComparisonType.And:
+                    resultValue.value = aValue.value && bValue.value;
+                    break;
+                case BooleanComparisonType.Or:
+                    resultValue.value = aValue.value || bValue.value;
+                    break;
+                case BooleanComparisonType.NotAnd:
+                    resultValue.value = !(aValue.value && bValue.value);
+                    break;
+                case BooleanComparisonType.NotOr:
+                    resultValue.value = !(aValue.value || bValue.value);
+                    break;
+                case BooleanComparisonType.Equal:
+                    resultValue.value = aValue.value == bValue.value;
+                    break;
+                case BooleanComparisonType.NotEqual:
+                    resultValue.value = aValue.value != bValue.value;
+                    break;
+            }
+
+            return resultValue;
+        }
     }
 }

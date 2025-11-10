@@ -61,7 +61,6 @@ namespace Turnroot.Skills.Nodes.Editor
                     }
                 }
             }
-
             // Fall back to NodeCategoryAttribute if no settings
             var script2 = MonoScript.FromScriptableObject(target);
             if (script2 != null)

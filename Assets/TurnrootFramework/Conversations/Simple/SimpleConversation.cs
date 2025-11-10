@@ -7,7 +7,7 @@ namespace TurnrootFramework.Conversations
 {
     [CreateAssetMenu(
         fileName = "New Conversation",
-        menuName = "Turnroot/Dialogue/Simple Conversation"
+        menuName = "Turnroot/Conversations/Simple Conversation"
     )]
     public class SimpleConversation : ScriptableObject
     {

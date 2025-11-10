@@ -2,44 +2,47 @@ using Turnroot.Skills.Nodes;
 using UnityEngine;
 using XNode;
 
-[CreateNodeMenu("Conditions/Weapon/Weapon Advantage")]
-[NodeLabel("Gets weapon advantage or same type")]
-public class WeaponAdvantageNode : SkillNode
+namespace Turnroot.Skills.Nodes.Conditions
 {
-    [Output]
-    BoolValue UnitAdvantage;
-
-    [Output]
-    BoolValue SameType;
-
-    public override object GetValue(NodePort port)
+    [CreateNodeMenu("Conditions/Weapon/Weapon Advantage")]
+    [NodeLabel("Gets weapon advantage or same type")]
+    public class WeaponAdvantageNode : SkillNode
     {
-        var skillGraph = graph as SkillGraph;
-        if (skillGraph == null || !Application.isPlaying)
-        {
-            // Return defaults in editor mode
-            return port.fieldName switch
-            {
-                "UnitAdvantage" => new BoolValue { value = false },
-                "SameType" => new BoolValue { value = true },
-                _ => null,
-            };
-        }
+        [Output]
+        BoolValue UnitAdvantage;
 
-        var context = GetContextFromGraph(skillGraph);
-        if (context == null || context.UnitInstance == null)
+        [Output]
+        BoolValue SameType;
+
+        public override object GetValue(NodePort port)
         {
-            Debug.LogWarning("WeaponAdvantage: Could not retrieve context or unit from graph");
+            var skillGraph = graph as SkillGraph;
+            if (skillGraph == null || !Application.isPlaying)
+            {
+                // Return defaults in editor mode
+                return port.fieldName switch
+                {
+                    "UnitAdvantage" => new BoolValue { value = false },
+                    "SameType" => new BoolValue { value = true },
+                    _ => null,
+                };
+            }
+
+            var context = GetContextFromGraph(skillGraph);
+            if (context == null || context.UnitInstance == null)
+            {
+                Debug.LogWarning("WeaponAdvantage: Could not retrieve context or unit from graph");
+                return new BoolValue { value = false };
+            }
+
+            // TODO: Implement weapon advantage calculation when weapon triangle system is added
+            // Future implementation:
+            // var unitWeapon = context.UnitInstance.GetEquippedWeapon();
+            // var enemyWeapon = context.TargetInstance?.GetEquippedWeapon();
+            // UnitAdvantage: check weapon triangle (Sword > Axe > Lance > Sword)
+            // SameType: unitWeapon.WeaponType == enemyWeapon.WeaponType
+
             return new BoolValue { value = false };
         }
-
-        // TODO: Implement weapon advantage calculation when weapon triangle system is added
-        // Future implementation:
-        // var unitWeapon = context.UnitInstance.GetEquippedWeapon();
-        // var enemyWeapon = context.TargetInstance?.GetEquippedWeapon();
-        // UnitAdvantage: check weapon triangle (Sword > Axe > Lance > Sword)
-        // SameType: unitWeapon.WeaponType == enemyWeapon.WeaponType
-
-        return new BoolValue { value = false };
     }
 }
