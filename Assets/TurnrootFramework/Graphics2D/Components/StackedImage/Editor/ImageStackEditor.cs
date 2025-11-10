@@ -7,12 +7,10 @@ namespace Turnroot.Graphics.Portrait.Editor
     [CustomEditor(typeof(ImageStack))]
     public class ImageStackEditor : UnityEditor.Editor
     {
-        private SerializedProperty _ownerCharacterProp;
         private SerializedProperty _layersProp;
 
         private void OnEnable()
         {
-            _ownerCharacterProp = serializedObject.FindProperty("_ownerCharacter");
             _layersProp = serializedObject.FindProperty("_layers");
         }
 
@@ -20,29 +18,9 @@ namespace Turnroot.Graphics.Portrait.Editor
         {
             serializedObject.Update();
 
-            // Auto-assign owner character if null
-            // This automatically sets the owner to the Character that contains a Portrait with this ImageStack
-            if (_ownerCharacterProp != null && _ownerCharacterProp.objectReferenceValue == null)
-            {
-                var character = FindOwnerCharacter();
-                if (character != null)
-                {
-                    _ownerCharacterProp.objectReferenceValue = character;
-                    _ = serializedObject.ApplyModifiedProperties();
-                }
-            }
-
             EditorGUILayout.Space(5);
             EditorGUILayout.LabelField("Image Stack", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
-
-            // Draw owner field
-            _ = EditorGUILayout.PropertyField(
-                _ownerCharacterProp,
-                new GUIContent("Owner Character")
-            );
-
-            EditorGUILayout.Space(10);
 
             // Draw layers list with custom header
             EditorGUILayout.LabelField($"Layers ({_layersProp.arraySize})", EditorStyles.boldLabel);
@@ -75,6 +53,9 @@ namespace Turnroot.Graphics.Portrait.Editor
                     {
                         _ = _layersProp.MoveArrayElement(i, i - 1);
                         _ = serializedObject.ApplyModifiedProperties();
+
+                        // Renumber orders to match the list
+                        RenumberLayerOrders();
                         return;
                     }
                     GUI.enabled = true;
@@ -85,6 +66,9 @@ namespace Turnroot.Graphics.Portrait.Editor
                     {
                         _ = _layersProp.MoveArrayElement(i, i + 1);
                         _ = serializedObject.ApplyModifiedProperties();
+
+                        // Renumber orders to match the list
+                        RenumberLayerOrders();
                         return;
                     }
                     GUI.enabled = true;
@@ -94,6 +78,9 @@ namespace Turnroot.Graphics.Portrait.Editor
                     {
                         _layersProp.DeleteArrayElementAtIndex(i);
                         _ = serializedObject.ApplyModifiedProperties();
+
+                        // Renumber orders to match the list
+                        RenumberLayerOrders();
                         return;
                     }
 
@@ -116,9 +103,13 @@ namespace Turnroot.Graphics.Portrait.Editor
                 newLayer.FindPropertyRelative("Offset").vector2Value = Vector2.zero;
                 newLayer.FindPropertyRelative("Scale").floatValue = 1f;
                 newLayer.FindPropertyRelative("Rotation").floatValue = 0f;
-                newLayer.FindPropertyRelative("Order").intValue = _layersProp.arraySize - 1;
+                // Assign Order so that 0 represents the bottom layer
+                newLayer.FindPropertyRelative("Order").intValue = 0;
 
                 _ = serializedObject.ApplyModifiedProperties();
+
+                // Renumber to be safe
+                RenumberLayerOrders();
             }
 
             EditorGUILayout.Space(10);
@@ -132,51 +123,19 @@ namespace Turnroot.Graphics.Portrait.Editor
             _ = serializedObject.ApplyModifiedProperties();
         }
 
-        private Object FindOwnerCharacter()
+        private void RenumberLayerOrders()
         {
-            // Search through all Character instances to find one with a Portrait that references this ImageStack
-            string assetPath = AssetDatabase.GetAssetPath(target);
-            if (string.IsNullOrEmpty(assetPath))
-                return null;
-
-            // Get all Character assets in the project
-            string[] guids = AssetDatabase.FindAssets("t:Character");
-            foreach (string guid in guids)
+            // We want Order 0 to be the bottom of the stack, while index 0 is the top in the list.
+            for (int i = 0; i < _layersProp.arraySize; i++)
             {
-                string path = AssetDatabase.GUIDToAssetPath(guid);
-                Object obj = AssetDatabase.LoadAssetAtPath<Object>(path);
-
-                if (obj != null)
-                {
-                    SerializedObject so = new SerializedObject(obj);
-                    SerializedProperty portraitsProp = so.FindProperty("_portraits");
-
-                    if (portraitsProp != null && portraitsProp.isArray)
-                    {
-                        // Check each portrait in the array
-                        for (int i = 0; i < portraitsProp.arraySize; i++)
-                        {
-                            SerializedProperty portraitProp = portraitsProp.GetArrayElementAtIndex(
-                                i
-                            );
-                            SerializedProperty imageStackProp = portraitProp.FindPropertyRelative(
-                                "_imageStack"
-                            );
-
-                            if (
-                                imageStackProp != null
-                                && imageStackProp.objectReferenceValue != null
-                                && imageStackProp.objectReferenceValue == target
-                            )
-                            {
-                                return obj;
-                            }
-                        }
-                    }
-                }
+                var el = _layersProp.GetArrayElementAtIndex(i);
+                var orderProp = el.FindPropertyRelative("Order");
+                if (orderProp != null)
+                    orderProp.intValue = (_layersProp.arraySize - 1) - i;
             }
-
-            return null;
+            _ = serializedObject.ApplyModifiedProperties();
         }
+
+        // Owner resolution removed: ImageStack is edited in the Portrait context. No auto-owner assignment.
     }
 }

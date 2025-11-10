@@ -65,6 +65,13 @@ namespace TurnrootFramework.Conversations
             {
                 conversation.CurrentLayerIndex = i;
                 var currentLayer = conversation.Layers[i];
+
+                if (!currentLayer.HasBeenParsed)
+                {
+                    Debug.Log($"Parsing layer {i + 1}/{conversation.Layers.Length} dialogue");
+                    currentLayer.ParseDialogue();
+                }
+
                 Debug.Log(
                     $"Running layer {i + 1}/{conversation.Layers.Length}: {currentLayer.Dialogue}"
                 );
@@ -76,7 +83,7 @@ namespace TurnrootFramework.Conversations
 
                     // Wait for the layer to complete
                     bool layerCompleted = false;
-                    UnityAction completionCallback = () => layerCompleted = true;
+                    void completionCallback() => layerCompleted = true;
 
                     currentLayer.OnLayerComplete.AddListener(completionCallback);
 

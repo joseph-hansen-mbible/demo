@@ -190,13 +190,8 @@ namespace Turnroot.Graphics2D.Editor
 
             if (EditorGUI.EndChangeCheck())
             {
-                // Use reflection to set the private _imageStack field
-                var field = typeof(StackedImage<TOwner>).GetField(
-                    "_imageStack",
-                    System.Reflection.BindingFlags.NonPublic
-                        | System.Reflection.BindingFlags.Instance
-                );
-                field?.SetValue(_currentImage, newStack);
+                // Use public API instead of reflection
+                _currentImage.SetImageStack(newStack);
 
                 EditorUtility.SetDirty(_currentOwner);
                 if (_autoRefresh)
@@ -228,13 +223,8 @@ namespace Turnroot.Graphics2D.Editor
                         UnityEditor.AssetDatabase.CreateAsset(newImageStack, path);
                         UnityEditor.AssetDatabase.SaveAssets();
 
-                        // Assign it to the current image
-                        var field = typeof(StackedImage<TOwner>).GetField(
-                            "_imageStack",
-                            System.Reflection.BindingFlags.NonPublic
-                                | System.Reflection.BindingFlags.Instance
-                        );
-                        field?.SetValue(_currentImage, newImageStack);
+                        // Assign it to the current image using public API
+                        _currentImage.SetImageStack(newImageStack);
 
                         EditorUtility.SetDirty(_currentOwner);
                         if (_autoRefresh)
@@ -547,13 +537,43 @@ namespace Turnroot.Graphics2D.Editor
 
         protected void RefreshPreview()
         {
-            if (_currentImage == null || _currentImage.ImageStack == null)
+            if (_currentImage == null)
             {
+                Debug.Log("RefreshPreview: _currentImage is null");
                 _previewTexture = null;
                 return;
             }
 
+            if (_currentImage.ImageStack == null)
+            {
+                Debug.Log(
+                    "RefreshPreview: ImageStack is null for image '" + (_currentImage?.Key) + "'"
+                );
+                _previewTexture = null;
+                return;
+            }
+
+            Debug.Log(
+                "RefreshPreview: Compositing image '"
+                    + _currentImage.Key
+                    + "' using ImageStack '"
+                    + _currentImage.ImageStack.name
+                    + "'"
+            );
             _previewTexture = _currentImage.CompositeLayers();
+            if (_previewTexture == null)
+            {
+                Debug.LogWarning(
+                    "RefreshPreview: CompositeLayers returned null for '" + _currentImage.Key + "'"
+                );
+
+                // Fallback: if a saved sprite exists, use its texture for preview
+                if (_currentImage.SavedSprite != null && _currentImage.SavedSprite.texture != null)
+                {
+                    Debug.Log("RefreshPreview: using SavedSprite.texture as fallback preview");
+                    _previewTexture = _currentImage.SavedSprite.texture;
+                }
+            }
             Repaint();
         }
     }

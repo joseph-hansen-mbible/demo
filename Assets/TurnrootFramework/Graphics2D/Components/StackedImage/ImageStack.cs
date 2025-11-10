@@ -8,12 +8,8 @@ namespace Turnroot.Graphics.Portrait
     public class ImageStack : ScriptableObject
     {
         [SerializeField]
-        private CharacterData _ownerCharacter;
-
-        [SerializeField]
         private List<ImageStackLayer> _layers = new();
 
         public List<ImageStackLayer> Layers => _layers;
-        public CharacterData OwnerCharacter => _ownerCharacter;
     }
 }

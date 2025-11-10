@@ -15,8 +15,8 @@ namespace TurnrootFramework.Conversations
         public UnityEvent OnConversationEnd;
 
         [SerializeField, ReorderableList]
-        private SimpleConversationLayer[] _layers;
-        public SimpleConversationLayer[] Layers
+        private ConversationLayer[] _layers;
+        public ConversationLayer[] Layers
         {
             get => _layers;
             set => _layers = value;
@@ -30,7 +30,7 @@ namespace TurnrootFramework.Conversations
             set => _currentLayerIndex = Mathf.Clamp(value, 0, _layers.Length - 1);
         }
 
-        public SimpleConversationLayer CurrentLayer
+        public ConversationLayer CurrentLayer
         {
             get
             {

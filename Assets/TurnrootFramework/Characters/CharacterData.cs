@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using Turnroot.Characters.Components;
 using Turnroot.Characters.Components.Support;
@@ -59,6 +60,8 @@ namespace Turnroot.Characters
 
         private void OnValidate()
         {
+            // Reset cached portrait array so changes in the inspector are reflected
+            _portraitArrayCache = null;
             // Ensure that the character's name is not empty
             if (string.IsNullOrWhiteSpace(_displayName))
             {
@@ -167,7 +170,10 @@ namespace Turnroot.Characters
         private Color _accentColor3 = Color.black;
 
         [Foldout("Visual"), SerializeField]
-        private Portrait[] _portraits;
+        private SerializableDictionary<string, Portrait> _portraits;
+
+        // Cached array view of the portraits dictionary values. Use PortraitArray to access.
+        private Portrait[] _portraitArrayCache;
 
         [Foldout("Visual"), SerializeField]
         private Sprite[] _sprites;
@@ -243,7 +249,20 @@ namespace Turnroot.Characters
         public Color AccentColor1 => _accentColor1;
         public Color AccentColor2 => _accentColor2;
         public Color AccentColor3 => _accentColor3;
-        public Portrait[] Portraits => _portraits;
+        public SerializableDictionary<string, Portrait> Portraits => _portraits;
+
+        // Helper: returns the dictionary values as an array (cached). Use when you need indexed access.
+        public Portrait[] PortraitArray
+        {
+            get
+            {
+                if (_portraitArrayCache == null)
+                {
+                    _portraitArrayCache = _portraits?.Values.ToArray();
+                }
+                return _portraitArrayCache;
+            }
+        }
         public Sprite[] Sprites => _sprites;
 
         public int Level => _level;
@@ -267,6 +286,12 @@ namespace Turnroot.Characters
 
         public bool HasDesignatedChildUnit => _hasDesignatedChildUnit;
         public CharacterData ChildUnitId => _childUnitId;
+
+        // Editor helper: invalidate cached PortraitArray so editors can refresh after changes.
+        public void InvalidatePortraitArrayCache()
+        {
+            _portraitArrayCache = null;
+        }
 
         // Helper methods to get stats by type
         public BoundedCharacterStat GetBoundedStat(BoundedStatType type)

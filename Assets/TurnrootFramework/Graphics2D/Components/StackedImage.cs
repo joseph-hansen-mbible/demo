@@ -49,6 +49,13 @@ namespace Turnroot.Graphics2D
             UpdateTintColorsFromOwner();
         }
 
+        // Editor helper: assign an ImageStack to this StackedImage instance.
+        // Prefer calling this instead of using reflection from editor code.
+        public void SetImageStack(Turnroot.Graphics.Portrait.ImageStack stack)
+        {
+            _imageStack = stack;
+        }
+
         public void SetKey(string key)
         {
             if (!string.IsNullOrEmpty(key))
@@ -170,9 +177,17 @@ namespace Turnroot.Graphics2D
 
         public Texture2D CompositeLayers()
         {
-            if (_imageStack == null || _imageStack.Layers == null || _imageStack.Layers.Count == 0)
+            if (_imageStack == null)
             {
-                Debug.LogWarning("No layers to composite.");
+                Debug.LogWarning("CompositeLayers: _imageStack is null.");
+                return null;
+            }
+
+            if (_imageStack.Layers == null || _imageStack.Layers.Count == 0)
+            {
+                Debug.LogWarning(
+                    $"CompositeLayers: ImageStack '{_imageStack.name}' has no layers."
+                );
                 return null;
             }
 
@@ -209,14 +224,69 @@ namespace Turnroot.Graphics2D
             baseTexture.Apply();
 
             // Composite the layers using static method
-            ImageStackLayer[] layers = _imageStack.Layers.ToArray();
+            ImageStackLayer[] originalLayers = _imageStack.Layers.ToArray();
 
-            // Extract masks from layers
+            // Defensive: create a temporary normalized copy of layers so we don't
+            // mutate the stored asset if any layer has an invalid Scale (e.g. 0).
+            // This prevents blank previews when existing ImageStack assets contain
+            // layers with Scale <= 0.
+            ImageStackLayer[] layers = new ImageStackLayer[originalLayers.Length];
+            bool correctedScale = false;
+            for (int i = 0; i < originalLayers.Length; i++)
+            {
+                var src = originalLayers[i];
+                if (src == null)
+                {
+                    layers[i] = null;
+                    continue;
+                }
+
+                // Create a shallow copy for safe editing (do not change asset)
+                var copy = new ImageStackLayer();
+                copy.Sprite = src.Sprite;
+                copy.Mask = src.Mask;
+                copy.Offset = src.Offset;
+                copy.Scale = src.Scale;
+                copy.Rotation = src.Rotation;
+                copy.Order = src.Order;
+
+                // Normalize invalid scale values to 1.0 to avoid zero-sized compositing
+                if (copy.Scale <= 0f)
+                {
+                    copy.Scale = 1f;
+                    correctedScale = true;
+                }
+
+                layers[i] = copy;
+            }
+
+            if (correctedScale)
+            {
+                UnityEngine.Debug.LogWarning(
+                    $"CompositeLayers: One or more layers in ImageStack '{_imageStack.name}' had non-positive Scale and were temporarily normalized to 1.0 for preview/compositing. Consider fixing the asset in the ImageStack editor."
+                );
+            }
+
+            // Extract masks from the (normalized) layers array
             Sprite[] masks = new Sprite[layers.Length];
             for (int i = 0; i < layers.Length; i++)
             {
                 masks[i] = layers[i]?.Mask;
             }
+
+            // Diagnostics: list layers and their order
+#if UNITY_EDITOR
+            for (int i = 0; i < layers.Length; i++)
+            {
+                var l = layers[i];
+                if (l == null)
+                    UnityEngine.Debug.Log($"CompositeLayers: layer[{i}] == null");
+                else
+                    UnityEngine.Debug.Log(
+                        $"CompositeLayers: layer[{i}] Order={l.Order} Sprite={(l.Sprite != null ? l.Sprite.name : "(null)")} Mask={(l.Mask != null ? l.Mask.name : "(null)")}"
+                    );
+            }
+#endif
 
             Texture2D result = ImageCompositor.CompositeImageStackLayers(
                 baseTexture,

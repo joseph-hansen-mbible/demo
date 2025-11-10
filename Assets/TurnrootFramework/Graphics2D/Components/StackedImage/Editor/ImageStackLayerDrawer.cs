@@ -39,30 +39,50 @@ public class ImageStackLayerDrawer : PropertyDrawer
                 ? position.width - PreviewSize - Spacing * 2
                 : position.width;
 
-            // Draw fields on the left
-            Rect fieldRect = new Rect(position.x, yPos, fieldWidth, FieldHeight);
+            // Draw fields on the left using dynamic heights per property to avoid overlap
+            Rect fieldRect = new Rect(
+                position.x,
+                yPos,
+                fieldWidth,
+                EditorGUI.GetPropertyHeight(spriteProp, true)
+            );
 
+            // Sprite
             _ = EditorGUI.PropertyField(fieldRect, spriteProp, new GUIContent("Sprite"));
-            yPos += FieldHeight + Spacing;
+            float h = EditorGUI.GetPropertyHeight(spriteProp, true);
+            yPos += h + Spacing;
 
+            // Mask
             fieldRect.y = yPos;
+            fieldRect.height = EditorGUI.GetPropertyHeight(maskProp, true);
             _ = EditorGUI.PropertyField(fieldRect, maskProp, new GUIContent("Mask"));
-            yPos += FieldHeight + Spacing;
+            h = EditorGUI.GetPropertyHeight(maskProp, true);
+            yPos += h + Spacing;
 
+            // Offset (Vector2)
             fieldRect.y = yPos;
+            fieldRect.height = EditorGUI.GetPropertyHeight(offsetProp, true);
             _ = EditorGUI.PropertyField(fieldRect, offsetProp, new GUIContent("Offset"));
-            yPos += FieldHeight + Spacing;
+            h = EditorGUI.GetPropertyHeight(offsetProp, true);
+            yPos += h + Spacing;
 
+            // Scale
             fieldRect.y = yPos;
+            fieldRect.height = EditorGUI.GetPropertyHeight(scaleProp, true);
             _ = EditorGUI.PropertyField(fieldRect, scaleProp, new GUIContent("Scale"));
-            yPos += FieldHeight + Spacing;
+            h = EditorGUI.GetPropertyHeight(scaleProp, true);
+            yPos += h + Spacing;
 
+            // Rotation
             fieldRect.y = yPos;
+            fieldRect.height = EditorGUI.GetPropertyHeight(rotationProp, true);
             _ = EditorGUI.PropertyField(fieldRect, rotationProp, new GUIContent("Rotation"));
-            yPos += FieldHeight + Spacing;
+            h = EditorGUI.GetPropertyHeight(rotationProp, true);
+            yPos += h + Spacing;
 
-            fieldRect.y = yPos;
-            _ = EditorGUI.PropertyField(fieldRect, orderProp, new GUIContent("Order"));
+            // Order
+            // Order is handled by the container (reorderable list) and not editable here
+            // but we still show it as a badge on the preview above.
 
             // Draw sprite preview on the right if available
             if (hasSprite)
@@ -144,9 +164,9 @@ public class ImageStackLayerDrawer : PropertyDrawer
             return FieldHeight;
         }
 
-        // Height includes: foldout + 6 fields with spacing (Sprite, Mask, Offset, Scale, Rotation, Order)
+        // Height includes: foldout + 5 fields with spacing (Sprite, Mask, Offset, Scale, Rotation)
         float height = FieldHeight + Spacing; // Foldout
-        height += (FieldHeight + Spacing) * 6; // 6 fields
+        height += (FieldHeight + Spacing) * 5; // 5 fields
 
         var spriteProp = property.FindPropertyRelative("Sprite");
         if (spriteProp != null && spriteProp.objectReferenceValue != null)
