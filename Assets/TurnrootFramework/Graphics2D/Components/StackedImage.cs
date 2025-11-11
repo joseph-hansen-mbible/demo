@@ -7,6 +7,11 @@ using UnityEngine;
 
 namespace Turnroot.Graphics2D
 {
+    /// <summary>
+    /// A stacked image is a group of ImageLayers
+    /// with tint and layer order. It is rendered
+    /// to a single sprite.
+    /// </summary>
     [Serializable]
     public abstract class StackedImage<TOwner>
         where TOwner : UnityEngine.Object
@@ -249,6 +254,34 @@ namespace Turnroot.Graphics2D
                 copy.Scale = src.Scale;
                 copy.Rotation = src.Rotation;
                 copy.Order = src.Order;
+                // Preserve Tag if present on source
+                try
+                {
+                    copy.Tag = src.Tag;
+                }
+                catch { }
+                // Preserve per-layer Tint if the source has one (e.g., UnmaskedImageStackLayer)
+                try
+                {
+                    var srcType = src.GetType();
+                    var tintField = srcType.GetField("Tint");
+                    if (tintField != null)
+                    {
+                        var tintVal = tintField.GetValue(src);
+                        if (tintVal is Color c)
+                        {
+                            // Use reflection to set Tint on the copy if available
+                            var copyType = copy.GetType();
+                            var copyTintField = copyType.GetField("Tint");
+                            if (copyTintField != null)
+                                copyTintField.SetValue(copy, c);
+                        }
+                    }
+                }
+                catch
+                {
+                    // ignore any reflection issues
+                }
 
                 // Normalize invalid scale values to 1.0 to avoid zero-sized compositing
                 if (copy.Scale <= 0f)
@@ -333,12 +366,10 @@ namespace Turnroot.Graphics2D
             string assetImportPath =
                 $"Assets/Resources/GameContent/Graphics/{subdirectory}/{fileName}";
             UnityEditor.AssetDatabase.ImportAsset(assetImportPath);
-#endif
         }
 
         private void LoadSavedSprite()
         {
-#if UNITY_EDITOR
             // Wait for asset database to finish importing
             UnityEditor.AssetDatabase.Refresh();
 

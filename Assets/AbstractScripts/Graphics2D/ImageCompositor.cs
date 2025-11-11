@@ -1,4 +1,7 @@
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Assets.AbstractScripts.Graphics2D
 {
@@ -99,6 +102,101 @@ namespace Assets.AbstractScripts.Graphics2D
             return tintedPixels;
         }
 
+        private static Color[] ApplyColorsToLayerPixels(
+            Color[] layerPixels,
+            Sprite mask,
+            Sprite sprite,
+            ImageStackLayer layer,
+            Color[] tints,
+            int layerIndex
+        )
+        {
+            // Apply tinting:
+            // - If a mask and global tints are provided, use mask-based tinting via TintSpritePixels.
+            // - Otherwise, for unmasked grayscale layers, use the layer's per-layer Tint
+            //   (expected to be stored on ImageStackLayer.Tint) and convert grayscale -> color.
+            if (mask != null && tints != null)
+            {
+                // Pre-validate common failure modes so we can give a clearer message
+                string layerTag = layer != null ? layer.Tag : string.Empty;
+                string spriteName =
+                    sprite != null && sprite.texture != null ? sprite.texture.name : "<null>";
+                string maskName =
+                    mask != null && mask.texture != null ? mask.texture.name : "<null>";
+
+                if (tints == null || tints.Length < 3)
+                {
+                    Debug.LogWarning(
+                        $"Tinting skipped for layer {layerIndex} (sprite='{spriteName}', tag='{layerTag}'): tints array is null or too short (length={(tints == null ? 0 : tints.Length)}). Provide exactly 3 tint colors for mask-based tinting."
+                    );
+                    return null;
+                }
+
+                if (sprite == null || sprite.texture == null || mask.texture == null)
+                {
+                    Debug.LogWarning(
+                        $"Tinting skipped for layer {layerIndex} (tag='{layerTag}'): sprite or mask texture is null."
+                    );
+                    return null;
+                }
+
+                if (
+                    mask.texture.width != sprite.texture.width
+                    || mask.texture.height != sprite.texture.height
+                )
+                {
+                    Debug.LogWarning(
+                        $"Tinting skipped for layer {layerIndex} (sprite='{spriteName}', mask='{maskName}', tag='{layerTag}'): size mismatch (sprite={sprite.texture.width}x{sprite.texture.height}, mask={mask.texture.width}x{mask.texture.height}). Ensure both textures are the same dimensions."
+                    );
+                    return null;
+                }
+
+                if (!IsTextureReadable(sprite.texture) || !IsTextureReadable(mask.texture))
+                {
+                    Debug.LogWarning(
+                        $"Tinting skipped for layer {layerIndex} (sprite='{spriteName}', mask='{maskName}', tag='{layerTag}'): one or more textures are not readable. Enable Read/Write in import settings for both assets."
+                    );
+                    return null;
+                }
+
+                var tinted = TintSpritePixels(sprite, mask, tints);
+                if (tinted == null)
+                {
+                    Debug.LogWarning(
+                        $"Tinting failed for layer {layerIndex} (sprite='{spriteName}', tag='{layerTag}'): TintSpritePixels returned null despite pre-checks. Skipping."
+                    );
+                    return null;
+                }
+                return tinted;
+            }
+
+            // No mask-based tinting requested. If the layer object carries a Tint
+            // field, bake that tint into the layer pixels. We expect the caller to
+            // populate ImageStackLayer.Tint for unmasked layers (e.g., Hair).
+            Color layerTint = Color.white;
+            if (layer != null)
+            {
+                layerTint = layer.Tint;
+            }
+
+            // Convert grayscale to colored pixels: use luminance as strength
+            Color[] tintedPixels = new Color[layerPixels.Length];
+            for (int p = 0; p < layerPixels.Length; p++)
+            {
+                Color src = layerPixels[p];
+                // compute luminance from rgb
+                float lum = 0.299f * src.r + 0.587f * src.g + 0.114f * src.b;
+                Color colored = new Color(
+                    layerTint.r * lum,
+                    layerTint.g * lum,
+                    layerTint.b * lum,
+                    src.a
+                );
+                tintedPixels[p] = colored;
+            }
+            return tintedPixels;
+        }
+
         public static Texture2D CompositeImageStackLayers(
             Texture2D baseTexture,
             ImageStackLayer[] layers,
@@ -112,20 +210,11 @@ namespace Assets.AbstractScripts.Graphics2D
                 return null;
             }
 
-            Texture2D compositedTexture = new(
-                baseTexture.width,
-                baseTexture.height,
-                TextureFormat.RGBA32,
-                false
-            );
-            Color[] basePixels = baseTexture.GetPixels();
-            Color[] finalPixels = new Color[basePixels.Length];
-            System.Array.Copy(basePixels, finalPixels, basePixels.Length);
+            // Create texture and pixel buffer
+            Color[] finalPixels;
+            Texture2D compositedTexture = CreateCompositedTexture(baseTexture, out finalPixels);
 
-            // Sort layers by Order property
-            var sortedLayers = new ImageStackLayer[layers.Length];
-            System.Array.Copy(layers, sortedLayers, layers.Length);
-            System.Array.Sort(sortedLayers, (a, b) => a.Order.CompareTo(b.Order));
+            var sortedLayers = SortLayersByOrder(layers);
 
             for (int layerIndex = 0; layerIndex < sortedLayers.Length; layerIndex++)
             {
@@ -137,98 +226,33 @@ namespace Assets.AbstractScripts.Graphics2D
                 Sprite mask =
                     (masks != null && masks.Length > layerIndex) ? masks[layerIndex] : null;
 
-                // Check if texture is readable
-                if (!IsTextureReadable(sprite.texture))
+                Color[] layerPixels = GetSpritePixelsIfReadable(sprite);
+                if (layerPixels == null)
                 {
-                    Debug.LogWarning(
-                        $"Layer {layerIndex} texture is not readable. Enable Read/Write in import settings. Skipping."
-                    );
+                    NotifyTextureNotReadable(sprite.texture, layerIndex);
                     continue;
                 }
 
-                Color[] layerPixels = sprite.texture.GetPixels();
+                layerPixels = ApplyColorsToLayerPixels(
+                    layerPixels,
+                    mask,
+                    sprite,
+                    layer,
+                    tints,
+                    layerIndex
+                );
 
-                // Apply tinting if mask and tints are provided (same tints for all layers)
-                if (mask != null && tints != null)
-                {
-                    layerPixels = TintSpritePixels(sprite, mask, tints);
-                    if (layerPixels == null)
-                    {
-                        Debug.LogWarning($"Failed to tint layer {layerIndex}. Skipping.");
-                        continue;
-                    }
-                }
+                if (layerPixels == null)
+                    continue;
 
-                // Apply scale, rotation, and offset
-                int layerWidth = sprite.texture.width;
-                int layerHeight = sprite.texture.height;
-                Vector2 offset = layer.Offset;
-                float scale = layer.Scale;
-                // Note: Rotation not yet implemented - would require matrix transformations
-
-                // Calculate scaled dimensions
-                int scaledWidth = Mathf.RoundToInt(layerWidth * scale);
-                int scaledHeight = Mathf.RoundToInt(layerHeight * scale);
-
-                // Composite layer onto final image using alpha blending with offset positioning
-                // Iterate through destination pixels to avoid gaps when upscaling
-                for (int destY = 0; destY < scaledHeight; destY++)
-                {
-                    for (int destX = 0; destX < scaledWidth; destX++)
-                    {
-                        // Apply offset to determine position in final texture
-                        int finalX = destX + Mathf.RoundToInt(offset.x);
-                        int finalY = destY + Mathf.RoundToInt(offset.y);
-
-                        // Check if position is within bounds of final texture
-                        if (
-                            finalX < 0
-                            || finalX >= baseTexture.width
-                            || finalY < 0
-                            || finalY >= baseTexture.height
-                        )
-                        {
-                            continue;
-                        }
-
-                        // Sample from source texture (nearest-neighbor)
-                        int sourceX = Mathf.FloorToInt(destX / scale);
-                        int sourceY = Mathf.FloorToInt(destY / scale);
-
-                        // Clamp to source bounds
-                        sourceX = Mathf.Clamp(sourceX, 0, layerWidth - 1);
-                        sourceY = Mathf.Clamp(sourceY, 0, layerHeight - 1);
-
-                        // Get pixel from layer
-                        int layerPixelIndex = sourceY * layerWidth + sourceX;
-                        if (layerPixelIndex >= layerPixels.Length)
-                            continue;
-
-                        Color src = layerPixels[layerPixelIndex];
-
-                        // Get corresponding pixel from final texture
-                        int finalPixelIndex = finalY * baseTexture.width + finalX;
-                        if (finalPixelIndex >= finalPixels.Length)
-                            continue;
-
-                        Color dst = finalPixels[finalPixelIndex];
-
-                        // Standard alpha blending formula
-                        float srcAlpha = src.a;
-                        float dstAlpha = dst.a * (1 - srcAlpha);
-                        float outAlpha = srcAlpha + dstAlpha;
-
-                        if (outAlpha > 0)
-                        {
-                            finalPixels[finalPixelIndex] = new Color(
-                                (src.r * srcAlpha + dst.r * dstAlpha) / outAlpha,
-                                (src.g * srcAlpha + dst.g * dstAlpha) / outAlpha,
-                                (src.b * srcAlpha + dst.b * dstAlpha) / outAlpha,
-                                outAlpha
-                            );
-                        }
-                    }
-                }
+                CompositeLayerOntoFinal(
+                    layerPixels,
+                    sprite,
+                    layer,
+                    finalPixels,
+                    baseTexture.width,
+                    baseTexture.height
+                );
             }
 
             compositedTexture.SetPixels(finalPixels);
@@ -280,12 +304,24 @@ namespace Assets.AbstractScripts.Graphics2D
                     continue;
                 }
 
-                Color[] layerPixels = layer.texture.GetPixels();
+                Color[] layerPixels = GetSpritePixelsIfReadable(layer);
+                if (layerPixels == null)
+                {
+                    NotifyTextureNotReadable(layer.texture, layerIndex);
+                    continue;
+                }
 
                 // Apply tinting if mask and tints are provided (same tints for all layers)
                 if (mask != null && tints != null)
                 {
-                    layerPixels = TintSpritePixels(layer, mask, tints);
+                    layerPixels = ApplyColorsToLayerPixels(
+                        layerPixels,
+                        mask,
+                        layer,
+                        null,
+                        tints,
+                        layerIndex
+                    );
                     if (layerPixels == null)
                     {
                         Debug.LogWarning($"Failed to tint layer {layerIndex}. Skipping.");
@@ -293,31 +329,8 @@ namespace Assets.AbstractScripts.Graphics2D
                     }
                 }
 
-                // Composite layer onto final image using alpha blending
-                for (int i = 0; i < finalPixels.Length && i < layerPixels.Length; i++)
-                {
-                    Color src = layerPixels[i];
-                    Color dst = finalPixels[i];
-
-                    // Standard alpha blending formula
-                    float srcAlpha = src.a;
-                    float dstAlpha = dst.a * (1 - srcAlpha);
-                    float outAlpha = srcAlpha + dstAlpha;
-
-                    if (outAlpha > 0)
-                    {
-                        finalPixels[i] = new Color(
-                            (src.r * srcAlpha + dst.r * dstAlpha) / outAlpha,
-                            (src.g * srcAlpha + dst.g * dstAlpha) / outAlpha,
-                            (src.b * srcAlpha + dst.b * dstAlpha) / outAlpha,
-                            outAlpha
-                        );
-                    }
-                    else
-                    {
-                        finalPixels[i] = new Color(0, 0, 0, 0);
-                    }
-                }
+                // Composite layer onto final image using elementwise blending (aligned buffers)
+                CompositePixelsElementwise(finalPixels, layerPixels);
             }
 
             compositedTexture.SetPixels(finalPixels);
@@ -334,7 +347,179 @@ namespace Assets.AbstractScripts.Graphics2D
             }
             catch
             {
+                Debug.LogError(
+                    $"Texture '{texture.name}' is not readable. Enable Read/Write in import settings."
+                );
+
                 return false;
+            }
+        }
+
+        // Helper: create the composited texture and initialize final pixel buffer
+        private static Texture2D CreateCompositedTexture(
+            Texture2D baseTexture,
+            out Color[] finalPixels
+        )
+        {
+            Texture2D compositedTexture = new(
+                baseTexture.width,
+                baseTexture.height,
+                TextureFormat.RGBA32,
+                false
+            );
+            Color[] basePixels = baseTexture.GetPixels();
+            finalPixels = new Color[basePixels.Length];
+            System.Array.Copy(basePixels, finalPixels, basePixels.Length);
+            return compositedTexture;
+        }
+
+        // Helper: return a sorted copy of layers by Order
+        private static ImageStackLayer[] SortLayersByOrder(ImageStackLayer[] layers)
+        {
+            var copy = new ImageStackLayer[layers.Length];
+            System.Array.Copy(layers, copy, layers.Length);
+            System.Array.Sort(copy, (a, b) => a.Order.CompareTo(b.Order));
+            return copy;
+        }
+
+        // Helper: get pixels from a sprite if readable, otherwise null
+        private static Color[] GetSpritePixelsIfReadable(Sprite sprite)
+        {
+            if (sprite == null)
+                return null;
+            if (!IsTextureReadable(sprite.texture))
+                return null;
+            return sprite.texture.GetPixels();
+        }
+
+        // Helper: show an editor popup for a non-readable texture and offer to open the
+        // texture asset in the inspector (editor-only). This centralizes the UI so both
+        // composition paths behave identically.
+        private static void NotifyTextureNotReadable(Texture2D texture, int layerIndex)
+        {
+            if (texture == null)
+                return;
+
+            string message =
+                $"Layer {layerIndex} texture '{texture.name}' is not readable. Enable Read/Write in the texture import settings and reimport the asset.";
+#if UNITY_EDITOR
+            int choice = EditorUtility.DisplayDialogComplex(
+                "Texture not readable",
+                message,
+                "OK",
+                "Open Import Settings",
+                "Skip"
+            );
+            if (choice == 1)
+            {
+                string path = AssetDatabase.GetAssetPath(texture);
+                var obj = AssetDatabase.LoadMainAssetAtPath(path);
+                if (obj != null)
+                {
+                    Selection.activeObject = obj;
+                    EditorGUIUtility.PingObject(obj);
+                }
+            }
+            // choice == 2 (Skip) or 0 (OK) both fall through; caller typically skips the layer.
+#else
+            Debug.LogWarning(message + " Skipping.");
+#endif
+        }
+
+        // Helper: composite a single layer's pixels (already tinted) onto finalPixels
+        private static void CompositeLayerOntoFinal(
+            Color[] layerPixels,
+            Sprite sprite,
+            ImageStackLayer layer,
+            Color[] finalPixels,
+            int finalWidth,
+            int finalHeight
+        )
+        {
+            if (layerPixels == null || sprite == null || layer == null)
+                return;
+
+            int layerWidth = sprite.texture.width;
+            int layerHeight = sprite.texture.height;
+            Vector2 offset = layer.Offset;
+            float scale = layer.Scale;
+
+            int scaledWidth = Mathf.RoundToInt(layerWidth * scale);
+            int scaledHeight = Mathf.RoundToInt(layerHeight * scale);
+
+            for (int destY = 0; destY < scaledHeight; destY++)
+            {
+                for (int destX = 0; destX < scaledWidth; destX++)
+                {
+                    int finalX = destX + Mathf.RoundToInt(offset.x);
+                    int finalY = destY + Mathf.RoundToInt(offset.y);
+
+                    if (finalX < 0 || finalX >= finalWidth || finalY < 0 || finalY >= finalHeight)
+                        continue;
+
+                    int sourceX = Mathf.FloorToInt(destX / scale);
+                    int sourceY = Mathf.FloorToInt(destY / scale);
+
+                    sourceX = Mathf.Clamp(sourceX, 0, layerWidth - 1);
+                    sourceY = Mathf.Clamp(sourceY, 0, layerHeight - 1);
+
+                    int layerPixelIndex = sourceY * layerWidth + sourceX;
+                    if (layerPixelIndex >= layerPixels.Length)
+                        continue;
+
+                    Color src = layerPixels[layerPixelIndex];
+
+                    int finalPixelIndex = finalY * finalWidth + finalX;
+                    if (finalPixelIndex >= finalPixels.Length)
+                        continue;
+
+                    Color dst = finalPixels[finalPixelIndex];
+
+                    float srcAlpha = src.a;
+                    float dstAlpha = dst.a * (1 - srcAlpha);
+                    float outAlpha = srcAlpha + dstAlpha;
+
+                    if (outAlpha > 0)
+                    {
+                        finalPixels[finalPixelIndex] = new Color(
+                            (src.r * srcAlpha + dst.r * dstAlpha) / outAlpha,
+                            (src.g * srcAlpha + dst.g * dstAlpha) / outAlpha,
+                            (src.b * srcAlpha + dst.b * dstAlpha) / outAlpha,
+                            outAlpha
+                        );
+                    }
+                }
+            }
+        }
+
+        // Helper: composite two aligned pixel buffers element-wise (no scaling or offsets)
+        private static void CompositePixelsElementwise(Color[] finalPixels, Color[] layerPixels)
+        {
+            if (finalPixels == null || layerPixels == null)
+                return;
+            int len = Mathf.Min(finalPixels.Length, layerPixels.Length);
+            for (int i = 0; i < len; i++)
+            {
+                Color src = layerPixels[i];
+                Color dst = finalPixels[i];
+
+                float srcAlpha = src.a;
+                float dstAlpha = dst.a * (1 - srcAlpha);
+                float outAlpha = srcAlpha + dstAlpha;
+
+                if (outAlpha > 0)
+                {
+                    finalPixels[i] = new Color(
+                        (src.r * srcAlpha + dst.r * dstAlpha) / outAlpha,
+                        (src.g * srcAlpha + dst.g * dstAlpha) / outAlpha,
+                        (src.b * srcAlpha + dst.b * dstAlpha) / outAlpha,
+                        outAlpha
+                    );
+                }
+                else
+                {
+                    finalPixels[i] = new Color(0, 0, 0, 0);
+                }
             }
         }
     }

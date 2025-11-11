@@ -179,13 +179,155 @@ namespace Turnroot.Characters.Subclasses.Editor
             _layersSerializedObject = new SerializedObject(imageStack);
             var layersProp = _layersSerializedObject.FindProperty("_layers");
 
+            // Ensure mandatory portrait layers exist. Add any missing mandatory tags.
+            var existingTags = new System.Collections.Generic.HashSet<string>(
+                System.StringComparer.OrdinalIgnoreCase
+            );
+            for (int i = 0; i < imageStack.Layers.Count; i++)
+            {
+                var l = imageStack.Layers[i];
+                if (l != null && !string.IsNullOrEmpty(l.Tag))
+                    existingTags.Add(l.Tag);
+            }
+
+            bool addedAny = false;
+            foreach (var t in Turnroot.Characters.PortraitLayerTags.Mandatory)
+            {
+                if (!existingTags.Contains(t))
+                {
+                    // Any named portrait tag is represented as an unmasked layer so it can
+                    // receive per-layer tinting and be composited appropriately.
+                    var layer = new UnmaskedImageStackLayer()
+                    {
+                        Sprite = null,
+                        Mask = null,
+                        Offset = Vector2.zero,
+                        Scale = 1f,
+                        Rotation = 0f,
+                        Order = 0,
+                        Tag = t,
+                        Tint = Color.white,
+                    };
+                    imageStack.Layers.Add(layer);
+                    addedAny = true;
+                }
+            }
+
+            if (addedAny)
+            {
+                EditorUtility.SetDirty(imageStack);
+                // Recreate the serialized object so layersProp reflects the inserted elements
+                _layersSerializedObject = new SerializedObject(imageStack);
+                layersProp = _layersSerializedObject.FindProperty("_layers");
+            }
+
+            // Convert any tagged layer to UnmaskedImageStackLayer so it carries the per-layer
+            // Tint used by the compositor and editor. We'll also enforce canonical ordering
+            // for mandatory tags (front-to-back) so that the UI always shows a predictable
+            // stacking order.
+            for (int i = 0; i < imageStack.Layers.Count; i++)
+            {
+                var l = imageStack.Layers[i];
+                if (l != null && !string.IsNullOrEmpty(l.Tag))
+                {
+                    if (!(l is UnmaskedImageStackLayer))
+                    {
+                        var converted = new UnmaskedImageStackLayer();
+                        converted.Sprite = l.Sprite;
+                        converted.Mask = null; // unmasked
+                        converted.Offset = l.Offset;
+                        converted.Scale = l.Scale;
+                        converted.Rotation = l.Rotation;
+                        converted.Order = l.Order;
+                        converted.Tag = l.Tag;
+                        converted.Tint = Color.white;
+
+                        imageStack.Layers[i] = converted;
+                        EditorUtility.SetDirty(imageStack);
+                        Debug.Log(
+                            "Converted ImageStack layer at index "
+                                + i
+                                + " to UnmaskedImageStackLayer for tag '"
+                                + l.Tag
+                                + "'."
+                        );
+                    }
+                }
+            }
+
+            // Enforce canonical ordering for mandatory tags among other layers, but
+            // keep newly-added (untagged) layers at the front so they remain where
+            // the user placed them. Algorithm:
+            // 1. Add untagged layers first (preserve original order) so new layers
+            //    inserted at the top stay there after reopen.
+            // 2. Add any remaining optional tagged layers in their original order.
+            // 3. Append mandatory tagged layers in the configured canonical
+            //    front-to-back order if present.
+            var canonical = Turnroot.Characters.PortraitLayerTags.CanonicalFrontToBackMandatory;
+            var original = imageStack.Layers.ToList();
+            var result = new System.Collections.Generic.List<ImageStackLayer>();
+
+            // 1) Untagged layers (preserve original order) - keep new layers at front
+            foreach (var l in original)
+            {
+                if (l == null)
+                    continue;
+                if (string.IsNullOrEmpty(l.Tag) && !result.Contains(l))
+                    result.Add(l);
+            }
+
+            // 2) Optional tagged layers (non-mandatory), preserving original order
+            foreach (var l in original)
+            {
+                if (l == null)
+                    continue;
+                if (
+                    !string.IsNullOrEmpty(l.Tag)
+                    && !Turnroot.Characters.PortraitLayerTags.IsMandatory(l.Tag)
+                    && !result.Contains(l)
+                )
+                    result.Add(l);
+            }
+
+            // 3) Mandatory tags in canonical front-to-back order
+            foreach (var tag in canonical)
+            {
+                var found = original.FirstOrDefault(x =>
+                    x != null
+                    && string.Equals(x.Tag, tag, System.StringComparison.OrdinalIgnoreCase)
+                );
+                if (found != null && !result.Contains(found))
+                    result.Add(found);
+            }
+
+            // Replace the layers list contents with the ordered result
+            imageStack.Layers.Clear();
+            foreach (var r in result)
+                imageStack.Layers.Add(r);
+
+            // Assign Order values: Face (back) gets 0, others incrementing from 1 (front highest)
+            int orderCounter = 1;
+            foreach (var l in imageStack.Layers)
+            {
+                if (l == null)
+                    continue;
+                if (
+                    !string.IsNullOrEmpty(l.Tag)
+                    && string.Equals(l.Tag, "Face", System.StringComparison.OrdinalIgnoreCase)
+                )
+                    l.Order = 0;
+                else
+                    l.Order = orderCounter++;
+            }
+
+            // We draw our own per-element remove button so we can hide removal for mandatory layers
             _layersReorderList = new ReorderableList(
                 _layersSerializedObject,
                 layersProp,
                 true,
                 true,
                 true,
-                true
+                false
             );
             _layersReorderList.drawHeaderCallback = rect =>
                 EditorGUI.LabelField(rect, $"Layers ({layersProp.arraySize})");
@@ -195,21 +337,47 @@ namespace Turnroot.Characters.Subclasses.Editor
             {
                 var el = layersProp.GetArrayElementAtIndex(index);
                 rect.y += 2;
-                EditorGUI.PropertyField(
-                    new Rect(rect.x, rect.y, rect.width, EditorGUI.GetPropertyHeight(el, true)),
-                    el,
-                    new GUIContent($"Layer {index}"),
-                    true
+                // Draw the element property field
+                Rect fieldRect = new Rect(
+                    rect.x,
+                    rect.y,
+                    rect.width - 60,
+                    EditorGUI.GetPropertyHeight(el, true)
                 );
+                EditorGUI.PropertyField(fieldRect, el, new GUIContent($"Layer {index}"), true);
+
+                // Draw a per-element remove button unless the layer is tagged as mandatory
+                var tagProp = el.FindPropertyRelative("Tag");
+                string tag = tagProp != null ? tagProp.stringValue : string.Empty;
+                if (
+                    string.IsNullOrEmpty(tag)
+                    || !Turnroot.Characters.PortraitLayerTags.IsMandatory(tag)
+                )
+                {
+                    Rect btnRect = new Rect(fieldRect.xMax + 4, fieldRect.y, 56, 18);
+                    if (GUI.Button(btnRect, "Remove"))
+                    {
+                        layersProp.DeleteArrayElementAtIndex(index);
+                        _layersSerializedObject.ApplyModifiedProperties();
+                        EditorUtility.SetDirty(imageStack);
+                        if (_autoRefresh)
+                            RefreshPreview();
+                    }
+                }
             };
 
             var stackRef = imageStack;
 
             _layersReorderList.onAddCallback = list =>
             {
+                // Increase the array size, then move the newly-created slot to index 0
                 layersProp.arraySize++;
-                int lastIndex = layersProp.arraySize - 1;
-                var newEl = layersProp.GetArrayElementAtIndex(lastIndex);
+                int srcIndex = layersProp.arraySize - 1;
+                int newIndex = 0;
+                if (srcIndex != newIndex)
+                    layersProp.MoveArrayElement(srcIndex, newIndex);
+
+                var newEl = layersProp.GetArrayElementAtIndex(newIndex);
                 if (newEl != null)
                 {
                     var spriteProp = newEl.FindPropertyRelative("Sprite");
@@ -218,6 +386,8 @@ namespace Turnroot.Characters.Subclasses.Editor
                     var scaleProp = newEl.FindPropertyRelative("Scale");
                     var rotationProp = newEl.FindPropertyRelative("Rotation");
                     var orderProp = newEl.FindPropertyRelative("Order");
+                    var tagProp = newEl.FindPropertyRelative("Tag");
+                    var tintProp = newEl.FindPropertyRelative("Tint");
 
                     if (spriteProp != null)
                         spriteProp.objectReferenceValue = null;
@@ -229,8 +399,29 @@ namespace Turnroot.Characters.Subclasses.Editor
                         scaleProp.floatValue = 1f;
                     if (rotationProp != null)
                         rotationProp.floatValue = 0f;
+
+                    // Put new layer at the front: give it a high Order so it renders on top.
                     if (orderProp != null)
-                        orderProp.intValue = (layersProp.arraySize - 1) - lastIndex;
+                    {
+                        int maxOrder = int.MinValue;
+                        for (int i = 0; i < layersProp.arraySize; i++)
+                        {
+                            if (i == newIndex)
+                                continue;
+                            var o = layersProp
+                                .GetArrayElementAtIndex(i)
+                                .FindPropertyRelative("Order");
+                            if (o != null)
+                                maxOrder = Mathf.Max(maxOrder, o.intValue);
+                        }
+                        orderProp.intValue = (maxOrder == int.MinValue) ? 1 : (maxOrder + 1);
+                    }
+
+                    // Ensure new layers are normal (no tag) and have default tint/manual settings
+                    if (tagProp != null)
+                        tagProp.stringValue = string.Empty;
+                    if (tintProp != null)
+                        tintProp.colorValue = Color.white;
                 }
 
                 _layersSerializedObject.ApplyModifiedProperties();
@@ -242,6 +433,27 @@ namespace Turnroot.Characters.Subclasses.Editor
             _layersReorderList.onRemoveCallback = list =>
             {
                 int removeIndex = list.index;
+
+                // Prevent removal of mandatory portrait layers identified by Tag (e.g., "Hair")
+                var elToRemove = layersProp.GetArrayElementAtIndex(removeIndex);
+                if (elToRemove != null)
+                {
+                    var tagProp = elToRemove.FindPropertyRelative("Tag");
+                    if (tagProp != null && !string.IsNullOrEmpty(tagProp.stringValue))
+                    {
+                        string tag = tagProp.stringValue;
+                        if (Turnroot.Characters.PortraitLayerTags.IsMandatory(tag))
+                        {
+                            EditorUtility.DisplayDialog(
+                                "Cannot remove layer",
+                                $"The '{tag}' layer is mandatory for portraits and cannot be removed.",
+                                "OK"
+                            );
+                            return;
+                        }
+                    }
+                }
+
                 layersProp.DeleteArrayElementAtIndex(removeIndex);
                 _layersSerializedObject.ApplyModifiedProperties();
 
