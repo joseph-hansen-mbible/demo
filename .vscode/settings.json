@@ -66,5 +66,83 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
     },
-    "dotnet.defaultSolution": "fe-prototyping.sln"
+    "dotnet.defaultSolution": "fe-prototyping.sln",
+    "folder-customization.folders": [
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Conversations\\",
+            "color": "foldercustomization.AnsiColor208"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Characters\\Components\\Inventory\\",
+            "color": "foldercustomization.AnsiColor198"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Characters\\Components\\Stats\\",
+            "color": "foldercustomization.AnsiColor154"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Characters\\Components\\Support\\",
+            "color": "foldercustomization.AnsiColor69"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Characters\\",
+            "color": "foldercustomization.AnsiColor86"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\CommonAncestors\\",
+            "color": "foldercustomization.AnsiColor217"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Conversations\\Branching\\Components\\Nodes\\",
+            "color": "foldercustomization.AnsiColor115"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Conversations\\Components\\",
+            "color": "foldercustomization.AnsiColor208"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Conversations\\Gameplay\\",
+            "color": "foldercustomization.AnsiColor50"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Conversations\\Simple\\",
+            "color": "foldercustomization.AnsiColor169"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Gameplay\\Combat\\FundamentalComponents\\",
+            "color": "foldercustomization.AnsiColor39"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Gameplay\\Objects\\",
+            "color": "foldercustomization.AnsiColor193"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Graphics2D\\Components\\StackedImage\\",
+            "color": "foldercustomization.AnsiColor217"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Skills\\",
+            "color": "foldercustomization.AnsiColor154"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\_FrameworkDocs\\",
+            "color": "foldercustomization.AnsiColor153"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Gameplay\\",
+            "color": "foldercustomization.AnsiColor229"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\Graphics2D\\",
+            "color": "foldercustomization.AnsiColor211"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\TurnrootFramework\\GamePackage\\",
+            "color": "foldercustomization.AnsiColor222"
+        },
+        {
+            "path": "fe-prototyping\\Assets\\AbstractScripts\\",
+            "color": "foldercustomization.AnsiColor73"
+        }
+    ]
 }
