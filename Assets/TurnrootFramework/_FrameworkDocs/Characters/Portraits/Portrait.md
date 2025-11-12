@@ -9,7 +9,7 @@ Represents a compositable character portrait with layer-based rendering and colo
 
 | Property | Type | Access | Description |
 |----------|------|--------|-------------|
-| `Owner` | `Character` | Read-only | Owning character |
+| `Owner` | `CharacterData` | Read-only | Owning character |
 | `ImageStack` | `ImageStack` | Read-only | Layer stack for compositing |
 | `Key` | `string` | Read-only | Unique filename key for saved sprite |
 | `RuntimeSprite` | `Sprite` | Read-only | Generated sprite (not serialized) |
@@ -28,7 +28,7 @@ Creates a new portrait with a unique GUID and generated key.
 
 ### Configuration
 ```csharp
-void SetOwner(Character owner)
+void SetOwner(CharacterData owner)
 ```
 Assigns the owning character and updates tint colors from character's accent colors.
 
@@ -57,7 +57,7 @@ Composites all layers, saves PNG to disk, and creates sprite asset.
 Texture2D CompositeLayers()
 ```
 Performs layer compositing with tinting and transformations.
-- **Returns:** Composited 512x512 RGBA32 texture
+- **Returns:** Composited texture with dimensions from `GraphicsPrototypesSettings`
 
 ### Utility
 ```csharp
@@ -69,6 +69,17 @@ Returns compact identifier: `p{GUID}`
 string Identify()
 ```
 Returns detailed string: `Portrait(ID: {guid}, Owner: {name}, Key: {key})`
+
+### Default Management
+```csharp
+void SaveDefaults()
+```
+Placeholder method for portrait-specific default saving. The actual implementation is in the owning `CharacterData.SaveDefaults()` which saves tagged layer defaults across all portraits.
+
+```csharp
+void LoadDefaults()
+```
+Placeholder method for portrait-specific default loading. The actual implementation is in the owning `CharacterData.LoadDefaults()` which restores tagged layer defaults across all portraits.
 
 ## Lifecycle
 

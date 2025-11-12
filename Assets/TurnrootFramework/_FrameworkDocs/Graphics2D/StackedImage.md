@@ -51,6 +51,20 @@ Sets the owner reference and updates tint colors from owner.
 - Assigns `_owner` field
 - Calls `UpdateTintColorsFromOwner()` to sync colors
 
+### SetImageStack()
+
+```csharp
+public void SetImageStack(ImageStack stack)
+```
+
+Assigns an ImageStack to this StackedImage instance.
+
+**Parameters**:
+- `stack` - ImageStack containing layers to composite
+
+**Effects**:
+- Assigns `_imageStack` field
+
 ### SetKey()
 
 ```csharp

@@ -5,7 +5,7 @@ Complete API reference for Assets/Prototypes systems.
 ## Core Systems
 
 ### Character System
-- **[Character](Characters/Character.md)** - Main character configuration asset
+- **[CharacterData](Characters/Character.md)** - Main character configuration asset
 - **[CharacterStats](Characters/CharacterStats.md)** - Stat system (bounded and unbounded)
 - **[CharacterComponents](Characters/CharacterComponents.md)** - Pronouns, relationships, traits
 - **[CharacterInventory](Characters/CharacterInventory.md)** - Multi-slot equipment and inventory

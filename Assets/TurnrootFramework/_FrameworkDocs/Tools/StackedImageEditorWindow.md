@@ -73,22 +73,24 @@ Override these to customize behavior:
 - Tint color editing (3 channels)
 - ImageStack assignment
 - Key generation (short/full GUID)
+- **Default management**: Save/load tagged layer defaults
 - Render to file + asset import
 - Saved sprite display
 
 **UI Layout:**
-``
+```
 +-------------------------------+
 � Window Title                   �
 +-------------------------------�
 � Controls    � Preview         �
-� - Metadata  �  [Image]        �
-� - Stack     �  [Refresh]      �
-� - Owner     �  [Saved Sprite] �
-� - Tints     �  [Render]       �
-� - Layers    �                 �
+� - Metadata  �  [Save Defaults] �
+� - Stack     �  [Load Defaults] �
+� - Owner     �  [Image]        �
+� - Tints     �  [Refresh]      �
+� - Layers    �  [Saved Sprite] �
+�             �  [Render]       �
 +-------------------------------+
-``
+```
 
 ## Customization Examples
 

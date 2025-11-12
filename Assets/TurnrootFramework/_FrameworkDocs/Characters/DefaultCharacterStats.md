@@ -66,7 +66,7 @@ Characters automatically load and apply defaults in `OnEnable()`:
 - Loads `Resources/GameSettings/DefaultCharacterStats`
 - Initializes stats using `CreateBoundedStats()` and `CreateUnboundedStats()`
 
-### Character.cs Integration
+### CharacterData.cs Integration
 
 ```csharp
 private void OnEnable()
@@ -123,5 +123,5 @@ Changes to the DefaultCharacterStats asset:
 ## See Also
 
 - **[CharacterStats](../Characters/CharacterStats.md)** - Stat system details
-- **[Character](../Characters/Character.md)** - Character asset
+- **[CharacterData](../Characters/Character.md)** - Character asset
 - **[Settings](Settings.md)** - Other settings assets

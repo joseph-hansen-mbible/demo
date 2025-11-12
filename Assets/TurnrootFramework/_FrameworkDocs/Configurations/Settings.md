@@ -17,13 +17,13 @@ Assets > Create > Game Settings > CharacterPrototypeSettings
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `UseAccentColors` | `bool` | `true` | Enable accent colors on new characters |
+| *(none)* | - | - | No configurable properties |
 
 ### Behavior
 
 **OnValidate (Editor Only):**
-- Automatically updates all `Character` assets when settings change
-- Finds all Character assets via AssetDatabase
+- Automatically updates all `CharacterData` assets when settings change
+- Finds all CharacterData assets via AssetDatabase
 - Marks them dirty and saves changes
 - Deferred to avoid import conflicts
 

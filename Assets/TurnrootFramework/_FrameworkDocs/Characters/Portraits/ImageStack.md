@@ -17,7 +17,6 @@ Assets > Create > Graphics > Portrait > ImageStack
 | Property | Type | Description |
 |----------|------|-------------|
 | `Layers` | `List<ImageStackLayer>` | Ordered list of compositable layers |
-| `OwnerCharacter` | `CharacterData` | Optional character reference for editor auto-assignment |
 
 ## Usage
 
@@ -37,7 +36,6 @@ portrait.CompositeLayers(); // Composites all layers
 ## Notes
 - Rendering handled by `StackedImage<TOwner>.CompositeLayers()` (Portrait, SkillBadge, etc.)
 - Layers composited in order of `Order` property (low to high)
-- Owner character reference used by editor for auto-assignment
 - Render dimensions determined by `GraphicsPrototypesSettings`
 
 ---
@@ -58,6 +56,8 @@ Individual sprite layer with transform and tinting data.
 | `Scale` | `float` | `1.0` | Scale multiplier |
 | `Rotation` | `float` | `0.0` | Rotation in degrees (not yet implemented) |
 | `Order` | `int` | `0` | Render order (lower = behind) |
+| `Tint` | `Color` | `Color.white` | Per-layer tint color for unmasked layers |
+| `Tag` | `string` | `""` | Tag for set components (e.g., "Hair", "Face", "Eyes") |
 
 ## Tint Masking
 
@@ -67,6 +67,8 @@ Mask sprite uses RGB channels to define tinting regions:
 - **Blue Channel** - Tinted by `TintColors[2]`
 
 Channel intensity (0-1) controls blend strength. Multiple channels blend proportionally.
+
+For unmasked layers, the `Tint` property applies a direct color tint (typically used for grayscale sprites like hair).
 
 ## Transformations
 
@@ -84,7 +86,9 @@ var layer = new ImageStackLayer {
     Mask = hairMask,
     Offset = new Vector2(0, 10),
     Scale = 1.2f,
-    Order = 5
+    Order = 5,
+    Tint = Color.white,
+    Tag = "Hair"
 };
 ```
 
