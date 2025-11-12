@@ -71,7 +71,6 @@ namespace TurnrootFramework.Conversations
         }
 
         public UnityEvent OnLayerStart;
-        public UnityEvent OnLayerEnd;
         public UnityEvent OnLayerComplete;
         private Sprite _PortraitSprite;
 
@@ -98,11 +97,6 @@ namespace TurnrootFramework.Conversations
         public void StartLayer()
         {
             OnLayerStart?.Invoke();
-        }
-
-        public void EndLayer()
-        {
-            OnLayerEnd?.Invoke();
         }
 
         public void CompleteLayer()

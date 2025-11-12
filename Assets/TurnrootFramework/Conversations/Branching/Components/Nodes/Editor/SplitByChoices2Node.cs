@@ -9,12 +9,12 @@ public class SplitByChoices2Node : Node
     [Input]
     public ConversationFlow previous;
 
-    [Output]
+    [Output(ShowBackingValue.Unconnected, ConnectionType.Override)]
     public ConversationFlow ChoiceA;
 
     public ConversationChoice choiceA;
 
-    [Output]
+    [Output(ShowBackingValue.Unconnected, ConnectionType.Override)]
     public ConversationFlow ChoiceB;
 
     public ConversationChoice choiceB;

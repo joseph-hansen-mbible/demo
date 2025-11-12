@@ -29,8 +29,6 @@ namespace Turnroot.Conversations.Branching.Nodes.Editor
                 NodeEditorGUILayout.PortField(port);
             }
 
-            // Draw serialized properties excluding internal xNode fields and any fields
-            // that correspond to ports (we already drew those via PortField).
             var portNames = new System.Collections.Generic.HashSet<string>(StringComparer.Ordinal);
             foreach (var p in target.Ports)
                 portNames.Add(p.fieldName);

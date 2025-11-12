@@ -92,8 +92,8 @@ namespace TurnrootFramework.Conversations
 
                     currentLayer.OnLayerComplete.RemoveListener(completionCallback);
 
-                    // End the layer
-                    currentLayer.EndLayer();
+                    // Layer cleanup can be done here if needed
+                    // (previously was currentLayer.EndLayer();)
                 }
             }
 
