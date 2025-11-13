@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Assets.AbstractScripts.Graphics2D;
 using NaughtyAttributes;
+using Turnroot.AbstractScripts.Graphics2D;
 using Turnroot.Graphics.Portrait;
 using UnityEngine;
 
@@ -203,16 +204,16 @@ namespace Turnroot.Graphics2D
             }
 
             // Get render dimensions from settings
-            GraphicsPrototypesSettings settings = Resources.Load<GraphicsPrototypesSettings>(
-                "GameSettings/GraphicsPrototypesSettings"
+            Graphics2DSettings settings = Resources.Load<Graphics2DSettings>(
+                "GameSettings/Graphics2DSettings"
             );
 
             if (settings == null)
             {
                 Debug.LogError(
-                    "GraphicsPrototypesSettings not found in Resources/GameSettings folder! Using default 512x512."
+                    "Graphics2DSettings not found in Resources/GameSettings folder! Using default 512x512."
                 );
-                settings = ScriptableObject.CreateInstance<GraphicsPrototypesSettings>();
+                settings = ScriptableObject.CreateInstance<Graphics2DSettings>();
             }
 
             int width = settings.portraitRenderWidth;

@@ -2,6 +2,7 @@ using System.Linq;
 using NaughtyAttributes;
 using Turnroot.Characters;
 using Turnroot.Characters.Subclasses;
+using Turnroot.AbstractScripts.Graphics2D;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -69,16 +70,6 @@ namespace Turnroot.Conversations
         [Header("Active Speaker / Tinting")]
         [SerializeField]
         private ActiveSpeakerType _activeSpeaker = ActiveSpeakerType.Primary;
-
-        [SerializeField, Tooltip("Color to mix into inactive portraits")]
-        private Color _inactiveTintColor = new Color(0.5f, 0.5f, 0.5f, 1f);
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        [Tooltip(
-            "How much of the inactive tint to mix into the portrait (0 = no tint, 1 = full tint)"
-        )]
-        private float _inactiveTintMix = 0.5f;
 
         public CharacterData Speaker
         {
@@ -201,7 +192,10 @@ namespace Turnroot.Conversations
                 return Color.white;
             if (slot == GetActiveSlot())
                 return Color.white;
-            return Color.Lerp(Color.white, _inactiveTintColor, _inactiveTintMix);
+            var settings = Graphics2DSettings.Instance;
+            var tintColor = settings?.InactiveTintColor ?? new Color(0.5f, 0.5f, 0.5f, 1f);
+            var tintMix = settings?.InactiveTintMix ?? 0.5f;
+            return Color.Lerp(Color.white, tintColor, tintMix);
         }
 
         public Color PrimaryPortraitTint => GetPortraitTint(_primary);
