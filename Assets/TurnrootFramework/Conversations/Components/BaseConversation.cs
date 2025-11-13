@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using Turnroot.Characters;
 using UnityEngine;
 
-namespace TurnrootFramework.Conversations
+namespace Turnroot.Conversations
 {
     [System.Serializable]
     public class BaseConversation

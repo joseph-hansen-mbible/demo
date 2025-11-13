@@ -1,5 +1,5 @@
 using System;
-using TurnrootFramework.CommonAncestors;
+using Turnroot.CommonAncestors;
 using UnityEngine;
 
 namespace Turnroot.Gameplay.Objects.Components

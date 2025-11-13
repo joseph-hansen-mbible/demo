@@ -5,92 +5,136 @@ using Turnroot.Characters.Subclasses;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TurnrootFramework.Conversations
+namespace Turnroot.Conversations
 {
     [System.Serializable]
     public class ConversationLayer : BaseConversation
     {
-        [SerializeField, SerializeReference]
-        private CharacterData _speaker;
-        public CharacterData Speaker
+        [System.Serializable]
+        public class SpeakerSlot
         {
-            get => _speaker;
-            set
+            [SerializeField, SerializeReference]
+            public CharacterData Speaker;
+
+            [SerializeField]
+            public string DisplayName;
+
+            [
+                SerializeField,
+                Dropdown("GetAvailablePortraitKeys"),
+                OnValueChanged("OnPortraitKeyChanged")
+            ]
+            public string PortraitKey;
+
+            private string[] GetAvailablePortraitKeys()
             {
-                _speaker = value;
-                // Clear portrait key if speaker changes and key is invalid
-                if (
-                    _speaker == null
-                    || (
-                        _speakerPortraitKey != null
-                        && !_speaker.Portraits.ContainsKey(_speakerPortraitKey)
-                    )
-                )
+                if (Speaker == null || Speaker.Portraits == null)
                 {
-                    _speakerPortraitKey = null;
+                    if (!string.IsNullOrEmpty(PortraitKey))
+                    {
+                        PortraitKey = null;
+                    }
+                    return new string[] { "No speaker selected" };
                 }
+
+                var keys = Speaker.Portraits.Keys.ToArray();
+                if (!string.IsNullOrEmpty(PortraitKey) && !keys.Contains(PortraitKey))
+                {
+                    PortraitKey = null;
+                }
+                return keys.Length > 0 ? keys : new string[] { "No portraits available" };
+            }
+
+            [System.NonSerialized]
+            public Sprite CachedSprite;
+
+            private void OnPortraitKeyChanged()
+            {
+                CachedSprite = null;
             }
         }
 
         [SerializeField]
-        private string _speakerDisplayName;
-        public string SpeakerDisplayName
+        private SpeakerSlot _primary = new();
+
+        [SerializeField]
+        private SpeakerSlot _secondary = new();
+
+        public enum ActiveSpeakerType
         {
-            get => _speakerDisplayName;
-            set => _speakerDisplayName = value;
+            Primary = 0,
+            Secondary = 1,
         }
 
-        [SerializeField, Dropdown("GetAvailablePortraitKeys")]
-        private string _speakerPortraitKey;
+        [Header("Active Speaker / Tinting")]
+        [SerializeField]
+        private ActiveSpeakerType _activeSpeaker = ActiveSpeakerType.Primary;
 
-        public string SpeakerPortraitKey
+        [SerializeField, Tooltip("Color to mix into inactive portraits")]
+        private Color _inactiveTintColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+
+        [SerializeField]
+        [Range(0f, 1f)]
+        [Tooltip(
+            "How much of the inactive tint to mix into the portrait (0 = no tint, 1 = full tint)"
+        )]
+        private float _inactiveTintMix = 0.5f;
+
+        public CharacterData Speaker
         {
-            get => _speakerPortraitKey;
+            get => _primary.Speaker;
             set
             {
-                _speakerPortraitKey = value;
-                // Clear cached sprite when portrait changes
-                _PortraitSprite = null;
+                _primary.Speaker = value;
+                ValidatePortraitKeyOnSpeakerChange(ref _primary.PortraitKey, _primary.Speaker);
+                _primary.CachedSprite = null;
             }
         }
 
-        public Portrait SpeakerPortrait
+        public CharacterData SecondarySpeaker
         {
-            get
+            get => _secondary.Speaker;
+            set
             {
-                if (
-                    _speaker != null
-                    && _speakerPortraitKey != null
-                    && _speaker.Portraits.ContainsKey(_speakerPortraitKey)
-                )
-                {
-                    return _speaker.Portraits[_speakerPortraitKey];
-                }
-                return null;
+                _secondary.Speaker = value;
+                ValidatePortraitKeyOnSpeakerChange(ref _secondary.PortraitKey, _secondary.Speaker);
+                _secondary.CachedSprite = null;
             }
         }
+
+        public string SpeakerDisplayName
+        {
+            get => _primary.DisplayName;
+            set => _primary.DisplayName = value;
+        }
+
+        public string SecondarySpeakerDisplayName
+        {
+            get => _secondary.DisplayName;
+            set => _secondary.DisplayName = value;
+        }
+
+        public Portrait SpeakerPortrait => GetPortrait(_primary.Speaker, _primary.PortraitKey);
+
+        public Portrait SecondarySpeakerPortrait =>
+            GetPortrait(_secondary.Speaker, _secondary.PortraitKey);
 
         public UnityEvent OnLayerStart;
         public UnityEvent OnLayerComplete;
-        private Sprite _PortraitSprite;
 
-        public Sprite PortraitSprite
-        {
-            get
-            {
-                if (_PortraitSprite == null && SpeakerPortrait != null)
-                {
-                    _PortraitSprite = SpeakerPortrait.SavedSprite;
-                }
-                return _PortraitSprite;
-            }
-        }
+        public Sprite PortraitSprite => GetPortraitSpriteForSlot(_primary);
+
+        public Sprite SecondaryPortraitSprite => GetPortraitSpriteForSlot(_secondary);
 
         public void OnAwake()
         {
             if (SpeakerPortrait != null)
             {
-                _PortraitSprite = SpeakerPortrait.SavedSprite;
+                _primary.CachedSprite = SpeakerPortrait.SavedSprite;
+            }
+            if (SecondarySpeakerPortrait != null)
+            {
+                _secondary.CachedSprite = SecondarySpeakerPortrait.SavedSprite;
             }
         }
 
@@ -104,30 +148,90 @@ namespace TurnrootFramework.Conversations
             OnLayerComplete?.Invoke();
         }
 
-        private bool HasSpeaker()
+        private void ValidatePortraitKeyOnSpeakerChange(
+            ref string portraitKey,
+            CharacterData speaker
+        )
         {
-            return _speaker != null;
+            if (
+                speaker == null
+                || (
+                    portraitKey != null
+                    && (speaker.Portraits == null || !speaker.Portraits.ContainsKey(portraitKey))
+                )
+            )
+            {
+                portraitKey = null;
+            }
         }
 
-        private string[] GetAvailablePortraitKeys()
+        private Portrait GetPortrait(CharacterData speaker, string portraitKey)
         {
-            if (_speaker == null || _speaker.Portraits == null)
+            if (
+                speaker != null
+                && portraitKey != null
+                && speaker.Portraits != null
+                && speaker.Portraits.ContainsKey(portraitKey)
+            )
             {
-                // Clear the key if speaker is null
-                if (!string.IsNullOrEmpty(_speakerPortraitKey))
-                {
-                    _speakerPortraitKey = null;
-                }
-                return new string[] { "No speaker selected" };
+                return speaker.Portraits[portraitKey];
             }
+            return null;
+        }
 
-            var keys = _speaker.Portraits.Keys.ToArray();
-            // Ensure current value is valid
-            if (!string.IsNullOrEmpty(_speakerPortraitKey) && !keys.Contains(_speakerPortraitKey))
+        // Active speaker helpers
+        public ActiveSpeakerType ActiveSpeaker
+        {
+            get => _activeSpeaker;
+            set => _activeSpeaker = value;
+        }
+
+        public SpeakerSlot GetActiveSlot()
+        {
+            return _activeSpeaker == ActiveSpeakerType.Primary ? _primary : _secondary;
+        }
+
+        public Portrait ActivePortrait =>
+            GetPortrait(GetActiveSlot().Speaker, GetActiveSlot().PortraitKey);
+
+        // Tint helpers: return the color that should be applied to a portrait image
+        public Color GetPortraitTint(SpeakerSlot slot)
+        {
+            if (slot == null)
+                return Color.white;
+            if (slot == GetActiveSlot())
+                return Color.white;
+            return Color.Lerp(Color.white, _inactiveTintColor, _inactiveTintMix);
+        }
+
+        public Color PrimaryPortraitTint => GetPortraitTint(_primary);
+        public Color SecondaryPortraitTint => GetPortraitTint(_secondary);
+
+        private Sprite GetPortraitSpriteForSlot(SpeakerSlot slot)
+        {
+            if (slot == null)
+                return null;
+            if (slot.CachedSprite == null)
             {
-                _speakerPortraitKey = null;
+                // If a portrait key is set, use it. Otherwise, try to pick the first available portrait
+                var p = GetPortrait(slot.Speaker, slot.PortraitKey);
+                if (p == null && slot.Speaker?.Portraits != null)
+                {
+                    // pick the first available portrait key as a sensible default
+                    var keys = slot.Speaker.Portraits.Keys.ToArray();
+                    if (keys.Length > 0)
+                    {
+                        slot.PortraitKey = keys[0];
+                        p = slot.Speaker.Portraits[slot.PortraitKey];
+                    }
+                }
+
+                if (p != null)
+                {
+                    slot.CachedSprite = p.SavedSprite;
+                }
             }
-            return keys.Length > 0 ? keys : new string[] { "No portraits available" };
+            return slot.CachedSprite;
         }
     }
 }

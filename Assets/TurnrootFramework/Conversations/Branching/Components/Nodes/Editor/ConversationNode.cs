@@ -1,9 +1,9 @@
+using Turnroot.Conversations;
 using Turnroot.Skills.Nodes;
-using TurnrootFramework.Conversations;
 using UnityEngine;
 using XNode;
 
-namespace TurnrootFramework.Conversations.Branching
+namespace Turnroot.Conversations.Branching
 {
     [CreateNodeMenu("Conversation/Conversation")]
     public class ConversationNode : Node

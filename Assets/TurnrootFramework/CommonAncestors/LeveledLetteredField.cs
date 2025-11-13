@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace TurnrootFramework.CommonAncestors
+namespace Turnroot.CommonAncestors
 {
     [Serializable]
     public class LeveledLetteredField

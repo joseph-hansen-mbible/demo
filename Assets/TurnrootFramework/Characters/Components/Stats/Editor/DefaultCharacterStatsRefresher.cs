@@ -8,31 +8,6 @@ using UnityEngine;
 
 public static class DefaultCharacterStatsRefresher
 {
-    [MenuItem("Turnroot/Tools/Refresh Unit Stats")]
-    public static void RefreshFromMenu()
-    {
-        var gameplaySettings = GameplayGeneralSettings.Instance;
-        var defaultStats = DefaultCharacterStats.Instance;
-
-        if (gameplaySettings == null)
-        {
-            Debug.LogError("GameplayGeneralSettings not found!");
-            return;
-        }
-
-        if (defaultStats == null)
-        {
-            Debug.LogError("DefaultCharacterStats not found!");
-            return;
-        }
-
-        RefreshStats(defaultStats, gameplaySettings);
-        EditorUtility.SetDirty(defaultStats);
-        AssetDatabase.SaveAssets();
-
-        Debug.Log("Unit stats refreshed successfully!");
-    }
-
     public static void RefreshStats(
         DefaultCharacterStats defaultStats,
         GameplayGeneralSettings gameplaySettings

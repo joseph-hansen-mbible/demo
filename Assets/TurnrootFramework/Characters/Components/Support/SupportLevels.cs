@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TurnrootFramework.CommonAncestors;
+using Turnroot.CommonAncestors;
 using UnityEngine;
 
 namespace Turnroot.Characters.Subclasses

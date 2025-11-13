@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomPropertyDrawer(typeof(TurnrootFramework.CommonAncestors.LeveledLetteredField), true)]
+[CustomPropertyDrawer(typeof(Turnroot.CommonAncestors.LeveledLetteredField), true)]
 public class LeveledLetteredFieldDrawer : PropertyDrawer
 {
     private readonly string[] _options = { "S", "A", "B", "C", "D", "E" };

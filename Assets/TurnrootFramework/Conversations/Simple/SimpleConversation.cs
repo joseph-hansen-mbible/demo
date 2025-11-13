@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TurnrootFramework.Conversations
+namespace Turnroot.Conversations
 {
     [CreateAssetMenu(
         fileName = "New Conversation",

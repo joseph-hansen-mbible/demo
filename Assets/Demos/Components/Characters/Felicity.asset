@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d531c8bfa9fbd649862bdaaa67913c8, type: 3}
+  m_Name: Felicity
+  m_EditorClassIdentifier: 
+  _: 
+  _which:
+    _value: Ally
+  _displayName: Felicity
+  _fullName: Newly Created Unit
+  _pronouns:
+    _selectedPronouns:
+    - they
+    - their
+    - theirs
+    - them
+  _height: 166
+  _birthdayDay: 1
+  _birthdayMonth: 1
+  _shortDescription: A new unit
+  _notes: Take private notes (only in the editor) about this unit
+  _canSSupport: 1
+  _canSSupportAvatar: 0
+  _canHaveChildren: 0
+  _isRecruitable: 0
+  _isUnique: 0
+  _accentColor1: {r: 0, g: 0, b: 0, a: 1}
+  _accentColor2: {r: 0, g: 0, b: 0, a: 1}
+  _accentColor3: {r: 0, g: 0, b: 0, a: 1}
+  _portraits:
+    _keys:
+    - Newly Created Unit_Portrait
+    - Felicity
+    _values:
+    - rid: 8948944127503630604
+    - rid: 8948944127503630605
+  _sprites: []
+  _ai: {fileID: 0}
+  _passedDownTraits:
+    _hairColor: 1
+    _faceShape: 0
+    _eyeColor: 1
+    _skinColor: 1
+    _height: 1
+    _aptitudes: 0
+    _statGrowths: 0
+  _hasDesignatedChildUnit: 0
+  _childUnitId: {fileID: 0}
+  _startingInventory: []
+  _supportRelationships: []
+  _level: 1
+  _exp: 0
+  _boundedStats:
+  - _current: 100
+    _bonus: 0
+    _statType: 0
+    _max: 100
+    _min: 0
+  - _current: 1
+    _bonus: 0
+    _statType: 1
+    _max: 50
+    _min: 1
+  - _current: 0
+    _bonus: 0
+    _statType: 2
+    _max: 100
+    _min: 0
+  - _current: 0
+    _bonus: 0
+    _statType: 3
+    _max: 100
+    _min: 0
+  _unboundedStats:
+  - _current: 10
+    _bonus: 0
+    _statType: 0
+  - _current: 10
+    _bonus: 0
+    _statType: 1
+  - _current: 10
+    _bonus: 0
+    _statType: 2
+  - _current: 10
+    _bonus: 0
+    _statType: 3
+  - _current: 10
+    _bonus: 0
+    _statType: 4
+  - _current: 10
+    _bonus: 0
+    _statType: 5
+  - _current: 10
+    _bonus: 0
+    _statType: 6
+  - _current: 10
+    _bonus: 0
+    _statType: 7
+  - _current: 10
+    _bonus: 0
+    _statType: 8
+  - _current: 10
+    _bonus: 0
+    _statType: 9
+  - _current: 10
+    _bonus: 0
+    _statType: 10
+  _unitClass: {fileID: 0}
+  _battalion: {fileID: 0}
+  _specialUnitClasses: []
+  _skills: []
+  _specialSkills: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 8948944127503630604
+      type: {class: Portrait, ns: Turnroot.Characters.Subclasses, asm: Assembly-CSharp}
+      data:
+        _owner: {fileID: 11400000}
+        _imageStack: {fileID: 11400000, guid: e56be0355d587cf4ea5e81494f1a0f74, type: 2}
+        _key: Newly Created Unit_Portrait
+        _savedSprite: {fileID: 21300000, guid: 070d831b42a19fe4d820fcb0abc5a65a, type: 3}
+        _idString: e14ba85b-bb9b-492a-91c0-2eb3ec4d3222
+        _tintColors:
+        - {r: 0, g: 0, b: 0, a: 1}
+        - {r: 0, g: 0, b: 0, a: 1}
+        - {r: 0, g: 0, b: 0, a: 1}
+    - rid: 8948944127503630605
+      type: {class: Portrait, ns: Turnroot.Characters.Subclasses, asm: Assembly-CSharp}
+      data:
+        _owner: {fileID: 11400000}
+        _imageStack: {fileID: 11400000, guid: fa7e76d07df125943bb4d60d55be9cb4, type: 2}
+        _key: Felicity
+        _savedSprite: {fileID: 21300000, guid: b6805113d49a89b47a54bf8fa91f500c, type: 3}
+        _idString: c1632ee5-5eab-46e7-97f3-f47b1d712e2f
+        _tintColors:
+        - {r: 0, g: 0, b: 0, a: 1}
+        - {r: 0, g: 0, b: 0, a: 1}
+        - {r: 0, g: 0, b: 0, a: 1}
