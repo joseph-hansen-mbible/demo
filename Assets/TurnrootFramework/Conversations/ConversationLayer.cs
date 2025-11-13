@@ -1,8 +1,8 @@
 using System.Linq;
 using NaughtyAttributes;
+using Turnroot.AbstractScripts.Graphics2D;
 using Turnroot.Characters;
 using Turnroot.Characters.Subclasses;
-using Turnroot.AbstractScripts.Graphics2D;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -34,6 +34,11 @@ namespace Turnroot.Conversations
                     if (!string.IsNullOrEmpty(PortraitKey))
                     {
                         PortraitKey = null;
+#if UNITY_EDITOR
+                        var sel = UnityEditor.Selection.activeObject as UnityEngine.Object;
+                        if (sel != null)
+                            UnityEditor.EditorUtility.SetDirty(sel);
+#endif
                     }
                     return new string[] { "No speaker selected" };
                 }
@@ -42,6 +47,11 @@ namespace Turnroot.Conversations
                 if (!string.IsNullOrEmpty(PortraitKey) && !keys.Contains(PortraitKey))
                 {
                     PortraitKey = null;
+#if UNITY_EDITOR
+                    var sel = UnityEditor.Selection.activeObject as UnityEngine.Object;
+                    if (sel != null)
+                        UnityEditor.EditorUtility.SetDirty(sel);
+#endif
                 }
                 return keys.Length > 0 ? keys : new string[] { "No portraits available" };
             }
@@ -52,6 +62,12 @@ namespace Turnroot.Conversations
             private void OnPortraitKeyChanged()
             {
                 CachedSprite = null;
+#if UNITY_EDITOR
+                // Ensure the change is recorded so the conversation asset is marked dirty and saved.
+                var sel = UnityEditor.Selection.activeObject as UnityEngine.Object;
+                if (sel != null)
+                    UnityEditor.EditorUtility.SetDirty(sel);
+#endif
             }
         }
 

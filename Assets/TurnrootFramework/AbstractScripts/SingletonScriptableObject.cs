@@ -11,8 +11,33 @@ public abstract class SingletonScriptableObject<T> : ScriptableObject
         {
             if (_instance == null)
             {
-                // Load the instance from Resources folder
+                // Try direct load by expected name first
                 _instance = Resources.Load<T>(typeof(T).Name);
+
+                // If not found at the exact path, search all Resources for the type
+                if (_instance == null)
+                {
+                    var all = Resources.LoadAll<T>("");
+                    if (all != null && all.Length > 0)
+                    {
+                        // Prefer an asset whose filename matches the type name
+                        foreach (var candidate in all)
+                        {
+                            if (candidate != null && candidate.name == typeof(T).Name)
+                            {
+                                _instance = candidate;
+                                break;
+                            }
+                        }
+                        // Otherwise just take the first one found
+                        if (_instance == null)
+                            _instance = all[0];
+
+                        Debug.LogWarning(
+                            $"SingletonScriptableObject: Loaded {typeof(T).Name} from Resources via fallback (found {all.Length} candidates). Consider placing the asset at 'Assets/Resources/{typeof(T).Name}.asset' for deterministic loading."
+                        );
+                    }
+                }
 
                 if (_instance == null)
                 {
