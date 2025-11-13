@@ -18,49 +18,32 @@ namespace Turnroot.Skills.Nodes.Editor
     )]
     public class SkillGraphEditorSettings : ScriptableObject
     {
-        [MenuItem("Turnroot/Utilities/Editor/Refresh Skill Node Colors")]
-        private static void ManualRefresh()
-        {
-            var settings = Instance;
-            if (settings != null)
-            {
-                // Force trigger OnValidate
-                EditorUtility.SetDirty(settings);
-                AssetDatabase.SaveAssets();
-
-                Debug.Log("Refreshing node colors from settings...");
-            }
-            else
-            {
-                Debug.LogWarning("SkillGraphEditorSettings not found in Resources folder!");
-            }
-        }
 
         [Header("Port Colors")]
         [Tooltip("Color for ExecutionFlow ports")]
-        public Color executionFlowColor = new Color(249f / 255f, 115f / 255f, 22f / 255f); // orange-500
+        public Color executionFlowColor = new(249f / 255f, 115f / 255f, 22f / 255f); // orange-500
 
         [Tooltip("Color for BoolValue ports")]
-        public Color boolValueColor = new Color(139f / 255f, 92f / 255f, 246f / 255f); // violet-500
+        public Color boolValueColor = new(139f / 255f, 92f / 255f, 246f / 255f); // violet-500
 
         [Tooltip("Color for FloatValue ports")]
-        public Color floatValueColor = new Color(14f / 255f, 165f / 255f, 233f / 255f); // sky-500
+        public Color floatValueColor = new(14f / 255f, 165f / 255f, 233f / 255f); // sky-500
 
         [Tooltip("Color for StringValue ports")]
-        public Color stringValueColor = new Color(20f / 255f, 184f / 255f, 166f / 255f); // teal-500
+        public Color stringValueColor = new(20f / 255f, 184f / 255f, 166f / 255f); // teal-500
 
         [Header("Node Tint Colors (by Folder)")]
         [Tooltip("Tint color for nodes in /Flow/ folder")]
-        public Color flowNodeColor = new Color(20f / 255f, 83f / 255f, 45f / 255f); // green-900
+        public Color flowNodeColor = new(20f / 255f, 83f / 255f, 45f / 255f); // green-900
 
         [Tooltip("Tint color for nodes in /Math/ folder")]
-        public Color mathNodeColor = new Color(19f / 255f, 78f / 255f, 74f / 255f); // teal-900
+        public Color mathNodeColor = new(19f / 255f, 78f / 255f, 74f / 255f); // teal-900
 
         [Tooltip("Tint color for nodes in /Events/ folder")]
-        public Color eventsNodeColor = new Color(12f / 255f, 74f / 255f, 110f / 255f); // sky-900
+        public Color eventsNodeColor = new(12f / 255f, 74f / 255f, 110f / 255f); // sky-900
 
         [Tooltip("Tint color for nodes in /Conditions/ folder")]
-        public Color conditionsNodeColor = new Color(49f / 255f, 46f / 255f, 129f / 255f); // indigo-900
+        public Color conditionsNodeColor = new(49f / 255f, 46f / 255f, 129f / 255f); // indigo-900
 
         private static SkillGraphEditorSettings _instance;
 
@@ -170,8 +153,8 @@ namespace Turnroot.Skills.Nodes.Editor
         [System.Serializable]
         private class SerializableTypeColorDict
         {
-            public List<string> keys = new List<string>();
-            public List<Color> values = new List<Color>();
+            public List<string> keys = new();
+            public List<Color> values = new();
 
             public SerializableTypeColorDict(Dictionary<string, Color> dict)
             {
