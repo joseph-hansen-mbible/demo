@@ -23,7 +23,7 @@ MonoBehaviour:
     _editorColor: {r: 0.6302591, g: 0.7830189, b: 0.46168566, a: 1}
   - _id: 88b0e895-b577-4643-89bf-55e3e0678f10
     _name: Shallow Water
-    _costWalk: 1
+    _costWalk: 1.6
     _costFly: 1
     _costRide: 1
     _costMagic: 1
@@ -31,7 +31,7 @@ MonoBehaviour:
     _editorColor: {r: 0.5438323, g: 0.9528302, b: 0.9528302, a: 1}
   - _id: 24f8aef3-a17a-4802-8f41-47aa601242a9
     _name: Deep Water
-    _costWalk: 1
+    _costWalk: 999
     _costFly: 1
     _costRide: 1
     _costMagic: 1
@@ -39,7 +39,7 @@ MonoBehaviour:
     _editorColor: {r: 0, g: 0.3603778, b: 1, a: 1}
   - _id: 98d625bd-9d22-4a01-b704-8ae9a0791d3c
     _name: Sand
-    _costWalk: 1
+    _costWalk: 3
     _costFly: 1
     _costRide: 1
     _costMagic: 1
@@ -47,7 +47,7 @@ MonoBehaviour:
     _editorColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   - _id: 6f984037-09d2-4e53-beff-0b33675edfb5
     _name: Snow
-    _costWalk: 1
+    _costWalk: 3
     _costFly: 1
     _costRide: 1
     _costMagic: 1
@@ -55,7 +55,7 @@ MonoBehaviour:
     _editorColor: {r: 1, g: 1, b: 1, a: 1}
   - _id: dc66fdaa-4b62-49ff-b6fa-fa811d7eb2e2
     _name: Forest
-    _costWalk: 1
+    _costWalk: 1.4
     _costFly: 1
     _costRide: 1
     _costMagic: 1
@@ -63,7 +63,7 @@ MonoBehaviour:
     _editorColor: {r: 0.13, g: 0.55, b: 0.13, a: 1}
   - _id: 1150d330-2f99-49d7-8f08-bf89d8e9d697
     _name: Bushes
-    _costWalk: 1
+    _costWalk: 1.2
     _costFly: 1
     _costRide: 1
     _costMagic: 1
@@ -108,4 +108,4 @@ MonoBehaviour:
     _costRide: 1
     _costMagic: 1
     _costArmor: 1
-    _editorColor: {r: 0.5844607, g: 0.6226415, b: 0.60110235, a: 1}
+    _editorColor: {r: 0.505874, g: 0.5283019, b: 0.51484513, a: 1}

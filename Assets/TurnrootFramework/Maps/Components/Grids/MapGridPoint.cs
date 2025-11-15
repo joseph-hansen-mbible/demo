@@ -1,10 +1,72 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGridPoint : MonoBehaviour
 {
+    // Initialize row/col after AddComponent (MonoBehaviours can't use constructors)
+    public void Initialize(int row, int col)
+    {
+        _row = row;
+        _col = col;
+    }
+
+    // Allow editor tools to change terrain id
+    public void SetTerrainTypeId(string id)
+    {
+        _terrainTypeId = id ?? string.Empty;
+    }
+
+    // Expose the stored terrain id for editor tooling
+    public string TerrainTypeId => _terrainTypeId;
+
+    private readonly (string name, int dRow, int dCol)[] directions = new (
+        string name,
+        int dRow,
+        int dCol
+    )[]
+    {
+        ("N", -1, 0),
+        ("NE", -1, 1),
+        ("E", 0, 1),
+        ("SE", 1, 1),
+        ("S", 1, 0),
+        ("SW", 1, -1),
+        ("W", 0, -1),
+        ("NW", -1, -1),
+    };
+
+    private readonly (string name, int dRow, int dCol)[] cardinalDirections = new (
+        string name,
+        int dRow,
+        int dCol
+    )[]
+    {
+        ("N", -1, 0),
+        ("E", 0, 1),
+        ("S", 1, 0),
+        ("W", 0, -1),
+    };
+
+    [SerializeField]
+    private int _row;
+
+    [SerializeField]
+    private int _col;
+
+    public int Row => _row;
+    public int Col => _col;
+
+    public MapGridPoint() { }
+
+    public MapGridPoint(int row, int col)
+    {
+        _row = row;
+        _col = col;
+    }
+
     [SerializeField]
     [Tooltip("Gizmo sphere radius (world units)")]
-    private float _gizmoRadius = 0.15f;
+    private float _gizmoRadius = 0.35f;
 
     [SerializeField]
     [Tooltip(
@@ -16,7 +78,7 @@ public class MapGridPoint : MonoBehaviour
     {
         get
         {
-            var asset = FindDefaultTerrainTypesAsset();
+            var asset = TerrainTypes.LoadDefault();
             if (asset == null)
                 return null;
             var t = asset.GetTypeById(_terrainTypeId);
@@ -29,35 +91,52 @@ public class MapGridPoint : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    public float GetTerrainTypeCost(
+        bool isWalking = true,
+        bool isFlying = false,
+        bool isRiding = false,
+        bool isMagic = false,
+        bool isArmored = false
+    )
     {
         var tt = SelectedTerrainType;
-        if (tt != null)
-        {
-            Gizmos.color = tt.EditorColor;
-        }
-        else
-        {
-            Gizmos.color = Color.white;
-        }
-        Gizmos.DrawSphere(transform.position, _gizmoRadius);
+        if (tt == null)
+            return 1; // default cost
+        if (isWalking)
+            return tt.CostWalk;
+        else if (isFlying)
+            return tt.CostFly;
+        else if (isRiding)
+            return tt.CostRide;
+        else if (isMagic)
+            return tt.CostMagic;
+        else if (isArmored)
+            return tt.CostArmor;
+        return 1; // default cost
     }
 
-    private void OnDrawGizmosSelected()
+    public Vector2 Coordinates()
     {
-        var tt = SelectedTerrainType;
-        if (tt != null)
-        {
-            Gizmos.color = tt.EditorColor;
-            Gizmos.DrawSphere(transform.position, _gizmoRadius);
-            Gizmos.DrawWireSphere(transform.position, _gizmoRadius * 1.5f);
-        }
+        return new Vector2(_row, _col);
     }
 
-    private TerrainTypes FindDefaultTerrainTypesAsset()
+    public Dictionary<string, MapGridPoint> GetNeighbors(bool cardinal = false)
     {
-        // Use the centralized loader which prefers Resources at runtime and falls back to
-        // AssetDatabase in the editor.
-        return TerrainTypes.LoadDefault();
+        var neighbors = new Dictionary<string, MapGridPoint>();
+        var grid = GetComponentInParent<MapGrid>();
+
+        var dirs = cardinal ? cardinalDirections : directions;
+        foreach (var (name, dRow, dCol) in dirs)
+        {
+            int newRow = _row + dRow;
+            int newCol = _col + dCol;
+            var neighbor = grid.GetGridPoint(newRow, newCol);
+            if (neighbor != null)
+            {
+                neighbors[name] = neighbor;
+            }
+        }
+
+        return neighbors;
     }
 }

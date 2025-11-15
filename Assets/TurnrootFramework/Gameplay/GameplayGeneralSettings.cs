@@ -26,6 +26,10 @@ public class GameplayGeneralSettings : SingletonScriptableObject<GameplayGeneral
     [SerializeField, BoxGroup("General Gameplay")]
     private bool UseExperienceAptitudes;
 
+    [SerializeField, BoxGroup("Movement")]
+    [Tooltip("Allow diagonal movement (NE, NW, SE, SW) for pathfinding and unit movement.")]
+    private bool _allowDiagonalMovement = false;
+
     [SerializeField, BoxGroup("Combat Mechanics"), HorizontalLine(color: EColor.Yellow)]
     private bool CombatArts;
 
@@ -161,6 +165,9 @@ public class GameplayGeneralSettings : SingletonScriptableObject<GameplayGeneral
     public bool GetUseExperienceSublevels() => UseExperienceSublevels;
 
     public bool GetUseExperienceAptitudes() => UseExperienceAptitudes;
+
+    // Movement settings
+    public bool GetAllowDiagonalMovement() => _allowDiagonalMovement;
 
 #if UNITY_EDITOR
     private void OnValidate()
