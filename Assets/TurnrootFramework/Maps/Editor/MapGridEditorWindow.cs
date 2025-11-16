@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using System.IO;
 using System.Collections.Generic;
 using System;
 
@@ -52,10 +53,15 @@ public class MapGridEditorWindow : EditorWindow
 
     // Cached resources
     private readonly Dictionary<string, Texture2D> _terrainIcons = new();
+    private MapGridEditorSettings _editorSettings;
+    private string _editorSettingsPath = string.Empty;
+    private DateTime _editorSettingsLastWriteTimeUtc = DateTime.MinValue;
     private GUIStyle _guiStyleButton,
         _guiStyleWrap,
         _guiStyleBoldWrap;
-    private Dictionary<KeyCode, string> _toolHotkeys = null;
+    private Dictionary<KeyCode, string> _featureHotkeys = null;
+    private Dictionary<KeyCode, int> _terrainHotkeys = null;
+    private Dictionary<KeyCode, string> _shiftHotkeys = null;
     private static Dictionary<string, MapGridPointFeatureProperties> _featureDefaultsCache = new(
         StringComparer.OrdinalIgnoreCase
     );
@@ -72,6 +78,8 @@ public class MapGridEditorWindow : EditorWindow
         "control",
         "breakable",
         "shelter",
+        "village",
+        "fortress",
         "underground",
         "cursor",
         "eraser",
@@ -87,6 +95,8 @@ public class MapGridEditorWindow : EditorWindow
         "Control",
         "BreakableWall",
         "Shelter",
+        "Village",
+        "Fortress",
         "UndergroundItem",
         "Cursor",
         "Eraser",
@@ -104,14 +114,23 @@ public class MapGridEditorWindow : EditorWindow
     private void OnEnable()
     {
         _terrainAsset = TerrainTypes.LoadDefault();
-        minSize = new Vector2(600, 480);
-        maxSize = new Vector2(2000, 900);
+        _editorSettings = Resources.Load<MapGridEditorSettings>(
+            "EditorSettings/MapGridEditorSettings"
+        );
+        if (_editorSettings != null)
+        {
+            _editorSettingsPath = AssetDatabase.GetAssetPath(_editorSettings) ?? string.Empty;
+            if (!string.IsNullOrEmpty(_editorSettingsPath) && File.Exists(_editorSettingsPath))
+                _editorSettingsLastWriteTimeUtc = File.GetLastWriteTimeUtc(_editorSettingsPath);
+        }
+        minSize = new Vector2(1000, 600);
+        maxSize = new Vector2(1920, 1080);
         wantsMouseMove = true;
         _selectedSecondTool = -1;
         _selectedSecondToolName = string.Empty;
         _zoom = 1f;
 
-        _toolHotkeys = new Dictionary<KeyCode, string>()
+        _featureHotkeys = new Dictionary<KeyCode, string>()
         {
             { KeyCode.T, "treasure" },
             { KeyCode.D, "door" },
@@ -122,9 +141,85 @@ public class MapGridEditorWindow : EditorWindow
             { KeyCode.C, "control" },
             { KeyCode.B, "breakable" },
             { KeyCode.S, "shelter" },
+            { KeyCode.V, "village" },
+            { KeyCode.F, "fortress" },
             { KeyCode.U, "underground" },
             { KeyCode.E, "eraser" },
         };
+
+        // Shift + terrain keys -> feature shortcuts (Shift+BackQuote -> treasure, Shift+1 -> door, ...)
+        _shiftHotkeys = new Dictionary<KeyCode, string>()
+        {
+            { KeyCode.Tilde, "treasure" },
+            { KeyCode.BackQuote, "treasure" },
+            { KeyCode.Alpha1, "door" },
+            { KeyCode.Alpha2, "warp" },
+            { KeyCode.Alpha3, "healing" },
+            { KeyCode.Alpha4, "ranged" },
+            { KeyCode.Alpha5, "mechanism" },
+            { KeyCode.Alpha6, "control" },
+            { KeyCode.Alpha7, "breakable" },
+            { KeyCode.Alpha8, "shelter" },
+            { KeyCode.Alpha9, "village" },
+            { KeyCode.Alpha0, "fortress" },
+            { KeyCode.Minus, "underground" },
+        };
+
+        _terrainHotkeys = new Dictionary<KeyCode, int>()
+        {
+            { KeyCode.Tilde, 0 },
+            { KeyCode.Alpha1, 1 },
+            { KeyCode.Alpha2, 2 },
+            { KeyCode.Alpha3, 3 },
+            { KeyCode.Alpha4, 4 },
+            { KeyCode.Alpha5, 5 },
+            { KeyCode.Alpha6, 6 },
+            { KeyCode.Alpha7, 7 },
+            { KeyCode.Alpha8, 8 },
+            { KeyCode.Alpha9, 9 },
+            { KeyCode.Alpha0, 10 },
+            { KeyCode.Minus, 11 },
+            { KeyCode.Equals, 12 },
+            { KeyCode.BackQuote, 0 },
+        };
+    }
+
+    private void OnInspectorUpdate()
+    {
+        ReloadEditorSettingsIfChanged();
+    }
+
+    private void ReloadEditorSettingsIfChanged()
+    {
+        var loaded = Resources.Load<MapGridEditorSettings>("EditorSettings/MapGridEditorSettings");
+        if (loaded == null)
+        {
+            if (_editorSettings != null)
+            {
+                _editorSettings = null;
+                _editorSettingsPath = string.Empty;
+                _editorSettingsLastWriteTimeUtc = DateTime.MinValue;
+                Repaint();
+            }
+            return;
+        }
+
+        string path = AssetDatabase.GetAssetPath(loaded) ?? string.Empty;
+        DateTime writeTime = DateTime.MinValue;
+        if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            writeTime = File.GetLastWriteTimeUtc(path);
+
+        if (
+            _editorSettings == null
+            || path != _editorSettingsPath
+            || writeTime != _editorSettingsLastWriteTimeUtc
+        )
+        {
+            _editorSettings = loaded;
+            _editorSettingsPath = path;
+            _editorSettingsLastWriteTimeUtc = writeTime;
+            Repaint();
+        }
     }
 
     private void EnsureStyles()
@@ -238,11 +333,58 @@ public class MapGridEditorWindow : EditorWindow
                 _selectedSecondToolName = string.Empty;
                 e.Use();
             }
-            if (_toolHotkeys?.TryGetValue(e.keyCode, out var toolId) == true)
+            if (_mode == Mode.Paint)
             {
-                _selectedSecondTool = Array.IndexOf(_secondToolIds, toolId);
-                _mode = Mode.Paint;
-                e.Use();
+                // Shift + terrain keys -> feature shortcuts (Shift+1 -> door, Shift+` -> treasure, etc.)
+                if (e.shift)
+                {
+                    string shiftFeat = null;
+                    if (_shiftHotkeys != null)
+                        _shiftHotkeys.TryGetValue(e.keyCode, out shiftFeat);
+
+                    if (
+                        string.IsNullOrEmpty(shiftFeat)
+                        && (e.character == '`' || e.character == '~')
+                    )
+                    {
+                        // fallback to tilde/backquote mapping
+                        if (_shiftHotkeys != null)
+                        {
+                            if (!_shiftHotkeys.TryGetValue(KeyCode.Tilde, out shiftFeat))
+                                _shiftHotkeys.TryGetValue(KeyCode.BackQuote, out shiftFeat);
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(shiftFeat))
+                    {
+                        _selectedSecondTool = Array.IndexOf(_secondToolIds, shiftFeat);
+                        _mode = Mode.Paint;
+                        e.Use();
+                        return;
+                    }
+                }
+
+                if (_featureHotkeys?.TryGetValue(e.keyCode, out var featId) == true)
+                {
+                    _selectedSecondTool = Array.IndexOf(_secondToolIds, featId);
+                    _mode = Mode.Paint;
+                    e.Use();
+                }
+                else if (_terrainHotkeys?.TryGetValue(e.keyCode, out var terrainIdx) == true)
+                {
+                    if (
+                        _terrainAsset?.Types != null
+                        && terrainIdx >= 0
+                        && terrainIdx < _terrainAsset.Types.Length
+                    )
+                    {
+                        _selectedTerrainIndex = terrainIdx;
+                        _selectedSecondTool = -1;
+                        _selectedSecondToolName = string.Empty;
+                        e.Use();
+                        Repaint();
+                    }
+                }
             }
 
             bool ctrl = e.control || e.command;
@@ -301,7 +443,8 @@ public class MapGridEditorWindow : EditorWindow
             DrawTerrainPalette();
         EditorGUILayout.EndVertical();
         EditorGUILayout.BeginVertical(GUILayout.Width(52));
-        DrawToolsPalette();
+        if (_mode == Mode.Paint)
+            DrawToolsPalette();
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
@@ -382,19 +525,6 @@ public class MapGridEditorWindow : EditorWindow
     private void DrawStatusBar()
     {
         EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-        string toolInfo = "Tool: None";
-        if (_selectedSecondTool >= 0 && _selectedSecondTool < _secondToolNames.Length)
-            toolInfo = $"Tool: {_secondToolNames[_selectedSecondTool]}";
-        else if (
-            _terrainAsset?.Types != null
-            && _selectedTerrainIndex >= 0
-            && _selectedTerrainIndex < _terrainAsset.Types.Length
-        )
-        {
-            var tt = _terrainAsset.Types[_selectedTerrainIndex];
-            toolInfo = $"Tool: Terrain {tt?.Name ?? _selectedTerrainIndex.ToString()}";
-        }
-
         string leftAction =
             _mode == Mode.TestMovement
                 ? "Left click: Start test"
@@ -404,15 +534,16 @@ public class MapGridEditorWindow : EditorWindow
                         : "Left click: Paint"
                 );
         string controls =
-            $"Zoom: Ctrl/Cmd +/-  |  Pan: Space + drag  |  {leftAction}  |  Left click + drag: Paint area  |  Right click: Pick/Select feature";
+            $"Ctrl +/- : Zoom | Space + Drag : Pan | {leftAction} | Left click + drag: Paint Area | [`, 1-0, -, =] : Terrain | Shift+[`, 1-0, -, =] : Feature";
         string hoverText =
-            _hoveredCell.x >= 0
-                ? $"Hovered: Row {_hoveredCell.x}, Col {_hoveredCell.y}"
-                : "Hovered: (none)";
+            _hoveredCell.x >= 0 ? $"Row {_hoveredCell.x}, Col {_hoveredCell.y}" : "(none)";
 
-        GUILayout.Label($"{toolInfo}  |  {controls}", GUILayout.ExpandWidth(true));
+        GUILayout.Label($"{controls}", GUILayout.ExpandWidth(true));
         GUILayout.FlexibleSpace();
-        GUILayout.Label(hoverText, GUILayout.ExpandWidth(false));
+        GUILayout.Label(
+            hoverText,
+            new GUILayoutOption[] { GUILayout.ExpandWidth(false), GUILayout.MinWidth(100) }
+        );
         EditorGUILayout.EndHorizontal();
     }
 
@@ -687,11 +818,38 @@ public class MapGridEditorWindow : EditorWindow
             EditorGUI.LabelField(cellRect, cost.ToString("0"), txtStyle);
         }
 
-        // Feature letter overlay
+        // Feature overlay: icon (preferred) or letter
         if (point != null)
         {
-            string letter = MapGridPointFeature.GetFeatureLetter(point.FeatureTypeId);
-            if (!string.IsNullOrEmpty(letter))
+            string featureId = point.FeatureTypeId;
+            string letter = MapGridPointFeature.GetFeatureLetter(featureId);
+
+            Texture2D icon = null;
+            if (_editorSettings != null && _editorSettings.featureDisplay == FeatureDisplay.Icon)
+                icon = GetSecondToolIcon(featureId);
+
+            if (icon != null)
+            {
+                float pad = Mathf.Max(1f, cellSize * 0.08f);
+                Rect iconRect = new Rect(
+                    cellRect.x + pad,
+                    cellRect.y + pad,
+                    cellRect.width - pad * 2f,
+                    cellRect.height - pad * 2f
+                );
+                // Tint icon to white or black depending on underlying tile luminance,
+                // unless the feature is selected (magenta).
+                float luminance = 0.299f * fill.r + 0.587f * fill.g + 0.114f * fill.b;
+                Color tint =
+                    point == _selectedFeaturePoint
+                        ? Color.magenta
+                        : (luminance < 0.5f ? Color.white : Color.black);
+                Color prev = GUI.color;
+                GUI.color = tint;
+                GUI.DrawTexture(iconRect, icon, ScaleMode.ScaleToFit, true);
+                GUI.color = prev;
+            }
+            else if (!string.IsNullOrEmpty(letter))
             {
                 float luminance = 0.299f * fill.r + 0.587f * fill.g + 0.114f * fill.b;
                 var txtStyle = new GUIStyle(EditorStyles.boldLabel)
@@ -710,7 +868,7 @@ public class MapGridEditorWindow : EditorWindow
                 EditorGUI.LabelField(cellRect, letter, txtStyle);
             }
 
-            // Selected feature border
+            // Selected feature border (unchanged color/behavior)
             if (point == _selectedFeaturePoint)
             {
                 float t = Mathf.Max(2f, Mathf.Round(cellSize * 0.08f));
@@ -731,15 +889,17 @@ public class MapGridEditorWindow : EditorWindow
 
     private void DrawCellBorders(Rect cellRect)
     {
-        EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, cellRect.width, 1f), Color.black);
+        float t = (_editorSettings != null) ? _editorSettings.gridThickness : 1f;
+        Color col = (_editorSettings != null) ? _editorSettings.gridColor : Color.black;
+        EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, cellRect.width, t), col);
         EditorGUI.DrawRect(
-            new Rect(cellRect.x, cellRect.y + cellRect.height - 1f, cellRect.width, 1f),
-            Color.black
+            new Rect(cellRect.x, cellRect.y + cellRect.height - t, cellRect.width, t),
+            col
         );
-        EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, 1f, cellRect.height), Color.black);
+        EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, t, cellRect.height), col);
         EditorGUI.DrawRect(
-            new Rect(cellRect.x + cellRect.width - 1f, cellRect.y, 1f, cellRect.height),
-            Color.black
+            new Rect(cellRect.x + cellRect.width - t, cellRect.y, t, cellRect.height),
+            col
         );
     }
 

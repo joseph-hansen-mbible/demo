@@ -95,15 +95,15 @@ MonoBehaviour:
     _editorColor: {r: 0.8490566, g: 0.47266576, b: 0.25231397, a: 1}
   - _id: d953faba-c20f-4485-9fbf-c583577d8bf8
     _name: Wall
-    _costWalk: 1
+    _costWalk: 999
     _costFly: 1
-    _costRide: 1
+    _costRide: 999
     _costMagic: 1
     _costArmor: 1
     _editorColor: {r: 0.16037738, g: 0.12385695, b: 0.09910112, a: 1}
   - _id: def4dc84-6419-4e27-9cf7-21a6461bcfe8
     _name: Mountain
-    _costWalk: 1
+    _costWalk: 3
     _costFly: 1
     _costRide: 1
     _costMagic: 1

@@ -22,6 +22,8 @@ public class MapGridPointFeature
         Control,
         Breakable,
         Shelter,
+        Village,
+        Fortress,
         Underground,
         Eraser,
     }
@@ -49,6 +51,10 @@ public class MapGridPointFeature
             return FeatureType.Breakable;
         if (fid.StartsWith("shelter"))
             return FeatureType.Shelter;
+        if (fid.StartsWith("village"))
+            return FeatureType.Village;
+        if (fid.StartsWith("fortress"))
+            return FeatureType.Fortress;
         if (fid.StartsWith("underground"))
             return FeatureType.Underground;
         if (fid.StartsWith("eraser"))
@@ -78,6 +84,10 @@ public class MapGridPointFeature
                 return "breakable";
             case FeatureType.Shelter:
                 return "shelter";
+            case FeatureType.Village:
+                return "village";
+            case FeatureType.Fortress:
+                return "fortress";
             case FeatureType.Underground:
                 return "underground";
             case FeatureType.Eraser:
@@ -113,6 +123,10 @@ public class MapGridPointFeature
             return "S";
         if (fid.StartsWith("underground"))
             return "U";
+        if (fid.StartsWith("village"))
+            return "V";
+        if (fid.StartsWith("fortress"))
+            return "F";
         return "?";
     }
 }
