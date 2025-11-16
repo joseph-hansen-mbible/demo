@@ -74,6 +74,109 @@ public class MapGridPoint : MonoBehaviour
     )]
     private string _terrainTypeId = string.Empty;
 
+    // Optional editor feature layer (second layer) - stores a feature id and an optional name.
+    [SerializeField]
+    [Tooltip("ID of an editor feature (chest, door, warp, etc). Empty = none.")]
+    private string _featureTypeId = string.Empty;
+
+    [SerializeField]
+    [Tooltip("Optional name or label for the feature. Editable from the Map Grid Editor.")]
+    private string _featureName = string.Empty;
+
+    [System.Serializable]
+    public class FeatureProperty
+    {
+        public string key = string.Empty;
+        public string value = string.Empty;
+    }
+
+    [SerializeField]
+    [Tooltip("Optional key/value properties attached to a feature (persisted).")]
+    private List<FeatureProperty> _featureProperties = new List<FeatureProperty>();
+
+    // Expose feature fields for editor tooling
+    public string FeatureTypeId => _featureTypeId;
+    public string FeatureName
+    {
+        get => _featureName;
+        set => _featureName = value ?? string.Empty;
+    }
+
+    // Editor helpers
+    public void SetFeatureTypeId(string id)
+    {
+        _featureTypeId = id ?? string.Empty;
+    }
+
+    public void ApplyFeature(string selId, string name, bool singleClickToggle)
+    {
+        if (string.IsNullOrEmpty(selId))
+            return;
+
+        if (selId == "eraser")
+        {
+            ClearFeature();
+            return;
+        }
+
+        if (singleClickToggle && !string.IsNullOrEmpty(_featureTypeId) && _featureTypeId == selId)
+        {
+            ClearFeature();
+            return;
+        }
+
+        _featureTypeId = selId;
+        _featureName = name ?? string.Empty;
+    }
+
+    public void ClearFeature()
+    {
+        _featureTypeId = string.Empty;
+        _featureName = string.Empty;
+        _featureProperties.Clear();
+    }
+
+    // Feature property helpers (key/value pairs persisted on the MapGridPoint)
+    public void SetFeatureProperty(string key, string value)
+    {
+        if (string.IsNullOrEmpty(key))
+            return;
+        var existing = _featureProperties.Find(p => p.key == key);
+        if (existing != null)
+        {
+            existing.value = value ?? string.Empty;
+        }
+        else
+        {
+            _featureProperties.Add(
+                new FeatureProperty { key = key, value = value ?? string.Empty }
+            );
+        }
+    }
+
+    public string GetFeatureProperty(string key)
+    {
+        if (string.IsNullOrEmpty(key))
+            return null;
+        var p = _featureProperties.Find(x => x.key == key);
+        return p != null ? p.value : null;
+    }
+
+    public void ClearFeatureProperty(string key)
+    {
+        if (string.IsNullOrEmpty(key))
+            return;
+        _featureProperties.RemoveAll(p => p.key == key);
+    }
+
+    public List<FeatureProperty> GetAllFeatureProperties()
+    {
+        // return a shallow copy to avoid callers mutating the serialized list directly
+        return new List<FeatureProperty>(_featureProperties);
+    }
+
+    // Feature letter mapping moved to MapGridPointFeature.GetFeatureLetter(string)
+
     public TerrainType SelectedTerrainType
     {
         get

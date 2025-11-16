@@ -11,11 +11,19 @@ public class MapGridEditorWindow : EditorWindow
     private int _selectedTerrainIndex = 0;
     private Vector2 _scroll = Vector2.zero;
     private float _zoom = 1f;
-    private int _baseCellSize = 24;
+    private readonly int _baseCellSize = 24;
     private bool _isDragging = false;
     private Vector2Int _dragStart;
     private Vector2Int _dragEnd;
     private Vector2Int _hoveredCell = new(-1, -1);
+
+    // Snapshot used to stabilize the right-panel UI between Layout and Repaint passes
+    private Vector2Int _detailSnapshotHovered = new(-1, -1);
+    private List<KeyValuePair<string, string>> _detailSnapshotProps = null;
+
+    // Space-pan state
+    private bool _spacePan = false;
+    private bool _isPanning = false;
 
     private enum Mode
     {
@@ -38,8 +46,59 @@ public class MapGridEditorWindow : EditorWindow
     private MapGridPoint _testMovementStart = null;
     private Dictionary<MapGridPoint, float> _testMovementResults = null;
 
+    // Second-layer tools (editor features)
+    private readonly string[] _secondToolIds = new string[]
+    {
+        "treasure",
+        "door",
+        "warp",
+        "healing",
+        "ranged",
+        "mechanism",
+        "control",
+        "breakable",
+        "shelter",
+        "underground",
+        "eraser",
+    };
+    private readonly string[] _secondToolNames = new string[]
+    {
+        "Treasure",
+        "Door",
+        "Warp",
+        "Healing",
+        "Ranged",
+        "Mechanism",
+        "Control",
+        "BreakableWall",
+        "Shelter",
+        "UndergroundItem",
+        "Eraser",
+    };
+    private int _selectedSecondTool = -1; // -1 = none
+    private string _selectedSecondToolName = string.Empty; // name to apply to painted features
+
     // Icon cache for terrain palette
-    private Dictionary<string, Texture2D> _terrainIcons = new();
+    private readonly Dictionary<string, Texture2D> _terrainIcons = new();
+
+    // Resource path constants
+    private const string PATH_TERRAIN_ICONS = "TerrainIcons/";
+    private const string PATH_FEATURE_ICONS = "FeatureIcons/";
+    private const string PATH_EDITOR_ICONS = "EditorSettings/MapGridEditorIcons/";
+
+    // GUI size constants
+    private const int GUI_BUTTON_SIZE = 40;
+    private const int GUI_PREVIEW_SIZE = 40;
+    private const int GUI_SMALL_BUTTON_HEIGHT = 24;
+
+    // Cached GUIStyles (avoid reallocating per-frame)
+    private GUIStyle _guiStyleButton;
+    private GUIStyle _guiStyleButtonSmall;
+    private GUIStyle _guiStyleWrap;
+    private GUIStyle _guiStyleBoldWrap;
+
+    // Hotkey mapping for second-layer tools (KeyCode -> tool id)
+    private Dictionary<KeyCode, string> _toolHotkeys = null;
 
     [MenuItem("Turnroot/Editors/Map Grid Editor")]
     public static void Open()
@@ -52,12 +111,91 @@ public class MapGridEditorWindow : EditorWindow
         _terrainAsset = TerrainTypes.LoadDefault();
         this.minSize = new Vector2(600, 480);
         this.maxSize = new Vector2(2000, 900);
+        // Receive mouse move events so hover updates without clicks
+        this.wantsMouseMove = true;
+        // Ensure no second-tool is auto-selected when opening the window
+        _selectedSecondTool = -1;
+        _selectedSecondToolName = string.Empty;
+        // Ensure default zoom is reset to 1 when the window is enabled
+        _zoom = 1f;
+
+        // Initialize hotkey map for quick tool selection
+        _toolHotkeys = new Dictionary<KeyCode, string>()
+        {
+            { KeyCode.T, "treasure" },
+            { KeyCode.D, "door" },
+            { KeyCode.W, "warp" },
+            { KeyCode.H, "healing" },
+            { KeyCode.R, "ranged" },
+            { KeyCode.M, "mechanism" },
+            { KeyCode.C, "control" },
+            { KeyCode.B, "breakable" },
+            { KeyCode.S, "shelter" },
+            { KeyCode.U, "underground" },
+            { KeyCode.E, "eraser" },
+        };
+    }
+
+    // Create GUIStyles lazily inside OnGUI (safe context for GUI functions).
+    private void EnsureStyles()
+    {
+        if (_guiStyleButton != null)
+            return;
+
+        // It's important these are created while inside OnGUI so Unity's GUI skin is available.
+        _guiStyleButton = new GUIStyle(GUI.skin.button);
+        _guiStyleButton.fixedWidth = GUI_BUTTON_SIZE;
+        _guiStyleButton.fixedHeight = GUI_BUTTON_SIZE;
+
+        _guiStyleButtonSmall = new GUIStyle(GUI.skin.button);
+        _guiStyleButtonSmall.fixedWidth = GUI_BUTTON_SIZE;
+        _guiStyleButtonSmall.fixedHeight = GUI_SMALL_BUTTON_HEIGHT;
+
+        _guiStyleWrap = new GUIStyle(EditorStyles.label) { wordWrap = true };
+        _guiStyleBoldWrap = new GUIStyle(EditorStyles.boldLabel) { wordWrap = true };
+
+        // Match style text color to the current editor theme so labels are readable in dark/light skins
+        var labelColor = EditorStyles.label.normal.textColor;
+        var boldLabelColor = EditorStyles.boldLabel.normal.textColor;
+        _guiStyleWrap.normal.textColor = labelColor;
+        _guiStyleBoldWrap.normal.textColor = boldLabelColor;
+        // Allow the wrap styles to stretch to available width and ensure richText is disabled
+        _guiStyleWrap.stretchWidth = true;
+        _guiStyleBoldWrap.stretchWidth = true;
+        _guiStyleWrap.richText = false;
+        _guiStyleBoldWrap.richText = false;
     }
 
     private void OnGUI()
     {
+        // Ensure GUIStyles are created while in the OnGUI context (safe to access GUI.skin / EditorStyles)
+        EnsureStyles();
+
         EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
         _grid = (MapGrid)EditorGUILayout.ObjectField(_grid, typeof(MapGrid), true);
+
+        // Compact grid info and editable map name in the toolbar
+        if (_grid != null)
+        {
+            // Show WxH compact label
+            GUILayout.Label($"{_grid.GridWidth}x{_grid.GridHeight}", GUILayout.Width(60));
+
+            // Editable map name field with label
+            GUILayout.Label("Map Name:", GUILayout.Width(72));
+            string newName = EditorGUILayout.TextField(
+                _grid.MapName ?? string.Empty,
+                GUILayout.Width(180)
+            );
+            if (newName != _grid.MapName)
+            {
+                Undo.RecordObject(_grid, "Edit Map Name");
+                _grid.MapName = newName;
+                EditorUtility.SetDirty(_grid);
+                var _scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                EditorSceneManager.MarkSceneDirty(_scene);
+            }
+        }
+
         if (GUILayout.Button("Refresh"))
         {
             _terrainAsset = TerrainTypes.LoadDefault();
@@ -65,6 +203,83 @@ public class MapGridEditorWindow : EditorWindow
         }
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
+
+        // Ensure the window repaints on mouse move so hover coordinates update live.
+        if (Event.current != null && Event.current.type == EventType.MouseMove)
+        {
+            Repaint();
+        }
+
+        // Keyboard shortcuts (global within this window). Do not intercept when editing text fields.
+        Event keyEvent = Event.current;
+        if (keyEvent != null)
+        {
+            if (keyEvent.type == EventType.KeyDown && !EditorGUIUtility.editingTextField)
+            {
+                // Mode switch
+                if (keyEvent.keyCode == KeyCode.P)
+                {
+                    _mode = Mode.Paint;
+                    // Untoggle any second-layer tool selection
+                    _selectedSecondTool = -1;
+                    _selectedSecondToolName = string.Empty;
+                    keyEvent.Use();
+                }
+
+                // Tool hotkey lookup: use the pre-initialized map to avoid repetitive branches
+                if (
+                    _toolHotkeys != null
+                    && _toolHotkeys.TryGetValue(keyEvent.keyCode, out var toolId)
+                )
+                {
+                    _selectedSecondTool = System.Array.IndexOf(_secondToolIds, toolId);
+                    _mode = Mode.Paint;
+                    keyEvent.Use();
+                }
+
+                // Zoom shortcuts (Ctrl/Cmd + / - , include keypad variants)
+                bool ctrlCmd = keyEvent.control || keyEvent.command;
+                if (
+                    ctrlCmd
+                    && (
+                        keyEvent.keyCode == KeyCode.Equals
+                        || keyEvent.keyCode == KeyCode.Plus
+                        || keyEvent.keyCode == KeyCode.KeypadPlus
+                    )
+                )
+                {
+                    _zoom = Mathf.Min(3f, _zoom + 0.1f);
+                    keyEvent.Use();
+                    Repaint();
+                }
+                else if (
+                    ctrlCmd
+                    && (
+                        keyEvent.keyCode == KeyCode.Minus || keyEvent.keyCode == KeyCode.KeypadMinus
+                    )
+                )
+                {
+                    _zoom = Mathf.Max(0.25f, _zoom - 0.1f);
+                    keyEvent.Use();
+                    Repaint();
+                }
+
+                // Space: begin panning mode (we will watch KeyUp to clear)
+                if (keyEvent.keyCode == KeyCode.Space)
+                {
+                    _spacePan = true;
+                    keyEvent.Use();
+                }
+            }
+            else if (keyEvent.type == EventType.KeyUp)
+            {
+                if (keyEvent.keyCode == KeyCode.Space)
+                {
+                    _spacePan = false;
+                    keyEvent.Use();
+                }
+            }
+        }
 
         // Auto-ensure grid points if the assigned MapGrid has an empty index.
         if (_grid != null && _grid.GetGridPoint(0, 0) == null)
@@ -111,7 +326,37 @@ public class MapGridEditorWindow : EditorWindow
             EditorGUILayout.HelpBox("No TerrainTypes asset found.", MessageType.Warning);
         }
 
-        _mode = (Mode)GUILayout.Toolbar((int)_mode, new string[] { "Paint", "Test Movement" });
+        _mode = (Mode)
+            GUILayout.Toolbar((int)_mode, new string[] { "Paint Terrain Types", "Test Movement" });
+
+        // Split layout: left vertical toolbars (two columns) + main area on right
+        EditorGUILayout.BeginHorizontal();
+
+        // Left toolbars column (two vertical toolbars side-by-side)
+        EditorGUILayout.BeginVertical(GUILayout.Width(120));
+        EditorGUILayout.BeginHorizontal();
+        // Palette column
+        EditorGUILayout.BeginVertical(GUILayout.Width(60));
+        if (_mode == Mode.Paint)
+        {
+            DrawTerrainPaletteVertical();
+        }
+        EditorGUILayout.EndVertical();
+
+        // Second toolbar column (empty placeholder for now)
+        EditorGUILayout.BeginVertical(GUILayout.Width(60));
+        DrawLeftSecondToolbar();
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndVertical();
+
+        // Main area (right) - split into grid (left) and details (right)
+        EditorGUILayout.BeginVertical();
+        EditorGUILayout.BeginHorizontal();
+
+        // Left: grid and controls (expandable)
+        EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
 
         // Test Movement controls
         if (_mode == Mode.TestMovement)
@@ -149,101 +394,177 @@ public class MapGridEditorWindow : EditorWindow
             EditorGUILayout.EndHorizontal();
         }
 
-        // Terrain selector (only shown in Paint mode)
-        if (_mode == Mode.Paint)
-        {
-            DrawTerrainSelector();
-            DrawTerrainPalette();
-        }
-
         // Zoom controls
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Zoom:", GUILayout.Width(40));
         _zoom = EditorGUILayout.Slider(_zoom, 0.25f, 3f);
-        if (GUILayout.Button("Reset Zoom", GUILayout.Width(90)))
-        {
-            _zoom = 1f;
-        }
-
         EditorGUILayout.EndHorizontal();
 
         float statusBarH = 24f;
-        Rect area = GUILayoutUtility.GetRect(position.width, position.height - 120 - statusBarH);
+        // calculate a left area width that leaves room for left toolbars (120) and right details
+        float rightPanelW = 220f;
+        float leftAreaW = Mathf.Max(200f, position.width - 120f - rightPanelW);
+        Rect area = GUILayoutUtility.GetRect(leftAreaW, position.height - 120 - statusBarH);
         DrawGridArea(area);
 
-        // Status bar showing hovered tile (row/col)
+        EditorGUILayout.EndVertical(); // end grid column
+
+        // Right: details panel for second-layer tools
+        EditorGUILayout.BeginVertical(GUILayout.Width(220));
+
+        // Use cached wrapped label styles for the right panel
+        // (Grid dimensions moved to the compact toolbar display)
+
+        if (_selectedSecondTool >= 0 && _selectedSecondTool < _secondToolNames.Length)
+        {
+            string toolId = _secondToolIds[_selectedSecondTool];
+            DrawFeatureDetails(toolId, _guiStyleBoldWrap, _guiStyleWrap);
+        }
+        else
+        {
+            DrawWrappedLabel(new GUIContent("Feature details"), _guiStyleWrap, 196f);
+        }
+        EditorGUILayout.EndVertical(); // end details column
+
+        EditorGUILayout.EndHorizontal();
+
+        // Close main area and left toolbar horizontal
+        EditorGUILayout.EndVertical();
+        EditorGUILayout.EndHorizontal();
+
+        // Status bar showing hovered tile (row/col) - placed below both toolbars and main area
         EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-        GUILayout.FlexibleSpace();
         string hoverText =
             _hoveredCell.x >= 0
                 ? $"Hovered: Row {_hoveredCell.x}, Col {_hoveredCell.y}"
                 : "Hovered: (none)";
-        GUILayout.Label(hoverText);
+        // Expand width so text doesn't get clipped on the right
+        GUILayout.Label(hoverText, GUILayout.ExpandWidth(true));
         EditorGUILayout.EndHorizontal();
     }
 
-    private void DrawTerrainSelector()
-    {
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Terrain:", GUILayout.Width(60));
-        if (_terrainAsset != null && _terrainAsset.Types != null)
-        {
-            string[] names = new string[_terrainAsset.Types.Length];
-            for (int i = 0; i < names.Length; i++)
-            {
-                names[i] = _terrainAsset.Types[i].Name ?? i.ToString();
-            }
+    // DrawTerrainSelector removed - selection/palette moved to left toolbar (cleanup)
 
-            _selectedTerrainIndex = EditorGUILayout.Popup(_selectedTerrainIndex, names);
-            var col = _terrainAsset.Types[_selectedTerrainIndex].EditorColor;
-            Rect cRect = GUILayoutUtility.GetRect(18, 18);
-            EditorGUI.DrawRect(cRect, col);
-        }
-        else
-        {
-            EditorGUILayout.LabelField("(none)");
-        }
-        EditorGUILayout.EndHorizontal();
-    }
-
-    private void DrawTerrainPalette()
+    // Vertical palette for the left toolbar
+    private void DrawTerrainPaletteVertical()
     {
         if (_terrainAsset == null || _terrainAsset.Types == null)
-        {
             return;
-        }
 
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.Label("Palette:", GUILayout.Width(60));
-        foreach (var t in _terrainAsset.Types)
+        GUILayout.Label("Palette", EditorStyles.boldLabel);
+        for (int i = 0; i < _terrainAsset.Types.Length; i++)
         {
+            var t = _terrainAsset.Types[i];
             if (t == null)
-            {
                 continue;
-            }
 
             Texture2D icon = GetTerrainIcon(t);
-            GUIContent content;
-            if (icon != null)
-            {
-                content = new GUIContent(icon, t.Name);
-            }
-            else
-            {
-                content = new GUIContent(t.Name);
-            }
+            GUIContent content =
+                icon != null ? new GUIContent(icon, t.Name) : new GUIContent(t.Name);
 
-            GUIStyle style = new(GUI.skin.button);
+            GUIStyle style = new GUIStyle(GUI.skin.button);
             style.fixedWidth = 40;
-            style.fixedHeight = 24;
+            style.fixedHeight = 40;
 
-            int idx = System.Array.IndexOf(_terrainAsset.Types, t);
-            if (GUILayout.Button(content, style))
+            bool isSelected = _selectedTerrainIndex == i;
+            bool newState = GUILayout.Toggle(isSelected, content, style);
+            if (newState && !isSelected)
             {
-                _selectedTerrainIndex = idx;
+                _selectedTerrainIndex = i;
             }
         }
-        EditorGUILayout.EndHorizontal();
+
+        // Color preview square (same size as buttons). Click to open terrain dropdown.
+        if (
+            _terrainAsset != null
+            && _terrainAsset.Types != null
+            && _selectedTerrainIndex >= 0
+            && _selectedTerrainIndex < _terrainAsset.Types.Length
+        )
+        {
+            var col = _terrainAsset.Types[_selectedTerrainIndex].EditorColor;
+            // Use an explicitly fixed 40x40 rect and don't expand width so it matches the buttons.
+            Rect cRect = GUILayoutUtility.GetRect(
+                40,
+                40,
+                GUILayout.Width(40),
+                GUILayout.Height(40)
+            );
+            EditorGUI.DrawRect(cRect, col);
+            // Make the color preview clickable to show a popup menu of terrain types
+            if (GUI.Button(cRect, GUIContent.none, GUIStyle.none))
+            {
+                ShowTerrainPopup(cRect);
+            }
+        }
+    }
+
+    // Placeholder for the second left toolbar (empty for now)
+    private void DrawLeftSecondToolbar()
+    {
+        GUILayout.Label("Tools", EditorStyles.boldLabel);
+
+        // Second-layer tools: show a vertical list of toggle buttons matching palette size
+        for (int i = 0; i < _secondToolIds.Length; i++)
+        {
+            string id = _secondToolIds[i];
+            string label = _secondToolNames[i];
+
+            // Try to load an icon from Resources/FeatureIcons/<id>
+            Texture2D icon = GetSecondToolIcon(id);
+            GUIContent content;
+            if (icon != null)
+                content = new GUIContent(icon, label);
+            else
+                content = new GUIContent(label.Substring(0, 1));
+
+            GUIStyle style = new GUIStyle(GUI.skin.button);
+            style.fixedWidth = 40;
+            style.fixedHeight = 40;
+
+            bool isSelected = _selectedSecondTool == i;
+            bool newState = GUILayout.Toggle(isSelected, content, style);
+            if (newState && !isSelected)
+            {
+                _selectedSecondTool = i;
+                // initialize the name field to empty or existing default
+                _selectedSecondToolName = string.Empty;
+            }
+            else if (!newState && isSelected)
+            {
+                // Clicking again will deselect
+                _selectedSecondTool = -1;
+            }
+        }
+
+        GUILayout.FlexibleSpace();
+    }
+
+    // Show a terrain selection popup at the given rect
+    private void ShowTerrainPopup(Rect rect)
+    {
+        if (_terrainAsset == null || _terrainAsset.Types == null)
+            return;
+
+        GenericMenu menu = new();
+        for (int i = 0; i < _terrainAsset.Types.Length; i++)
+        {
+            var t = _terrainAsset.Types[i];
+            string name = t != null ? t.Name ?? i.ToString() : i.ToString();
+            int idx = i;
+            bool on = idx == _selectedTerrainIndex;
+            menu.AddItem(
+                new GUIContent(name),
+                on,
+                () =>
+                {
+                    _selectedTerrainIndex = idx;
+                    Repaint();
+                }
+            );
+        }
+
+        menu.DropDown(rect);
     }
 
     private Texture2D GetTerrainIcon(TerrainType t)
@@ -258,33 +579,68 @@ public class MapGridEditorWindow : EditorWindow
         {
             return cached;
         }
-
-        var NameWithoutSpaces = t.Name.Replace(" ", "").ToLower();
-
-        // Try multiple Resources subfolders and both Id and Name lookups.
-        Texture2D tex = null;
-        string[] tryPaths = new string[]
+        // Build candidate paths (id and name variants)
+        string nameNoSpaces = (t.Name ?? string.Empty).Replace(" ", "").ToLower();
+        string[] candidates = new string[]
         {
-            "TerrainIcons/" + t.Id,
-            "TerrainIcons/" + NameWithoutSpaces,
-            "EditorSettings/MapGridEditorIcons/" + t.Id,
-            "EditorSettings/MapGridEditorIcons/" + NameWithoutSpaces,
+            PATH_TERRAIN_ICONS + t.Id,
+            PATH_TERRAIN_ICONS + nameNoSpaces,
+            PATH_EDITOR_ICONS + t.Id,
+            PATH_EDITOR_ICONS + nameNoSpaces,
         };
-        foreach (var p in tryPaths)
+
+        var tex = LoadIconFromPaths(key, candidates);
+        return tex;
+    }
+
+    // Load icons for second-layer feature tools from Resources/FeatureIcons/<id>
+    private Texture2D GetSecondToolIcon(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return null;
+        string key = "feature_" + id;
+        if (_terrainIcons.TryGetValue(key, out var cached))
+            return cached;
+        string nameNoSpaces = id.Replace(" ", "").ToLower();
+        string[] candidates = new string[]
+        {
+            PATH_FEATURE_ICONS + id,
+            PATH_FEATURE_ICONS + nameNoSpaces,
+            PATH_EDITOR_ICONS + id,
+            PATH_EDITOR_ICONS + nameNoSpaces,
+        };
+
+        var tex = LoadIconFromPaths(key, candidates);
+        return tex;
+    }
+
+    // Helper: try loading a Texture2D from a set of Resources paths and cache the result.
+    private Texture2D LoadIconFromPaths(string cacheKey, string[] paths)
+    {
+        if (_terrainIcons.TryGetValue(cacheKey, out var cached))
+            return cached;
+
+        Texture2D tex = null;
+        var tried = new List<string>();
+        foreach (var p in paths)
         {
             if (string.IsNullOrEmpty(p))
-            {
                 continue;
-            }
-
+            tried.Add(p);
             tex = Resources.Load<Texture2D>(p);
             if (tex != null)
-            {
                 break;
-            }
         }
 
-        _terrainIcons[key] = tex;
+        if (tex == null)
+        {
+            // Keep the cache entry (null) to avoid repeated lookups and log debug info once.
+            Debug.LogWarning(
+                $"MapGridEditorWindow: icon not found for '{cacheKey}'. Tried: {string.Join(", ", tried)}"
+            );
+        }
+
+        _terrainIcons[cacheKey] = tex;
         return tex;
     }
 
@@ -306,6 +662,12 @@ public class MapGridEditorWindow : EditorWindow
         // Background
         var contentRect = new Rect(0, 0, width * cellSize, height * cellSize);
         EditorGUI.DrawRect(contentRect, Color.grey * 0.2f);
+
+        // Show pan cursor when space is held or actively panning (over the scroll content)
+        if (_spacePan || _isPanning)
+        {
+            EditorGUIUtility.AddCursorRect(contentRect, MouseCursor.Pan);
+        }
 
         Event e = Event.current;
         // After BeginScrollView the GUI coordinate space is already translated into
@@ -411,6 +773,30 @@ public class MapGridEditorWindow : EditorWindow
                     }
                 }
 
+                // Feature overlay (second-layer): draw large bold letter if the point has a feature
+                if (point != null)
+                {
+                    string letter = MapGridPointFeature.GetFeatureLetter(point.FeatureTypeId);
+                    if (!string.IsNullOrEmpty(letter))
+                    {
+                        var txtStyleFeature = new GUIStyle(EditorStyles.boldLabel)
+                        {
+                            alignment = TextAnchor.MiddleCenter,
+                            fontSize = Mathf.Max(10, Mathf.FloorToInt(cellSize * 0.8f)),
+                            fontStyle = FontStyle.Bold,
+                        };
+
+                        // Choose contrasting text color based on underlying terrain fill
+                        float luminance = 0.299f * fill.r + 0.587f * fill.g + 0.114f * fill.b;
+                        if (luminance < 0.5f)
+                            txtStyleFeature.normal.textColor = Color.white;
+                        else
+                            txtStyleFeature.normal.textColor = Color.black;
+
+                        EditorGUI.LabelField(cellRect, letter, txtStyleFeature);
+                    }
+                }
+
                 // 1px black lines
                 EditorGUI.DrawRect(
                     new Rect(cellRect.x, cellRect.y, cellRect.width, 1f),
@@ -448,6 +834,35 @@ public class MapGridEditorWindow : EditorWindow
             && localMouse.y >= 0
             && localMouse.x <= contentW
             && localMouse.y <= contentH;
+
+        // Space + drag pans the view. Use Event.delta for smooth panning inside the scroll view.
+        if (_spacePan)
+        {
+            if (e.type == EventType.MouseDown && e.button == 0 && inside)
+            {
+                GUI.FocusControl(null);
+                _isPanning = true;
+                e.Use();
+                return;
+            }
+            else if (e.type == EventType.MouseDrag && _isPanning)
+            {
+                // e.delta is in GUI coordinates; subtract it to move the content opposite to mouse drag
+                _scroll -= e.delta;
+                // Prevent negative scroll which can cause jitter; clamp to zero minimum
+                _scroll.x = Mathf.Max(0f, _scroll.x);
+                _scroll.y = Mathf.Max(0f, _scroll.y);
+                Repaint();
+                e.Use();
+                return;
+            }
+            else if (e.type == EventType.MouseUp && e.button == 0 && _isPanning)
+            {
+                _isPanning = false;
+                e.Use();
+                return;
+            }
+        }
 
         if (_mode == Mode.Paint)
         {
@@ -550,18 +965,285 @@ public class MapGridEditorWindow : EditorWindow
                 if (p != null)
                 {
                     Undo.RecordObject(p, "MapGrid Edit");
-                    p.SetTerrainTypeId(chosen.Id);
+                    // If a second-layer tool is selected, only modify the feature layer.
+                    if (_selectedSecondTool >= 0 && _selectedSecondTool < _secondToolIds.Length)
+                    {
+                        string selId = _secondToolIds[_selectedSecondTool];
+                        bool singleCell = (minR == maxR && minC == maxC);
+                        ApplySecondToolToPoint(p, selId, singleCell);
+                    }
+                    else
+                    {
+                        // No second-layer tool selected: apply terrain painting as before
+                        p.SetTerrainTypeId(chosen.Id);
+                    }
+
                     EditorUtility.SetDirty(p);
                     painted++;
                 }
             }
         }
         EditorUtility.SetDirty(_grid);
+        // Persist the feature layer to the MapGrid serialized records
+        _grid.SaveFeatureLayer();
         // Mark the active scene dirty so changes persist
         var _scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
         EditorSceneManager.MarkSceneDirty(_scene);
         SceneView.RepaintAll();
 #endif
+    }
+
+    // Helper to apply (or toggle) a second-layer tool on a single point
+    private void ApplySecondToolToPoint(MapGridPoint p, string selId, bool singleCell)
+    {
+        if (p == null || string.IsNullOrEmpty(selId))
+            return;
+
+        // Delegate feature application logic to MapGridPoint to keep editor code thin.
+        p.ApplyFeature(selId, _selectedSecondToolName ?? string.Empty, singleCell);
+    }
+
+    // Draw the right-panel UI for the selected feature tool
+    private void DrawFeatureDetails(string toolId, GUIStyle boldWrap, GUIStyle wrapStyle)
+    {
+        // Use safe fallbacks in case cached styles are not initialized yet.
+        // Prefer the provided cached styles; otherwise create fresh styles based on EditorStyles
+        GUIStyle safeBold = null;
+        GUIStyle safeWrap = null;
+        if (boldWrap != null)
+            safeBold = boldWrap;
+        else
+            safeBold = new GUIStyle(EditorStyles.boldLabel) { wordWrap = true };
+
+        if (wrapStyle != null)
+            safeWrap = wrapStyle;
+        else
+            safeWrap = new GUIStyle(EditorStyles.label) { wordWrap = true };
+
+        // Ensure text colors match the current theme (dark/light)
+        safeWrap.normal.textColor = EditorStyles.label.normal.textColor;
+        safeBold.normal.textColor = EditorStyles.boldLabel.normal.textColor;
+
+        // Take a snapshot during the Layout event so Layout and Repaint produce
+        // the same number of controls even if hover changes mid-pass.
+        if (Event.current != null && Event.current.type == EventType.Layout)
+        {
+            _detailSnapshotHovered = _hoveredCell;
+            _detailSnapshotProps = null;
+            if (_detailSnapshotHovered.x >= 0 && _detailSnapshotHovered.y >= 0 && _grid != null)
+            {
+                var hp = _grid.GetGridPoint(_detailSnapshotHovered.x, _detailSnapshotHovered.y);
+                if (hp != null && hp.FeatureTypeId == toolId)
+                {
+                    var live = hp.GetAllFeatureProperties();
+                    _detailSnapshotProps = new List<KeyValuePair<string, string>>();
+                    if (live != null)
+                    {
+                        // Handle different possible return shapes for feature properties
+                        foreach (var vv in live)
+                        {
+                            var kv = ExtractKeyValuePair(vv);
+                            _detailSnapshotProps.Add(kv);
+                        }
+                    }
+                }
+            }
+        }
+
+        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+        // Constrain inner contents to a fixed width slightly smaller than the
+        // outer details column so word-wrap works reliably.
+        EditorGUILayout.BeginVertical(GUILayout.Width(196));
+        switch (toolId)
+        {
+            case "eraser":
+                DrawWrappedLabel(new GUIContent("Feature: Eraser"), safeBold, 196f);
+                DrawWrappedLabel(
+                    new GUIContent("Eraser clears the feature layer on painted tiles."),
+                    safeWrap,
+                    196f
+                );
+                _selectedSecondToolName = string.Empty;
+                break;
+            default:
+                // Find a friendly name if available
+                string friendly = toolId;
+                int idx = System.Array.IndexOf(_secondToolIds, toolId);
+                if (idx >= 0 && idx < _secondToolNames.Length)
+                    friendly = _secondToolNames[idx];
+
+                DrawWrappedLabel(new GUIContent($"Feature: {friendly}"), safeBold, 196f);
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Name:", GUILayout.Width(50));
+                _selectedSecondToolName = EditorGUILayout.TextField(
+                    _selectedSecondToolName,
+                    GUILayout.ExpandWidth(true)
+                );
+                EditorGUILayout.EndHorizontal();
+
+                // Show per-feature properties using a snapshot captured during Layout
+                if (
+                    _detailSnapshotHovered.x >= 0
+                    && _detailSnapshotHovered.y >= 0
+                    && _detailSnapshotProps != null
+                    && _grid != null
+                )
+                {
+                    var hoveredPoint = _grid.GetGridPoint(
+                        _detailSnapshotHovered.x,
+                        _detailSnapshotHovered.y
+                    );
+                    GUILayout.Space(6);
+                    DrawWrappedLabel(new GUIContent("Properties (key / value)"), safeBold, 196f);
+
+                    // Display editable list from the snapshot (stable control counts)
+                    var props = _detailSnapshotProps;
+                    var removeKeys = new List<string>();
+                    var editOldKeys = new List<string>();
+                    var editNewKeys = new List<string>();
+                    var editNewVals = new List<string>();
+                    bool addRequested = false;
+
+                    for (int i = 0; i < props.Count; i++)
+                    {
+                        var p = props[i];
+                        EditorGUILayout.BeginHorizontal();
+                        string newKey = EditorGUILayout.TextField(p.Key, GUILayout.Width(120));
+                        string newVal = EditorGUILayout.TextField(
+                            p.Value,
+                            GUILayout.ExpandWidth(true)
+                        );
+                        if (GUILayout.Button("Remove", GUILayout.Width(60)))
+                        {
+                            removeKeys.Add(p.Key);
+                        }
+                        EditorGUILayout.EndHorizontal();
+
+                        if (newKey != p.Key || newVal != p.Value)
+                        {
+                            editOldKeys.Add(p.Key);
+                            editNewKeys.Add(newKey ?? string.Empty);
+                            editNewVals.Add(newVal ?? string.Empty);
+                        }
+                    }
+
+                    EditorGUILayout.BeginHorizontal();
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("Add Property", GUILayout.Width(120)))
+                    {
+                        addRequested = true;
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+                    if (removeKeys.Count > 0 || editOldKeys.Count > 0 || addRequested)
+                    {
+                        var capturedPoint = hoveredPoint;
+                        var capturedGrid = _grid;
+                        var rkList = new List<string>(removeKeys);
+                        var oldKeys = new List<string>(editOldKeys);
+                        var newKeys = new List<string>(editNewKeys);
+                        var newVals = new List<string>(editNewVals);
+                        bool willAdd = addRequested;
+
+                        EditorApplication.delayCall += () =>
+                        {
+                            if (capturedPoint == null)
+                                return;
+
+                            Undo.RecordObject(capturedPoint, "Edit Feature Properties");
+
+                            foreach (var rk in rkList)
+                            {
+                                capturedPoint.ClearFeatureProperty(rk);
+                            }
+
+                            for (int ei = 0; ei < oldKeys.Count; ei++)
+                            {
+                                var oldk = oldKeys[ei];
+                                var newk = newKeys[ei];
+                                var newv = newVals[ei];
+                                capturedPoint.ClearFeatureProperty(oldk);
+                                if (!string.IsNullOrEmpty(newk))
+                                    capturedPoint.SetFeatureProperty(newk, newv);
+                            }
+
+                            if (willAdd)
+                            {
+                                capturedPoint.SetFeatureProperty("new_key", string.Empty);
+                            }
+
+                            EditorUtility.SetDirty(capturedPoint);
+                            if (capturedGrid != null)
+                                capturedGrid.SaveFeatureLayer();
+#if UNITY_EDITOR
+                            var _scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                            EditorSceneManager.MarkSceneDirty(_scene);
+                            SceneView.RepaintAll();
+#endif
+                        };
+                    }
+                }
+                else
+                {
+                    GUILayout.Space(6);
+                    DrawWrappedLabel(
+                        new GUIContent("Hover a tile with this feature to edit its properties."),
+                        safeWrap,
+                        196f
+                    );
+                }
+                break;
+        }
+        // End inner fixed-width vertical
+        EditorGUILayout.EndVertical();
+        EditorGUILayout.EndVertical();
+    }
+
+    // Helper: extract key/value from various possible feature property shapes
+    private KeyValuePair<string, string> ExtractKeyValuePair(object item)
+    {
+        if (item == null)
+            return new KeyValuePair<string, string>(string.Empty, string.Empty);
+
+        var type = item.GetType();
+
+        // Try fields first (common for lightweight data structs)
+        var fKey = type.GetField("key") ?? type.GetField("Key");
+        var fVal = type.GetField("value") ?? type.GetField("Value");
+        if (fKey != null && fVal != null)
+        {
+            var k = fKey.GetValue(item)?.ToString() ?? string.Empty;
+            var v = fVal.GetValue(item)?.ToString() ?? string.Empty;
+            return new KeyValuePair<string, string>(k, v);
+        }
+
+        // Try properties
+        var pKey = type.GetProperty("key") ?? type.GetProperty("Key");
+        var pVal = type.GetProperty("value") ?? type.GetProperty("Value");
+        if (pKey != null && pVal != null)
+        {
+            var k = pKey.GetValue(item)?.ToString() ?? string.Empty;
+            var v = pVal.GetValue(item)?.ToString() ?? string.Empty;
+            return new KeyValuePair<string, string>(k, v);
+        }
+
+        // Last resort: try ToString splitting (not ideal but safe)
+        var s = item.ToString() ?? string.Empty;
+        return new KeyValuePair<string, string>(s, string.Empty);
+    }
+
+    // Helper: draw a wrapped label within an explicit fixed width using a rect
+    private void DrawWrappedLabel(GUIContent content, GUIStyle style, float width)
+    {
+        if (content == null)
+            content = new GUIContent(string.Empty);
+
+        GUIStyle s = style != null ? new GUIStyle(style) : new GUIStyle(EditorStyles.label);
+        s.wordWrap = true;
+
+        float h = s.CalcHeight(content, width);
+        Rect r = GUILayoutUtility.GetRect(width, h, GUILayout.Width(width));
+        EditorGUI.LabelField(r, content, s);
     }
 }
 #endif
