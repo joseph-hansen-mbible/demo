@@ -1,9 +1,25 @@
 using System;
 using System.Collections.Generic;
+using Turnroot.Maps.Components.Grids;
 using UnityEngine;
 
 public class MapGridPoint : MonoBehaviour
 {
+    [SerializeField]
+    private SpawnPoint _spawnPoint = new();
+
+    public SpawnPoint SpawnPoint
+    {
+        get => _spawnPoint;
+        set => _spawnPoint = value ?? new SpawnPoint();
+    }
+
+    void OnValidate()
+    {
+        SpawnPoint ??= new SpawnPoint();
+    }
+
+    /* ---------------------------- Grid point data ---------------------------- */
     private static readonly (string name, int dRow, int dCol)[] Directions = new[]
     {
         ("N", -1, 0),

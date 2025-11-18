@@ -1,56 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class MapGrid : MonoBehaviour
 {
-    [SerializeField]
-    private float _gridScale = 1f;
-
-    [SerializeField]
-    private Vector3 _gridOffset = Vector3.zero;
-
-    [SerializeField]
-    private int _gridWidth = 10;
-
-    [SerializeField]
-    private int _gridHeight = 10;
-
-    [SerializeField]
-    private string _mapName = string.Empty;
-    public string MapName
-    {
-        get => _mapName;
-        set => _mapName = value;
-    }
-
-    [SerializeField]
-    private Dictionary<Vector2Int, GameObject> _gridPoints = new();
-
-    [SerializeField]
-    [Tooltip(
-        "Serialized feature layer records (second layer) for editor features such as chests, doors, etc."
-    )]
-    private List<FeatureRecord> _features = new();
-
-    [SerializeField]
-    private GameObject _single3dHeightMesh;
-
-    [SerializeField]
-    private Vector3[] _single3dHeightMeshRaycastPoints;
-
-    [SerializeField]
-    [Tooltip(
-        "Layer mask used when raycasting to the 3D map. Use this to limit raycasts to the map's layer(s)."
-    )]
-    private LayerMask _raycastLayerMask = ~0;
-
-    public int GridWidth => _gridWidth;
-    public int GridHeight => _gridHeight;
-    public float GridScale => _gridScale;
-    public Vector3 GridOffset => _gridOffset;
-
+    /* -------------------------- Buttons -------------------------- */
     [Button("Create Grid Points")]
     public void CreateChildrenPoints()
     {
@@ -75,26 +31,6 @@ public class MapGrid : MonoBehaviour
         }
 
         LoadFeatureLayer();
-    }
-
-    private void SetDefaultTerrainType(MapGridPoint gridPoint)
-    {
-        var terrainAsset = TerrainTypes.LoadDefault();
-        if (terrainAsset?.Types == null)
-            return;
-
-        var voidType = terrainAsset.Types.FirstOrDefault(t =>
-            t != null && t.Name.Equals("Void", System.StringComparison.OrdinalIgnoreCase)
-        );
-
-        if (voidType != null)
-        {
-            gridPoint.SetTerrainTypeId(voidType.Id);
-        }
-        else if (terrainAsset.Types.Length > 0 && terrainAsset.Types[0] != null)
-        {
-            gridPoint.SetTerrainTypeId(terrainAsset.Types[0].Id);
-        }
     }
 
     [Button("Add Row")]
@@ -170,6 +106,7 @@ public class MapGrid : MonoBehaviour
     }
 
     [Button("Remove Row")]
+    [Tooltip("Removes the last row from the grid. This doesn't remove the existing data.")]
     public void RemoveRow()
     {
         if (_gridHeight <= 1)
@@ -225,6 +162,166 @@ public class MapGrid : MonoBehaviour
 #endif
     }
 
+    [Button("Connect to 3D Map Height")]
+    public void ConnectTo3DMapObject()
+    {
+        if (_single3dHeightMesh == null)
+            return;
+        if (_gridPoints == null)
+            EnsureGridPoints();
+
+        EnsureGridPoints();
+
+        var colliders = _single3dHeightMesh.GetComponentsInChildren<Collider>(true);
+        if (colliders == null || colliders.Length == 0)
+            return;
+
+        var connector = new MapGridHeightConnector();
+        var points = connector.RaycastPointsDownTo3DMap(
+            _single3dHeightMesh,
+            _gridPoints,
+            _raycastLayerMask,
+            _flipRaycastX,
+            _flipRaycastY
+        );
+
+        if (points == null || points.Length == 0)
+            return;
+
+        _single3dHeightMeshRaycastPoints = points;
+        // Build a parallel array of colors matching each computed point, using the
+        // terrain type color from the corresponding MapGridPoint when available.
+        var colors = new Color[points.Length];
+        var indices = new Vector2Int[points.Length];
+        int ci = 0;
+        var ordered = _gridPoints.AsEnumerable();
+        IOrderedEnumerable<System.Collections.Generic.KeyValuePair<
+            Vector2Int,
+            GameObject
+        >> orderedByX;
+        if (_flipRaycastX)
+            orderedByX = ordered.OrderByDescending(kv => kv.Key.x);
+        else
+            orderedByX = ordered.OrderBy(kv => kv.Key.x);
+
+        IOrderedEnumerable<System.Collections.Generic.KeyValuePair<
+            Vector2Int,
+            GameObject
+        >> orderedFinal;
+        if (_flipRaycastY)
+            orderedFinal = orderedByX.ThenByDescending(kv => kv.Key.y);
+        else
+            orderedFinal = orderedByX.ThenBy(kv => kv.Key.y);
+        foreach (var kv in orderedFinal)
+        {
+            if (ci >= colors.Length)
+                break;
+            var mgp = kv.Value?.GetComponent<MapGridPoint>();
+            var tt = mgp?.SelectedTerrainType;
+            colors[ci] = tt != null ? tt.EditorColor : Color.yellow;
+            indices[ci] = kv.Key; // store (row,col) for this raycast point
+            ci++;
+        }
+        // If the dictionary had fewer entries (shouldn't), fill remaining with yellow
+        for (; ci < colors.Length; ci++)
+            colors[ci] = Color.yellow;
+        _single3dHeightMeshRaycastColors = colors;
+        _single3dHeightMeshRaycastIndices = indices;
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+        UnityEditor.SceneView.RepaintAll();
+#endif
+    }
+
+    [Header("Grid Settings")]
+    [HorizontalLine(color: EColor.Green)]
+    [SerializeField]
+    private float _gridScale = 1f;
+
+    [SerializeField]
+    private Vector3 _gridOffset = Vector3.zero;
+
+    [SerializeField]
+    private int _gridWidth = 10;
+
+    [SerializeField]
+    private int _gridHeight = 10;
+
+    [SerializeField]
+    private string _mapName = string.Empty;
+    public string MapName
+    {
+        get => _mapName;
+        set => _mapName = value;
+    }
+
+    [SerializeField, ReadOnly]
+    private Dictionary<Vector2Int, GameObject> _gridPoints = new();
+
+    [SerializeField, ReadOnly]
+    [Tooltip(
+        "Serialized feature layer records (second layer) for editor features such as chests, doors, etc."
+    )]
+    private List<FeatureRecord> _features = new();
+
+    [Header("3D Map Height Connection")]
+    [HorizontalLine(color: EColor.Blue)]
+    [SerializeField]
+    private GameObject _single3dHeightMesh;
+
+    [SerializeField]
+    private Vector3[] _single3dHeightMeshRaycastPoints;
+    private Color[] _single3dHeightMeshRaycastColors;
+
+    [SerializeField]
+    [Tooltip(
+        "Row/Column indices (grid) matching each computed raycast point — useful for manual adjustments"
+    )]
+    private Vector2Int[] _single3dHeightMeshRaycastIndices;
+
+    [SerializeField]
+    [Tooltip("Show gizmo spheres for computed raycast points in the Scene view")]
+    private bool _showRaycastGizmos = true;
+
+    [SerializeField]
+    [Tooltip("Flip the X ordering used when mapping raycast points to grid indices")]
+    private bool _flipRaycastX = false;
+
+    [SerializeField]
+    [Tooltip("Flip the Y ordering used when mapping raycast points to grid indices")]
+    private bool _flipRaycastY = false;
+
+    [SerializeField]
+    [Tooltip(
+        "Layer mask used when raycasting to the 3D map. Use this to limit raycasts to the map's layer(s)."
+    )]
+    private LayerMask _raycastLayerMask = ~0;
+
+    public int GridWidth => _gridWidth;
+    public int GridHeight => _gridHeight;
+    public float GridScale => _gridScale;
+    public Vector3 GridOffset => _gridOffset;
+
+    private void SetDefaultTerrainType(MapGridPoint gridPoint)
+    {
+        var terrainAsset = TerrainTypes.LoadDefault();
+        if (terrainAsset?.Types == null)
+            return;
+
+        var voidType = terrainAsset.Types.FirstOrDefault(t =>
+            t != null && t.Name.Equals("Void", System.StringComparison.OrdinalIgnoreCase)
+        );
+
+        if (voidType != null)
+        {
+            gridPoint.SetTerrainTypeId(voidType.Id);
+        }
+        else if (terrainAsset.Types.Length > 0 && terrainAsset.Types[0] != null)
+        {
+            gridPoint.SetTerrainTypeId(terrainAsset.Types[0].Id);
+        }
+    }
+
     public void ClearGrid()
     {
         foreach (var point in _gridPoints.Values.Where(p => p != null))
@@ -250,36 +347,6 @@ public class MapGrid : MonoBehaviour
         _gridPoints = newDict;
 
         LoadFeatureLayer();
-    }
-
-    [Button("Connect to 3D Map Height")]
-    public void ConnectTo3DMapObject()
-    {
-        if (_single3dHeightMesh == null)
-            return;
-
-        EnsureGridPoints();
-
-        var colliders = _single3dHeightMesh.GetComponentsInChildren<Collider>(true);
-        if (colliders == null || colliders.Length == 0)
-            return;
-
-        var connector = new MapGridHeightConnector();
-        var points = connector.RaycastPointsDownTo3DMap(
-            _single3dHeightMesh,
-            _gridPoints,
-            _raycastLayerMask,
-            true
-        );
-
-        if (points == null || points.Length == 0)
-            return;
-
-        _single3dHeightMeshRaycastPoints = points;
-#if UNITY_EDITOR
-        UnityEditor.EditorUtility.SetDirty(this);
-        UnityEditor.SceneView.RepaintAll();
-#endif
     }
 
     public void SaveFeatureLayer()
@@ -420,9 +487,65 @@ public class MapGrid : MonoBehaviour
         }
 
         RepositionGridPoints();
+
+        // Refresh serialized feature data so the editor view stays in sync
+        if (_features != null && _features.Count > 0)
+            LoadFeatureLayer();
+
+        // If raycast points/colors already exist, refresh the colors and indices when flips change
+        if (_single3dHeightMeshRaycastPoints != null && _single3dHeightMeshRaycastPoints.Length > 0)
+            RebuildRaycastColors();
         UnityEditor.EditorUtility.SetDirty(this);
     }
 #endif
+
+    // Recompute the per-raycast colors using the current flip settings.
+    private void RebuildRaycastColors()
+    {
+        if (
+            _single3dHeightMeshRaycastPoints == null
+            || _single3dHeightMeshRaycastPoints.Length == 0
+        )
+            return;
+        var colors = new Color[_single3dHeightMeshRaycastPoints.Length];
+        var indices = new Vector2Int[_single3dHeightMeshRaycastPoints.Length];
+
+        var ordered = _gridPoints.AsEnumerable();
+        IOrderedEnumerable<System.Collections.Generic.KeyValuePair<
+            Vector2Int,
+            GameObject
+        >> orderedByX;
+        if (_flipRaycastX)
+            orderedByX = ordered.OrderByDescending(kv => kv.Key.x);
+        else
+            orderedByX = ordered.OrderBy(kv => kv.Key.x);
+
+        IOrderedEnumerable<System.Collections.Generic.KeyValuePair<
+            Vector2Int,
+            GameObject
+        >> orderedFinal;
+        if (_flipRaycastY)
+            orderedFinal = orderedByX.ThenByDescending(kv => kv.Key.y);
+        else
+            orderedFinal = orderedByX.ThenBy(kv => kv.Key.y);
+        int ci = 0;
+        foreach (var kv in orderedFinal)
+        {
+            if (ci >= colors.Length)
+                break;
+            var mgp = kv.Value?.GetComponent<MapGridPoint>();
+            var tt = mgp?.SelectedTerrainType;
+            colors[ci] = tt != null ? tt.EditorColor : Color.yellow;
+            indices[ci] = kv.Key;
+            ci++;
+        }
+
+        for (; ci < colors.Length; ci++)
+            colors[ci] = Color.yellow;
+
+        _single3dHeightMeshRaycastColors = colors;
+        _single3dHeightMeshRaycastIndices = indices;
+    }
 
 #if UNITY_EDITOR
     void OnDrawGizmos()
@@ -447,12 +570,24 @@ public class MapGrid : MonoBehaviour
             Gizmos.DrawSphere(corner, 1f);
         }
 
-        if (_single3dHeightMeshRaycastPoints != null && _single3dHeightMeshRaycastPoints.Length > 0)
+        if (
+            _showRaycastGizmos
+            && _single3dHeightMeshRaycastPoints != null
+            && _single3dHeightMeshRaycastPoints.Length > 0
+        )
         {
-            Gizmos.color = Color.yellow;
-            float s = Mathf.Max(0.05f, _gridScale * 0.2f);
-            foreach (var p in _single3dHeightMeshRaycastPoints)
+            float s = Mathf.Max(0.2f, _gridScale * 0.4f);
+            for (int i = 0; i < _single3dHeightMeshRaycastPoints.Length; i++)
             {
+                var p = _single3dHeightMeshRaycastPoints[i];
+                var c =
+                    (
+                        _single3dHeightMeshRaycastColors != null
+                        && i < _single3dHeightMeshRaycastColors.Length
+                    )
+                        ? _single3dHeightMeshRaycastColors[i]
+                        : Color.yellow;
+                Gizmos.color = c;
                 Gizmos.DrawSphere(p, s);
             }
         }

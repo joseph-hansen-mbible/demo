@@ -114,4 +114,3 @@ public class MapGridPointFeatureProperties : ScriptableObject
     public List<IntProperty> intProperties = new();
     public List<FloatProperty> floatProperties = new();
 }
-

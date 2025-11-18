@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MapGridHeightConnector
@@ -7,7 +8,8 @@ public class MapGridHeightConnector
         GameObject mapObject,
         Dictionary<Vector2Int, GameObject> gridPoints,
         LayerMask layerMask,
-        bool debug = false
+        bool flipX = false,
+        bool flipY = false
     )
     {
         Vector3[] raycastPoints = new Vector3[gridPoints.Count];
@@ -16,8 +18,17 @@ public class MapGridHeightConnector
         // If the provided 3D map object is null, simply return original positions
         if (mapObject == null)
         {
-            foreach (var point in gridPoints.Values)
+            // Return original positions in a deterministic order
+            var orderedNull = gridPoints.AsEnumerable();
+            var orderedX = flipX
+                ? orderedNull.OrderByDescending(kv => kv.Key.x)
+                : orderedNull.OrderBy(kv => kv.Key.x);
+            var orderedXY = flipY
+                ? orderedX.ThenByDescending(kv => kv.Key.y)
+                : orderedX.ThenBy(kv => kv.Key.y);
+            foreach (var kv in orderedXY)
             {
+                var point = kv.Value;
                 raycastPoints[index++] = point.transform.position;
             }
             return raycastPoints;
@@ -26,8 +37,18 @@ public class MapGridHeightConnector
         // Cache the transform for hierarchy checks
         var targetRoot = mapObject.transform;
 
-        foreach (var point in gridPoints.Values)
+        // Iterate the provided grid points in a deterministic order so the output
+        // array corresponds predictably to row/column indices.
+        var ordered = gridPoints.AsEnumerable();
+        var orderedByX = flipX
+            ? ordered.OrderByDescending(kv => kv.Key.x)
+            : ordered.OrderBy(kv => kv.Key.x);
+        var orderedFinal = flipY
+            ? orderedByX.ThenByDescending(kv => kv.Key.y)
+            : orderedByX.ThenBy(kv => kv.Key.y);
+        foreach (var kv in orderedFinal)
         {
+            var point = kv.Value;
             Vector3 rayOrigin = point.transform.position + Vector3.up * 50f; // Start the ray well above the grid point
             Ray ray = new Ray(rayOrigin, Vector3.down);
 
@@ -47,15 +68,6 @@ public class MapGridHeightConnector
             // Sort hits by distance
             System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
-            if (debug)
-            {
-                string first =
-                    hits.Length > 0 && hits[0].collider != null ? hits[0].collider.name : "<none>";
-                Debug.Log(
-                    $"Raycast debug: point={point.name} origin={rayOrigin} hits={hits.Length} firstHit={first}"
-                );
-            }
-
             bool found = false;
             foreach (var hit in hits)
             {
@@ -69,10 +81,6 @@ public class MapGridHeightConnector
                     {
                         raycastPoints[index] = hit.point;
                         found = true;
-                        if (debug)
-                            Debug.Log(
-                                $"Raycast debug: matched target for point={point.name} hitCollider={hit.collider.name} at {hit.point}"
-                            );
                         break;
                     }
                     hitRoot = hitRoot.parent;
