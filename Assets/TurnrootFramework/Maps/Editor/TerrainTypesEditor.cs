@@ -38,11 +38,11 @@ public class TerrainTypesEditor : Editor
                 elem,
                 new[]
                 {
-                    ("_costWalk", "Walk", 1f, 5f, 0.1f, new Color(1f, 0.6f, 0f)),
-                    ("_costFly", "Fly", 1f, 5f, 0.1f, new Color(1f, 0.6f, 0f)),
-                    ("_costRide", "Ride", 1f, 5f, 0.1f, new Color(1f, 0.6f, 0f)),
-                    ("_costMagic", "Magic", 1f, 5f, 0.1f, new Color(1f, 0.6f, 0f)),
-                    ("_costArmor", "Armor", 1f, 5f, 0.1f, new Color(1f, 0.6f, 0f)),
+                    ("_costWalk", "Walk", 1f, 4f, 0.1f, new Color(1f, 0.6f, 0f)),
+                    ("_costFly", "Fly", 1f, 4f, 0.1f, new Color(1f, 0.6f, 0f)),
+                    ("_costRide", "Ride", 1f, 4f, 0.1f, new Color(1f, 0.6f, 0f)),
+                    ("_costMagic", "Magic", 1f, 4f, 0.1f, new Color(1f, 0.6f, 0f)),
+                    ("_costArmor", "Armor", 1f, 4f, 0.1f, new Color(1f, 0.6f, 0f)),
                 },
                 true
             );
