@@ -142,7 +142,6 @@ public class MapGridPoint : MonoBehaviour
 #endif
     }
 
-
     public void ClearFeature()
     {
         _featureTypeId = string.Empty;
@@ -269,6 +268,7 @@ public class MapGridPoint : MonoBehaviour
     // Event properties
     public void SetEventFeatureProperty(string key, UnityEvent value) =>
         SetProperty(_eventProperties, key, value);
+
     public UnityEvent GetEventFeatureProperty(string key)
     {
         return GetProperty<MapGridPointFeatureProperties.EventProperty, UnityEvent>(
@@ -276,9 +276,9 @@ public class MapGridPoint : MonoBehaviour
             key
         );
     }
+
     public List<MapGridPointFeatureProperties.EventProperty> GetAllEventFeatureProperties() =>
         new(_eventProperties);
-
 
     public void ApplyDefaultsForFeature(string featureId)
     {

@@ -25,9 +25,7 @@ public class MapGridPointFeature
         Village,
         Fortress,
         Underground,
-        Objective,
-        StartingPoint,
-        Spawner
+        Eraser
     }
 
     public static FeatureType TypeFromId(string id)
