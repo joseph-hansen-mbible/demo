@@ -149,14 +149,14 @@ public abstract class MapGridPropertyBase : ScriptableObject
 
     // Helper methods for property access
     public T GetProperty<T>(string key)
-        where T : IProperty
+        where T : class, IProperty
     {
         var list = GetPropertyList<T>();
         return list?.Find(p => p.key == key);
     }
 
     public void SetProperty<T>(string key, object value)
-        where T : IProperty, new()
+        where T : class, IProperty, new()
     {
         var list = GetPropertyList<T>();
         if (list == null)
@@ -176,7 +176,7 @@ public abstract class MapGridPropertyBase : ScriptableObject
     }
 
     private List<T> GetPropertyList<T>()
-        where T : IProperty
+        where T : class, IProperty
     {
         return typeof(T).Name switch
         {

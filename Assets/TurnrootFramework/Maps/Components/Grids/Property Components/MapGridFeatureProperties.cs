@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Properties for map grid point features (treasure, doors, etc.).
 /// Inherits from the base property system.
-/// This replaces the old MapGridPointFeatureProperties class.
+/// This class provides a place to store defaults for map feature assets.
 /// </summary>
 [System.Serializable]
 [CreateAssetMenu(
@@ -20,7 +20,5 @@ public class MapGridFeatureProperties : MapGridPropertyBase
     public string featureName = string.Empty;
 }
 
-// DEPRECATED: Keep for backwards compatibility during migration
-// This allows existing serialized references to still work
 [System.Serializable]
 public class MapGridPointFeatureProperties : MapGridFeatureProperties { }
