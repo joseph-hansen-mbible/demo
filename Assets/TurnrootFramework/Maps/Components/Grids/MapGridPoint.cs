@@ -6,6 +6,20 @@ using Turnroot.Maps.Components.Grids;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Represents a single tile on the map grid. Each point contains a collection
+/// of typed properties (strings, bools, ints, floats, units, object-items and
+/// events). The property system is backed by typed containers derived from
+/// `MapGridPropertyBase` so the editor and runtime can treat properties
+/// generically while still providing typed accessors.
+///
+/// The defaults for every newly created grid point are defined here in
+/// `InitializePresetGridPointProperties()` (starting unit and default events).
+/// This keeps defaults local and avoids needing a ScriptableObject preset
+/// for the common case of one global set of defaults. If you want a
+/// configurable preset, consider the (deprecated) `MapGridPointProperties` SO
+/// or create a new editor setting to point to a global preset.
+/// </summary>
 public class MapGridPoint : MonoBehaviour
 {
     [SerializeField]
@@ -16,7 +30,14 @@ public class MapGridPoint : MonoBehaviour
         set => _spawnPoint = value ?? new SpawnPoint();
     }
 
-    void OnValidate() => SpawnPoint ??= new SpawnPoint();
+    void OnValidate()
+    {
+        SpawnPoint ??= new SpawnPoint();
+        // Apply built-in defaults in case this point was created before those
+        // defaults existed in the codebase.  This won't override existing
+        // properties because the initialization only adds missing entries.
+        InitializePresetGridPointProperties();
+    }
 
     /* ---------------------------- Grid point data ---------------------------- */
     private static readonly (string name, int dRow, int dCol)[] Directions = new[]
@@ -84,6 +105,11 @@ public class MapGridPoint : MonoBehaviour
     [SerializeField]
     private List<MapGridPropertyBase.FloatProperty> _pointFloatProperties = new();
 
+    // Keys for built-in preset properties.
+    public const string KEY_STARTING_UNIT = "startingUnit";
+    public const string KEY_FRIENDLY_ENTERS = "friendlyEnters";
+    public const string KEY_ENEMY_ENTERS = "enemyEnters";
+
     /* ---------------------------- Feature Properties ---------------------------- */
     [Header("Feature Properties")]
     [SerializeField]
@@ -147,91 +173,73 @@ public class MapGridPoint : MonoBehaviour
     private void InitializePresetGridPointProperties()
     {
         // Starting Unit
-        if (
-            _pointUnitProperties.Find(p => p.key == MapGridPointProperties.KEY_STARTING_UNIT)
-            == null
-        )
+        if (_pointUnitProperties.Find(p => p.key == KEY_STARTING_UNIT) == null)
         {
             _pointUnitProperties.Add(
-                new MapGridPropertyBase.UnitProperty
-                {
-                    key = MapGridPointProperties.KEY_STARTING_UNIT,
-                    value = null,
-                }
+                new MapGridPropertyBase.UnitProperty { key = KEY_STARTING_UNIT, value = null }
             );
         }
 
         // Friendly Enters
-        if (
-            _pointEventProperties.Find(p => p.key == MapGridPointProperties.KEY_FRIENDLY_ENTERS)
-            == null
-        )
+        if (_pointEventProperties.Find(p => p.key == KEY_FRIENDLY_ENTERS) == null)
         {
             _pointEventProperties.Add(
                 new MapGridPropertyBase.EventProperty
                 {
-                    key = MapGridPointProperties.KEY_FRIENDLY_ENTERS,
+                    key = KEY_FRIENDLY_ENTERS,
                     value = new UnityEvent(),
                 }
             );
         }
 
         // Enemy Enters
-        if (
-            _pointEventProperties.Find(p => p.key == MapGridPointProperties.KEY_ENEMY_ENTERS)
-            == null
-        )
+        if (_pointEventProperties.Find(p => p.key == KEY_ENEMY_ENTERS) == null)
         {
             _pointEventProperties.Add(
                 new MapGridPropertyBase.EventProperty
                 {
-                    key = MapGridPointProperties.KEY_ENEMY_ENTERS,
+                    key = KEY_ENEMY_ENTERS,
                     value = new UnityEvent(),
                 }
             );
         }
+
+        // NOTE: default point properties are defined within this class (see the
+        // initialization above).  We intentionally do not auto-load a Scriptable
+        // Object preset — there is a `MapGridPointProperties` ScriptableObject type
+        // in the project, but we don't use it automatically; if you prefer to
+        // manage presets from SOs, move the initialization here into the SO and
+        // call it from InitializePresetGridPointProperties.
     }
 
     /* ---------------------------- Grid Point Property Accessors ---------------------------- */
 
     public CharacterInstance GetStartingUnit()
     {
-        var prop = _pointUnitProperties.Find(p =>
-            p.key == MapGridPointProperties.KEY_STARTING_UNIT
-        );
+        var prop = _pointUnitProperties.Find(p => p.key == KEY_STARTING_UNIT);
         return prop?.value;
     }
 
     public void SetStartingUnit(CharacterInstance unit)
     {
-        var prop = _pointUnitProperties.Find(p =>
-            p.key == MapGridPointProperties.KEY_STARTING_UNIT
-        );
+        var prop = _pointUnitProperties.Find(p => p.key == KEY_STARTING_UNIT);
         if (prop != null)
             prop.value = unit;
         else
             _pointUnitProperties.Add(
-                new MapGridPropertyBase.UnitProperty
-                {
-                    key = MapGridPointProperties.KEY_STARTING_UNIT,
-                    value = unit,
-                }
+                new MapGridPropertyBase.UnitProperty { key = KEY_STARTING_UNIT, value = unit }
             );
     }
 
     public UnityEvent GetFriendlyEntersEvent()
     {
-        var prop = _pointEventProperties.Find(p =>
-            p.key == MapGridPointProperties.KEY_FRIENDLY_ENTERS
-        );
+        var prop = _pointEventProperties.Find(p => p.key == KEY_FRIENDLY_ENTERS);
         return prop?.value;
     }
 
     public UnityEvent GetEnemyEntersEvent()
     {
-        var prop = _pointEventProperties.Find(p =>
-            p.key == MapGridPointProperties.KEY_ENEMY_ENTERS
-        );
+        var prop = _pointEventProperties.Find(p => p.key == KEY_ENEMY_ENTERS);
         return prop?.value;
     }
 
@@ -338,7 +346,6 @@ public class MapGridPoint : MonoBehaviour
 
     /* ---------------------------- Feature Property Accessors ---------------------------- */
 
-    // String properties
     public void SetStringFeatureProperty(string key, string value) =>
         SetProperty(_featureStringProperties, key, value ?? string.Empty);
 
@@ -347,6 +354,16 @@ public class MapGridPoint : MonoBehaviour
 
     public List<MapGridPropertyBase.StringProperty> GetAllStringFeatureProperties() =>
         new(_featureStringProperties);
+
+    // ----- Point-level string properties -----
+    public void SetStringPointProperty(string key, string value) =>
+        SetProperty(_pointStringProperties, key, value ?? string.Empty);
+
+    public string GetStringPointProperty(string key) =>
+        GetProperty<MapGridPropertyBase.StringProperty, string>(_pointStringProperties, key);
+
+    public List<MapGridPropertyBase.StringProperty> GetAllStringPointProperties() =>
+        new(_pointStringProperties);
 
     // Unit properties (NEW)
     public void SetUnitFeatureProperty(string key, CharacterInstance value) =>
@@ -361,6 +378,16 @@ public class MapGridPoint : MonoBehaviour
     public List<MapGridPropertyBase.UnitProperty> GetAllUnitFeatureProperties() =>
         new(_featureUnitProperties);
 
+    // ----- Point-level unit properties -----
+    public void SetUnitPointProperty(string key, CharacterInstance value) =>
+        SetProperty(_pointUnitProperties, key, value);
+
+    public CharacterInstance GetUnitPointProperty(string key) =>
+        GetProperty<MapGridPropertyBase.UnitProperty, CharacterInstance>(_pointUnitProperties, key);
+
+    public List<MapGridPropertyBase.UnitProperty> GetAllUnitPointProperties() =>
+        new(_pointUnitProperties);
+
     // ObjectItem properties (NEW)
     public void SetObjectItemFeatureProperty(string key, ObjectItemInstance value) =>
         SetProperty(_featureObjectItemProperties, key, value);
@@ -374,6 +401,19 @@ public class MapGridPoint : MonoBehaviour
     public List<MapGridPropertyBase.ObjectItemProperty> GetAllObjectItemFeatureProperties() =>
         new(_featureObjectItemProperties);
 
+    // ----- Point-level object item properties -----
+    public void SetObjectItemPointProperty(string key, ObjectItemInstance value) =>
+        SetProperty(_pointObjectItemProperties, key, value);
+
+    public ObjectItemInstance GetObjectItemPointProperty(string key) =>
+        GetProperty<MapGridPropertyBase.ObjectItemProperty, ObjectItemInstance>(
+            _pointObjectItemProperties,
+            key
+        );
+
+    public List<MapGridPropertyBase.ObjectItemProperty> GetAllObjectItemPointProperties() =>
+        new(_pointObjectItemProperties);
+
     // Bool properties
     public void SetBoolFeatureProperty(string key, bool value) =>
         SetProperty(_featureBoolProperties, key, value);
@@ -383,6 +423,16 @@ public class MapGridPoint : MonoBehaviour
 
     public List<MapGridPropertyBase.BoolProperty> GetAllBoolFeatureProperties() =>
         new(_featureBoolProperties);
+
+    // ----- Point-level bool properties -----
+    public void SetBoolPointProperty(string key, bool value) =>
+        SetProperty(_pointBoolProperties, key, value);
+
+    public bool? GetBoolPointProperty(string key) =>
+        GetNullableProperty<bool, MapGridPropertyBase.BoolProperty>(_pointBoolProperties, key);
+
+    public List<MapGridPropertyBase.BoolProperty> GetAllBoolPointProperties() =>
+        new(_pointBoolProperties);
 
     // Int properties
     public void SetIntFeatureProperty(string key, int value) =>
@@ -394,6 +444,16 @@ public class MapGridPoint : MonoBehaviour
     public List<MapGridPropertyBase.IntProperty> GetAllIntFeatureProperties() =>
         new(_featureIntProperties);
 
+    // ----- Point-level int properties -----
+    public void SetIntPointProperty(string key, int value) =>
+        SetProperty(_pointIntProperties, key, value);
+
+    public int? GetIntPointProperty(string key) =>
+        GetNullableProperty<int, MapGridPropertyBase.IntProperty>(_pointIntProperties, key);
+
+    public List<MapGridPropertyBase.IntProperty> GetAllIntPointProperties() =>
+        new(_pointIntProperties);
+
     // Float properties
     public void SetFloatFeatureProperty(string key, float value) =>
         SetProperty(_featureFloatProperties, key, value);
@@ -403,6 +463,16 @@ public class MapGridPoint : MonoBehaviour
 
     public List<MapGridPropertyBase.FloatProperty> GetAllFloatFeatureProperties() =>
         new(_featureFloatProperties);
+
+    // ----- Point-level float properties -----
+    public void SetFloatPointProperty(string key, float value) =>
+        SetProperty(_pointFloatProperties, key, value);
+
+    public float? GetFloatPointProperty(string key) =>
+        GetNullableProperty<float, MapGridPropertyBase.FloatProperty>(_pointFloatProperties, key);
+
+    public List<MapGridPropertyBase.FloatProperty> GetAllFloatPointProperties() =>
+        new(_pointFloatProperties);
 
     // Event properties
     public void SetEventFeatureProperty(string key, UnityEvent value) =>
@@ -418,6 +488,16 @@ public class MapGridPoint : MonoBehaviour
 
     public List<MapGridPropertyBase.EventProperty> GetAllEventFeatureProperties() =>
         new(_featureEventProperties);
+
+    // ----- Point-level event properties -----
+    public void SetEventPointProperty(string key, UnityEvent value) =>
+        SetProperty(_pointEventProperties, key, value);
+
+    public UnityEvent GetEventPointProperty(string key) =>
+        GetProperty<MapGridPropertyBase.EventProperty, UnityEvent>(_pointEventProperties, key);
+
+    public List<MapGridPropertyBase.EventProperty> GetAllEventPointProperties() =>
+        new(_pointEventProperties);
 
     public void ApplyDefaultsForFeature(string featureId)
     {
@@ -439,6 +519,122 @@ public class MapGridPoint : MonoBehaviour
         ApplyDefaultEventProperties(defaultProps.eventProperties);
         ApplyDefaultIntProperties(defaultProps.intProperties);
         ApplyDefaultFloatProperties(defaultProps.floatProperties);
+    }
+
+    // Deprecated/removed: We no longer look up per-point ScriptableObject presets.
+    // If we want a single global preset managed by an SO, use MapGridPointProperties
+    // and call the ApplyDefault*PointProperties helpers directly here.
+
+    private void ApplyDefaultStringPointProperties(
+        List<MapGridPropertyBase.StringProperty> defaults
+    )
+    {
+        ApplyDefaultRefPointProperties<MapGridPropertyBase.StringProperty, string>(
+            defaults,
+            GetStringPointProperty,
+            SetStringPointProperty
+        );
+    }
+
+    private void ApplyDefaultUnitPointProperties(List<MapGridPropertyBase.UnitProperty> defaults)
+    {
+        ApplyDefaultRefPointProperties<MapGridPropertyBase.UnitProperty, CharacterInstance>(
+            defaults,
+            GetUnitPointProperty,
+            SetUnitPointProperty
+        );
+    }
+
+    private void ApplyDefaultObjectItemPointProperties(
+        List<MapGridPropertyBase.ObjectItemProperty> defaults
+    )
+    {
+        ApplyDefaultRefPointProperties<MapGridPropertyBase.ObjectItemProperty, ObjectItemInstance>(
+            defaults,
+            GetObjectItemPointProperty,
+            SetObjectItemPointProperty
+        );
+    }
+
+    private void ApplyDefaultBoolPointProperties(List<MapGridPropertyBase.BoolProperty> defaults)
+    {
+        ApplyDefaultNullableValPointProperties<MapGridPropertyBase.BoolProperty, bool>(
+            defaults,
+            GetBoolPointProperty,
+            SetBoolPointProperty
+        );
+    }
+
+    private void ApplyDefaultEventPointProperties(List<MapGridPropertyBase.EventProperty> defaults)
+    {
+        ApplyDefaultRefPointProperties<MapGridPropertyBase.EventProperty, UnityEvent>(
+            defaults,
+            GetEventPointProperty,
+            SetEventPointProperty
+        );
+    }
+
+    private void ApplyDefaultIntPointProperties(List<MapGridPropertyBase.IntProperty> defaults)
+    {
+        ApplyDefaultNullableValPointProperties<MapGridPropertyBase.IntProperty, int>(
+            defaults,
+            GetIntPointProperty,
+            SetIntPointProperty
+        );
+    }
+
+    private void ApplyDefaultFloatPointProperties(List<MapGridPropertyBase.FloatProperty> defaults)
+    {
+        ApplyDefaultNullableValPointProperties<MapGridPropertyBase.FloatProperty, float>(
+            defaults,
+            GetFloatPointProperty,
+            SetFloatPointProperty
+        );
+    }
+
+    // Generic helpers to DRY default property application. Two variants:
+    // - reference types (string, CharacterInstance, ObjectItemInstance, UnityEvent)
+    // - nullable value types (bool?, int?, float?)
+    private void ApplyDefaultRefPointProperties<TProp, TValue>(
+        List<TProp> defaults,
+        Func<string, TValue> getter,
+        Action<string, TValue> setter
+    )
+        where TProp : MapGridPropertyBase.IProperty
+        where TValue : class
+    {
+        if (defaults == null)
+            return;
+        foreach (var prop in defaults)
+        {
+            if (string.IsNullOrEmpty(prop.key) || getter(prop.key) != null)
+                continue;
+            var val = prop.GetValue() as TValue;
+            setter(prop.key, val);
+        }
+    }
+
+    private void ApplyDefaultNullableValPointProperties<TProp, TValue>(
+        List<TProp> defaults,
+        Func<string, TValue?> getter,
+        Action<string, TValue> setter
+    )
+        where TProp : MapGridPropertyBase.IProperty
+        where TValue : struct
+    {
+        if (defaults == null)
+            return;
+        foreach (var prop in defaults)
+        {
+            if (string.IsNullOrEmpty(prop.key))
+                continue;
+
+            var current = getter(prop.key);
+            if (current.HasValue)
+                continue;
+            var val = (TValue)prop.GetValue();
+            setter(prop.key, val);
+        }
     }
 
     private MapGridFeatureProperties FindFeatureProperties(

@@ -259,6 +259,18 @@ public class MapGrid : MonoBehaviour
                 newDict[new Vector2Int(mgp.Row, mgp.Col)] = child.gameObject;
         }
         _gridPoints = newDict;
+
+        // Ensure each grid point has default properties applied. This helps
+        // when opening or importing older maps that were created before
+        // default point properties existed in the codebase.
+        foreach (var kv in _gridPoints)
+        {
+            var mgp = kv.Value?.GetComponent<MapGridPoint>();
+            if (mgp == null)
+                continue;
+            mgp.Initialize(mgp.Row, mgp.Col);
+        }
+
         LoadFeatureLayer();
     }
 
