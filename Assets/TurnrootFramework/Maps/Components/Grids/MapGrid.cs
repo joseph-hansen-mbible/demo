@@ -505,7 +505,8 @@ public class MapGrid : MonoBehaviour
                         && i < _single3dHeightMeshRaycastColors.Length
                     )
                         ? _single3dHeightMeshRaycastColors[i]
-                        : Color.yellow;
+                        : Color.magenta;
+                c.a = 1f;
                 Gizmos.color = c;
                 Gizmos.DrawSphere(p, s);
             }

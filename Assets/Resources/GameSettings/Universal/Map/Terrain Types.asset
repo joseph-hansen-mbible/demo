@@ -203,7 +203,7 @@ MonoBehaviour:
   - _id: def4dc84-6419-4e27-9cf7-21a6461bcfe8
     _name: Mountain
     _costWalk: 3
-    _costFly: 1.2
+    _costFly: 1
     _costRide: 4
     _costMagic: 1
     _costArmor: 4

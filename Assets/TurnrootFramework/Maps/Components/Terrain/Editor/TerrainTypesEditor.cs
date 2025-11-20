@@ -83,7 +83,6 @@ public class TerrainTypesEditor : Editor
                 false
             );
 
-            EditorGUILayout.Space();
             if (GUILayout.Button("Remove"))
             {
                 typesProp.DeleteArrayElementAtIndex(i);
@@ -94,7 +93,6 @@ public class TerrainTypesEditor : Editor
             EditorGUILayout.EndVertical();
         }
 
-        EditorGUILayout.Space();
         if (GUILayout.Button("Add New Terrain Type"))
         {
             AddNewTerrainType(typesProp);
@@ -125,7 +123,7 @@ public class TerrainTypesEditor : Editor
             EditorGUILayout.BeginVertical(GUILayout.Width(42));
             float value = isFloat ? prop.floatValue : prop.intValue;
             float newValue = KnobGUILayout.Knob(
-                new Vector2(40, 40),
+                new Vector2(38, 38),
                 value,
                 min,
                 max,
@@ -153,10 +151,8 @@ public class TerrainTypesEditor : Editor
             EditorGUILayout.LabelField(knobLabel, EditorStyles.miniLabel, GUILayout.Width(32));
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndHorizontal();
-            GUILayout.Space(20);
             EditorGUILayout.EndVertical();
         }
-        GUILayout.Space(20);
         EditorGUILayout.EndHorizontal();
     }
 
