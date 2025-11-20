@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class MapGridEditorWindow : EditorWindow
 {
@@ -14,6 +15,7 @@ public class MapGridEditorWindow : EditorWindow
 
     // State
     private int _selectedTerrainIndex = 0;
+    private bool _suppressNextMouseDownAfterModeSwitch = false;
     private Vector2 _scroll = Vector2.zero;
     private float _zoom = 1f;
     private bool _isDragging = false,
@@ -32,8 +34,6 @@ public class MapGridEditorWindow : EditorWindow
     private MapGridPoint _selectedFeaturePoint = null;
     private int _selectedSecondTool = -1;
     private string _selectedSecondToolName = string.Empty;
-    private List<KeyValuePair<string, string>> _detailSnapshotProps = null;
-    private List<string> _detailSnapshotPropTypes = null;
 
     // Movement testing
     private bool _asWalk = true,
@@ -49,12 +49,10 @@ public class MapGridEditorWindow : EditorWindow
     // UI constants
     private readonly int _baseCellSize = 24;
     private const int GUI_BUTTON_SIZE = 40;
-    private const string PATH_TERRAIN_ICONS = "TerrainIcons/";
-    private const string PATH_FEATURE_ICONS = "FeatureIcons/";
-    private const string PATH_EDITOR_ICONS = "EditorSettings/MapGridEditorIcons/";
+    private const string ICON_PATH = "EditorSettings/MapGridEditorIcons/";
 
     // Cached resources
-    private readonly Dictionary<string, Texture2D> _terrainIcons = new();
+    private readonly Dictionary<string, Texture2D> _iconCache = new();
     private MapGridEditorSettings _editorSettings;
     private string _editorSettingsPath = string.Empty;
     private DateTime _editorSettingsLastWriteTimeUtc = DateTime.MinValue;
@@ -66,46 +64,65 @@ public class MapGridEditorWindow : EditorWindow
     private Dictionary<KeyCode, string> _shiftHotkeys = null;
 
     // Tool definitions
-    private readonly string[] _secondToolIds = new[]
-    {
-        "treasure",
-        "door",
-        "warp",
-        "healing",
-        "ranged",
-        "mechanism",
-        "control",
-        "breakable",
-        "shelter",
-        "village",
-        "fortress",
-        "underground",
-        "cursor",
-        "eraser",
-    };
-    private readonly string[] _secondToolNames = new[]
-    {
-        "Treasure",
-        "Door",
-        "Warp",
-        "Healing",
-        "Ranged",
-        "Mechanism",
-        "Control",
-        "BreakableWall",
-        "Shelter",
-        "Village",
-        "Fortress",
-        "UndergroundItem",
-        "Cursor",
-        "Eraser",
-    };
+    private readonly ToolSet _featureTools = new ToolSet(
+        new[]
+        {
+            "treasure",
+            "door",
+            "warp",
+            "healing",
+            "ranged",
+            "mechanism",
+            "control",
+            "breakable",
+            "shelter",
+            "village",
+            "fortress",
+            "underground",
+            "cursor",
+            "eraser",
+        },
+        new[]
+        {
+            "Treasure",
+            "Door",
+            "Warp",
+            "Healing",
+            "Ranged",
+            "Mechanism",
+            "Control",
+            "BreakableWall",
+            "Shelter",
+            "Village",
+            "Fortress",
+            "UndergroundItem",
+            "Cursor",
+            "Eraser",
+        }
+    );
+
+    private readonly ToolSet _troopsTools = new(
+        new[] { "startingpoint", "spawner", "objective", "cursor", "eraser" },
+        new[] { "StartingPoint", "Spawner", "Objective", "Cursor", "Eraser" }
+    );
 
     private enum Mode
     {
         Paint = 0,
         TestMovement = 1,
         TroopsAndConditions = 2,
+    }
+
+    private class ToolSet
+    {
+        public string[] Ids { get; }
+        public string[] Names { get; }
+
+        public ToolSet(string[] ids, string[] names)
+        {
+            Ids = ids;
+            Names = names;
+        }
     }
 
     [MenuItem("Turnroot/Editors/Map Grid Editor")]
@@ -117,6 +134,7 @@ public class MapGridEditorWindow : EditorWindow
         _editorSettings = Resources.Load<MapGridEditorSettings>(
             "EditorSettings/MapGridEditorSettings"
         );
+
         if (_editorSettings != null)
         {
             _editorSettingsPath = AssetDatabase.GetAssetPath(_editorSettings) ?? string.Empty;
@@ -237,17 +255,12 @@ public class MapGridEditorWindow : EditorWindow
             fixedWidth = GUI_BUTTON_SIZE,
             fixedHeight = GUI_BUTTON_SIZE,
         };
-        _guiStyleWrap = new GUIStyle(EditorStyles.label)
-        {
-            wordWrap = true,
-            stretchWidth = true,
-            richText = false,
-        };
+
+        _guiStyleWrap = new GUIStyle(EditorStyles.label) { wordWrap = true, stretchWidth = true };
         _guiStyleBoldWrap = new GUIStyle(EditorStyles.boldLabel)
         {
             wordWrap = true,
             stretchWidth = true,
-            richText = false,
         };
         _guiStyleWrap.normal.textColor = EditorStyles.label.normal.textColor;
         _guiStyleBoldWrap.normal.textColor = EditorStyles.boldLabel.normal.textColor;
@@ -260,6 +273,7 @@ public class MapGridEditorWindow : EditorWindow
 
         if (Event.current?.type == EventType.MouseMove)
             Repaint();
+
         HandleKeyboardShortcuts();
         EnsureGridPoints();
 
@@ -287,14 +301,39 @@ public class MapGridEditorWindow : EditorWindow
         if (_terrainAsset == null)
             EditorGUILayout.HelpBox("No TerrainTypes asset found.", MessageType.Warning);
 
+        HandleModeSwitch();
+        DrawMainLayout();
+        DrawStatusBar();
+    }
+
+    private void HandleModeSwitch()
+    {
+        var prevMode = _mode;
         _mode = (Mode)
             GUILayout.Toolbar(
                 (int)_mode,
                 new[] { "Paint Terrain Types", "Test Movement", "Troops and Conditions" }
             );
 
-        DrawMainLayout();
-        DrawStatusBar();
+        if (prevMode != _mode)
+        {
+            _selectedSecondTool = -1;
+            _selectedSecondToolName = string.Empty;
+            SetSelectedFeaturePoint(null);
+            _selectedTerrainIndex = -1;
+            _suppressNextMouseDownAfterModeSwitch = true;
+            Repaint();
+        }
+
+        if (
+            _suppressNextMouseDownAfterModeSwitch
+            && Event.current != null
+            && Event.current.type == EventType.MouseDown
+        )
+        {
+            Event.current.Use();
+            _suppressNextMouseDownAfterModeSwitch = false;
+        }
     }
 
     private void DrawToolbar()
@@ -337,6 +376,7 @@ public class MapGridEditorWindow : EditorWindow
             }
             Repaint();
         }
+
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
     }
@@ -363,11 +403,11 @@ public class MapGridEditorWindow : EditorWindow
             return;
         }
 
-        if (_mode == Mode.Paint)
-        {
-            if (HandleShiftHotkey(e) || HandleFeatureHotkey(e) || HandleTerrainHotkey(e))
-                return;
-        }
+        if (
+            _mode == Mode.Paint
+            && (HandleShiftHotkey(e) || HandleFeatureHotkey(e) || HandleTerrainHotkey(e))
+        )
+            return;
 
         HandleZoomHotkeys(e);
 
@@ -383,19 +423,13 @@ public class MapGridEditorWindow : EditorWindow
         if (!e.shift)
             return false;
 
-        string shiftFeat = null;
-        _shiftHotkeys?.TryGetValue(e.keyCode, out shiftFeat);
-
-        if (string.IsNullOrEmpty(shiftFeat) && (e.character == '`' || e.character == '~'))
+        if (
+            _shiftHotkeys?.TryGetValue(e.keyCode, out var featId) == true
+            || (e.character == '`' || e.character == '~')
+                && _shiftHotkeys?.TryGetValue(KeyCode.Tilde, out featId) == true
+        )
         {
-            _shiftHotkeys?.TryGetValue(KeyCode.Tilde, out shiftFeat);
-            if (string.IsNullOrEmpty(shiftFeat))
-                _shiftHotkeys?.TryGetValue(KeyCode.BackQuote, out shiftFeat);
-        }
-
-        if (!string.IsNullOrEmpty(shiftFeat))
-        {
-            _selectedSecondTool = Array.IndexOf(_secondToolIds, shiftFeat);
+            _selectedSecondTool = Array.IndexOf(_featureTools.Ids, featId);
             _mode = Mode.Paint;
             e.Use();
             return true;
@@ -407,7 +441,7 @@ public class MapGridEditorWindow : EditorWindow
     {
         if (_featureHotkeys?.TryGetValue(e.keyCode, out var featId) == true)
         {
-            _selectedSecondTool = Array.IndexOf(_secondToolIds, featId);
+            _selectedSecondTool = Array.IndexOf(_featureTools.Ids, featId);
             _mode = Mode.Paint;
             e.Use();
             return true;
@@ -477,14 +511,19 @@ public class MapGridEditorWindow : EditorWindow
         // Left toolbars
         EditorGUILayout.BeginVertical(GUILayout.Width(110));
         EditorGUILayout.BeginHorizontal();
+
         EditorGUILayout.BeginVertical(GUILayout.Width(52));
         if (_mode == Mode.Paint)
             DrawTerrainPalette();
         EditorGUILayout.EndVertical();
+
         EditorGUILayout.BeginVertical(GUILayout.Width(52));
         if (_mode == Mode.Paint)
-            DrawToolsPalette();
+            DrawToolsPalette(_featureTools);
+        else if (_mode == Mode.TroopsAndConditions)
+            DrawToolsPalette(_troopsTools);
         EditorGUILayout.EndVertical();
+
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
 
@@ -495,6 +534,7 @@ public class MapGridEditorWindow : EditorWindow
 
         if (_mode == Mode.TestMovement)
             DrawTestMovementControls();
+
         DrawZoomControls();
 
         float rightPanelW = 270f;
@@ -504,23 +544,37 @@ public class MapGridEditorWindow : EditorWindow
         EditorGUILayout.EndVertical();
 
         // Right panel
-        EditorGUILayout.BeginVertical(GUILayout.Width(rightPanelW));
-        if (
-            _selectedSecondTool >= 0
-            && _selectedSecondTool < _secondToolNames.Length
-            && _mode != Mode.TestMovement
-        )
-            DrawFeatureDetails(_secondToolIds[_selectedSecondTool]);
-        else if (_mode == Mode.TestMovement)
-        {
-            _selectedFeaturePoint = null;
-            GUILayout.Space(4);
-        }
-        EditorGUILayout.EndVertical();
+        if (_mode != Mode.TestMovement)
+            DrawRightPanel();
 
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndHorizontal();
+    }
+
+    private void DrawRightPanel()
+    {
+        EditorGUILayout.BeginVertical(GUILayout.Width(270f));
+        EditorGUILayout.LabelField("Feature Details", EditorStyles.boldLabel);
+
+        if (_selectedFeaturePoint != null)
+        {
+            if (!string.IsNullOrEmpty(_selectedFeaturePoint.FeatureTypeId))
+                DrawFeatureDetails(_selectedFeaturePoint.FeatureTypeId, false);
+            if (!string.IsNullOrEmpty(_selectedFeaturePoint.TroopsTypeId))
+                DrawFeatureDetails(_selectedFeaturePoint.TroopsTypeId, true);
+        }
+        else
+        {
+            var tools = _mode == Mode.TroopsAndConditions ? _troopsTools : _featureTools;
+            if (_selectedSecondTool >= 0 && _selectedSecondTool < tools.Ids.Length)
+                DrawFeatureDetails(
+                    tools.Ids[_selectedSecondTool],
+                    _mode == Mode.TroopsAndConditions
+                );
+        }
+
+        EditorGUILayout.EndVertical();
     }
 
     private void DrawTestMovementControls()
@@ -600,17 +654,15 @@ public class MapGridEditorWindow : EditorWindow
                         ? "Left click: Add/Select feature"
                         : "Left click: Paint"
                 );
+
         string controls =
             $"Ctrl +/- : Zoom | Space + Drag : Pan | {leftAction} | Left click + drag: Paint Area | [`, 1-0, -, =, Q, A] : Terrain | Shift+[`, 1-0, -, =] : Feature";
         string hoverText =
             _hoveredCell.x >= 0 ? $"Row {_hoveredCell.x}, Col {_hoveredCell.y}" : "(none)";
 
-        GUILayout.Label($"{controls}", GUILayout.ExpandWidth(true));
+        GUILayout.Label(controls, GUILayout.ExpandWidth(true));
         GUILayout.FlexibleSpace();
-        GUILayout.Label(
-            hoverText,
-            new GUILayoutOption[] { GUILayout.ExpandWidth(false), GUILayout.MinWidth(100) }
-        );
+        GUILayout.Label(hoverText, GUILayout.ExpandWidth(false), GUILayout.MinWidth(100));
         EditorGUILayout.EndHorizontal();
     }
 
@@ -637,7 +689,7 @@ public class MapGridEditorWindow : EditorWindow
                 _selectedTerrainIndex = i;
                 _selectedSecondTool = -1;
                 _selectedSecondToolName = string.Empty;
-                _selectedFeaturePoint = null;
+                SetSelectedFeaturePoint(null);
             }
         }
 
@@ -660,32 +712,33 @@ public class MapGridEditorWindow : EditorWindow
         }
     }
 
-    private void DrawToolsPalette()
+    private void DrawToolsPalette(ToolSet tools)
     {
         GUILayout.Label("Tools", EditorStyles.boldLabel);
 
-        for (int i = 0; i < _secondToolIds.Length; i++)
+        for (int i = 0; i < tools.Ids.Length; i++)
         {
-            string id = _secondToolIds[i];
-            string label = _secondToolNames[i];
+            string id = tools.Ids[i];
+            string label = tools.Names[i];
 
-            Texture2D icon = GetSecondToolIcon(id);
+            Texture2D icon = GetToolIcon(id, tools == _troopsTools);
             GUIContent content =
                 icon != null ? new GUIContent(icon, label) : new GUIContent(label.Substring(0, 1));
 
             bool isSelected = _selectedSecondTool == i;
             bool newState = GUILayout.Toggle(isSelected, content, _guiStyleButton);
+
             if (newState && !isSelected)
             {
                 _selectedSecondTool = i;
                 _selectedSecondToolName = string.Empty;
-                _selectedFeaturePoint = null;
+                SetSelectedFeaturePoint(null);
                 _selectedTerrainIndex = -1;
             }
             else if (!newState && isSelected)
             {
                 _selectedSecondTool = -1;
-                _selectedFeaturePoint = null;
+                SetSelectedFeaturePoint(null);
             }
         }
 
@@ -716,22 +769,30 @@ public class MapGridEditorWindow : EditorWindow
         menu.DropDown(rect);
     }
 
-    private Texture2D GetIcon(string key, string[] paths)
+    private Texture2D GetIcon(string cacheKey, string[] paths)
     {
-        if (_terrainIcons.TryGetValue(key, out var cached))
+        if (_iconCache.TryGetValue(cacheKey, out var cached))
             return cached;
 
         Texture2D tex = null;
-        foreach (var p in paths)
+        foreach (var path in paths)
         {
-            if (string.IsNullOrEmpty(p))
+            if (string.IsNullOrEmpty(path))
                 continue;
-            tex = Resources.Load<Texture2D>(p);
+
+            tex = Resources.Load<Texture2D>(path);
             if (tex != null)
                 break;
+
+            var spr = Resources.Load<Sprite>(path);
+            if (spr?.texture != null)
+            {
+                tex = spr.texture;
+                break;
+            }
         }
 
-        _terrainIcons[key] = tex;
+        _iconCache[cacheKey] = tex;
         return tex;
     }
 
@@ -739,39 +800,54 @@ public class MapGridEditorWindow : EditorWindow
     {
         if (t == null)
             return null;
-        string key = !string.IsNullOrEmpty(t.Id) ? t.Id : t.Name;
-        string nameNoSpaces = (t.Name ?? string.Empty).Replace(" ", "").ToLower();
+
+        string cacheKey = "terrain_" + (!string.IsNullOrEmpty(t.Id) ? t.Id : t.Name);
+
+        var variants = new List<string>
+        {
+            t.Id,
+            t.Name,
+            t.Name?.Replace(" ", ""),
+            t.Id?.ToLower(),
+            t.Name?.Replace(" ", "").ToLower(),
+        };
+
         return GetIcon(
-            key,
-            new[]
-            {
-                PATH_TERRAIN_ICONS + t.Id,
-                PATH_TERRAIN_ICONS + nameNoSpaces,
-                PATH_EDITOR_ICONS + t.Id,
-                PATH_EDITOR_ICONS + nameNoSpaces,
-            }
+            cacheKey,
+            variants.Where(v => !string.IsNullOrEmpty(v)).Select(v => ICON_PATH + v).ToArray()
         );
     }
 
-    private Texture2D GetSecondToolIcon(string id)
+    private Texture2D GetToolIcon(string id, bool isTroops)
     {
         if (string.IsNullOrEmpty(id))
             return null;
-        string key = "feature_" + id;
-        string nameNoSpaces = id.Replace(" ", "").ToLower();
-        var paths = new List<string>
+
+        string cacheKey = (isTroops ? "troops_" : "feature_") + id;
+
+        var variants = new List<string>();
+
+        var toolSet = isTroops ? _troopsTools : _featureTools;
+        int idx = Array.IndexOf(toolSet.Ids, id);
+        string friendlyName = (idx >= 0 && idx < toolSet.Names.Length) ? toolSet.Names[idx] : null;
+
+        if (!string.IsNullOrEmpty(friendlyName))
         {
-            PATH_FEATURE_ICONS + id,
-            PATH_FEATURE_ICONS + nameNoSpaces,
-            PATH_EDITOR_ICONS + id,
-            PATH_EDITOR_ICONS + nameNoSpaces,
-        };
-        if (string.Equals(id, "cursor", StringComparison.OrdinalIgnoreCase))
-        {
-            paths.Insert(0, PATH_FEATURE_ICONS + "Cursor");
-            paths.Add(PATH_EDITOR_ICONS + "Cursor");
+            variants.Add(friendlyName);
+            variants.Add(friendlyName.Replace(" ", ""));
         }
-        return GetIcon(key, paths.ToArray());
+
+        variants.Add(id);
+        variants.Add(id.Replace(" ", "").ToLower());
+        variants.Add(id.ToLower());
+
+        if (id.Length > 0)
+            variants.Add(char.ToUpper(id[0]) + id.Substring(1));
+
+        return GetIcon(
+            cacheKey,
+            variants.Where(v => !string.IsNullOrEmpty(v)).Select(v => ICON_PATH + v).ToArray()
+        );
     }
 
     private void DrawGridArea(Rect area)
@@ -829,7 +905,7 @@ public class MapGridEditorWindow : EditorWindow
                 Color fill = GetCellColor(point);
                 EditorGUI.DrawRect(cellRect, fill);
 
-                DrawCellOverlays(cellRect, r, c, point, fill, cellSize);
+                DrawCellOverlays(cellRect, point, fill, cellSize);
                 DrawCellBorders(cellRect);
             }
         }
@@ -844,92 +920,119 @@ public class MapGridEditorWindow : EditorWindow
         return tt?.EditorColor ?? Color.white;
     }
 
-    private void DrawCellOverlays(
-        Rect cellRect,
-        int r,
-        int c,
-        MapGridPoint point,
-        Color fill,
-        float cellSize
-    )
+    private void DrawCellOverlays(Rect cellRect, MapGridPoint point, Color fill, float cellSize)
     {
+        if (point == null)
+            return;
+
         // Paint selection overlay
-        if (_mode == Mode.Paint && _isDragging)
+        if ((_mode == Mode.Paint || _mode == Mode.TroopsAndConditions) && _isDragging)
         {
             int minR = Mathf.Min(_dragStart.x, _dragEnd.x),
                 maxR = Mathf.Max(_dragStart.x, _dragEnd.x);
             int minC = Mathf.Min(_dragStart.y, _dragEnd.y),
                 maxC = Mathf.Max(_dragStart.y, _dragEnd.y);
-            if (r >= minR && r <= maxR && c >= minC && c <= maxC)
+            if (point.Row >= minR && point.Row <= maxR && point.Col >= minC && point.Col <= maxC)
                 EditorGUI.DrawRect(cellRect, new Color(0, 0, 0, 0.25f));
         }
 
         // Test movement overlay
-        if (
-            _mode == Mode.TestMovement
-            && _testMovementResults?.TryGetValue(point, out var cost) == true
-        )
+        if (_mode == Mode.TestMovement && _testMovementResults?.ContainsKey(point) == true)
             EditorGUI.DrawRect(cellRect, new Color(.8f, 0f, 0.8f, .65f));
 
         // Feature overlay
-        if (point != null)
+        string featureId = point.FeatureTypeId;
+        string troopsId = point.TroopsTypeId;
+
+        bool hasFeature = !string.IsNullOrEmpty(featureId);
+        bool hasTroops = !string.IsNullOrEmpty(troopsId);
+
+        if (!hasFeature && !hasTroops)
+            return;
+
+        float luminance = 0.299f * fill.r + 0.587f * fill.g + 0.114f * fill.b;
+        bool isSelected = point == _selectedFeaturePoint;
+        Color tint = isSelected ? Color.magenta : (luminance < 0.5f ? Color.white : Color.black);
+
+        // If both layers exist, draw a '2'
+        if (hasFeature && hasTroops)
         {
-            string featureId = point.FeatureTypeId;
-            string letter = MapGridPointFeature.GetFeatureLetter(featureId);
-
-            Texture2D icon = null;
-            if (_editorSettings?.featureDisplay == FeatureDisplay.Icon)
-                icon = GetSecondToolIcon(featureId);
-
-            float luminance = 0.299f * fill.r + 0.587f * fill.g + 0.114f * fill.b;
-            Color tint =
-                point == _selectedFeaturePoint
-                    ? Color.magenta
-                    : (luminance < 0.5f ? Color.white : Color.black);
+            DrawCellText(cellRect, "2", tint, cellSize);
+        }
+        else
+        {
+            string id = hasFeature ? featureId : troopsId;
+            Texture2D icon =
+                _editorSettings?.featureDisplay == FeatureDisplay.Icon
+                    ? GetToolIcon(id, hasTroops)
+                    : null;
 
             if (icon != null)
             {
-                float pad = Mathf.Max(1f, cellSize * 0.08f);
-                Rect iconRect = new(
-                    cellRect.x + pad,
-                    cellRect.y + pad,
-                    cellRect.width - pad * 2f,
-                    cellRect.height - pad * 2f
-                );
-                Color prev = GUI.color;
-                GUI.color = tint;
-                GUI.DrawTexture(iconRect, icon, ScaleMode.ScaleToFit, true);
-                GUI.color = prev;
+                DrawCellIcon(cellRect, icon, tint, cellSize);
             }
-            else if (!string.IsNullOrEmpty(letter))
+            else
             {
-                var txtStyle = new GUIStyle(EditorStyles.boldLabel)
+                string letter = MapGridPointFeature.GetFeatureLetter(id);
+                if (!string.IsNullOrEmpty(letter))
                 {
-                    alignment = TextAnchor.MiddleCenter,
-                    fontSize = Mathf.Max(10, Mathf.FloorToInt(cellSize * 0.8f)),
-                    fontStyle = FontStyle.Bold,
-                    normal = { textColor = tint },
-                };
-                EditorGUI.LabelField(cellRect, letter, txtStyle);
-            }
-
-            // Selected feature border
-            if (point == _selectedFeaturePoint)
-            {
-                float t = Mathf.Max(2f, Mathf.Round(cellSize * 0.08f));
-                Color borderCol = Color.magenta;
-                EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, cellRect.width, t), borderCol);
-                EditorGUI.DrawRect(
-                    new Rect(cellRect.x, cellRect.y + cellRect.height - t, cellRect.width, t),
-                    borderCol
-                );
-                EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, t, cellRect.height), borderCol);
-                EditorGUI.DrawRect(
-                    new Rect(cellRect.x + cellRect.width - t, cellRect.y, t, cellRect.height),
-                    borderCol
-                );
+                    DrawCellText(cellRect, letter, tint, cellSize);
+                }
+                else
+                {
+                    // Fallback: show first letter of id
+                    string fallback = id.Length > 0 ? id.Substring(0, 1).ToUpper() : "?";
+                    DrawCellText(cellRect, fallback, tint, cellSize);
+                }
             }
         }
+
+        // Selected feature border
+        if (isSelected)
+            DrawSelectionBorder(cellRect, cellSize);
+    }
+
+    private void DrawCellText(Rect cellRect, string text, Color tint, float cellSize)
+    {
+        var txtStyle = new GUIStyle(EditorStyles.boldLabel)
+        {
+            alignment = TextAnchor.MiddleCenter,
+            fontSize = Mathf.Max(10, Mathf.FloorToInt(cellSize * 0.8f)),
+            fontStyle = FontStyle.Bold,
+            normal = { textColor = tint },
+        };
+        EditorGUI.LabelField(cellRect, text, txtStyle);
+    }
+
+    private void DrawCellIcon(Rect cellRect, Texture2D icon, Color tint, float cellSize)
+    {
+        float pad = Mathf.Max(1f, cellSize * 0.08f);
+        Rect iconRect = new(
+            cellRect.x + pad,
+            cellRect.y + pad,
+            cellRect.width - pad * 2f,
+            cellRect.height - pad * 2f
+        );
+        Color prev = GUI.color;
+        GUI.color = tint;
+        GUI.DrawTexture(iconRect, icon, ScaleMode.ScaleToFit, true);
+        GUI.color = prev;
+    }
+
+    private void DrawSelectionBorder(Rect cellRect, float cellSize)
+    {
+        float t = Mathf.Max(2f, Mathf.Round(cellSize * 0.08f));
+        Color borderCol = Color.magenta;
+        EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, cellRect.width, t), borderCol);
+        EditorGUI.DrawRect(
+            new Rect(cellRect.x, cellRect.y + cellRect.height - t, cellRect.width, t),
+            borderCol
+        );
+        EditorGUI.DrawRect(new Rect(cellRect.x, cellRect.y, t, cellRect.height), borderCol);
+        EditorGUI.DrawRect(
+            new Rect(cellRect.x + cellRect.width - t, cellRect.y, t, cellRect.height),
+            borderCol
+        );
     }
 
     private void DrawCellBorders(Rect cellRect)
@@ -983,7 +1086,7 @@ public class MapGridEditorWindow : EditorWindow
             }
         }
 
-        if (_mode == Mode.Paint)
+        if (_mode == Mode.Paint || _mode == Mode.TroopsAndConditions)
             HandlePaintMode(e, localMouse, cellSize, width, height, inside);
         else if (_mode == Mode.TestMovement)
             HandleTestMovementMode(e, localMouse, cellSize, width, height, inside);
@@ -1005,7 +1108,10 @@ public class MapGridEditorWindow : EditorWindow
         }
         else if (e.type == EventType.MouseDown && e.button == 0 && inside)
         {
-            HandlePaintStart(localMouse, cellSize, width, height);
+            GUI.FocusControl(null);
+            _dragStart = ClampCell(MouseToCell(localMouse, cellSize), width, height);
+            _dragEnd = _dragStart;
+            _isDragging = true;
             e.Use();
         }
         else if (e.type == EventType.MouseDrag && _isDragging)
@@ -1038,10 +1144,8 @@ public class MapGridEditorWindow : EditorWindow
                 return;
             }
 
-            var clicked = _grid.GetGridPoint(
-                ClampCell(MouseToCell(localMouse, cellSize), width, height).x,
-                ClampCell(MouseToCell(localMouse, cellSize), width, height).y
-            );
+            var cell = ClampCell(MouseToCell(localMouse, cellSize), width, height);
+            var clicked = _grid.GetGridPoint(cell.x, cell.y);
             if (clicked != null)
             {
                 _testMovementStart = clicked;
@@ -1072,23 +1176,36 @@ public class MapGridEditorWindow : EditorWindow
     {
         Vector2Int cellClamped = ClampCell(MouseToCell(localMouse, cellSize), width, height);
         var clickedPoint = _grid.GetGridPoint(cellClamped.x, cellClamped.y);
+
         if (clickedPoint != null && !string.IsNullOrEmpty(clickedPoint.FeatureTypeId))
         {
-            int idx = Array.IndexOf(_secondToolIds, clickedPoint.FeatureTypeId);
-            _selectedSecondTool = idx >= 0 ? idx : Array.IndexOf(_secondToolIds, "cursor");
+            string fid = clickedPoint.FeatureTypeId;
+            int idx = Array.IndexOf(_featureTools.Ids, fid);
+
+            if (idx >= 0)
+            {
+                _mode = Mode.Paint;
+                _selectedSecondTool = idx;
+            }
+            else
+            {
+                int idx2 = Array.IndexOf(_troopsTools.Ids, fid);
+                if (idx2 >= 0)
+                {
+                    _mode = Mode.TroopsAndConditions;
+                    _selectedSecondTool = idx2;
+                }
+                else
+                {
+                    _selectedSecondTool = Array.IndexOf(_featureTools.Ids, "cursor");
+                }
+            }
+
             _selectedSecondToolName = string.Empty;
-            _selectedFeaturePoint = clickedPoint;
+            SetSelectedFeaturePoint(clickedPoint);
             _selectedTerrainIndex = -1;
             Repaint();
         }
-    }
-
-    private void HandlePaintStart(Vector2 localMouse, float cellSize, int width, int height)
-    {
-        GUI.FocusControl(null);
-        _dragStart = ClampCell(MouseToCell(localMouse, cellSize), width, height);
-        _dragEnd = _dragStart;
-        _isDragging = true;
     }
 
     private Vector2Int MouseToCell(Vector2 localMouse, float cellSize) =>
@@ -1110,16 +1227,17 @@ public class MapGridEditorWindow : EditorWindow
         int minC = Mathf.Min(_dragStart.y, _dragEnd.y),
             maxC = Mathf.Max(_dragStart.y, _dragEnd.y);
 
-        TerrainType chosen = null;
-        bool haveTerrainChoice = false;
-        if (!(_selectedSecondTool >= 0 && _selectedSecondTool < _secondToolIds.Length))
-        {
-            if (_selectedTerrainIndex >= 0 && _selectedTerrainIndex < _terrainAsset.Types.Length)
-            {
-                chosen = _terrainAsset.Types[_selectedTerrainIndex];
-                haveTerrainChoice = (chosen != null);
-            }
-        }
+        var currentTools = _mode == Mode.TroopsAndConditions ? _troopsTools : _featureTools;
+        bool isToolSelected =
+            _selectedSecondTool >= 0 && _selectedSecondTool < currentTools.Ids.Length;
+
+        TerrainType chosenTerrain = null;
+        if (
+            !isToolSelected
+            && _selectedTerrainIndex >= 0
+            && _selectedTerrainIndex < _terrainAsset.Types.Length
+        )
+            chosenTerrain = _terrainAsset.Types[_selectedTerrainIndex];
 
         for (int r = minR; r <= maxR; r++)
         {
@@ -1129,16 +1247,18 @@ public class MapGridEditorWindow : EditorWindow
                 if (p != null)
                 {
                     Undo.RecordObject(p, "MapGrid Edit");
-                    if (_selectedSecondTool >= 0 && _selectedSecondTool < _secondToolIds.Length)
+
+                    if (isToolSelected)
                     {
-                        string selId = _secondToolIds[_selectedSecondTool];
+                        string toolId = currentTools.Ids[_selectedSecondTool];
                         bool singleCell = (minR == maxR && minC == maxC);
-                        ApplySecondToolToPoint(p, selId, singleCell);
+                        ApplyToolToPoint(p, toolId, singleCell);
                     }
-                    else if (haveTerrainChoice && chosen != null)
+                    else if (chosenTerrain != null)
                     {
-                        p.SetTerrainTypeId(chosen.Id);
+                        p.SetTerrainTypeId(chosenTerrain.Id);
                     }
+
                     EditorUtility.SetDirty(p);
                 }
             }
@@ -1146,127 +1266,215 @@ public class MapGridEditorWindow : EditorWindow
 
         EditorUtility.SetDirty(_grid);
         _grid.SaveFeatureLayer();
-        EditorSceneManager.MarkSceneDirty(
-            UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-        );
+        _grid.SaveTroopsLayer();
+        MarkDirty();
         SceneView.RepaintAll();
     }
 
-    private void ApplySecondToolToPoint(MapGridPoint p, string selId, bool singleCell)
+    private void ApplyToolToPoint(MapGridPoint p, string toolId, bool singleCell)
     {
-        if (p == null || string.IsNullOrEmpty(selId))
+        if (p == null || string.IsNullOrEmpty(toolId))
             return;
 
-        if (string.Equals(selId, "cursor", StringComparison.OrdinalIgnoreCase))
+        bool isTroopsTool = _mode == Mode.TroopsAndConditions;
+
+        // Handle cursor tool
+        if (string.Equals(toolId, "cursor", StringComparison.OrdinalIgnoreCase))
         {
             if (!singleCell)
                 return;
-            if (!string.IsNullOrEmpty(p.FeatureTypeId))
+
+            if (isTroopsTool && !string.IsNullOrEmpty(p.TroopsTypeId))
             {
-                int idx = Array.IndexOf(_secondToolIds, p.FeatureTypeId);
-                if (idx >= 0)
-                    _selectedSecondTool = idx;
-                _selectedSecondToolName = string.Empty;
-                _selectedFeaturePoint = p;
-                _selectedTerrainIndex = -1;
+                int idx = Array.IndexOf(_troopsTools.Ids, p.TroopsTypeId);
+                _selectedSecondTool = idx >= 0 ? idx : Array.IndexOf(_troopsTools.Ids, "cursor");
+                SetSelectedFeaturePoint(p);
+            }
+            else if (!isTroopsTool && !string.IsNullOrEmpty(p.FeatureTypeId))
+            {
+                int idx = Array.IndexOf(_featureTools.Ids, p.FeatureTypeId);
+                _selectedSecondTool = idx >= 0 ? idx : Array.IndexOf(_featureTools.Ids, "cursor");
+                SetSelectedFeaturePoint(p);
             }
             else
-                _selectedFeaturePoint = null;
+            {
+                SetSelectedFeaturePoint(null);
+            }
+
+            _selectedSecondToolName = string.Empty;
+            _selectedTerrainIndex = -1;
             Repaint();
             return;
         }
 
-        if (!singleCell)
+        // Handle eraser tool
+        if (string.Equals(toolId, "eraser", StringComparison.OrdinalIgnoreCase))
         {
-            p.ApplyFeature(selId, _selectedSecondToolName ?? string.Empty, false);
+            if (isTroopsTool)
+                p.ClearTroopsFeature();
+            else
+                p.ClearFeature();
             EditorUtility.SetDirty(p);
             return;
         }
 
-        if (p.FeatureTypeId != selId)
+        // Multi-cell paint: always apply tool
+        if (!singleCell)
         {
-            p.ApplyFeature(selId, _selectedSecondToolName ?? string.Empty, false);
-            _selectedFeaturePoint = p;
+            if (isTroopsTool)
+            {
+                p.ClearTroopsFeature();
+                p.ApplyTroopsFeature(toolId, _selectedSecondToolName ?? string.Empty, false);
+            }
+            else
+            {
+                p.ClearFeature();
+                p.ApplyFeature(toolId, _selectedSecondToolName ?? string.Empty, false);
+            }
+            EditorUtility.SetDirty(p);
+            return;
+        }
+
+        // Single cell: toggle or select
+        string currentId = isTroopsTool ? p.TroopsTypeId : p.FeatureTypeId;
+
+        if (currentId != toolId)
+        {
+            if (isTroopsTool)
+            {
+                p.ClearTroopsFeature();
+                p.ApplyTroopsFeature(toolId, _selectedSecondToolName ?? string.Empty, false);
+            }
+            else
+            {
+                p.ClearFeature();
+                p.ApplyFeature(toolId, _selectedSecondToolName ?? string.Empty, false);
+            }
+            SetSelectedFeaturePoint(p);
         }
         else
         {
-            _selectedFeaturePoint = (_selectedFeaturePoint == p) ? null : p;
+            SetSelectedFeaturePoint(_selectedFeaturePoint == p ? null : p);
             Repaint();
         }
 
         EditorUtility.SetDirty(p);
     }
 
-    private void DrawFeatureDetails(string toolId)
+    private void DrawFeatureDetails(string toolId, bool isTroops)
     {
-        GUIStyle safeBold =
-            _guiStyleBoldWrap ?? new GUIStyle(EditorStyles.boldLabel) { wordWrap = true };
-        GUIStyle safeWrap = _guiStyleWrap ?? new GUIStyle(EditorStyles.label) { wordWrap = true };
-        safeWrap.normal.textColor = EditorStyles.label.normal.textColor;
-        safeBold.normal.textColor = EditorStyles.boldLabel.normal.textColor;
-
-        CapturePropertySnapshot(toolId);
-
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
         EditorGUILayout.BeginVertical(GUILayout.Width(240));
 
-        if (toolId == "eraser")
+        var props = GetPropertySnapshot(toolId, isTroops);
+
+        if (_selectedFeaturePoint != null && props != null)
         {
-            DrawWrappedLabel(new GUIContent("Feature: Eraser"), safeBold, 240f);
+            string friendly = GetFriendlyName(toolId);
+            string instanceName = isTroops
+                ? _selectedFeaturePoint.TroopsName
+                : _selectedFeaturePoint.FeatureName;
+            string layerLabel = isTroops ? "Troops Properties" : "Feature Properties";
+            string header = string.IsNullOrEmpty(instanceName)
+                ? $"{layerLabel}: {friendly} ({toolId})"
+                : $"{layerLabel}: {friendly} — {instanceName} ({toolId})";
+
+            DrawWrappedLabel(new GUIContent(header), _guiStyleBoldWrap, 240f);
+            DrawPropertyList(toolId, isTroops, props);
+        }
+        else if (toolId == "eraser")
+        {
+            DrawWrappedLabel(new GUIContent("Feature: Eraser"), _guiStyleBoldWrap, 240f);
             DrawWrappedLabel(
                 new GUIContent("Eraser clears the feature layer on painted tiles."),
-                safeWrap,
+                _guiStyleWrap,
                 240f
             );
             _selectedSecondToolName = string.Empty;
         }
         else if (toolId == "cursor")
         {
-            DrawWrappedLabel(new GUIContent("Feature: Cursor"), safeBold, 240f);
+            DrawWrappedLabel(new GUIContent("Feature: Cursor"), _guiStyleBoldWrap, 240f);
             DrawWrappedLabel(
                 new GUIContent(
                     "Cursor selects existing features without changing or creating them."
                 ),
-                safeWrap,
+                _guiStyleWrap,
                 240f
             );
             _selectedSecondToolName = string.Empty;
         }
         else
         {
-            DrawFeatureEditor(toolId, safeBold, safeWrap);
+            DrawFeatureEditor(toolId, isTroops);
         }
 
         EditorGUILayout.EndVertical();
         EditorGUILayout.EndVertical();
     }
 
-    private void CapturePropertySnapshot(string toolId)
+    private string GetFriendlyName(string toolId)
     {
-        if (Event.current?.type != EventType.Layout)
-            return;
+        int idx = Array.IndexOf(_featureTools.Ids, toolId);
+        if (idx >= 0 && idx < _featureTools.Names.Length)
+            return _featureTools.Names[idx];
 
-        _detailSnapshotProps = null;
-        _detailSnapshotPropTypes = null;
+        int idx2 = Array.IndexOf(_troopsTools.Ids, toolId);
+        if (idx2 >= 0 && idx2 < _troopsTools.Names.Length)
+            return _troopsTools.Names[idx2];
 
-        MapGridPoint hp =
-            (_selectedFeaturePoint?.FeatureTypeId == toolId) ? _selectedFeaturePoint : null;
-        if (hp == null)
-            return;
-
-        _detailSnapshotProps = new List<KeyValuePair<string, string>>();
-        _detailSnapshotPropTypes = new List<string>();
-
-        AddPropsToSnapshot(hp.GetAllStringFeatureProperties(), "string");
-        AddPropsToSnapshot(hp.GetAllBoolFeatureProperties(), "bool");
-        AddPropsToSnapshot(hp.GetAllIntFeatureProperties(), "int");
-        AddPropsToSnapshot(hp.GetAllFloatFeatureProperties(), "float");
+        return toolId;
     }
 
-    private void AddPropsToSnapshot<T>(List<T> props, string type)
+    private void SetSelectedFeaturePoint(MapGridPoint p)
+    {
+        _selectedFeaturePoint = p;
+        Repaint();
+    }
+
+    private List<KeyValuePair<string, string>> GetPropertySnapshot(string toolId, bool isTroops)
+    {
+        if (_selectedFeaturePoint == null)
+            return null;
+
+        string currentId = isTroops
+            ? _selectedFeaturePoint.TroopsTypeId
+            : _selectedFeaturePoint.FeatureTypeId;
+        if (
+            string.IsNullOrEmpty(currentId)
+            || !currentId.Equals(toolId ?? string.Empty, StringComparison.OrdinalIgnoreCase)
+        )
+            return null;
+
+        var props = new List<KeyValuePair<string, string>>();
+
+        if (isTroops)
+        {
+            AddPropsToList(_selectedFeaturePoint.GetAllStringTroopsProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllObjectTroopsProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllEventTroopsProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllBoolTroopsProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllIntTroopsProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllFloatTroopsProperties(), props);
+        }
+        else
+        {
+            AddPropsToList(_selectedFeaturePoint.GetAllStringFeatureProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllObjectFeatureProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllEventFeatureProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllBoolFeatureProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllIntFeatureProperties(), props);
+            AddPropsToList(_selectedFeaturePoint.GetAllFloatFeatureProperties(), props);
+        }
+
+        return props;
+    }
+
+    private void AddPropsToList<T>(List<T> props, List<KeyValuePair<string, string>> outProps)
     {
         if (props == null)
             return;
+
         foreach (var p in props)
         {
             if (p == null)
@@ -1276,29 +1484,26 @@ public class MapGridEditorWindow : EditorWindow
             var vField = t.GetField("value") ?? t.GetField("Value");
             if (kField != null && vField != null)
             {
-                _detailSnapshotProps.Add(
+                outProps.Add(
                     new KeyValuePair<string, string>(
                         kField.GetValue(p)?.ToString() ?? string.Empty,
                         vField.GetValue(p)?.ToString() ?? string.Empty
                     )
                 );
-                _detailSnapshotPropTypes.Add(type);
             }
         }
     }
 
-    private void DrawFeatureEditor(string toolId, GUIStyle safeBold, GUIStyle safeWrap)
+    private void DrawFeatureEditor(string toolId, bool isTroops)
     {
-        string friendly = toolId;
-        int idx = Array.IndexOf(_secondToolIds, toolId);
-        if (idx >= 0 && idx < _secondToolNames.Length)
-            friendly = _secondToolNames[idx];
+        string friendly = GetFriendlyName(toolId);
 
-        GUIStyle titleStyle = new GUIStyle(safeBold);
+        GUIStyle titleStyle = new GUIStyle(_guiStyleBoldWrap);
         if (_selectedFeaturePoint?.FeatureTypeId == toolId)
             titleStyle.normal.textColor = Color.magenta;
 
         DrawWrappedLabel(new GUIContent($"Feature: {friendly}"), titleStyle, 240f);
+
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Name:", GUILayout.Width(50));
         _selectedSecondToolName = EditorGUILayout.TextField(
@@ -1313,22 +1518,20 @@ public class MapGridEditorWindow : EditorWindow
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Apply Defaults", GUILayout.Width(120)))
             {
-                _selectedFeaturePoint.ApplyDefaultsForFeature(toolId);
+                if (isTroops)
+                    _selectedFeaturePoint.ApplyDefaultsForTroopsFeature(toolId);
+                else
+                    _selectedFeaturePoint.ApplyDefaultsForFeature(toolId);
                 EditorUtility.SetDirty(_selectedFeaturePoint);
                 Repaint();
             }
             EditorGUILayout.EndHorizontal();
-        }
 
-        if (
-            _selectedFeaturePoint != null
-            && _detailSnapshotProps != null
-            && _detailSnapshotPropTypes != null
-        )
-        {
             GUILayout.Space(6);
-            DrawWrappedLabel(new GUIContent("Properties"), safeBold, 240f);
-            DrawPropertyList();
+            DrawWrappedLabel(new GUIContent("Properties"), _guiStyleBoldWrap, 240f);
+            var props = GetPropertySnapshot(toolId, isTroops);
+            if (props != null)
+                DrawPropertyList(toolId, isTroops, props);
         }
         else
         {
@@ -1337,155 +1540,95 @@ public class MapGridEditorWindow : EditorWindow
                 new GUIContent(
                     "Click a tile with this feature to select it and edit its properties."
                 ),
-                safeWrap,
+                _guiStyleWrap,
                 240f
             );
         }
     }
 
-    private void DrawPropertyList()
+    private void DrawPropertyList(
+        string toolId,
+        bool isTroops,
+        List<KeyValuePair<string, string>> props
+    )
     {
         var removeKeys = new List<string>();
-        var editOldKeys = new List<string>();
-        var editNewKeys = new List<string>();
-        var editNewVals = new List<string>();
-        var editNewTypes = new List<string>();
 
-        for (int i = 0; i < _detailSnapshotProps.Count; i++)
+        foreach (var p in props)
         {
-            var p = _detailSnapshotProps[i];
-            var t = _detailSnapshotPropTypes.Count > i ? _detailSnapshotPropTypes[i] : "string";
-
             EditorGUILayout.BeginHorizontal();
-            string newKey = EditorGUILayout.TextField(p.Key, GUILayout.Width(120));
-            string newValStr = DrawPropertyField(p.Value, t);
-
+            EditorGUILayout.LabelField(p.Key, GUILayout.Width(120));
+            EditorGUILayout.LabelField(p.Value ?? string.Empty, GUILayout.ExpandWidth(true));
             if (GUILayout.Button("-", GUILayout.Width(24)))
                 removeKeys.Add(p.Key);
             EditorGUILayout.EndHorizontal();
-
-            if (newKey != p.Key || newValStr != p.Value)
-            {
-                editOldKeys.Add(p.Key);
-                editNewKeys.Add(newKey ?? string.Empty);
-                editNewVals.Add(newValStr ?? string.Empty);
-                editNewTypes.Add(t);
-            }
         }
 
         EditorGUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Add Property", GUILayout.Width(120)))
-            ShowAddPropertyMenu();
+            ShowAddPropertyMenu(isTroops);
         EditorGUILayout.EndHorizontal();
 
-        if (removeKeys.Count > 0 || editOldKeys.Count > 0)
-            SchedulePropertyUpdate(removeKeys, editOldKeys, editNewKeys, editNewVals, editNewTypes);
+        if (removeKeys.Count > 0)
+            SchedulePropertyRemoval(removeKeys, isTroops);
     }
 
-    private string DrawPropertyField(string value, string type)
-    {
-        switch (type)
-        {
-            case "bool":
-                bool.TryParse(value, out bool curB);
-                return EditorGUILayout.Toggle(curB, GUILayout.ExpandWidth(true)).ToString();
-            case "int":
-                int.TryParse(value, out int curI);
-                return EditorGUILayout.IntField(curI, GUILayout.ExpandWidth(true)).ToString();
-            case "float":
-                float.TryParse(value, out float curF);
-                return EditorGUILayout.FloatField(curF, GUILayout.ExpandWidth(true)).ToString();
-            default:
-                return EditorGUILayout.TextField(
-                    value ?? string.Empty,
-                    GUILayout.ExpandWidth(true)
-                );
-        }
-    }
-
-    private void ShowAddPropertyMenu()
+    private void ShowAddPropertyMenu(bool isTroops)
     {
         var menu = new GenericMenu();
         var point = _selectedFeaturePoint;
         var grid = _grid;
+
         menu.AddItem(
             new GUIContent("String"),
             false,
-            () => NewPropertyPrompt.ShowFor(this, point, grid, "string")
+            () => NewPropertyPrompt.ShowFor(this, point, grid, "string", isTroops)
         );
         menu.AddItem(
             new GUIContent("Bool"),
             false,
-            () => NewPropertyPrompt.ShowFor(this, point, grid, "bool")
+            () => NewPropertyPrompt.ShowFor(this, point, grid, "bool", isTroops)
         );
         menu.AddItem(
             new GUIContent("Int"),
             false,
-            () => NewPropertyPrompt.ShowFor(this, point, grid, "int")
+            () => NewPropertyPrompt.ShowFor(this, point, grid, "int", isTroops)
         );
         menu.AddItem(
             new GUIContent("Float"),
             false,
-            () => NewPropertyPrompt.ShowFor(this, point, grid, "float")
+            () => NewPropertyPrompt.ShowFor(this, point, grid, "float", isTroops)
         );
         menu.ShowAsContext();
     }
 
-    private void SchedulePropertyUpdate(
-        List<string> removeKeys,
-        List<string> editOldKeys,
-        List<string> editNewKeys,
-        List<string> editNewVals,
-        List<string> editNewTypes
-    )
+    private void SchedulePropertyRemoval(List<string> removeKeys, bool isTroops)
     {
         var capturedPoint = _selectedFeaturePoint;
         var capturedGrid = _grid;
+
         EditorApplication.delayCall += () =>
         {
             if (capturedPoint == null)
                 return;
-            Undo.RecordObject(capturedPoint, "Edit Feature Properties");
+            Undo.RecordObject(capturedPoint, "Remove Properties");
 
             foreach (var rk in removeKeys)
-                capturedPoint.ClearFeatureProperty(rk);
-
-            for (int i = 0; i < editOldKeys.Count; i++)
             {
-                capturedPoint.ClearFeatureProperty(editOldKeys[i]);
-                if (!string.IsNullOrEmpty(editNewKeys[i]))
-                    SetTypedProperty(
-                        capturedPoint,
-                        editNewKeys[i],
-                        editNewVals[i],
-                        editNewTypes.Count > i ? editNewTypes[i] : "string"
-                    );
+                if (isTroops)
+                    capturedPoint.ClearTroopsProperty(rk);
+                else
+                    capturedPoint.ClearFeatureProperty(rk);
             }
 
             EditorUtility.SetDirty(capturedPoint);
-            capturedGrid?.SaveFeatureLayer();
+            if (isTroops)
+                capturedGrid?.SaveTroopsLayer();
+            else
+                capturedGrid?.SaveFeatureLayer();
             MarkDirty();
         };
-    }
-
-    private void SetTypedProperty(MapGridPoint point, string key, string val, string type)
-    {
-        switch (type)
-        {
-            case "bool":
-                point.SetBoolFeatureProperty(key, bool.TryParse(val, out var bv) ? bv : false);
-                break;
-            case "int":
-                point.SetIntFeatureProperty(key, int.TryParse(val, out var iv) ? iv : 0);
-                break;
-            case "float":
-                point.SetFloatFeatureProperty(key, float.TryParse(val, out var fv) ? fv : 0f);
-                break;
-            default:
-                point.SetStringFeatureProperty(key, val ?? string.Empty);
-                break;
-        }
     }
 
     private void DrawWrappedLabel(GUIContent content, GUIStyle style, float width)
@@ -1514,12 +1657,14 @@ public class MapGridEditorWindow : EditorWindow
         private MapGrid _grid;
         private string _propType = "string";
         private string _key = string.Empty;
+        private bool _isTroops = false;
 
         public static void ShowFor(
             MapGridEditorWindow owner,
             MapGridPoint point,
             MapGrid grid,
-            string propType
+            string propType,
+            bool isTroops
         )
         {
             if (point == null)
@@ -1528,6 +1673,7 @@ public class MapGridEditorWindow : EditorWindow
             win._point = point;
             win._grid = grid;
             win._propType = propType ?? "string";
+            win._isTroops = isTroops;
             win._key = string.Empty;
             win.titleContent = new GUIContent("New Property");
             win.position = new Rect(100, 100, 360, 110);
@@ -1538,6 +1684,7 @@ public class MapGridEditorWindow : EditorWindow
         {
             GUILayout.Label($"Create new {_propType} property", EditorStyles.boldLabel);
             EditorGUILayout.Space();
+
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Key:", GUILayout.Width(40));
             _key = EditorGUILayout.TextField(_key, GUILayout.ExpandWidth(true));
@@ -1577,21 +1724,36 @@ public class MapGridEditorWindow : EditorWindow
             switch ((_propType ?? "").ToLowerInvariant())
             {
                 case "bool":
-                    _point.SetBoolFeatureProperty(_key, false);
+                    if (_isTroops)
+                        _point.SetBoolTroopsProperty(_key, false);
+                    else
+                        _point.SetBoolFeatureProperty(_key, false);
                     break;
                 case "int":
-                    _point.SetIntFeatureProperty(_key, 0);
+                    if (_isTroops)
+                        _point.SetIntTroopsProperty(_key, 0);
+                    else
+                        _point.SetIntFeatureProperty(_key, 0);
                     break;
                 case "float":
-                    _point.SetFloatFeatureProperty(_key, 0f);
+                    if (_isTroops)
+                        _point.SetFloatTroopsProperty(_key, 0f);
+                    else
+                        _point.SetFloatFeatureProperty(_key, 0f);
                     break;
                 default:
-                    _point.SetStringFeatureProperty(_key, string.Empty);
+                    if (_isTroops)
+                        _point.SetStringTroopsProperty(_key, string.Empty);
+                    else
+                        _point.SetStringFeatureProperty(_key, string.Empty);
                     break;
             }
 
             EditorUtility.SetDirty(_point);
-            _grid?.SaveFeatureLayer();
+            if (_isTroops)
+                _grid?.SaveTroopsLayer();
+            else
+                _grid?.SaveFeatureLayer();
             EditorSceneManager.MarkSceneDirty(
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             );

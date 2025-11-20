@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Turnroot.Maps.Components.Grids;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapGridPoint : MonoBehaviour
 {
@@ -73,6 +74,9 @@ public class MapGridPoint : MonoBehaviour
     [SerializeField]
     private List<MapGridPointFeatureProperties.FloatProperty> _floatProperties = new();
 
+    [SerializeField]
+    private List<MapGridPointFeatureProperties.EventProperty> _eventProperties = new();
+
     public int Row => _row;
     public int Col => _col;
     public string TerrainTypeId => _terrainTypeId;
@@ -82,7 +86,6 @@ public class MapGridPoint : MonoBehaviour
         get => _featureName;
         set => _featureName = value ?? string.Empty;
     }
-
     public MapGridPointFeature.FeatureType FeatureType
     {
         get => MapGridPointFeature.TypeFromId(_featureTypeId);
@@ -131,7 +134,14 @@ public class MapGridPoint : MonoBehaviour
         _featureTypeId = selId;
         _featureName = name ?? string.Empty;
         ApplyDefaultsForFeature(selId);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+        UnityEditor.EditorUtility.SetDirty(this.gameObject);
+        UnityEditor.SceneView.RepaintAll();
+#endif
     }
+
 
     public void ClearFeature()
     {
@@ -139,9 +149,16 @@ public class MapGridPoint : MonoBehaviour
         _featureName = string.Empty;
         _stringProperties.Clear();
         _objectProperties.Clear();
+        _eventProperties.Clear();
         _boolProperties.Clear();
         _intProperties.Clear();
         _floatProperties.Clear();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+        UnityEditor.EditorUtility.SetDirty(this.gameObject);
+        UnityEditor.SceneView.RepaintAll();
+#endif
     }
 
     public void ClearFeatureProperty(string key)
@@ -151,6 +168,7 @@ public class MapGridPoint : MonoBehaviour
         _stringProperties.RemoveAll(p => p.key == key);
         _objectProperties.RemoveAll(p => p.key == key);
         _boolProperties.RemoveAll(p => p.key == key);
+        _eventProperties.RemoveAll(p => p.key == key);
         _intProperties.RemoveAll(p => p.key == key);
         _floatProperties.RemoveAll(p => p.key == key);
     }
@@ -248,6 +266,20 @@ public class MapGridPoint : MonoBehaviour
     public List<MapGridPointFeatureProperties.FloatProperty> GetAllFloatFeatureProperties() =>
         new(_floatProperties);
 
+    // Event properties
+    public void SetEventFeatureProperty(string key, UnityEvent value) =>
+        SetProperty(_eventProperties, key, value);
+    public UnityEvent GetEventFeatureProperty(string key)
+    {
+        return GetProperty<MapGridPointFeatureProperties.EventProperty, UnityEvent>(
+            _eventProperties,
+            key
+        );
+    }
+    public List<MapGridPointFeatureProperties.EventProperty> GetAllEventFeatureProperties() =>
+        new(_eventProperties);
+
+
     public void ApplyDefaultsForFeature(string featureId)
     {
         if (string.IsNullOrEmpty(featureId))
@@ -264,6 +296,7 @@ public class MapGridPoint : MonoBehaviour
         ApplyDefaultStringProperties(defaultProps.stringProperties);
         ApplyDefaultObjectProperties(defaultProps.objectProperties);
         ApplyDefaultBoolProperties(defaultProps.boolProperties);
+        ApplyDefaultEventProperties(defaultProps.eventProperties);
         ApplyDefaultIntProperties(defaultProps.intProperties);
         ApplyDefaultFloatProperties(defaultProps.floatProperties);
     }
@@ -325,6 +358,20 @@ public class MapGridPoint : MonoBehaviour
             if (string.IsNullOrEmpty(prop.key) || GetBoolFeatureProperty(prop.key).HasValue)
                 continue;
             SetBoolFeatureProperty(prop.key, prop.value);
+        }
+    }
+
+    private void ApplyDefaultEventProperties(
+        List<MapGridPointFeatureProperties.EventProperty> defaults
+    )
+    {
+        if (defaults == null)
+            return;
+        foreach (var prop in defaults)
+        {
+            if (string.IsNullOrEmpty(prop.key) || GetEventFeatureProperty(prop.key) != null)
+                continue;
+            SetEventFeatureProperty(prop.key, prop.value);
         }
     }
 

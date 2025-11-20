@@ -10,14 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 698cbba4ada1f8c4f95ce6cfef3718ee, type: 3}
-  m_Name: BreakableWall
+  m_Name: Underground
   m_EditorClassIdentifier: 
-  featureId: breakable
+  featureId: underground
   featureName: 
   stringProperties: []
-  objectProperties: []
-  boolProperties: []
+  objectProperties:
+  - key: Common Item
+    value: {fileID: 0}
+  - key: Rare Item
+    value: {fileID: 0}
+  eventProperties: []
+  boolProperties:
+  - key: Is Secret
+    value: 0
   intProperties:
-  - key: HP
+  - key: Common Chance %
+    value: 80
+  - key: Common Chance %
     value: 20
   floatProperties: []

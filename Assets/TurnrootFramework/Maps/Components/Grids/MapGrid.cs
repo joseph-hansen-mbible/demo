@@ -3,6 +3,7 @@ using System.Linq;
 using NaughtyAttributes;
 using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MapGrid : MonoBehaviour
 {
@@ -512,6 +513,9 @@ public class FeatureRecord
 
     public List<PropertyRecord<string>> stringProperties = new();
     public List<PropertyRecord<bool>> boolProperties = new();
+
+    public List<PropertyRecord<UnityEngine.Object>> objectProperties = new();
+    public List<PropertyRecord<UnityEvent>> eventProperties = new();
     public List<PropertyRecord<int>> intProperties = new();
     public List<PropertyRecord<float>> floatProperties = new();
 }

@@ -119,18 +119,18 @@ public class TerrainTypesEditor : Editor
             if (prop == null)
                 continue;
 
-            EditorGUILayout.BeginVertical(GUILayout.Width(64));
+            EditorGUILayout.BeginVertical(GUILayout.Width(70));
             EditorGUILayout.BeginHorizontal();
 
-            EditorGUILayout.BeginVertical(GUILayout.Width(48));
+            EditorGUILayout.BeginVertical(GUILayout.Width(42));
             float value = isFloat ? prop.floatValue : prop.intValue;
             float newValue = KnobGUILayout.Knob(
-                new Vector2(48, 48),
+                new Vector2(40, 40),
                 value,
                 min,
                 max,
                 "",
-                Color.gray,
+                Color.white,
                 color,
                 false,
                 isFloat ? "0.0" : "0",
@@ -145,29 +145,18 @@ public class TerrainTypesEditor : Editor
                 prop.intValue = Mathf.RoundToInt(newValue);
             EditorGUILayout.EndVertical();
 
-            GUILayout.Space(4);
             EditorGUILayout.BeginVertical();
             string displayValue = isFloat
                 ? prop.floatValue.ToString("0.0")
                 : prop.intValue.ToString();
-            EditorGUILayout.LabelField(
-                displayValue,
-                EditorStyles.centeredGreyMiniLabel,
-                GUILayout.Width(36)
-            );
-            EditorGUILayout.LabelField(
-                knobLabel,
-                EditorStyles.centeredGreyMiniLabel,
-                GUILayout.Width(36)
-            );
+            EditorGUILayout.LabelField(displayValue, EditorStyles.numberField, GUILayout.Width(32));
+            EditorGUILayout.LabelField(knobLabel, EditorStyles.miniLabel, GUILayout.Width(32));
             EditorGUILayout.EndVertical();
-
             EditorGUILayout.EndHorizontal();
+            GUILayout.Space(20);
             EditorGUILayout.EndVertical();
-            GUILayout.Space(12);
         }
-
-        GUILayout.FlexibleSpace();
+        GUILayout.Space(20);
         EditorGUILayout.EndHorizontal();
     }
 

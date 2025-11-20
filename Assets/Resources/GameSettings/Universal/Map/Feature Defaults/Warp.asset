@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698cbba4ada1f8c4f95ce6cfef3718ee, type: 3}
+  m_Name: Warp
+  m_EditorClassIdentifier: 
+  featureId: warp
+  featureName: 
+  stringProperties: []
+  objectProperties: []
+  eventProperties: []
+  boolProperties:
+  - key: Is Active
+    value: 1
+  intProperties:
+  - key: warp to row
+    value: 0
+  - key: warp to column
+    value: 0
+  floatProperties: []

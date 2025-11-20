@@ -70,6 +70,23 @@ public class MapGridInspector : Editor
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Matched Raycast Point", EditorStyles.helpBox);
 
+                EditorGUILayout.LabelField("Element Number", found.ToString());
+                if (indices != null && found >= 0 && found < indices.Length)
+                {
+                    var idx = indices[found];
+                    EditorGUILayout.LabelField("Index (row,col)", $"{idx.x},{idx.y}");
+                    string pointName = "(unknown)";
+                    if (mg != null)
+                    {
+                        var mgp = mg.GetGridPoint(idx.x, idx.y);
+                        if (mgp != null && mgp.gameObject != null)
+                            pointName = mgp.gameObject.name;
+                        else
+                            pointName = $"Point_R{idx.x}_C{idx.y}";
+                    }
+                    EditorGUILayout.LabelField("Point Name", pointName);
+                }
+
                 var pointsPropEditable = serializedObject.FindProperty(
                     "_single3dHeightMeshRaycastPoints"
                 );

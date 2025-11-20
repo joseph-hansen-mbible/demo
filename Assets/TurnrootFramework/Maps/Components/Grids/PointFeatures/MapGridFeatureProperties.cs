@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 [CreateAssetMenu(
@@ -38,6 +39,23 @@ public class MapGridPointFeatureProperties : ScriptableObject
         public object GetValue() => value;
 
         public void SetValue(object val) => value = val as string ?? string.Empty;
+    }
+
+    [System.Serializable]
+    public class EventProperty : IProperty
+    {
+        public string key = string.Empty;
+        public UnityEvent value = new();
+
+        string IProperty.key
+        {
+            get => key;
+            set => key = value;
+        }
+
+        public object GetValue() => value;
+
+        public void SetValue(object val) => value = val as UnityEvent ?? new UnityEvent();
     }
 
     [System.Serializable]
@@ -110,6 +128,7 @@ public class MapGridPointFeatureProperties : ScriptableObject
 
     public List<StringProperty> stringProperties = new();
     public List<ObjectProperty> objectProperties = new();
+    public List<EventProperty> eventProperties = new();
     public List<BoolProperty> boolProperties = new();
     public List<IntProperty> intProperties = new();
     public List<FloatProperty> floatProperties = new();
