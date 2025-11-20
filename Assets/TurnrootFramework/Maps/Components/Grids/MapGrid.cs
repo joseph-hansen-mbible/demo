@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
+using Turnroot.Characters;
+using Turnroot.Gameplay.Objects;
 using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.Events;
@@ -288,6 +290,20 @@ public class MapGrid : MonoBehaviour
                     floatProperties = mgp.GetAllFloatFeatureProperties()
                         ?.Select(p => new PropertyRecord<float> { key = p.key, value = p.value })
                         .ToList(),
+                    unitProperties = mgp.GetAllUnitFeatureProperties()
+                        ?.Select(p => new PropertyRecord<CharacterInstance>
+                        {
+                            key = p.key,
+                            value = p.value,
+                        })
+                        .ToList(),
+                    objectItemProperties = mgp.GetAllObjectItemFeatureProperties()
+                        ?.Select(p => new PropertyRecord<ObjectItemInstance>
+                        {
+                            key = p.key,
+                            value = p.value,
+                        })
+                        .ToList(),
                 }
             );
         }
@@ -315,6 +331,8 @@ public class MapGrid : MonoBehaviour
             ApplyPropertyList(rec.boolProperties, mgp.SetBoolFeatureProperty);
             ApplyPropertyList(rec.intProperties, mgp.SetIntFeatureProperty);
             ApplyPropertyList(rec.floatProperties, mgp.SetFloatFeatureProperty);
+            ApplyPropertyList(rec.unitProperties, mgp.SetUnitFeatureProperty);
+            ApplyPropertyList(rec.objectItemProperties, mgp.SetObjectItemFeatureProperty);
         }
     }
 
@@ -513,9 +531,9 @@ public class FeatureRecord
 
     public List<PropertyRecord<string>> stringProperties = new();
     public List<PropertyRecord<bool>> boolProperties = new();
-
-    public List<PropertyRecord<UnityEngine.Object>> objectProperties = new();
-    public List<PropertyRecord<UnityEvent>> eventProperties = new();
     public List<PropertyRecord<int>> intProperties = new();
     public List<PropertyRecord<float>> floatProperties = new();
+
+    public List<PropertyRecord<CharacterInstance>> unitProperties = new();
+    public List<PropertyRecord<ObjectItemInstance>> objectItemProperties = new();
 }

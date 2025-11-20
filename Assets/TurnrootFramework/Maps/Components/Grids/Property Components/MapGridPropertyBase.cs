@@ -1,22 +1,17 @@
 using System;
 using System.Collections.Generic;
+using Turnroot.Characters;
+using Turnroot.Gameplay.Objects;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Base class for properties that can be attached to map grid points and features.
+/// Provides a flexible property system with strongly-typed property containers.
+/// </summary>
 [System.Serializable]
-[CreateAssetMenu(
-    fileName = "New MapGridPointFeatureProperties",
-    menuName = "Turnroot/Maps/Tile Feature Properties"
-)]
-public class MapGridPointFeatureProperties : ScriptableObject
+public abstract class MapGridPropertyBase : ScriptableObject
 {
-    [Header("Feature identity")]
-    [Tooltip("ID used to match this asset to a feature type (e.g. 'treasure').")]
-    public string featureId = string.Empty;
-
-    [Tooltip("Optional friendly name for the feature defaults asset.")]
-    public string featureName = string.Empty;
-
     public interface IProperty
     {
         string key { get; set; }
@@ -59,10 +54,10 @@ public class MapGridPointFeatureProperties : ScriptableObject
     }
 
     [System.Serializable]
-    public class ObjectProperty : IProperty
+    public class UnitProperty : IProperty
     {
         public string key = string.Empty;
-        public UnityEngine.Object value = null;
+        public CharacterInstance value = null;
 
         string IProperty.key
         {
@@ -72,7 +67,24 @@ public class MapGridPointFeatureProperties : ScriptableObject
 
         public object GetValue() => value;
 
-        public void SetValue(object val) => value = val as UnityEngine.Object;
+        public void SetValue(object val) => value = val as CharacterInstance;
+    }
+
+    [System.Serializable]
+    public class ObjectItemProperty : IProperty
+    {
+        public string key = string.Empty;
+        public ObjectItemInstance value = null;
+
+        string IProperty.key
+        {
+            get => key;
+            set => key = value;
+        }
+
+        public object GetValue() => value;
+
+        public void SetValue(object val) => value = val as ObjectItemInstance;
     }
 
     [System.Serializable]
@@ -126,10 +138,56 @@ public class MapGridPointFeatureProperties : ScriptableObject
         public void SetValue(object val) => value = val is float f ? f : 0f;
     }
 
+    // Property collections
     public List<StringProperty> stringProperties = new();
-    public List<ObjectProperty> objectProperties = new();
     public List<EventProperty> eventProperties = new();
+    public List<UnitProperty> unitProperties = new();
+    public List<ObjectItemProperty> objectItemProperties = new();
     public List<BoolProperty> boolProperties = new();
     public List<IntProperty> intProperties = new();
     public List<FloatProperty> floatProperties = new();
+
+    // Helper methods for property access
+    public T GetProperty<T>(string key)
+        where T : IProperty
+    {
+        var list = GetPropertyList<T>();
+        return list?.Find(p => p.key == key);
+    }
+
+    public void SetProperty<T>(string key, object value)
+        where T : IProperty, new()
+    {
+        var list = GetPropertyList<T>();
+        if (list == null)
+            return;
+
+        var prop = list.Find(p => p.key == key);
+        if (prop != null)
+        {
+            prop.SetValue(value);
+        }
+        else
+        {
+            var newProp = new T { key = key };
+            newProp.SetValue(value);
+            list.Add(newProp);
+        }
+    }
+
+    private List<T> GetPropertyList<T>()
+        where T : IProperty
+    {
+        return typeof(T).Name switch
+        {
+            nameof(StringProperty) => stringProperties as List<T>,
+            nameof(EventProperty) => eventProperties as List<T>,
+            nameof(UnitProperty) => unitProperties as List<T>,
+            nameof(ObjectItemProperty) => objectItemProperties as List<T>,
+            nameof(BoolProperty) => boolProperties as List<T>,
+            nameof(IntProperty) => intProperties as List<T>,
+            nameof(FloatProperty) => floatProperties as List<T>,
+            _ => null,
+        };
+    }
 }
