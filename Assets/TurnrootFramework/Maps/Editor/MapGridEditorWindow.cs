@@ -590,13 +590,21 @@ public class MapGridEditorWindow : EditorWindow
         serializedPoint.Update();
         serializedPoint.Update();
 
-        // Starting Unit
-        var unitProps = serializedPoint.FindProperty("_pointUnitProperties");
-        if (unitProps != null && unitProps.arraySize > 0)
+        var startingUnitProp = serializedPoint.FindProperty("_startingUnit");
+        if (startingUnitProp != null)
         {
-            var unitProp = unitProps.GetArrayElementAtIndex(0);
-            var valueProp = unitProp.FindPropertyRelative("value");
-            if (valueProp != null)
+            var templateProp = startingUnitProp.FindPropertyRelative("_characterTemplate");
+            if (templateProp != null)
+            {
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.PropertyField(templateProp, new GUIContent("Starting Unit"));
+                if (EditorGUI.EndChangeCheck())
+                {
+                    serializedPoint.ApplyModifiedProperties();
+                    MarkDirty();
+                }
+            }
+            else
             {
                 var current = point.GetStartingUnit();
                 var currentTemplate = current?.CharacterTemplate;
@@ -622,44 +630,33 @@ public class MapGridEditorWindow : EditorWindow
 
         GUILayout.Space(5);
 
-        // Events
-        var eventProps = serializedPoint.FindProperty("_pointEventProperties");
-        if (eventProps != null && eventProps.arraySize > 0)
+        var friendlyProp = serializedPoint.FindProperty("_friendlyEntersEvent");
+        if (friendlyProp != null)
         {
-            var friendlyProp = eventProps.GetArrayElementAtIndex(0).FindPropertyRelative("value");
-            if (friendlyProp != null)
+            EditorGUILayout.LabelField("Friendly Enters Event", _guiStyleBoldWrap);
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(friendlyProp, GUIContent.none);
+            if (EditorGUI.EndChangeCheck())
             {
-                EditorGUILayout.LabelField("Friendly Enters Event", _guiStyleBoldWrap);
-                EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(friendlyProp, GUIContent.none);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    serializedPoint.ApplyModifiedProperties();
-                    MarkDirty();
-                }
+                serializedPoint.ApplyModifiedProperties();
+                MarkDirty();
             }
         }
 
-        if (eventProps != null && eventProps.arraySize > 1)
+        var enemyProp = serializedPoint.FindProperty("_enemyEntersEvent");
+        if (enemyProp != null)
         {
-            var enemyProp = eventProps.GetArrayElementAtIndex(1).FindPropertyRelative("value");
-            if (enemyProp != null)
+            EditorGUILayout.LabelField("Enemy Enters Event", _guiStyleBoldWrap);
+            EditorGUI.BeginChangeCheck();
+            EditorGUILayout.PropertyField(enemyProp, GUIContent.none);
+            if (EditorGUI.EndChangeCheck())
             {
-                EditorGUILayout.LabelField("Enemy Enters Event", _guiStyleBoldWrap);
-                EditorGUI.BeginChangeCheck();
-                EditorGUILayout.PropertyField(enemyProp, GUIContent.none);
-                if (EditorGUI.EndChangeCheck())
-                {
-                    serializedPoint.ApplyModifiedProperties();
-                    MarkDirty();
-                }
+                serializedPoint.ApplyModifiedProperties();
+                MarkDirty();
             }
         }
 
         GUILayout.Space(5);
-
-        // Points automatically initialize their preset properties on creation; no manual
-        // "Apply Defaults" button is necessary.
 
         GUILayout.Space(5);
 
@@ -851,12 +848,28 @@ public class MapGridEditorWindow : EditorWindow
         var serializedPoint = new SerializedObject(point);
         var propertiesArray = serializedPoint.FindProperty(propertyName);
 
-        if (propertiesArray == null || propertiesArray.arraySize == 0)
+        bool hasVisible = false;
+        if (propertiesArray != null && propertiesArray.arraySize > 0)
+        {
+            for (int i = 0; i < propertiesArray.arraySize; i++)
+            {
+                var el = propertiesArray.GetArrayElementAtIndex(i);
+                var keyProp = el.FindPropertyRelative("key");
+                if (keyProp == null)
+                    continue;
+
+                hasVisible = true;
+                break;
+            }
+        }
+
+        if (propertiesArray == null || !hasVisible)
         {
             EditorGUILayout.BeginHorizontal();
-            // This label is replaced by the accent foldout header earlier; keep old + behavior if needed
             if (GUILayout.Button("+", GUILayout.Width(20)))
+            {
                 onAddNew();
+            }
             EditorGUILayout.EndHorizontal();
             return;
         }
@@ -1085,7 +1098,6 @@ public class MapGridEditorWindow : EditorWindow
 
     private void DrawSectionHeader(string title, bool expanded, Action onAddNew)
     {
-        // Background rect for header — choose a color depending on the section
         Color bg = GetHeaderAccentColor(title);
         Rect rect = GUILayoutUtility.GetRect(0, 22, GUILayout.ExpandWidth(true));
         EditorGUI.DrawRect(rect, bg);
@@ -1097,7 +1109,6 @@ public class MapGridEditorWindow : EditorWindow
         var headerStyle = new GUIStyle(EditorStyles.boldLabel);
         headerStyle.normal.textColor = textCol;
 
-        // foldout and label
         bool newExpanded = EditorGUI.Foldout(
             new Rect(rect.x + 8, rect.y + 3, rect.width - 36, rect.height - 6),
             expanded,
@@ -1106,12 +1117,10 @@ public class MapGridEditorWindow : EditorWindow
             headerStyle
         );
 
-        // + button on right
         Rect buttonRect = new Rect(rect.x + rect.width - 28, rect.y + 2, 24, rect.height - 4);
         if (GUI.Button(buttonRect, "+"))
             onAddNew?.Invoke();
 
-        // Save state
         _sectionFoldouts[title] = newExpanded;
     }
 
@@ -1139,7 +1148,6 @@ public class MapGridEditorWindow : EditorWindow
         if (title.IndexOf("Event", StringComparison.OrdinalIgnoreCase) >= 0)
             return _editorSettings.headerAccentEventColor;
 
-        // Default / fallback
         return _editorSettings.headerAccentColor;
     }
 
@@ -1210,7 +1218,7 @@ public class MapGridEditorWindow : EditorWindow
         string hoverText =
             _hoveredCell.x >= 0 ? $"Row {_hoveredCell.x}, Col {_hoveredCell.y}" : "(none)";
 
-        GUILayout.Label(controls, GUILayout.ExpandWidth(true));
+        GUILayout.Label(controls, GUILayout.ExpandWidth(true), GUILayout.Height(20));
         GUILayout.FlexibleSpace();
         GUILayout.Label(hoverText, GUILayout.ExpandWidth(false), GUILayout.MinWidth(100));
         EditorGUILayout.EndHorizontal();
@@ -1497,8 +1505,6 @@ public class MapGridEditorWindow : EditorWindow
         {
             float luminance = 0.299f * fill.r + 0.587f * fill.g + 0.114f * fill.b;
             bool isSelectedb = point == _selectedFeaturePoint;
-            // Icon/initial tint should stay monochrome for readability (white/black). The
-            // border and selection colors are configurable in MapGridEditorSettings.
             Color tint = luminance < 0.5f ? Color.white : Color.black;
 
             string id = featureId;
@@ -1532,14 +1538,15 @@ public class MapGridEditorWindow : EditorWindow
             // If has feature, use magenta. If no feature but has modified properties, use lighter color
             Color borderCol;
             if (hasFeature)
-                borderCol = _editorSettings?.selectedFeatureBorderColor ?? Color.magenta;
+                borderCol =
+                    _editorSettings?.selectedFeatureBorderColor
+                    ?? _editorSettings?.selectedTileBorderColor
+                    ?? Color.black;
             else
-            {
-                // Lighten the configured grid color so it reads as a subtle modified indicator
-                Color baseCol = _editorSettings?.gridColor ?? new Color(1f, 0.75f, 1f, 1f);
-                borderCol = Color.Lerp(baseCol, Color.white, 0.6f);
-                borderCol.a = 1f;
-            }
+                borderCol =
+                    _editorSettings != null
+                        ? _editorSettings.selectedTileBorderColor
+                        : new Color(0.1f, 0.7f, 0.95f, 1f);
             DrawSelectionBorder(cellRect, cellSize, borderCol);
         }
         // Modified properties indicator (no feature, not selected, but has custom properties)
@@ -1556,12 +1563,17 @@ public class MapGridEditorWindow : EditorWindow
         if (point == null)
             return false;
 
-        // Check if starting unit is set
+        // Show the modified overlay only when a map tile's built-in default
+        // point properties are changed. These are the starting unit and the
+        // two tile-enter events. This avoids marking tiles modified when
+        // only custom feature properties were added.
         var startingUnit = point.GetStartingUnit();
-        if (startingUnit != null)
+        // A CharacterInstance object may exist as a wrapper but doesn't mean a
+        // template was assigned. Only treat the tile as modified if the
+        // starting unit has a non-null template asset.
+        if (startingUnit != null && startingUnit.CharacterTemplate != null)
             return true;
 
-        // Check if events have listeners
         var friendlyEvent = point.GetFriendlyEntersEvent();
         if (friendlyEvent != null && friendlyEvent.GetPersistentEventCount() > 0)
             return true;
@@ -1937,9 +1949,6 @@ public class MapGridEditorWindow : EditorWindow
         SceneView.RepaintAll();
     }
 
-    // Point preset defaults are applied automatically on initialization; the popup
-    // method that let you manually choose presets is removed.
-
     private class NewPropertyPrompt : EditorWindow
     {
         private MapGridPoint _point;
@@ -2121,20 +2130,19 @@ public class MapGridEditorWindow : EditorWindow
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Property Editing", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "Unit/Object properties use templates: choose a CharacterData asset for unit properties, or an ObjectItem asset for object properties.\n"
-                    + "Selecting a template will automatically wrap it into a runtime instance and save it on the map point.\n"
-                    + "Use the + buttons in a property section to add a new property, and right-hand - buttons to remove them.\n"
-                    + "To add default properties for features, create a MapGridFeatureProperties ScriptableObject in Resources/GameSettings and call Apply Defaults from the Feature Properties panel.",
+                "Starting Unit: choose which character should start on this tile when a level begins (optional).\n"
+                    + "Enter Events: attach actions that happen when a friendly or enemy character steps onto this tile.\n"
+                    + "Use the + button to add custom named properties to a tile, and the - button to remove them; these properties can hold numbers, text, or true/false flags that your gameplay logic can read.\n"
+                    + "To set a default configuration for an entire feature type (for example, every door), make a 'Feature Defaults' asset in Game Settings and use the Apply Defaults button in the feature panel.",
                 MessageType.Info
             );
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Customization", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "Customize border colors and UI accents in the Map Grid Editor Settings asset (Resources/EditorSettings/MapGridEditorSettings).\n"
-                    + "Change 'selectedFeatureBorderColor' for selected features and 'modifiedPropertyBorderColor' for tiles with modified properties.\n"
-                    + "Use 'headerAccentColor' to change the background for section headers and 'propertyIndent' to adjust indentation.\n"
-                    + "You can also set per-type header colors: headerAccentStringColor, headerAccentBoolColor, headerAccentIntColor, headerAccentFloatColor, headerAccentUnitColor, headerAccentObjectItemColor, and headerAccentEventColor.",
+                "Appearance: change the editor colors and accents by editing the 'Map Grid Editor Settings' in Resources/EditorSettings.\n"
+                    + "You can change the border shown around the currently selected object/tile and the color used to mark tiles with edited defaults.\n"
+                    + "Header colors for each property group (string, bool, int, float, unit, object) are also configurable so you can visually organize sections.",
                 MessageType.Info
             );
 

@@ -25,6 +25,9 @@ public class MapGridEditorSettings : ScriptableObject
     [Tooltip("Border color used for selected features.")]
     public Color selectedFeatureBorderColor = Color.magenta;
 
+    [Tooltip("Border color used for selected tiles that do not have a feature.")]
+    public Color selectedTileBorderColor = new Color(0.1f, 0.7f, 0.95f, 1f);
+
     [Tooltip("Border color used for tiles that have modified properties (not selected).")]
     public Color modifiedPropertyBorderColor = new Color(1f, 0.75f, 1f, 0.6f);
 
