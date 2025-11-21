@@ -20,23 +20,6 @@ public abstract class MapGridPropertyBase : ScriptableObject
     }
 
     [System.Serializable]
-    public class StringProperty : IProperty
-    {
-        public string key = string.Empty;
-        public string value = string.Empty;
-
-        string IProperty.key
-        {
-            get => key;
-            set => key = value;
-        }
-
-        public object GetValue() => value;
-
-        public void SetValue(object val) => value = val as string ?? string.Empty;
-    }
-
-    [System.Serializable]
     public class EventProperty : IProperty
     {
         public string key = string.Empty;
@@ -105,23 +88,6 @@ public abstract class MapGridPropertyBase : ScriptableObject
     }
 
     [System.Serializable]
-    public class IntProperty : IProperty
-    {
-        public string key = string.Empty;
-        public int value = 0;
-
-        string IProperty.key
-        {
-            get => key;
-            set => key = value;
-        }
-
-        public object GetValue() => value;
-
-        public void SetValue(object val) => value = val is int i ? i : 0;
-    }
-
-    [System.Serializable]
     public class FloatProperty : IProperty
     {
         public string key = string.Empty;
@@ -139,12 +105,10 @@ public abstract class MapGridPropertyBase : ScriptableObject
     }
 
     // Property collections
-    public List<StringProperty> stringProperties = new();
     public List<EventProperty> eventProperties = new();
     public List<UnitProperty> unitProperties = new();
     public List<ObjectItemProperty> objectItemProperties = new();
     public List<BoolProperty> boolProperties = new();
-    public List<IntProperty> intProperties = new();
     public List<FloatProperty> floatProperties = new();
 
     // Helper methods for property access
@@ -180,12 +144,10 @@ public abstract class MapGridPropertyBase : ScriptableObject
     {
         return typeof(T).Name switch
         {
-            nameof(StringProperty) => stringProperties as List<T>,
             nameof(EventProperty) => eventProperties as List<T>,
             nameof(UnitProperty) => unitProperties as List<T>,
             nameof(ObjectItemProperty) => objectItemProperties as List<T>,
             nameof(BoolProperty) => boolProperties as List<T>,
-            nameof(IntProperty) => intProperties as List<T>,
             nameof(FloatProperty) => floatProperties as List<T>,
             _ => null,
         };

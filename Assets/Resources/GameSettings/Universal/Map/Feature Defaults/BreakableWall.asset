@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 698cbba4ada1f8c4f95ce6cfef3718ee, type: 3}
   m_Name: BreakableWall
   m_EditorClassIdentifier: 
-  featureId: breakable
-  featureName: 
-  stringProperties: []
-  objectProperties: []
   eventProperties: []
+  unitProperties: []
+  objectItemProperties: []
   boolProperties: []
-  intProperties:
-  - key: HP
+  floatProperties:
+  - key: Max HP
     value: 20
   - key: Current HP
     value: 20
-  floatProperties: []
+  featureId: breakable
+  featureName: 

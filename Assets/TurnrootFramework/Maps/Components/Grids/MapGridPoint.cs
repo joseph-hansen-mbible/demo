@@ -82,9 +82,6 @@ public class MapGridPoint : MonoBehaviour
     /* ---------------------------- Grid Point Properties ---------------------------- */
     [Header("Grid Point Properties")]
     [SerializeField]
-    private List<MapGridPropertyBase.StringProperty> _pointStringProperties = new();
-
-    [SerializeField]
     private List<MapGridPropertyBase.EventProperty> _pointEventProperties = new();
 
     [SerializeField]
@@ -95,9 +92,6 @@ public class MapGridPoint : MonoBehaviour
 
     [SerializeField]
     private List<MapGridPropertyBase.BoolProperty> _pointBoolProperties = new();
-
-    [SerializeField]
-    private List<MapGridPropertyBase.IntProperty> _pointIntProperties = new();
 
     [SerializeField]
     private List<MapGridPropertyBase.FloatProperty> _pointFloatProperties = new();
@@ -112,9 +106,6 @@ public class MapGridPoint : MonoBehaviour
     /* ---------------------------- Feature Properties ---------------------------- */
     [Header("Feature Properties")]
     [SerializeField]
-    private List<MapGridPropertyBase.StringProperty> _featureStringProperties = new();
-
-    [SerializeField]
     private List<MapGridPropertyBase.EventProperty> _featureEventProperties = new();
 
     [SerializeField]
@@ -126,8 +117,7 @@ public class MapGridPoint : MonoBehaviour
     [SerializeField]
     private List<MapGridPropertyBase.BoolProperty> _featureBoolProperties = new();
 
-    [SerializeField]
-    private List<MapGridPropertyBase.IntProperty> _featureIntProperties = new();
+    // Int properties removed intentionally
 
     [SerializeField]
     private List<MapGridPropertyBase.FloatProperty> _featureFloatProperties = new();
@@ -221,6 +211,17 @@ public class MapGridPoint : MonoBehaviour
         _featureTypeId = selId;
         _featureName = name ?? string.Empty;
 
+        // When a feature is applied, automatically apply any configured defaults
+        // so newly created features get their expected starting properties.
+        try
+        {
+            ApplyDefaultsForFeature(selId);
+        }
+        catch
+        {
+            // Defensive: don't throw in editor UI if defaults aren't available
+        }
+
 #if UNITY_EDITOR
         // Avoid marking the scene dirty if this is triggered by compilation/domain reload
         // or while the editor is updating (asset reimport / progress UI) or entering/exiting
@@ -242,7 +243,6 @@ public class MapGridPoint : MonoBehaviour
     {
         _featureTypeId = string.Empty;
         _featureName = string.Empty;
-        _featureStringProperties.Clear();
         _featureUnitProperties.Clear();
         _featureObjectItemProperties.Clear();
         _featureEventProperties.Clear();
@@ -252,7 +252,7 @@ public class MapGridPoint : MonoBehaviour
             && !UnityEditor.EditorApplication.isUpdating
         )
         {
-            _featureIntProperties.Clear();
+            // Int properties removed
             _featureFloatProperties.Clear();
         }
 
@@ -274,12 +274,12 @@ public class MapGridPoint : MonoBehaviour
     {
         if (string.IsNullOrEmpty(key))
             return;
-        _featureStringProperties.RemoveAll(p => p.key == key);
+        // string properties removed
         _featureUnitProperties.RemoveAll(p => p.key == key);
         _featureObjectItemProperties.RemoveAll(p => p.key == key);
         _featureBoolProperties.RemoveAll(p => p.key == key);
         _featureEventProperties.RemoveAll(p => p.key == key);
-        _featureIntProperties.RemoveAll(p => p.key == key);
+        // Int properties removed
         _featureFloatProperties.RemoveAll(p => p.key == key);
     }
 
@@ -321,24 +321,9 @@ public class MapGridPoint : MonoBehaviour
 
     /* ---------------------------- Feature Property Accessors ---------------------------- */
 
-    public void SetStringFeatureProperty(string key, string value) =>
-        SetProperty(_featureStringProperties, key, value ?? string.Empty);
+    // String properties removed (deliberate).
 
-    public string GetStringFeatureProperty(string key) =>
-        GetProperty<MapGridPropertyBase.StringProperty, string>(_featureStringProperties, key);
-
-    public List<MapGridPropertyBase.StringProperty> GetAllStringFeatureProperties() =>
-        new(_featureStringProperties);
-
-    // ----- Point-level string properties -----
-    public void SetStringPointProperty(string key, string value) =>
-        SetProperty(_pointStringProperties, key, value ?? string.Empty);
-
-    public string GetStringPointProperty(string key) =>
-        GetProperty<MapGridPropertyBase.StringProperty, string>(_pointStringProperties, key);
-
-    public List<MapGridPropertyBase.StringProperty> GetAllStringPointProperties() =>
-        new(_pointStringProperties);
+    // Point-level string properties have been removed.
 
     // Unit properties (NEW)
     public void SetUnitFeatureProperty(string key, CharacterInstance value) =>
@@ -417,24 +402,9 @@ public class MapGridPoint : MonoBehaviour
         new(_pointBoolProperties);
 
     // Int properties
-    public void SetIntFeatureProperty(string key, int value) =>
-        SetProperty(_featureIntProperties, key, value);
+    // Int feature properties removed.
 
-    public int? GetIntFeatureProperty(string key) =>
-        GetNullableProperty<int, MapGridPropertyBase.IntProperty>(_featureIntProperties, key);
-
-    public List<MapGridPropertyBase.IntProperty> GetAllIntFeatureProperties() =>
-        new(_featureIntProperties);
-
-    // ----- Point-level int properties -----
-    public void SetIntPointProperty(string key, int value) =>
-        SetProperty(_pointIntProperties, key, value);
-
-    public int? GetIntPointProperty(string key) =>
-        GetNullableProperty<int, MapGridPropertyBase.IntProperty>(_pointIntProperties, key);
-
-    public List<MapGridPropertyBase.IntProperty> GetAllIntPointProperties() =>
-        new(_pointIntProperties);
+    // Point-level int properties removed.
 
     // Float properties
     public void SetFloatFeatureProperty(string key, float value) =>
@@ -502,12 +472,11 @@ public class MapGridPoint : MonoBehaviour
         if (defaultProps == null)
             return;
 
-        ApplyDefaultStringProperties(defaultProps.stringProperties);
         ApplyDefaultUnitProperties(defaultProps.unitProperties);
         ApplyDefaultObjectItemProperties(defaultProps.objectItemProperties);
         ApplyDefaultBoolProperties(defaultProps.boolProperties);
         ApplyDefaultEventProperties(defaultProps.eventProperties);
-        ApplyDefaultIntProperties(defaultProps.intProperties);
+        // String and Int defaults intentionally omitted (types removed)
         ApplyDefaultFloatProperties(defaultProps.floatProperties);
     }
 
@@ -529,18 +498,6 @@ public class MapGridPoint : MonoBehaviour
                 return props;
         }
         return null;
-    }
-
-    private void ApplyDefaultStringProperties(List<MapGridPropertyBase.StringProperty> defaults)
-    {
-        if (defaults == null)
-            return;
-        foreach (var prop in defaults)
-        {
-            if (string.IsNullOrEmpty(prop.key) || GetStringFeatureProperty(prop.key) != null)
-                continue;
-            SetStringFeatureProperty(prop.key, prop.value);
-        }
     }
 
     private void ApplyDefaultUnitProperties(List<MapGridPropertyBase.UnitProperty> defaults)
@@ -593,17 +550,7 @@ public class MapGridPoint : MonoBehaviour
         }
     }
 
-    private void ApplyDefaultIntProperties(List<MapGridPropertyBase.IntProperty> defaults)
-    {
-        if (defaults == null)
-            return;
-        foreach (var prop in defaults)
-        {
-            if (string.IsNullOrEmpty(prop.key) || GetIntFeatureProperty(prop.key).HasValue)
-                continue;
-            SetIntFeatureProperty(prop.key, prop.value);
-        }
-    }
+    // String and Int default appliers removed — these types were deprecated.
 
     private void ApplyDefaultFloatProperties(List<MapGridPropertyBase.FloatProperty> defaults)
     {

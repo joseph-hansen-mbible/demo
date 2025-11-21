@@ -36,14 +36,10 @@ public class MapGridEditorSettings : ScriptableObject
     public Color headerAccentColor = new Color(0.0f, 0.35f, 0.8f, 0.18f);
 
     [Header("Per-type Header Accent Colors")]
-    [Tooltip("Accent color for string property headers (overrides headerAccentColor when set)")]
-    public Color headerAccentStringColor = new Color(0.1f, 0.6f, 0.7f, 0.18f);
-
     [Tooltip("Accent color for boolean property headers")]
     public Color headerAccentBoolColor = new Color(0.24f, 0.7f, 0.2f, 0.18f);
 
-    [Tooltip("Accent color for integer property headers")]
-    public Color headerAccentIntColor = new Color(0.9f, 0.5f, 0.1f, 0.18f);
+    // String and Int header accent colors removed (these property types are no longer used)
 
     [Tooltip("Accent color for float property headers")]
     public Color headerAccentFloatColor = new Color(0.9f, 0.76f, 0.0f, 0.18f);

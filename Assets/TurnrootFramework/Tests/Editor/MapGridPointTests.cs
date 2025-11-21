@@ -12,14 +12,7 @@ public class MapGridPointTests
         var p = go.AddComponent<MapGridPoint>();
         p.Initialize(0, 0);
 
-        // String point property
-        p.SetStringPointProperty("note", "hello");
-        Assert.AreEqual("hello", p.GetStringPointProperty("note"));
-
-        // Int/Float/Bool point
-        p.SetIntPointProperty("num", 42);
-        Assert.AreEqual(42, p.GetIntPointProperty("num"));
-
+        // Float/Bool point
         p.SetFloatPointProperty("f", 3.14f);
         Assert.AreEqual(3.14f, p.GetFloatPointProperty("f"));
 
@@ -36,12 +29,12 @@ public class MapGridPointTests
         p.SetObjectItemPointProperty("item", instance);
         Assert.AreEqual(instance, p.GetObjectItemPointProperty("item"));
 
-        // Feature-level properties
+        // Feature-level properties (string/int no longer supported)
         p.SetFeatureTypeId("treasure");
-        p.SetStringFeatureProperty("loot", "gem");
+        p.SetFloatFeatureProperty("lootValue", 1.5f);
         p.SetBoolFeatureProperty("opened", false);
 
-        Assert.AreEqual("gem", p.GetStringFeatureProperty("loot"));
+        Assert.AreEqual(1.5f, p.GetFloatFeatureProperty("lootValue"));
         Assert.AreEqual(false, p.GetBoolFeatureProperty("opened"));
 
         Object.DestroyImmediate(go);

@@ -660,14 +660,6 @@ public class MapGridEditorWindow : EditorWindow
 
         GUILayout.Space(5);
 
-        // Point-level property sections (serialized) - show any custom properties added to the tile
-        DrawSerializedPropertySection(
-            "String Properties",
-            point,
-            "_pointStringProperties",
-            () => ShowAddPropertyMenu(point, "string", false)
-        );
-
         DrawSerializedPropertySection(
             "Bool Properties",
             point,
@@ -676,10 +668,10 @@ public class MapGridEditorWindow : EditorWindow
         );
 
         DrawSerializedPropertySection(
-            "Int Properties",
+            "Unit Properties",
             point,
-            "_pointIntProperties",
-            () => ShowAddPropertyMenu(point, "int", false)
+            "_pointUnitProperties",
+            () => ShowAddPropertyMenu(point, "unit", false)
         );
 
         DrawSerializedPropertySection(
@@ -687,13 +679,6 @@ public class MapGridEditorWindow : EditorWindow
             point,
             "_pointFloatProperties",
             () => ShowAddPropertyMenu(point, "float", false)
-        );
-
-        DrawSerializedPropertySection(
-            "Unit Properties",
-            point,
-            "_pointUnitProperties",
-            () => ShowAddPropertyMenu(point, "unit", false)
         );
 
         DrawSerializedPropertySection(
@@ -725,33 +710,16 @@ public class MapGridEditorWindow : EditorWindow
             MarkDirty();
         }
 
-        if (GUILayout.Button("Apply Defaults", GUILayout.Width(120)))
-        {
-            Undo.RecordObject(point, "Apply Defaults");
-            point.ApplyDefaultsForFeature(toolId);
-            MarkDirty();
-        }
+        // Defaults are now automatically applied when a feature is created/placed.
 
         GUILayout.Space(10);
 
-        // String Properties
-        DrawEditablePropertySection(
-            "String Properties",
-            point.GetAllStringFeatureProperties(),
-            (key) => point.GetStringFeatureProperty(key),
-            (key, val) =>
-            {
-                Undo.RecordObject(point, "Edit String Property");
-                point.SetStringFeatureProperty(key, val);
-                MarkDirty();
-            },
-            (key) =>
-            {
-                Undo.RecordObject(point, "Remove String Property");
-                point.ClearFeatureProperty(key);
-                MarkDirty();
-            },
-            () => ShowAddPropertyMenu(point, "string")
+        // Event Properties (feature-level)
+        DrawSerializedPropertySection(
+            "Event Properties",
+            point,
+            "_featureEventProperties",
+            () => ShowAddPropertyMenu(point, "event")
         );
 
         // Bool Properties
@@ -774,25 +742,7 @@ public class MapGridEditorWindow : EditorWindow
             () => ShowAddPropertyMenu(point, "bool")
         );
 
-        // Int Properties
-        DrawEditablePropertySection(
-            "Int Properties",
-            point.GetAllIntFeatureProperties(),
-            (key) => point.GetIntFeatureProperty(key) ?? 0,
-            (key, val) =>
-            {
-                Undo.RecordObject(point, "Edit Int Property");
-                point.SetIntFeatureProperty(key, val);
-                MarkDirty();
-            },
-            (key) =>
-            {
-                Undo.RecordObject(point, "Remove Int Property");
-                point.ClearFeatureProperty(key);
-                MarkDirty();
-            },
-            () => ShowAddPropertyMenu(point, "int")
-        );
+        // String & Int property editors removed per request
 
         // Float Properties
         DrawEditablePropertySection(
@@ -1130,12 +1080,9 @@ public class MapGridEditorWindow : EditorWindow
             return new Color(0.0f, 0.35f, 0.8f, 0.18f);
 
         string title = sectionTitle ?? string.Empty;
-        if (title.IndexOf("String", StringComparison.OrdinalIgnoreCase) >= 0)
-            return _editorSettings.headerAccentStringColor;
         if (title.IndexOf("Bool", StringComparison.OrdinalIgnoreCase) >= 0)
             return _editorSettings.headerAccentBoolColor;
-        if (title.IndexOf("Int", StringComparison.OrdinalIgnoreCase) >= 0)
-            return _editorSettings.headerAccentIntColor;
+        // "String" and "Int" headers are no longer present — fall through to other types
         if (title.IndexOf("Float", StringComparison.OrdinalIgnoreCase) >= 0)
             return _editorSettings.headerAccentFloatColor;
         if (title.IndexOf("Unit", StringComparison.OrdinalIgnoreCase) >= 0)
@@ -1885,6 +1832,9 @@ public class MapGridEditorWindow : EditorWindow
         {
             p.ClearFeature();
             SafeSetDirty(p);
+            // Persist changes to the feature layer when a feature is removed
+            _grid?.SaveFeatureLayer();
+            MarkDirty();
             return;
         }
 
@@ -1895,6 +1845,9 @@ public class MapGridEditorWindow : EditorWindow
             p.ApplyFeature(toolId, _selectedSecondToolName ?? string.Empty, false);
 
             SafeSetDirty(p);
+            // Persist defaults and feature changes when painting multiple tiles
+            _grid?.SaveFeatureLayer();
+            MarkDirty();
             return;
         }
 
@@ -1907,6 +1860,9 @@ public class MapGridEditorWindow : EditorWindow
             p.ApplyFeature(toolId, _selectedSecondToolName ?? string.Empty, false);
 
             SetSelectedFeaturePoint(p);
+            // Ensure new feature defaults are saved immediately for single-cell placement
+            _grid?.SaveFeatureLayer();
+            MarkDirty();
         }
         else
         {
@@ -1988,7 +1944,7 @@ public class MapGridEditorWindow : EditorWindow
     {
         private MapGridPoint _point;
         private MapGrid _grid;
-        private string _propType = "string";
+        private string _propType = "float";
         private bool _forFeature = true;
         private string _key = string.Empty;
 
@@ -2005,7 +1961,7 @@ public class MapGridEditorWindow : EditorWindow
             var win = CreateInstance<NewPropertyPrompt>();
             win._point = point;
             win._grid = grid;
-            win._propType = propType ?? "string";
+            win._propType = propType ?? "float";
             win._forFeature = forFeature;
             win._forFeature = forFeature;
             win._key = string.Empty;
@@ -2063,12 +2019,6 @@ public class MapGridEditorWindow : EditorWindow
                     else
                         _point.SetBoolPointProperty(_key, false);
                     break;
-                case "int":
-                    if (_forFeature)
-                        _point.SetIntFeatureProperty(_key, 0);
-                    else
-                        _point.SetIntPointProperty(_key, 0);
-                    break;
                 case "float":
                     if (_forFeature)
                         _point.SetFloatFeatureProperty(_key, 0f);
@@ -2087,11 +2037,14 @@ public class MapGridEditorWindow : EditorWindow
                     else
                         _point.SetObjectItemPointProperty(_key, null);
                     break;
-                default:
+                case "event":
                     if (_forFeature)
-                        _point.SetStringFeatureProperty(_key, string.Empty);
+                        _point.SetEventFeatureProperty(_key, new UnityEvent());
                     else
-                        _point.SetStringPointProperty(_key, string.Empty);
+                        _point.SetEventPointProperty(_key, new UnityEvent());
+                    break;
+                default:
+                    // unknown / deprecated types (string/int) are no longer supported
                     break;
             }
             // Avoid marking scene objects during non-interactive editor update/import.
@@ -2173,7 +2126,7 @@ public class MapGridEditorWindow : EditorWindow
                 "Starting Unit: choose which character should start on this tile when a level begins (optional).\n"
                     + "Enter Events: attach actions that happen when a friendly or enemy character steps onto this tile.\n"
                     + "Use the + button to add custom named properties to a tile, and the - button to remove them; these properties can hold numbers, text, or true/false flags that your gameplay logic can read.\n"
-                    + "To set a default configuration for an entire feature type (for example, every door), make a 'Feature Defaults' asset in Game Settings and use the Apply Defaults button in the feature panel.",
+                    + "To set a default configuration for an entire feature type (for example, every door), make a 'Feature Defaults' asset in Game Settings. Defaults are applied automatically when you place a feature.",
                 MessageType.Info
             );
 

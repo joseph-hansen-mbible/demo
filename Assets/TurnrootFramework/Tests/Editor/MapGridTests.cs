@@ -43,7 +43,8 @@ public class MapGridTests
 
         // Assign a feature and feature properties
         p00.SetFeatureTypeId("chest");
-        p00.SetStringFeatureProperty("loot", "gold");
+        // string property removed — use float property instead for this test
+        p00.SetFloatFeatureProperty("value", 12.5f);
         p00.SetBoolFeatureProperty("opened", false);
 
         // Unit and object item feature properties
@@ -58,12 +59,12 @@ public class MapGridTests
         mg.SaveFeatureLayer();
 
         // Mutate properties to ensure load actually restores
-        p00.SetStringFeatureProperty("loot", "silver");
+        p00.SetFloatFeatureProperty("value", 0f);
         p00.SetBoolFeatureProperty("opened", true);
 
         mg.LoadFeatureLayer();
 
-        Assert.AreEqual("gold", p00.GetStringFeatureProperty("loot"));
+        Assert.AreEqual(12.5f, p00.GetFloatFeatureProperty("value"));
         Assert.AreEqual(false, p00.GetBoolFeatureProperty("opened"));
         // Check unit and object item restore
         Assert.AreEqual(charInstance, p00.GetUnitFeatureProperty("spawn"));

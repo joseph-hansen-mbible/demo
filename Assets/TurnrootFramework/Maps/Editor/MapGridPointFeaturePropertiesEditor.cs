@@ -52,19 +52,7 @@ public class MapGridPointFeaturePropertiesEditor : Editor
         EditorGUILayout.LabelField("Add Property", EditorStyles.boldLabel);
         EditorGUILayout.BeginHorizontal();
 
-        if (GUILayout.Button("Add String"))
-            AddProperty(
-                src,
-                "Add String Property",
-                () =>
-                    src.stringProperties.Add(
-                        new MapGridPointFeatureProperties.StringProperty
-                        {
-                            key = "new_key",
-                            value = "",
-                        }
-                    )
-            );
+        // String and Int properties have been removed (no-op)
 
         if (GUILayout.Button("Add Bool"))
             AddProperty(
@@ -80,13 +68,42 @@ public class MapGridPointFeaturePropertiesEditor : Editor
                     )
             );
 
-        if (GUILayout.Button("Add Int"))
+        // Int type removed. Expose other useful add buttons below.
+        if (GUILayout.Button("Add Event"))
             AddProperty(
                 src,
-                "Add Int Property",
+                "Add Event Property",
                 () =>
-                    src.intProperties.Add(
-                        new MapGridPointFeatureProperties.IntProperty { key = "new_int", value = 0 }
+                    src.eventProperties.Add(
+                        new MapGridPropertyBase.EventProperty
+                        {
+                            key = "new_event",
+                            value = new UnityEngine.Events.UnityEvent(),
+                        }
+                    )
+            );
+
+        if (GUILayout.Button("Add Unit"))
+            AddProperty(
+                src,
+                "Add Unit Property",
+                () =>
+                    src.unitProperties.Add(
+                        new MapGridPropertyBase.UnitProperty { key = "new_unit", value = null }
+                    )
+            );
+
+        if (GUILayout.Button("Add ObjectItem"))
+            AddProperty(
+                src,
+                "Add ObjectItem Property",
+                () =>
+                    src.objectItemProperties.Add(
+                        new MapGridPropertyBase.ObjectItemProperty
+                        {
+                            key = "new_object",
+                            value = null,
+                        }
                     )
             );
 

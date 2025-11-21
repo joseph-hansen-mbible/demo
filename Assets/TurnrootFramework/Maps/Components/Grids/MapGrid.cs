@@ -70,6 +70,11 @@ public class MapGrid : MonoBehaviour
     )]
     private LayerMask _raycastLayerMask = ~0;
 
+    [SerializeField]
+    private Vector2Int[] _traversableAreaCorners = new Vector2Int[4];
+
+    public Vector2Int[] TraversableAreaCorners => _traversableAreaCorners;
+
     public int GridWidth => _gridWidth;
     public int GridHeight => _gridHeight;
     public float GridScale => _gridScale;
@@ -290,14 +295,17 @@ public class MapGrid : MonoBehaviour
                     col = kv.Key.y,
                     typeId = mgp.FeatureTypeId,
                     name = mgp.FeatureName,
-                    stringProperties = mgp.GetAllStringFeatureProperties()
-                        ?.Select(p => new PropertyRecord<string> { key = p.key, value = p.value })
-                        .ToList(),
+                    // String properties removed
                     boolProperties = mgp.GetAllBoolFeatureProperties()
                         ?.Select(p => new PropertyRecord<bool> { key = p.key, value = p.value })
                         .ToList(),
-                    intProperties = mgp.GetAllIntFeatureProperties()
-                        ?.Select(p => new PropertyRecord<int> { key = p.key, value = p.value })
+                    // Int properties removed
+                    eventProperties = mgp.GetAllEventFeatureProperties()
+                        ?.Select(p => new PropertyRecord<UnityEvent>
+                        {
+                            key = p.key,
+                            value = p.value,
+                        })
                         .ToList(),
                     floatProperties = mgp.GetAllFloatFeatureProperties()
                         ?.Select(p => new PropertyRecord<float> { key = p.key, value = p.value })
@@ -339,9 +347,10 @@ public class MapGrid : MonoBehaviour
             mgp.FeatureName = rec.name ?? string.Empty;
             mgp.ApplyDefaultsForFeature(rec.typeId);
 
-            ApplyPropertyList(rec.stringProperties, mgp.SetStringFeatureProperty);
+            // string Properties removed
             ApplyPropertyList(rec.boolProperties, mgp.SetBoolFeatureProperty);
-            ApplyPropertyList(rec.intProperties, mgp.SetIntFeatureProperty);
+            // int Properties removed
+            ApplyPropertyList(rec.eventProperties, mgp.SetEventFeatureProperty);
             ApplyPropertyList(rec.floatProperties, mgp.SetFloatFeatureProperty);
             ApplyPropertyList(rec.unitProperties, mgp.SetUnitFeatureProperty);
             ApplyPropertyList(rec.objectItemProperties, mgp.SetObjectItemFeatureProperty);
@@ -537,6 +546,20 @@ public class MapGrid : MonoBehaviour
                 Gizmos.DrawSphere(p, s);
             }
         }
+        // Draw a rectangle for the traversable area
+        if (_traversableAreaCorners != null && _traversableAreaCorners.Length == 4)
+        {
+            Vector3 c1 = getPos(_traversableAreaCorners[0].x, _traversableAreaCorners[0].y);
+            Vector3 c2 = getPos(_traversableAreaCorners[1].x, _traversableAreaCorners[1].y);
+            Vector3 c3 = getPos(_traversableAreaCorners[2].x, _traversableAreaCorners[2].y);
+            Vector3 c4 = getPos(_traversableAreaCorners[3].x, _traversableAreaCorners[3].y);
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(c1, c2);
+            Gizmos.DrawLine(c2, c4);
+            Gizmos.DrawLine(c4, c3);
+            Gizmos.DrawLine(c3, c1);
+        }
     }
 #endif
 }
@@ -556,9 +579,11 @@ public class FeatureRecord
     public string typeId;
     public string name;
 
-    public List<PropertyRecord<string>> stringProperties = new();
+    // stringProperties removed
     public List<PropertyRecord<bool>> boolProperties = new();
-    public List<PropertyRecord<int>> intProperties = new();
+
+    // intProperties removed
+    public List<PropertyRecord<UnityEvent>> eventProperties = new();
     public List<PropertyRecord<float>> floatProperties = new();
 
     public List<PropertyRecord<CharacterInstance>> unitProperties = new();

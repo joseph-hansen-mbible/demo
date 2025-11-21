@@ -135,6 +135,70 @@ public class MapGridInspector : Editor
             }
         }
         serializedObject.ApplyModifiedProperties();
+
+        if (GUILayout.Button("Create Grid Points"))
+        {
+            if (mg != null)
+            {
+                Undo.RecordObject(mg, "Create Grid Points");
+                mg.CreateChildrenPoints();
+                EditorUtility.SetDirty(mg);
+            }
+        }
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Add Row"))
+        {
+            if (mg != null)
+            {
+                Undo.RecordObject(mg, "Add Row");
+                mg.AddRow();
+                EditorUtility.SetDirty(mg);
+            }
+        }
+
+        if (GUILayout.Button("Add Column"))
+        {
+            if (mg != null)
+            {
+                Undo.RecordObject(mg, "Add Column");
+                mg.AddColumn();
+                EditorUtility.SetDirty(mg);
+            }
+        }
+        EditorGUILayout.EndHorizontal();
+
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Remove Row"))
+        {
+            if (mg != null)
+            {
+                Undo.RecordObject(mg, "Remove Row");
+                mg.RemoveRow();
+                EditorUtility.SetDirty(mg);
+            }
+        }
+
+        if (GUILayout.Button("Remove Column"))
+        {
+            if (mg != null)
+            {
+                Undo.RecordObject(mg, "Remove Column");
+                mg.RemoveColumn();
+                EditorUtility.SetDirty(mg);
+            }
+        }
+        EditorGUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Connect to 3D Map Height"))
+        {
+            if (mg != null)
+            {
+                Undo.RecordObject(mg, "Connect to 3D Map Height");
+                mg.ConnectTo3DMapObject();
+                EditorUtility.SetDirty(mg);
+            }
+        }
     }
 }
 #endif

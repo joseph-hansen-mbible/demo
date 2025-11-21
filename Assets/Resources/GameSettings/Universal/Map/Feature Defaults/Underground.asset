@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 698cbba4ada1f8c4f95ce6cfef3718ee, type: 3}
   m_Name: Underground
   m_EditorClassIdentifier: 
-  stringProperties: []
   eventProperties: []
   unitProperties: []
   objectItemProperties:
@@ -25,11 +24,10 @@ MonoBehaviour:
   boolProperties:
   - key: Is Secret
     value: 0
-  intProperties:
-  - key: Common Chance %
+  floatProperties:
+  - key: Common Chance
     value: 80
-  - key: Rare Chance %
+  - key: Rare Chance
     value: 20
-  floatProperties: []
   featureId: underground
   featureName: 
