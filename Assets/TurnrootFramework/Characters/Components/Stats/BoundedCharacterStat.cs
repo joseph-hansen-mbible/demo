@@ -22,6 +22,20 @@ namespace Turnroot.Characters.Stats
             _current = 100f;
         }
 
+        // Copy constructor - preserves all fields
+        public BoundedCharacterStat(BoundedCharacterStat other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            _statType = other._statType;
+            _max = other._max;
+            _min = other._min;
+            _current = other._current;
+            _bonus = other._bonus;
+        }
+
         public BoundedCharacterStat(
             float max,
             float current = -1,

@@ -17,6 +17,9 @@ Common methods
 - `GetBoundedStat(type)`, `GetUnboundedStat(type)` — stat accessors
 - `SaveDefaults()` / `LoadDefaults()` — editor helpers for portrait layer defaults
 
+Utilities
+- Use `SupportRelationship.SanitizeForCharacter(owner, list)` to validate support lists and initialize defaults where necessary.
+
 Where to look
 - Source: `Assets/TurnrootFramework/Characters/CharacterData.cs`
 - Portraits: `Assets/TurnrootFramework/Characters/Portraits`

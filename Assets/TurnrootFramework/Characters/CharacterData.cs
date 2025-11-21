@@ -98,22 +98,16 @@ namespace Turnroot.Characters
             // Validate support relationships - remove any that reference this character
             if (_supportRelationships != null)
             {
-                _supportRelationships.RemoveAll(rel =>
+                var removed =
+                    Turnroot.Characters.Components.Support.SupportRelationship.SanitizeForCharacter(
+                        this,
+                        _supportRelationships
+                    );
+                foreach (var r in removed)
                 {
-                    if (rel.Character == this)
-                    {
-                        Debug.LogWarning(
-                            $"Removed invalid support relationship: {name} cannot have a support relationship with themselves"
-                        );
-                        return true;
-                    }
-                    return false;
-                });
-
-                // Ensure all support relationships have proper default values
-                foreach (var rel in _supportRelationships)
-                {
-                    rel.InitializeDefaults();
+                    Debug.LogWarning(
+                        $"Removed invalid support relationship: {name} cannot have a support relationship with themselves ({r.Character?.name})"
+                    );
                 }
             }
         }
@@ -340,26 +334,23 @@ namespace Turnroot.Characters
             _taggedLayerDefaults.Clear();
             if (_portraits != null)
             {
-                foreach (var portrait in _portraits.Values)
-                {
-                    if (portrait.ImageStack?.Layers != null)
+                Turnroot.Characters.CharacterHelpers.ForEachPortraitLayer(
+                    _portraits,
+                    layer =>
                     {
-                        foreach (var layer in portrait.ImageStack.Layers)
+                        if (!string.IsNullOrEmpty(layer.Tag))
                         {
-                            if (!string.IsNullOrEmpty(layer.Tag))
+                            _taggedLayerDefaults[layer.Tag] = new TaggedLayerDefault
                             {
-                                _taggedLayerDefaults[layer.Tag] = new TaggedLayerDefault
-                                {
-                                    Tag = layer.Tag,
-                                    Sprite = layer.Sprite,
-                                    Offset = layer.Offset,
-                                    Scale = layer.Scale,
-                                    Tint = layer.Tint,
-                                };
-                            }
+                                Tag = layer.Tag,
+                                Sprite = layer.Sprite,
+                                Offset = layer.Offset,
+                                Scale = layer.Scale,
+                                Tint = layer.Tint,
+                            };
                         }
                     }
-                }
+                );
             }
         }
 
@@ -367,26 +358,23 @@ namespace Turnroot.Characters
         {
             if (_portraits != null)
             {
-                foreach (var portrait in _portraits.Values)
-                {
-                    if (portrait.ImageStack?.Layers != null)
+                Turnroot.Characters.CharacterHelpers.ForEachPortraitLayer(
+                    _portraits,
+                    layer =>
                     {
-                        foreach (var layer in portrait.ImageStack.Layers)
+                        if (
+                            !string.IsNullOrEmpty(layer.Tag)
+                            && _taggedLayerDefaults.ContainsKey(layer.Tag)
+                        )
                         {
-                            if (
-                                !string.IsNullOrEmpty(layer.Tag)
-                                && _taggedLayerDefaults.ContainsKey(layer.Tag)
-                            )
-                            {
-                                var def = _taggedLayerDefaults[layer.Tag];
-                                layer.Sprite = def.Sprite;
-                                layer.Offset = def.Offset;
-                                layer.Scale = def.Scale;
-                                layer.Tint = def.Tint;
-                            }
+                            var def = _taggedLayerDefaults[layer.Tag];
+                            layer.Sprite = def.Sprite;
+                            layer.Offset = def.Offset;
+                            layer.Scale = def.Scale;
+                            layer.Tint = def.Tint;
                         }
                     }
-                }
+                );
             }
             InvalidatePortraitArrayCache();
         }

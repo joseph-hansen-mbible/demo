@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Turnroot.Characters;
 using Turnroot.Characters.Subclasses;
 using UnityEngine;
@@ -68,6 +69,39 @@ namespace Turnroot.Characters.Components.Support
                 _maxLevel = new SupportLevels { Value = "A" };
             if (_supportSpeed <= 0)
                 _supportSpeed = 1;
+        }
+
+        /// <summary>
+        /// Sanitize a list of support relationships for a character.
+        /// Removes self-references and initializes defaults on remaining entries.
+        /// Returns a list of removed entries for optional logging.
+        /// </summary>
+        public static List<SupportRelationship> SanitizeForCharacter(
+            CharacterData owner,
+            List<SupportRelationship> relationships
+        )
+        {
+            var removed = new List<SupportRelationship>();
+            if (relationships == null)
+                return removed;
+
+            for (int i = relationships.Count - 1; i >= 0; i--)
+            {
+                var rel = relationships[i];
+                if (rel == null)
+                    continue;
+                if (rel.Character == owner)
+                {
+                    removed.Add(rel);
+                    relationships.RemoveAt(i);
+                }
+                else
+                {
+                    rel.InitializeDefaults();
+                }
+            }
+
+            return removed;
         }
     }
 }

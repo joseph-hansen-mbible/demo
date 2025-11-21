@@ -10,6 +10,18 @@ namespace Turnroot.Characters.Stats
 
         public CharacterStat() { }
 
+        // Copy constructor used for safe cloning
+        public CharacterStat(CharacterStat other)
+        {
+            if (other == null)
+            {
+                return;
+            }
+            _statType = other._statType;
+            _current = other._current;
+            _bonus = other._bonus;
+        }
+
         public CharacterStat(
             float current = 0,
             UnboundedStatType statType = UnboundedStatType.Strength

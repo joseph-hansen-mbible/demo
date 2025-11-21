@@ -69,17 +69,12 @@ namespace Turnroot.Characters
             _currentExp = _characterTemplate.Exp;
 
             // Deep copy stats from template
-            _runtimeBoundedStats = new List<BoundedCharacterStat>();
-            foreach (var stat in _characterTemplate.BoundedStats)
-            {
-                _runtimeBoundedStats.Add(new BoundedCharacterStat(stat));
-            }
-
-            _runtimeUnboundedStats = new List<CharacterStat>();
-            foreach (var stat in _characterTemplate.UnboundedStats)
-            {
-                _runtimeUnboundedStats.Add(new CharacterStat(stat));
-            }
+            _runtimeBoundedStats = Turnroot.Characters.CharacterHelpers.CloneBoundedStats(
+                _characterTemplate.BoundedStats
+            );
+            _runtimeUnboundedStats = Turnroot.Characters.CharacterHelpers.CloneUnboundedStats(
+                _characterTemplate.UnboundedStats
+            );
 
             // Deep copy inventory from template
             _inventoryInstance = new CharacterInventoryInstance();
@@ -92,24 +87,10 @@ namespace Turnroot.Characters
             }
 
             // Deep copy support relationships from template
-            _supportRelationships = new List<SupportRelationshipInstance>();
-            if (_characterTemplate.SupportRelationships != null)
-            {
-                foreach (var relTemplate in _characterTemplate.SupportRelationships)
-                {
-                    // Skip invalid relationships (same character)
-                    if (relTemplate.Character != _characterTemplate)
-                    {
-                        _supportRelationships.Add(new SupportRelationshipInstance(relTemplate));
-                    }
-                    else
-                    {
-                        Debug.LogWarning(
-                            $"Skipping invalid support relationship in template: character cannot have relationship with themselves ({relTemplate.Character.name})"
-                        );
-                    }
-                }
-            }
+            _supportRelationships = Turnroot.Characters.CharacterHelpers.CloneSupportRelationships(
+                _characterTemplate.SupportRelationships,
+                _characterTemplate
+            );
 
             // Initialize skills from template
             _skillInstances = new List<SkillInstance>();
