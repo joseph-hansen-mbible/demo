@@ -12,12 +12,8 @@ Assets > Create > Turnroot > Objects > Gameplay Item
 
 ## Overview
 ObjectItem provides a flexible item system with:
-- **Dynamic Subtype System** - Item types that respect GameplayGeneralSettings
-- **Equipment Support** - Weapons, shields, accessories, staves, rings
-- **Durability System** - Optional use tracking and repair mechanics
-- **Gift System** - Character-specific gift preferences
-- **Lost Item System** - Items belonging to specific characters
-- **Range System** - Weapon/magic attack ranges with stat bonuses
+# ObjectItem — short ref
+`ObjectItem` is the main ScriptableObject for items (weapons, magic, consumables, gifts). It integrates with `ObjectSubtype` and `CharacterInventory` to control equips, durability, pricing and gifts.
 
 ## Properties
 
@@ -106,8 +102,15 @@ ObjectItem provides a flexible item system with:
 | `_minAptitude` | `Aptitude` | Private | Minimum aptitude to use (default: E) |
 
 ## Helper Methods
+Public methods
+- `AddToInventory(item)` — attempt to add item
+- `RemoveFromInventory(item)` — remove by reference
+- `EquipItem(index)` / `UnequipItem(index)` / `UnequipAllItems()` — equip/unequip helpers
+- `GetEquippedItemIndex(ObjectSubtype)` — find currently equipped index
 
 --
+- `Characters/CharacterInventory.md` — per-character inventory runtime
+- `Gameplay/ObjectSubtype.md` — item-type validation and dynamic availability
 ## See Also
 - **[CharacterInventoryInstance](../Characters/CharacterInventory.md)** - Inventory management
 - **[WeaponType](./WeaponType.md)** - Weapon classification

@@ -6,7 +6,7 @@
 
 Defines a type of experience that units can gain (e.g., Sword, Axe, Riding, Authority).
 
-**Location:** `Assets/Prototypes/Gameplay/Combat/FundamentalComponents/ExperienceType.cs`
+**Location:** `Assets/TurnrootFramework/Gameplay/Combat/FundamentalComponents/ExperienceType.cs`
 
 #### Properties
 
@@ -26,14 +26,15 @@ Defines a type of experience that units can gain (e.g., Sword, Axe, Riding, Auth
 - **HasWeaponType**: Checkbox
 - **AssociatedWeaponType**: Only shown when HasWeaponType is checked
 
-#### ID Generation
+#### ID generation
 
-The `Id` is automatically generated when the `Name` is set:
-- Converts to lowercase
-- Removes all spaces
-- Example: `"Long Sword"` → `"longsword"`
+The `Id` is automatically generated from the `Name` when it is set. The rule used in code is:
+- Convert to lowercase
+- Remove spaces
 
-**Note:** The `Id` property has a private setter and cannot be directly assigned.
+Example: "Long Sword" -> `longsword`
+
+Note: `Id` has a private setter and cannot be written to in the inspector; it's computed from `Name`.
 
 ---
 
@@ -41,14 +42,12 @@ The `Id` is automatically generated when the `Name` is set:
 
 Defines a weapon type with its characteristics and combat ranges.
 
-**Location:** `Assets/Prototypes/Gameplay/Combat/Objects/Components/WeaponType.cs`  
+**Location:** `Assets/TurnrootFramework/Gameplay/Objects/Components/WeaponType.cs`  
 **Inherits:** `ScriptableObject`
 
 #### Creation
 
-```csharp
-Assets > Create > Game Settings > Gameplay > Weapon Type
-```
+Create via: Assets → Create → Turnroot → Game Settings → Gameplay → Weapon Type (`CreateAssetMenu` configured in code).
 
 #### Properties
 
@@ -56,7 +55,7 @@ Assets > Create > Game Settings > Gameplay > Weapon Type
 |----------|------|-------------|
 | `Name` | `string` | Display name of the weapon type (e.g., "Sword", "Bow"). |
 | `Icon` | `Sprite` | Visual icon for the weapon type. |
-| `Id` | `string` | Unique identifier for lookups. |
+| `Id` | `string` | Unique identifier for lookups (editable). |
 | `Ranges` | `int[]` | Array of valid combat ranges (e.g., [1] for melee, [2,3] for 2-3 range). |
 | `DefaultRange` | `int` | Default/preferred range for this weapon type. |
 
@@ -66,3 +65,5 @@ Assets > Create > Game Settings > Gameplay > Weapon Type
 
 - **[GameplayGeneralSettings](GameplayGeneralSettings.md)** - Main gameplay configuration
 - **[Settings](Settings.md)** - Other prototype settings
+ - **[Settings](Settings.md)** - Other Turnroot settings (graphics, character defaults)
+ - `Assets/TurnrootFramework/Skills/Nodes/Nodes/Conditions/WeaponTypeNode.cs` — example node that queries weapon type in a node graph

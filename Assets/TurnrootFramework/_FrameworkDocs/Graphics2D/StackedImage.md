@@ -1,13 +1,4 @@
-# StackedImage
-
-**Namespace**: `Turnroot.Graphics2D`  
-**Type**: `[Serializable]` abstract class with generic parameter  
-**Generic**: `StackedImage<TOwner> where TOwner : UnityEngine.Object`  
-**Source**: `Assets/Prototypes/Graphics2D/Components/StackedImage.cs`
-
-## Description
-
-Abstract base class for compositable layered images with owner reference and tint color support. Manages image stack composition, file saving, and sprite asset generation. Generic owner type enables type-safe integration with various asset types.
+Generic base for layered compositable images. Handles composition (ImageStack), key generation and sprite rendering for `SkillBadge`, `Portrait`, and other `StackedImage<T>` types.
 
 ## Generic Parameter
 
@@ -15,41 +6,15 @@ Abstract base class for compositable layered images with owner reference and tin
 |-----------|------------|-------------|
 | `TOwner` | `: UnityEngine.Object` | Type of asset that owns this image (e.g., `Skill`, `CharacterData`) |
 
-## Implementations
+Implementations: `Portrait` (Character), `SkillBadge` (Skill)
 
-- **[SkillBadge](../Skills/SkillBadge.md)** - `StackedImage<Skill>` for skill badge graphics
-- **Portrait** - `StackedImage<CharacterData>` for character portraits
+Key properties: `ImageStack`, `Key`, `SavedSprite`, `TintColors[3]`
 
-## Properties
-
-| Property | Type | Access | Description |
-|----------|------|--------|-------------|
-| `Owner` | `TOwner` | Read-only | Asset that owns this image |
-| `ImageStack` | `ImageStack` | Read-only | Container of layers to composite |
-| `Key` | `string` | Read-only | Unique filename for saved sprite |
-| `RuntimeSprite` | `Sprite` | Read-only | Non-serialized preview sprite (not saved) |
-| `SavedSprite` | `Sprite` | Read-only | Serialized sprite asset reference |
-| `Id` | `Guid` | Read-only | Unique identifier (persisted via `_idString`) |
-| `TintColors` | `Color[]` | Read-only | Array of 3 tint colors for RGB mask channels |
-
-**Note**: All properties read-only. Use methods (`SetOwner`, `SetKey`) to modify.
-
-## Methods
-
-### SetOwner()
-
-```csharp
-public void SetOwner(TOwner owner)
-```
-
-Sets the owner reference and updates tint colors from owner.
-
-**Parameters**:
-- `owner` - Asset to set as owner
-
-**Effects**:
-- Assigns `_owner` field
-- Calls `UpdateTintColorsFromOwner()` to sync colors
+Main methods
+- `SetOwner(owner)` — set owner
+- `SetImageStack(stack)` — assign ImageStack
+- `SetKey(key)` — set filename/auto-generate
+- `Render()` — composite layers → save sprite
 
 ### SetImageStack()
 
@@ -102,29 +67,7 @@ Main rendering pipeline: composites layers, saves to file, loads sprite asset.
 
 **Editor-Only**: `SaveToFile()` and `LoadSavedSprite()` use `#if UNITY_EDITOR` for AssetDatabase operations.
 
-### CompositeLayers()
-
-```csharp
-public Texture2D CompositeLayers()
-```
-
-Composites ImageStack layers into single texture with proper dimensions from settings.
-
-**Returns**: `Texture2D` with all layers composited, or `null` if no layers.
-
-**Process**:
-1. Validates ImageStack and layers exist
-2. Ensures key is set (calls `EnsureKeyInitialized()` if needed)
-3. Loads `GraphicsPrototypesSettings` to get render dimensions (width/height)
-4. Creates base texture with transparent background (size from settings)
-5. Extracts layer array and mask array from ImageStack
-6. Calls `ImageCompositor.CompositeImageStackLayers()` with base texture, layers, masks, tint colors
-7. Returns composited texture
-
-**Note**: 
-- Creates new texture each call (not cached)
-- Uses settings-based dimensions instead of hardcoded values
-- Key auto-generated if needed using `EnsureKeyInitialized()` helper
+Composition: Composites layers to Texture2D using `ImageCompositor` (editor-only file writes + AssetDatabase calls — only when rendering in editor).
 
 ### ToString()
 
@@ -225,11 +168,23 @@ Each layer's mask sprite defines color intensity per channel. See **[ImageCompos
 
 **GUID Persistence**: `Guid` type not serializable, so persisted as `_idString` and parsed in `OnAfterDeserialize()`.
 
+
+Public methods
+- `SetOwner(TOwner owner)` — set owner and update tint colors
+- `SetImageStack(ImageStack stack)` — assign ImageStack asset
+- `SetKey(string)` — set the saved key (filename) or auto-generate
+- `Render()` — composites layers and saves sprite to Resources
+- `CompositeLayers()` — returns a composited Texture2D for preview
+- `Identify()` / `ToString()` — debugging helpers
+
+See also
+- `Tools/ImageCompositor.md` — low-level pixel compositor
+- `Tools/StackedImageEditorWindow.md` — editor window for live preview and rendering
+- `Characters/Portraits/Portrait.md` — portrait implementation (concrete `StackedImage`)
+# StackedImage — short ref
+
 ---
 
-## See Also
-
-- **[SkillBadge](../Skills/SkillBadge.md)** - Skill badge implementation
-- **[ImageStack](../Characters/Portraits/ImageStack.md)** - Layer container
-- **[ImageCompositor](../Tools/ImageCompositor.md)** - Compositing and tinting
-- **[StackedImageEditorWindow](../Tools/StackedImageEditorWindow.md)** - Base editor window
+Where to look
+- `Assets/TurnrootFramework/Graphics2D/Components/StackedImage.cs`
+- `Assets/TurnrootFramework/Tools/ImageCompositor.cs`

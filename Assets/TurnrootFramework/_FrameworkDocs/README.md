@@ -1,6 +1,6 @@
 # Prototype Systems Documentation
 
-Complete API reference for Assets/Prototypes systems.
+Complete API reference for the Turnroot Framework assets.
 
 ## Core Systems
 
@@ -39,18 +39,27 @@ Complete API reference for Assets/Prototypes systems.
 
 ### Editor Tools
 - **[PortraitEditorWindow](Tools/PortraitEditorWindow.md)** - Portrait editing interface
+ - **[Map Grid Editor](Maps/MapGridEditorWindow.md)** - Map painting, features, movement testing
+
+### Map Systems
+- **[MapGrid](Maps/MapGrid.md)** - Grid container for tiles
+- **[MapGridPoint](Maps/MapGridPoint.md)** - Per-tile properties and feature storage
+- **[MapGridEditorSettings](Maps/MapGridEditorSettings.md)** - Editor colors and layout settings
+- **[MapGridPropertyBase](Maps/Property Components/MapGridPropertyBase.md)** - Typed property containers
+- **[MapGridPointFeature](Maps/Property Components/MapGridPointFeature.md)** - Feature enum/ID helpers
+- **[MapGridFeatureProperties](Maps/Property Components/MapGridFeatureProperties.md)** - Feature default assets
 
 ---
 
 ## DOCUMENTATION LOCATION
-- **Base Path**: `Assets/PrototypeDocs/`
+- **Base Path**: `Assets/TurnrootFramework/_FrameworkDocs/`
 - **Entry Point**: `README.md` (index with quick reference)
 
 ## CURRENT DOCUMENTATION STRUCTURE
 
-### Files and Their Coverage
+### Files and Their Coverage (short)
 ```
-PrototypeDocs/
+TurnrootFramework/_FrameworkDocs/
 ├── README.md                                    # Index, quick ref, architecture, troubleshooting
 ├── Characters/                                  # Character system documentation
 │   ├── Character.md                            # Character class (main asset)
@@ -85,69 +94,28 @@ PrototypeDocs/
 ## DOCUMENTATION MAPPING TO SOURCE FILES
 
 ### Characters/Character.md
-**Source**: `Assets/Prototypes/Characters/Character.cs`
-**Documents**:
-- All properties (Identity, Demographics, Description, Flags, Visual, Stats, etc.)
-- Lifecycle: `OnEnable()` - loads CharacterPrototypeSettings
-- Methods: `GetBoundedStat()`, `GetUnboundedStat()`, `GetClassExp()`, `SetClassExp()`, support relationship methods
-- Integration with accent colors → Portrait tinting
+**Source**: `Assets/TurnrootFramework/Characters/CharacterData.cs`
+Summary: main ScriptableObject for character templates (stats, portraits, skills). See `CharacterData` API in the doc.
 
 ### Characters/Portraits/Portrait.md
-**Source**: `Assets/Prototypes/Characters/Components/Portrait.cs`
-**Documents**:
-- Properties: Owner, ImageStack, Key, RuntimeSprite, SavedSprite, Id, TintColors
-- Constructor + `OnAfterDeserialize()`
-- Methods: `SetOwner()`, `SetKey()`, `UpdateTintColorsFromOwner()`, `Render()`, `CompositeLayers()`
-- **Rendering Pipeline** (critical):
-  1. CompositeLayers() → compositor
-  2. SaveToFile() → PNG to disk
-  3. LoadSavedSprite() → configure texture importer + load asset
-- **Tinting System**: RGB mask channels → 3 tint colors
+**Source**: `Assets/TurnrootFramework/Characters/Components/Portrait.cs`
+Summary: portrait composition (ImageStack), tinting and rendering to PNG; used by `CharacterData` and the `PortraitEditorWindow`.
 
 ### Characters/Portraits/ImageStack.md
-**Sources**: 
-- `Assets/Prototypes/Graphics2D/Components/Portrait/ImageStack.cs`
-- `Assets/Prototypes/Graphics2D/Components/ImageStackLayer.cs`
-**Documents**:
-- ImageStack: Layer container with `Layers` list and optional `OwnerCharacter` reference
-- ImageStackLayer: Sprite, Mask, Offset, Scale, Rotation, Order
-- Mask-based tinting (RGB channels)
-- Transform application order
-- **Note**: Rendering logic handled by `StackedImage<TOwner>.CompositeLayers()`, not ImageStack methods
+**Sources**: `Assets/TurnrootFramework/Graphics2D/Components/ImageStack.cs`, `Assets/TurnrootFramework/Graphics2D/Components/ImageStackLayer.cs`
+Summary: ImageStack and ImageStackLayer define layer lists used by Portrait/SkillBadge composition.
 
 ### Tools/ImageCompositor.md
-**Source**: `Assets/AbstractScripts/Graphics2D/ImageCompositor.cs`
-**Documents**:
-- Static methods: `CreateSpriteFromTexture()`, `TintSpritePixels()`, `CompositeImageStackLayers()`
-- **Tinting Algorithm**: 
-  - Normalize RGB weights
-  - Blend 3 tint colors proportionally
-  - Lerp by totalStrength
-- **Compositing Process**: Sort by Order → tint → scale → offset → alpha blend
-- **Scaling**: Nearest-neighbor, iterate destination pixels
+**Source**: `Assets/TurnrootFramework/AbstractScripts/Graphics2D/ImageCompositor.cs`
+Summary: low-level compositor used by `StackedImage.Render()`; includes mask-based tinting API.
 
 ### Characters/CharacterStats.md
-**Sources**:
-- `Assets/Prototypes/Characters/Components/Stats/CharacterStat.cs`
-- `Assets/Prototypes/Characters/Components/Stats/BoundedCharacterStat.cs`
-- `Assets/Prototypes/Characters/Components/Stats/StatTypes.cs`
-**Documents**:
-- CharacterStat: Unbounded, Current + Bonus
-- BoundedCharacterStat: Min/Max bounds, Ratio for progress bars
-- Both: Implicit int conversion
-- StatTypes enums: UnboundedStatType, BoundedStatType
+**Sources**: `Assets/TurnrootFramework/Characters/Components/Stats/*`
+Summary: Bounded & unbounded stat containers and helper conversions used in characters.
 
 ### Characters/CharacterComponents.md
-**Sources**:
-- `Assets/Prototypes/Characters/Components/Pronouns.cs`
-- `Assets/Prototypes/Characters/Components/SupportRelationship.cs`
-- `Assets/Prototypes/Characters/Components/HereditaryTraits.cs`
-- `Assets/Prototypes/Characters/Components/CharacterWhich.cs`
-**Documents**:
-- Pronouns: they/she/he sets, `Use()` for template replacement
-- SupportRelationship: Character ref, levels (None/C/B/A/S), points, speed
-- HereditaryTraits: Colors, passed skills/traits, growth bonuses
-- CharacterWhich enum: Player/Enemy/Ally/Neutral
+**Sources**: `Assets/TurnrootFramework/Characters/Components/*`
+Summary: small data containers & serializable types used by `CharacterData` (Pronouns, SupportRelationship, HereditaryTraits).
 
 ### Characters/CharacterInventory.md
 **Source**: `Assets/TurnrootFramework/Characters/Components/Inventory/CharacterInventoryInstance.cs`
@@ -194,34 +162,15 @@ PrototypeDocs/
 - Integration with GameplayGeneralSettings, ObjectItem, CharacterInventoryInstance
 
 ### Skills/Nodes/README.md
-**Sources**:
-- `Assets/Prototypes/Skills/Nodes/Core/*.cs`
-- `Assets/Prototypes/Skills/Nodes/Nodes/Events/*.cs`
-- `Assets/Prototypes/Skills/Nodes/Nodes/Conditions/*.cs`
-- `Assets/Prototypes/Gameplay/Combat/FundamentalComponents/Battles/BattleContext.cs`
-**Documents**:
-- SkillGraph: NodeGraph container, Execute(BattleContext), validation
-- SkillNode: Base class with Execute(BattleContext), GetInputFloat/GetInputBool helpers
-- BattleContext: UnitInstance, Targets, Allies, AdjacentUnits, CustomData, EnvironmentalConditions, SkillUseCount
-- Port types: ExecutionFlow, BoolValue, FloatValue, StringValue
-- **Event nodes**: 30+ nodes for stat modification, damage, combat effects, positioning
-- **Condition nodes**: 20+ nodes for stat comparisons, unit state, combat state, spatial queries
-- Multi-target pattern: BoolValue affectAllTargets input
-- Adjacency system: Direction enum with 9-direction grid
-- Helper methods for simplified node development
+**Sources**: `Assets/TurnrootFramework/Skills/Nodes/*`
+Summary: Visual xNode graph system for skill behavior - nodes for events, conditions and flow execution.
 
 ### Configurations/Settings.md
-**Sources**:
-- `Assets/Prototypes/Characters/CharacterPrototypeSettings.cs`
-- `Assets/Prototypes/Graphics2D/GraphicsPrototypesSettings.cs`
-**Documents**:
-- CharacterPrototypeSettings: `UseAccentColors`, OnValidate propagation
-- GraphicsPrototypesSettings: Portrait render dimensions
-- **Critical**: OnValidate behavior, EditorApplication.delayCall, IsAssetImportWorkerProcess check
-- Loading pattern: `Resources.Load<T>("Path")`
+**Sources**: `Assets/TurnrootFramework/Configurations/*` and `Resources/GameSettings/*`
+Summary: Global ScriptableObjects that configure character & graphics pipeline; provides editor `OnValidate()` hooks.
 
 ### Configurations/DefaultCharacterStats.md
-**Source**: `Assets/Prototypes/Characters/DefaultCharacterStats.cs`
+**Source**: `Assets/TurnrootFramework/Characters/DefaultCharacterStats.cs`
 **Documents**:
 - DefaultCharacterStats: ScriptableObject for default stat initialization
 - DefaultBoundedStat and DefaultUnboundedStat nested classes
@@ -231,9 +180,9 @@ PrototypeDocs/
 
 ### Configurations/Components/ExperienceTypes.md
 **Sources**:
-- `Assets/Prototypes/Gameplay/Combat/FundamentalComponents/ExperienceType.cs`
-- `Assets/Prototypes/Gameplay/Combat/Objects/Components/WeaponType.cs`
-- `Assets/Prototypes/Gameplay/Combat/FundamentalComponents/Editor/ExperienceTypeDrawer.cs`
+- `Assets/TurnrootFramework/Gameplay/Combat/FundamentalComponents/ExperienceType.cs`
+- `Assets/TurnrootFramework/Gameplay/Combat/Objects/Components/WeaponType.cs`
+- `Assets/TurnrootFramework/Gameplay/Combat/FundamentalComponents/Editor/ExperienceTypeDrawer.cs`
 **Documents**:
 - ExperienceType: Name, Id (auto-generated), Enabled, HasWeaponType, AssociatedWeaponType
 - **ID Generation**: Lowercase, space-stripped from Name, private setter
@@ -243,27 +192,15 @@ PrototypeDocs/
 - Integration with GameplayGeneralSettings
 
 ### Tools/PortraitEditorWindow.md
-**Source**: `Assets/Prototypes/Characters/Components/Editor/PortraitEditorWindow.cs`
-**Documents**:
-- Editor window: Tools > Portrait Editor
-- UI layout and controls
-- Workflow: character selection → portrait config → layer management → tinting → save
-- Reflection usage for private field assignment
-- Live preview system
-- Integration points with Portrait.Render()
+**Source**: `Assets/TurnrootFramework/Characters/Components/Editor/PortraitEditorWindow.cs`
+Summary: Editor UI for composing and rendering portraits with live preview.
 
 ### Skills/Skill.md
-**Source**: `Assets/Prototypes/Skills/Skill.cs`
-**Documents**:
-- Properties: AccentColor1/2/3, Badge, SkillName, Description
-- UnityEvents: ReadyToFire, SkillTriggered, ActionCompleted, SkillEquipped, SkillUnequipped
-- Method: `CreateNewBadge()` - creates SkillBadge and opens editor window via reflection
-- Integration with Character.Skills and Character.SpecialSkills
-- NaughtyAttributes usage for inspector UI
-- Incomplete features: NodeConnections, EventNodes (commented out)
+**Source**: `Assets/TurnrootFramework/Skills/Skill.cs`
+Summary: Skill asset containing behavior graph, UI accent colors, and badge assets.
 
 ### Skills/SkillBadge.md
-**Source**: `Assets/Prototypes/Skills/Components/Badges/SkillBadge.cs`
+**Source**: `Assets/TurnrootFramework/Skills/Components/Badges/SkillBadge.cs`
 **Documents**:
 - Inherits `StackedImage<Skill>` - specialized for skill badge graphics
 - `GetSaveSubdirectory()` - returns "SkillBadges"
@@ -272,7 +209,7 @@ PrototypeDocs/
 - Tint color array safety (always 3 elements, white default)
 
 ### Skills/SkillBadgeEditorWindow.md
-**Source**: `Assets/Prototypes/Skills/Components/Badges/Editor/SkillBadgeEditorWindow.cs`
+**Source**: `Assets/TurnrootFramework/Skills/Components/Badges/Editor/SkillBadgeEditorWindow.cs`
 **Documents**:
 - Inherits `StackedImageEditorWindow<Skill, SkillBadge>`
 - MenuItem: "Turnroot/Editors/Skill Badge Editor"
@@ -282,16 +219,5 @@ PrototypeDocs/
 - Opened via reflection from Skill.CreateNewBadge()
 
 ### Graphics2D/StackedImage.md
-**Source**: `Assets/Prototypes/Graphics2D/Components/StackedImage.cs`
-**Documents**:
-- Abstract generic class `StackedImage<TOwner>` where TOwner : UnityEngine.Object
-- Properties: Owner, ImageStack, Key, RuntimeSprite, SavedSprite, Id, TintColors
-- Methods: `SetOwner()`, `SetKey()`, `Render()`, `CompositeLayers()`, `ToString()`, `Identify()`
-- Internal helper: `EnsureKeyInitialized()` - consolidates key generation logic
-- Abstract methods: `UpdateTintColorsFromOwner()`, `GetSaveSubdirectory()`
-- **Rendering Pipeline**: Render() → CompositeLayers() → SaveToFile() → LoadSavedSprite()
-- **CompositeLayers()**: Loads dimensions from `GraphicsPrototypesSettings`, creates base texture, calls ImageCompositor
-- **Lifecycle**: Constructor, OnAfterDeserialize() for GUID persistence
-- Tint color system (3-color RGB mask channels)
-- File path structure and editor-only features
-- Implementations: SkillBadge, Portrait
+**Source**: `Assets/TurnrootFramework/Graphics2D/Components/StackedImage.cs`
+Summary: Base class for layered image composition with rendering to PNG and editor integration.

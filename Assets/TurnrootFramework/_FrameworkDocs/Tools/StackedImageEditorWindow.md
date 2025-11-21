@@ -1,40 +1,17 @@
-# StackedImageEditorWindow
+# Stacked Image Editor Window — short ref
 
-**Namespace:** `Turnroot.Graphics2D.Editor`  
-**Type:** Generic abstract base class for editing `StackedImage<TOwner>`
-
-Reusable editor window providing UI for layer management, tinting, preview, and rendering. Inherit and implement 3 abstract members to create a custom editor.
+Generic base editor for `StackedImage<TOwner>`. Provides layer management, tinting, live preview and rendering. Derive and implement a few members to support custom assets (Portraits etc).
 
 ## Type Parameters
 
 - `TOwner` (constraint: `UnityEngine.Object`) - Owner type (CharacterData, ItemData, etc.)
 - `TStackedImage` (constraint: `StackedImage<TOwner>`) - Concrete StackedImage implementation
 
-## Quick Start
-
-``csharp
-using Turnroot.Graphics2D.Editor;
-using UnityEditor;
-
-public class PortraitEditorWindow : StackedImageEditorWindow<CharacterData, Portrait>
-{
-    protected override string WindowTitle => "Portrait Editor";
-    protected override string OwnerFieldLabel => "Character";
-    
-    [MenuItem("Window/Portrait Editor")]
-    public static void ShowWindow() => GetWindow<PortraitEditorWindow>("Portrait Editor");
-    
-    protected override Portrait[] GetImagesFromOwner(CharacterData owner) => owner?.Portraits;
-}
-``
-## Abstract Members (Required)
-
-### Properties
-- `string WindowTitle { get; }` - Window title ("Portrait Editor")
-- `string OwnerFieldLabel { get; }` - Owner field label ("Character")
-
-### Methods
-- `TStackedImage[] GetImagesFromOwner(TOwner owner)` - Returns image array from owner
+## Quick start
+Derive `PortraitEditorWindow : StackedImageEditorWindow<CharacterData, Portrait>` and override `GetImagesFromOwner` plus title strings. Use `GetWindow<T>` to open.
+## Required overrides
+- `WindowTitle`, `OwnerFieldLabel` (strings)
+- `GetImagesFromOwner(TOwner owner)`
 
 ## Protected Fields (Available to Derived Classes)
 
@@ -64,18 +41,8 @@ Override these to customize behavior:
 - `UpdateCurrentImage()` - Refresh current image from owner
 - `RefreshPreview()` - Recomposite and update preview
 
-## Features Included
 
-**Automatic:**
-- Owner/image selection with validation
-- Live preview with auto-refresh toggle
-- Layer visualization and selection
-- Tint color editing (3 channels)
-- ImageStack assignment
-- Key generation (short/full GUID)
-- **Default management**: Save/load tagged layer defaults
-- Render to file + asset import
-- Saved sprite display
+In-built features: selection, preview, layer tint/order/offset, default management, render to file.
 
 **UI Layout:**
 ```
@@ -134,7 +101,17 @@ public static void OpenPortrait(CharacterData character, int index = 0)
 
 ---
 
-## See Also
+## Where to look
+- `Assets/TurnrootFramework/Graphics2D/Editor/StackedImageEditorWindow.cs`
 
-- **[StackedImage](../Graphics2D/StackedImage.md)** - Base image class
-- **[Portrait](../Characters/Portrait.md)** - Character implementation
+Key methods (public/protected)
+- `GetImagesFromOwner(TOwner owner)` — abstract: return image array for editor
+- `SetImagesToOwner(TOwner owner, TStackedImage[] images)` — optional override to update owner images
+- `UpdateCurrentImage()` — refresh selection and preview
+- `RefreshPreview()` — trigger recomposition and update UI
+- `DrawControlPanel()` / `DrawPreviewPanel()` — layout hooks for derived classes
+
+See also
+- `Characters/Portraits/Portrait.md` — concrete use-case
+- `Graphics2D/StackedImage.md` — base image API
+- `Assets/TurnrootFramework/Characters/Components/Editor/PortraitEditorWindow.cs`
