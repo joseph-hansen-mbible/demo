@@ -107,12 +107,8 @@ InitTestScene*.unity*
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-Assets/TurnrootFramework/_FrameworkDocs/copilot-instructions.md
-Assets/TurnrootFramework/_FrameworkDocs/copilot-instructions.md.meta
 Packages/UnityMarkdownViewer/
 /.github/instructions
-/_FrameworkDocs/copilot-instructions.md
-/Assets/Resources/GraphicPacks
 .vscode/settings.json
 .editorconfig
 .config/dotnet-tools.json
