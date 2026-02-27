@@ -112,3 +112,4 @@ Packages/UnityMarkdownViewer/
 .vscode/settings.json
 .editorconfig
 .config/dotnet-tools.json
+/Assets/Demos
