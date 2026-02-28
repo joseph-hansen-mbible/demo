@@ -117,7 +117,7 @@ Material:
     - _DepthDistance: 1.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortionStrength: 0
+    - _DistortionStrength: 0.0061
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -137,23 +137,24 @@ Material:
     - _ReceiveShadows: 1
     - _RippleCount: 5
     - _RippleDistance: 0.8
-    - _RippleDistortion: 0.592
-    - _RippleEdgeFade: 1
+    - _RippleDistortion: 0
+    - _RippleEdgeFade: 0.836
     - _RippleNoiseScale: 2
     - _RippleNoiseScale2: 6
-    - _RippleNoiseSpeed: 0.05
+    - _RippleNoiseSpeed: 0.02
     - _RippleNoiseStrength: 2
     - _RippleNoiseStrength2: 1
-    - _RippleOpacity: 0.774
+    - _RippleOpacity: 1
+    - _RipplePhaseJitter: 0.563
     - _RippleShadowMask: 1
-    - _RippleSharpness: 7.6
-    - _RippleSpeed: 0.4
-    - _ShadowStrength: 0.4
+    - _RippleSharpness: 11.1
+    - _RippleSpeed: 0.5
+    - _ShadowStrength: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularMurkinessSuppress: 1
-    - _SpecularNormalStrength: 0
+    - _SpecularNormalStrength: 0.094
     - _SpecularPower: 51
     - _SpecularStrength: 0.967
     - _SrcBlend: 1
@@ -170,9 +171,9 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 0.75, g: 0.88, b: 1, a: 1}
     - _RippleColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShadowColor: {r: 0, g: 0.09999997, b: 0.19999996, a: 1}
+    - _ShadowColor: {r: 0.582, g: 0.7885412, b: 1, a: 0.9647059}
     - _ShallowColor: {r: 0.40147054, g: 0.6458287, b: 0.7647059, a: 0.14901961}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0.9811321, g: 0.9757083, b: 0.8284087, a: 1}
+    - _SpecularColor: {r: 0.93465286, g: 1, b: 0.6933962, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

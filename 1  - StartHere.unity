@@ -43440,8 +43440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92de5083d17c4334496fe457b4be09ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseHeightMeshAsTerrainModel: 0
-  TerrainLevelModel: {fileID: 0}
+  UseHeightMeshAsTerrainModel: 1
+  TerrainLevelModel: {fileID: 652847066}
   AdditionalDecorativeModels: []
   PlayerTeamSpawnPoints:
   - {x: 14, y: 13}
