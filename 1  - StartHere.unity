@@ -65583,6 +65583,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157427171440184067, guid: 9f4f6d1d94a6fb6458437533b7396f9e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7187356854690170449, guid: 9f4f6d1d94a6fb6458437533b7396f9e, type: 3}
       propertyPath: m_Name
       value: testmap-height
