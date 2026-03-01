@@ -87,13 +87,13 @@ Material:
     - _CloudColorNightUnder: {r: 0.09197104, g: 0.21698111, b: 0.06243324, a: 1}
     - _DayBottomColor: {r: 0.6694998, g: 0.7955393, b: 0.8018868, a: 1}
     - _DayTopColor: {r: 0.45512158, g: 0.5970865, b: 0.69803923, a: 1}
-    - _HorizonColorDay: {r: 0.24815686, g: 0.4412853, b: 0.44313726, a: 1}
+    - _HorizonColorDay: {r: 0.29046902, g: 0.52099997, b: 0.52099997, a: 1}
     - _HorizonColorNight: {r: 0.0076984875, g: 0.0076984875, b: 0.009433985, a: 1}
     - _MoonColor: {r: 0.42831078, g: 0.67112094, b: 0.7264151, a: 1}
     - _NightBottomColor: {r: 0.0773407, g: 0.16414501, b: 0.20754719, a: 1}
     - _NightTopColor: {r: 0.019001415, g: 0.053338934, b: 0.066037714, a: 1}
     - _StarsSkyColor: {r: 0.03292984, g: 0.03462514, b: 0.03773582, a: 1}
     - _SunColor: {r: 0.9811321, g: 0.9664011, b: 0.8006408, a: 1}
-    - _SunSet: {r: 0.4308314, g: 0.46925312, b: 0.6392157, a: 1}
+    - _SunSet: {r: 0.38544706, g: 0.48816243, b: 0.6392157, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
