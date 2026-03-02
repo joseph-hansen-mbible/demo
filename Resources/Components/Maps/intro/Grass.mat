@@ -147,7 +147,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.39701942, g: 0.492, b: 0.351288, a: 1}
-    - _CameraPosition: {r: 25.17, g: 9.21, b: 5.75, a: 0}
+    - _CameraPosition: {r: 37.34919, g: 9.21, b: 27.684364, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowColor: {r: 0.35822597, g: 0.320188, b: 0.41799998, a: 0.6666667}

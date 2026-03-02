@@ -34740,6 +34740,83 @@ MonoBehaviour:
   _col: 7
   _terrainTypeId: dc66fdaa-4b62-49ff-b6fa-fa811d7eb2e2
   _featureTypeId: 
+--- !u!1001 &1223278478
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 35.96
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 33.54
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: m_Name
+      value: cattails
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589000460442352738, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 45ddd5a168d7d7c4f85aefa4c5b36c90, type: 2}
+    - target: {fileID: 1589000460442352738, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 377cff97b677e344eb96b4cf75ad757e, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef4cd2c14a9b4e243a0d883a57916482, type: 3}
 --- !u!1 &1223972097
 GameObject:
   m_ObjectHideFlags: 0
@@ -47685,24 +47762,27 @@ MonoBehaviour:
   grassMaterial: {fileID: 2100000, guid: ff92cf264beee324aac4f417e5da0999, type: 2}
   targetCamera: {fileID: 1671593254}
   maskTexture: {fileID: 2800000, guid: 3be4241b7de242340a44b8b1a740aa45, type: 3}
-  maskZero: 0.248
-  maskThreshold: 0.894
+  maskFloor: 0.14
   density: 250
   maxBlades: 2500000
-  minHeight: 0.2
-  maxHeight: 0.4
+  minHeight: 0.1
+  maxHeight: 0.8
   minWidth: 0.03
   maxWidth: 0.05
   maxDistance: 90
   fadeStartDistance: 80
-  grassEnabled: 1
+  grassEnabled: 0
   shadowCasting: 0
-  extraMaterials: []
-  maskedExtraMaterial: {fileID: 2100000, guid: 537e2e16d84d83946be5993bc23566ab, type: 2}
-  maskedExtraMask: {fileID: 2800000, guid: ce6cef4277bd19e4da0aef0d27f5de38, type: 3}
+  extraMaterials:
+  - {fileID: 2100000, guid: 99d3ba08868700f44bbf23e258936252, type: 2}
+  - {fileID: 2100000, guid: 607f117b0e2d7df4c88638ecdb2cf461, type: 2}
+  unmaskedExtraDensity: 0.099
+  unmaskedExtraSize: {x: 0.3, y: 0.3}
+  maskedExtraMaterial: {fileID: 0}
+  maskedExtraMask: {fileID: 0}
   maskedExtraThreshold: 0.198
-  extraDensity: 0.149
-  extraPlaneSize: {x: 0.8, y: 0.8}
+  maskedExtraDensity: 0.01
+  maskedExtraSize: {x: 0.1, y: 0.1}
   disableCulling: 0
   logVisibleCount: 0
 --- !u!1 &1590830684
@@ -66327,6 +66407,38 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1587982575}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetGrassEnabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: GrassRenderer, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
+      propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8934030873259943151, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -66510,3 +66622,4 @@ SceneRoots:
   - {fileID: 935331459}
   - {fileID: 1830534780}
   - {fileID: 3797713037292196943}
+  - {fileID: 1223278478}
