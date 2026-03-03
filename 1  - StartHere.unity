@@ -90035,8 +90035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BushDisabler
   Culler: {fileID: 1671593254}
-  ViewportPadding: 0.024
-  UpdateInterval: 0.1
+  GrassRenderer: {fileID: 1587982575}
 --- !u!1 &1653316468
 GameObject:
   m_ObjectHideFlags: 0
@@ -127735,11 +127734,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
       propertyPath: segments.Array.data[0].onSegmentReached.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
       propertyPath: segments.Array.data[2].onSegmentReached.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7778715969270593766, guid: bcbce3e4930f8574982e8b65369c56a5, type: 3}
       propertyPath: IsInTopdownBattleViewChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
