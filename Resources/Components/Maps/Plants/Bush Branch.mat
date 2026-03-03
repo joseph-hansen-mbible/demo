@@ -7,12 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground
+  m_Name: Bush Branch
   m_Shader: {fileID: 4800000, guid: 87480c90398cfea48803d30987d041a9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _USE_FRENSEL_ON
   - _USE_MATCAP_REFLECTION_ON
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -27,7 +26,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: df2c0271a6e21d3418941a21675765c8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -63,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: df2c0271a6e21d3418941a21675765c8, type: 3}
+        m_Texture: {fileID: 2800000, guid: dc13f567d68d1d34a80873256d99295d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Main_Emissive_Tex:
@@ -79,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 9f892af7b94575048834bd8be5892863, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -125,14 +124,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _ASEOutalpha: 0
-    - _ASEOutlineWidth: 0.001
+    - _ASEOutlineWidth: 0.002
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
-    - _Cel_Shader_Offset: 1
+    - _Cel_Shader_Offset: 0.64
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -145,13 +144,13 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Highlight_Amount: 1.87
+    - _Highlight_Amount: 1
     - _Highlight_Mask_Amount: 1
-    - _Highlight_Offset: 0.797
+    - _Highlight_Offset: 0.674
     - _Highlight_Replace: 0
     - _Highlight_Roughness: 0
-    - _Highlight_Saturation: 0.361
-    - _Highlight_Smoothness: 0.243
+    - _Highlight_Saturation: 0
+    - _Highlight_Smoothness: 0.035
     - _Main_Emissve_power: 1
     - _MatcapIntensity: 1
     - _MatcapObjectSpace: 0
@@ -162,13 +161,13 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Shadow_Noise_Amount: 0
-    - _Shadow_Offset: 0.771
+    - _Shadow_Offset: 0.508
     - _Shadow_Replace: 0
     - _Shadow_Roughness: 0
-    - _Shadow_Smoothness: 0.221
-    - _Shadow_Strength: 0.423
+    - _Shadow_Smoothness: 0.26
+    - _Shadow_Strength: 0
     - _Show_Masks: 0
-    - _Smoothness: 0
+    - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -177,14 +176,14 @@ Material:
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
-    - _frensel_hard: 0.804
+    - _frensel_hard: 0.8
     - _frensel_power: 1
-    - _frensel_range: 0.559
+    - _frensel_range: 0.6
     - _matcap_animation_speed: 1
     - _special_buff_dissolve: 1
     - _special_buff_switch_edge_hardness: 1
     - _use_dark_tex: 0
-    - _use_frensel: 1
+    - _use_frensel: 0
     - _use_highlight_mask: 0
     - _use_light_tex: 0
     - _use_main_emissive: 0
@@ -195,19 +194,19 @@ Material:
     - _use_outlines: 0
     - _use_shadow_noise: 0
     m_Colors:
-    - _ASEOutlineColor: {r: 0.2270826, g: 0.5943396, b: 0.47391546, a: 1}
+    - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Main_Emissve_color: {r: 1, g: 1, b: 1, a: 0}
     - _Matcap_Emissve_color: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _dark: {r: 0.18438713, g: 0.16887683, b: 0.5188679, a: 1}
-    - _frensel_color: {r: 0.01655393, g: 0.11320752, b: 0.060447287, a: 0}
+    - _dark: {r: 0.23432861, g: 0.19032001, b: 0.305, a: 0}
+    - _frensel_color: {r: 0, g: 0, b: 0, a: 0}
     - _light: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &5404526455049935218
+--- !u!114 &8595199639543249081
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

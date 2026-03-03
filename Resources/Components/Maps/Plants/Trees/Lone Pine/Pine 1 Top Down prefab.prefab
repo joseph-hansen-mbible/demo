@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1491565572883597635
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 54.724007
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 51.37077
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6544968148536358038, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5e625003338b15443990e4078cd58606, type: 2}
+    - target: {fileID: -4179395951630848569, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_Name
+      value: Pine 1 Top Down prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449495222015626234, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449495222015626234, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449495222015626234, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5449495222015626234, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.83
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: -7690235296556650651, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0d4dfd352b652d418f35012073bc78f, type: 3}
