@@ -51232,6 +51232,8 @@ MonoBehaviour:
   HideOnTopDownLayerModels:
   - {fileID: 1793181079}
   - {fileID: 296198620}
+  ShowOnTopDownLayerModels:
+  - {fileID: 972645355}
   PlayerTeamSpawnPoints:
   - {x: 14, y: 13}
   - {x: 14, y: 12}
