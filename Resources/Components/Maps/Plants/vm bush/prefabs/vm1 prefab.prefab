@@ -68,17 +68,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: vm1 prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 2083690851310886473, guid: 322c2f2dfdd84434cadb41838aedd3ba, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7568726019351105632, guid: 322c2f2dfdd84434cadb41838aedd3ba, type: 3}
       propertyPath: m_Quality
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7568726019351105632, guid: 322c2f2dfdd84434cadb41838aedd3ba, type: 3}
       propertyPath: m_ForceMeshLod
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7568726019351105632, guid: 322c2f2dfdd84434cadb41838aedd3ba, type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7568726019351105632, guid: 322c2f2dfdd84434cadb41838aedd3ba, type: 3}
       propertyPath: m_MeshLodSelectionBias
       value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7568726019351105632, guid: 322c2f2dfdd84434cadb41838aedd3ba, type: 3}
+      propertyPath: m_SkinnedMotionVectors
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7568726019351105632, guid: 322c2f2dfdd84434cadb41838aedd3ba, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

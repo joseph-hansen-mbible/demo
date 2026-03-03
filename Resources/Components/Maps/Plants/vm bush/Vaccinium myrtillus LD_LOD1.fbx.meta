@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Vacci myrt bark
+    second: {fileID: 2100000, guid: 377cff97b677e344eb96b4cf75ad757e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Vacci myrt leaf 01
-    second: {fileID: 2100000, guid: c83df6d97d1661b40952286e3c660b29, type: 2}
+    second: {fileID: 2100000, guid: 5c6ad7e59394cd44a99a22192bfa4cd1, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
