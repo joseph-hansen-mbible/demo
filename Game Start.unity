@@ -516,6 +516,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turnroot Brain Loader
       objectReference: {fileID: 0}
+    - target: {fileID: 6269035262697412637, guid: 9141daf7e0292cc4da962dbafaababd7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
