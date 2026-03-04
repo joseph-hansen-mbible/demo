@@ -41,7 +41,8 @@ Shader "Joseph&Minions/StylizedSkybox"
         _DistortScale("Distort Noise Scale",  Range(0, 1)) = 0.06
         _SecNoiseScale("Secondary Noise Scale",  Range(0, 1)) = 0.05
         _Distortion("Extra Distortion",  Range(0, 1)) = 0.1
-        _Speed("Movement Speed",  Range(0, 10)) = 1.4
+        _Speed("Movement Speed",  Range(-2, 10)) = 1.4
+        _DetailSpeed("Detail Movement Speed",  Range(0, 5)) = 1.0
         _CloudCutoff("Cloud Cutoff",  Range(0, 1)) = 0.3
         _Fuzziness("Cloud Fuzziness",  Range(0, 1)) = 0.04
         _FuzzinessUnder("Cloud Fuzziness Under",  Range(0, 1)) = 0.01
@@ -96,7 +97,7 @@ Shader "Joseph&Minions/StylizedSkybox"
                 float4 _HorizonColorDay, _HorizonColorNight, _SunSet;
                 float _StarsCutoff, _StarsSpeed, _HorizonIntensity;
                 float _BaseNoiseScale, _DistortScale, _SecNoiseScale, _Distortion;
-                float _Speed, _CloudCutoff, _Fuzziness, _FuzzinessUnder, _Brightness;
+                float _Speed, _DetailSpeed, _CloudCutoff, _Fuzziness, _FuzzinessUnder, _Brightness;
                 float4 _CloudColorDayEdge, _CloudColorDayMain, _CloudColorDayUnder;
                 float4 _CloudColorNightEdge, _CloudColorNightMain, _CloudColorNightUnder, _StarsSkyColor;
                 float _SunriseStart, _SunriseEnd, _SunsetStart, _SunsetEnd, _SunriseSunsetIntensity;
@@ -137,7 +138,7 @@ Shader "Joseph&Minions/StylizedSkybox"
 
                 // Clouds
                 float2 flatSkyUV = IN.positionWS.xz / (abs(IN.positionWS.y) + 1.0);
-                float baseNoise = SAMPLE_TEXTURE2D(_BaseNoise, sampler_BaseNoise, (flatSkyUV - _Time.x) * _BaseNoiseScale).x;
+                float baseNoise = SAMPLE_TEXTURE2D(_BaseNoise, sampler_BaseNoise, (flatSkyUV - (_Time.x * _DetailSpeed)) * _BaseNoiseScale).x;
                 float noise1 = SAMPLE_TEXTURE2D(_Distort, sampler_Distort, ((flatSkyUV + baseNoise) - (_Time.x * _Speed)) * _DistortScale).x;
                 float noise2 = SAMPLE_TEXTURE2D(_SecNoise, sampler_SecNoise, ((flatSkyUV + (noise1 * _Distortion)) - (_Time.x * (_Speed * 0.5))) * _SecNoiseScale).x;
                 float finalNoise = saturate(noise1 * noise2) * 3 * saturate(worldDir.y);
