@@ -15,7 +15,7 @@ public class Flicker : MonoBehaviour
 
     // add noise to the material's emission intensity 
     // material is a URP Lit default with emission enabled
-    void Update()
+    private void Update()
     {
         if (mat != null)
         {

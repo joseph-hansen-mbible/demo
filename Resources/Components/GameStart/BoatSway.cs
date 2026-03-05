@@ -11,12 +11,12 @@ public class BoatSway : MonoBehaviour
 
     private Quaternion _initialRotation;
 
-    void Start()
+    private void Start()
     {
         _initialRotation = transform.rotation;
     }
 
-    void Update()
+    private void Update()
     {
         float swayAngle = (Mathf.Sin(Time.time * swaySpeed) * swayAmount) + (Mathf.PerlinNoise(Time.time * swaySpeed, 0f) * swayDistortionAmount);
         float swayAngle1 = (Mathf.Sin(Time.time * swaySpeed * 1.3f) * (swayAmount * 0.5f)) + (Mathf.PerlinNoise(Time.time * swaySpeed * 1.3f, 0f) * swayDistortionAmount);
