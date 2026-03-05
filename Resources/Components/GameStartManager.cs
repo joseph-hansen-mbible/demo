@@ -61,7 +61,9 @@ namespace Turnroot.Demos
         public GameObject ScreenKeyboard;
         private ScreenKeyboard _keyboard;
 
-        public AudioSource UiSfx;
+        public AudioSource StartFx;
+
+        public AudioSource UiFx;
 
         public AudioClip StartClip;
 
@@ -101,11 +103,33 @@ namespace Turnroot.Demos
 
         }
 
-        private void ReadyKeyboard()
+        public void ReadyKeyboard()
         {
             ScreenKeyboard.GetComponent<UIFade>().Show();
             _keyboard = ScreenKeyboard.GetComponentInChildren<ScreenKeyboard>();
+            _keyboard.OnSubmit = OnKeyboardSubmit;
             _forwardInputToKeyboard = true;
+            _forwardInputToSaveFiles = false;
+        }
+
+        public void ReadyKeyboard(string defaultText)
+        {
+            ScreenKeyboard.GetComponent<UIFade>().Show();
+            _keyboard = ScreenKeyboard.GetComponentInChildren<ScreenKeyboard>();
+            _keyboard.OnSubmit = OnKeyboardSubmit;
+            _keyboard.SetText(defaultText);
+            _forwardInputToKeyboard = true;
+            _forwardInputToSaveFiles = false;
+        }
+
+        private void OnKeyboardSubmit(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                saveFileBrain.Brain.PublishUpdateSaveFileName(text);
+            }
+            ScreenKeyboard.GetComponent<UIFade>().Hide();
+            _forwardInputToKeyboard = false;
         }
 
         private void HandleInput(string action)
@@ -124,7 +148,7 @@ namespace Turnroot.Demos
             {
                 if (EntryFade.Visible)
                 {
-                    UiSfx.PlayOneShot(StartClip);
+                    StartFx.PlayOneShot(StartClip);
                     EntryFade.Hide();
 
                     Debug.Log(saveFileBrain.SaveFiles.ToString());
@@ -149,17 +173,43 @@ namespace Turnroot.Demos
                 manager.Deselect();
             }
 
-            if (action == "NavigateUp" || action == "NavigateLeft")
+            if (action is "NavigateUp" or "NavigateLeft")
             {
-                UiSfx.PlayOneShot(NavigateClip);
+                UiFx.PlayOneShot(NavigateClip);
                 currentIndex = (currentIndex - 1 + SaveFileUiManagers.Length) % SaveFileUiManagers.Length;
             }
-            else if (action == "NavigateDown" || action == "NavigateRight")
+            else if (action is "NavigateDown" or "NavigateRight")
             {
-                UiSfx.PlayOneShot(NavigateClip);
+                UiFx.PlayOneShot(NavigateClip);
                 currentIndex = (currentIndex + 1) % SaveFileUiManagers.Length;
             }
+            else if (action == "Select")
+            {
+                UiFx.PlayOneShot(NavigateClip);
 
+                if (currentIndex >= saveFileBrain.SaveFiles.Count)
+                {
+                    SaveFileSubfolders subfolder = (SaveFileSubfolders)currentIndex;
+                    saveFileBrain.CreateNewSaveFile(subfolder);
+                    InitializeSaveFiles();
+                }
+
+                var selectedSaveFile = saveFileBrain.SaveFiles[currentIndex];
+
+                if (selectedSaveFile.AvatarBodyType == AvatarBody.None ||
+                    selectedSaveFile.AvatarPortrait == null ||
+                    string.IsNullOrEmpty(selectedSaveFile.FileName) ||
+                    selectedSaveFile.FileName == "Unnamed")
+                {
+                    SaveFilesFade.Hide();
+                }
+                else
+                {
+                    Debug.Log("TODO: Load existing save file");
+                }
+
+                return;
+            }
             SaveFileUiManagers[currentIndex].Select();
         }
     }
