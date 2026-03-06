@@ -10,8 +10,23 @@ public class Flicker : MonoBehaviour
 
     public float maxDecalIntensity = .2f;
     public float minDecalIntensity = .05f;
-
     public DecalProjector[] decalProjectors;
+
+    private void Awake()
+    {
+        if (mat == null)
+        {
+            mat.SetColor("_EmissionColor", Color.white);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (mat != null)
+        {
+            mat.SetColor("_EmissionColor", Color.white);
+        }
+    }
 
     // add noise to the material's emission intensity 
     // material is a URP Lit default with emission enabled

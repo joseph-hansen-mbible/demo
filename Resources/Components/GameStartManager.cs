@@ -1,3 +1,5 @@
+using Turnroot.Characters;
+using Turnroot.Characters.Subclasses;
 using Turnroot.Gameplay.Brain;
 using Turnroot.Graphics2D;
 using Turnroot.Utilities.AbstractScripts;
@@ -17,6 +19,7 @@ namespace Turnroot.Demos
         public InputAction NavigateRight;
 
         public UI.SaveFileUiManager[] SaveFileUiManagers;
+        public UI.PronounsUiManager[] PronounsUiManagers;
 
         private int currentIndex = 0;
 
@@ -57,9 +60,13 @@ namespace Turnroot.Demos
 
         public UIFade EntryFade;
         public UIFade SaveFilesFade;
+
+        public UIFade PronounsFade;
         private SaveFileBrain saveFileBrain;
         public GameObject ScreenKeyboard;
         private ScreenKeyboard _keyboard;
+
+        public string LastName = "Lastname";
 
         public AudioSource StartFx;
 
@@ -132,6 +139,20 @@ namespace Turnroot.Demos
             _forwardInputToKeyboard = false;
         }
 
+        public CharacterData AvatarData;
+        private bool _forwardInputToPronouns = false;
+
+        private Pronouns selectedPronouns = new();
+
+        public void ShowAvatarPronounSelection()
+        {
+            Debug.Log("Showing avatar pronoun selection");
+            currentIndex = 0;
+            _forwardInputToPronouns = true;
+        }
+
+        public void ChangeAvatarForm() { }
+
         private void HandleInput(string action)
         {
             if (_forwardInputToKeyboard && _keyboard != null)
@@ -142,6 +163,12 @@ namespace Turnroot.Demos
             if (_forwardInputToSaveFiles)
             {
                 HandleSaveFileInput(action);
+            }
+
+            if (_forwardInputToPronouns)
+            {
+                Debug.Log($"Handling pronouns input: {action}");
+                HandlePronounsInput(action);
             }
 
             if (action is "Select" or "Start")
@@ -211,6 +238,48 @@ namespace Turnroot.Demos
                 return;
             }
             SaveFileUiManagers[currentIndex].Select();
+        }
+
+        private void HandlePronounsInput(string action)
+        {
+            foreach (var manager in PronounsUiManagers)
+            {
+                manager.Deselect();
+            }
+
+            if (action is "NavigateUp" or "NavigateLeft")
+            {
+                UiFx.PlayOneShot(NavigateClip);
+                PronounsUiManagers[currentIndex].Deselect();
+                currentIndex = (currentIndex - 1 + 3) % 3;
+            }
+            else if (action is "NavigateDown" or "NavigateRight")
+            {
+                UiFx.PlayOneShot(NavigateClip);
+                PronounsUiManagers[currentIndex].Deselect();
+                currentIndex = (currentIndex + 1) % 3;
+            }
+            else if (action == "Select")
+            {
+                selectedPronouns = currentIndex switch
+                {
+                    0 => new Pronouns("she"),
+                    1 => new Pronouns("he"),
+                    2 => new Pronouns("they"),
+                    _ => selectedPronouns
+                };
+
+                AvatarData.SetAvatarNameAndPronouns(
+                    saveFileBrain.ActiveSaveFile.FileName,
+                    saveFileBrain.ActiveSaveFile.FileName + " " + LastName,
+                    selectedPronouns
+                );
+
+                PronounsFade.Hide();
+                _forwardInputToPronouns = false;
+            }
+            PronounsUiManagers[currentIndex].Select();
+
         }
     }
 }
