@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -51,6 +52,9 @@ namespace Turnroot.Demos
         private int currentIndex = 0;
         private bool isRotating = false;
 
+        public AudioClip NavigateClip;
+        public AudioSource UiFx;
+
         private void Start()
         {
             if (StarGifts.Count > 0)
@@ -69,10 +73,12 @@ namespace Turnroot.Demos
 
             if (action == "NavigateUp" || action == "NavigateLeft")
             {
+                UiFx.PlayOneShot(NavigateClip);
                 NavigatePrevious();
             }
             else if (action == "NavigateDown" || action == "NavigateRight")
             {
+                UiFx.PlayOneShot(NavigateClip);
                 NavigateNext();
             }
             else if (action == "Select" || action == "Start")

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using Turnroot.Characters;
 using Turnroot.Characters.CharacterClass;
 using Turnroot.Characters.Stats;
@@ -5,6 +6,7 @@ using Turnroot.Characters.Subclasses;
 using Turnroot.Gameplay.Brain;
 using Turnroot.Gameplay.Brain.Components;
 using Turnroot.Graphics2D;
+using Turnroot.Utilities;
 using Turnroot.Utilities.AbstractScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,18 +15,106 @@ namespace Turnroot.Demos
 {
     public class GameStartManager : MonoBehaviour
     {
+        #region Input Actions
+
+        [BoxGroup("Input Actions"), Tooltip("Input action for selecting items")]
         public InputAction Select;
+
+        [BoxGroup("Input Actions")]
         public InputAction Back;
+
+        [BoxGroup("Input Actions")]
         public InputAction StartAction;
+
+        [BoxGroup("Input Actions")]
         public InputAction NavigateUp;
+
+        [BoxGroup("Input Actions")]
         public InputAction NavigateDown;
+
+        [BoxGroup("Input Actions")]
         public InputAction NavigateLeft;
+
+        [BoxGroup("Input Actions")]
         public InputAction NavigateRight;
 
+        #endregion
+
+        #region UI Managers
+
+        [BoxGroup("UI Managers"), HorizontalLine(color: EColor.Blue)]
         public UI.SaveFileUiManager[] SaveFileUiManagers;
+
+        [BoxGroup("UI Managers")]
         public UI.PronounsUiManager[] PronounsUiManagers;
 
+        #endregion
+
+        #region UI Fades & Screens
+
+        [BoxGroup("UI Fades"), HorizontalLine(color: EColor.Indigo)]
+        public UIFade EntryFade;
+
+        [BoxGroup("UI Fades")]
+        public UIFade SaveFilesFade;
+
+        [BoxGroup("UI Fades")]
+        public UIFade PronounsFade;
+
+        [BoxGroup("UI Fades")]
+        public UIFade StarGiftsFade;
+
+        [BoxGroup("UI Fades")]
+        public GameObject ScreenKeyboard;
+
+        #endregion
+
+        #region Audio
+
+        [BoxGroup("Audio"), HorizontalLine(color: EColor.Orange)]
+        public AudioSource StartFx;
+
+        [BoxGroup("Audio")]
+        public AudioSource UiFx;
+
+        [BoxGroup("Audio")]
+        public AudioClip StartClip;
+
+        [BoxGroup("Audio")]
+        public AudioClip NavigateClip;
+
+        #endregion
+
+        #region Avatar & Character Data
+
+        [BoxGroup("Avatar"), HorizontalLine(color: EColor.Green)]
+        public CharacterData AvatarData;
+
+        [BoxGroup("Avatar")]
+        public StarGiftManager StarGiftManager;
+
+        [BoxGroup("Avatar")]
+        public string LastName = "Lastname";
+
+        #endregion
+
+        #region Private State
+
+        private SaveFileBrain saveFileBrain;
+        private ScreenKeyboard _keyboard;
         private int currentIndex = 0;
+
+        private bool _forwardInputToKeyboard = false;
+        private bool _forwardInputToSaveFiles = false;
+        private bool _forwardInputToPronouns = false;
+        private bool _forwardInputToStarGifts = false;
+
+        private Pronouns selectedPronouns = new();
+        private StarGift selectedStarGift;
+
+        #endregion
+
+        #region Unity Lifecycle
 
         private void OnEnable()
         {
@@ -59,38 +149,66 @@ namespace Turnroot.Demos
             NavigateRight.performed += ctx => HandleInput("NavigateRight");
             saveFileBrain = FindFirstObjectByType<SaveFileBrain>();
             InitializeSaveFiles();
-            
+
             // Subscribe to StarGift selection event
             StarGiftManager?.OnStarGiftSelected.AddListener(OnStarGiftSelected);
         }
 
-        public UIFade EntryFade;
-        public UIFade SaveFilesFade;
+        #endregion
 
-        public UIFade PronounsFade;
-        public UIFade StarGiftsFade;
-        public StarGiftManager StarGiftManager;
-        private SaveFileBrain saveFileBrain;
-        public GameObject ScreenKeyboard;
-        private ScreenKeyboard _keyboard;
+        #region Input Handling
 
-        public string LastName = "Lastname";
+        private void HandleInput(string action)
+        {
+            if (_forwardInputToKeyboard && _keyboard != null)
+            {
+                _keyboard.HandleInput(action);
+                return;
+            }
 
-        public AudioSource StartFx;
+            if (_forwardInputToSaveFiles)
+            {
+                HandleSaveFileInput(action);
+                return;
+            }
 
-        public AudioSource UiFx;
+            if (_forwardInputToPronouns)
+            {
+                HandlePronounsInput(action);
+                return;
+            }
 
-        public AudioClip StartClip;
+            if (_forwardInputToStarGifts)
+            {
+                HandleStarGiftInput(action);
+                return;
+            }
 
-        public AudioClip NavigateClip;
+            if (action == "Select" || action == "Start")
+            {
+                if (EntryFade.Visible)
+                {
+                    StartFx.PlayOneShot(StartClip);
+                    EntryFade.Hide();
 
-        private bool _forwardInputToKeyboard = false;
+                    if (saveFileBrain == null)
+                    {
+                        "SaveFileBrain not found!".LogError("GameStartManager");
+                        return;
+                    }
 
-        private bool _forwardInputToSaveFiles = false;
+                    SaveFilesFade.Show();
+                    _forwardInputToSaveFiles = true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Save File Management
 
         private void InitializeSaveFiles()
         {
-
             var result = saveFileBrain.SaveFiles;
             for (int i = 0; i < SaveFileUiManagers.Length; i++)
             {
@@ -111,98 +229,7 @@ namespace Turnroot.Demos
                 {
                     SaveFileUiManagers[i].UpdateSaveFileInfo(new SaveFile());
                     SaveFileUiManagers[i].Deselect();
-                    // select the first empty slot
                     SaveFileUiManagers[0].Select();
-                }
-            }
-
-        }
-
-        public void ReadyKeyboard()
-        {
-            ScreenKeyboard.GetComponent<UIFade>().Show();
-            _keyboard = ScreenKeyboard.GetComponentInChildren<ScreenKeyboard>();
-            _keyboard.OnSubmit = OnKeyboardSubmit;
-            _forwardInputToKeyboard = true;
-            _forwardInputToSaveFiles = false;
-        }
-
-        public void ReadyKeyboard(string defaultText)
-        {
-            ScreenKeyboard.GetComponent<UIFade>().Show();
-            _keyboard = ScreenKeyboard.GetComponentInChildren<ScreenKeyboard>();
-            _keyboard.OnSubmit = OnKeyboardSubmit;
-            _keyboard.SetText(defaultText);
-            _forwardInputToKeyboard = true;
-            _forwardInputToSaveFiles = false;
-        }
-
-        private void OnKeyboardSubmit(string text)
-        {
-            if (!string.IsNullOrEmpty(text))
-            {
-                saveFileBrain.Brain.PublishUpdateSaveFileName(text);
-            }
-            ScreenKeyboard.GetComponent<UIFade>().Hide();
-            _forwardInputToKeyboard = false;
-        }
-
-        public CharacterData AvatarData;
-        private bool _forwardInputToPronouns = false;
-        private bool _forwardInputToStarGifts = false;
-
-        private Pronouns selectedPronouns = new();
-        private StarGift selectedStarGift;
-
-        public void ShowAvatarPronounSelection()
-        {
-            Debug.Log("Showing avatar pronoun selection");
-            currentIndex = 0;
-            _forwardInputToPronouns = true;
-        }
-
-        public void ChangeAvatarForm() { }
-
-        private void HandleInput(string action)
-        {
-            if (_forwardInputToKeyboard && _keyboard != null)
-            {
-                _keyboard.HandleInput(action);
-            }
-
-            if (_forwardInputToSaveFiles)
-            {
-                HandleSaveFileInput(action);
-            }
-
-            if (_forwardInputToPronouns)
-            {
-                Debug.Log($"Handling pronouns input: {action}");
-                HandlePronounsInput(action);
-            }
-
-            if (_forwardInputToStarGifts)
-            {
-                HandleStarGiftInput(action);
-            }
-
-            if (action == "Select" || action == "Start")
-            {
-                if (EntryFade.Visible)
-                {
-                    StartFx.PlayOneShot(StartClip);
-                    EntryFade.Hide();
-
-                    Debug.Log(saveFileBrain.SaveFiles.ToString());
-
-                    if (saveFileBrain == null)
-                    {
-                        Debug.LogError("SaveFileBrain not found!");
-                        return;
-                    }
-
-                    SaveFilesFade.Show();
-                    _forwardInputToSaveFiles = true;
                 }
             }
         }
@@ -233,12 +260,12 @@ namespace Turnroot.Demos
                 {
                     SaveFileSubfolders subfolderEnum = (SaveFileSubfolders)currentIndex;
                     saveFileBrain.CreateNewSaveFile(subfolderEnum);
-                    currentIndex = saveFileBrain.SaveFiles.Count - 1; // Point to newly created save file
+                    currentIndex = saveFileBrain.SaveFiles.Count - 1;
                     InitializeSaveFiles();
                 }
 
                 var selectedSaveFile = saveFileBrain.SaveFiles[currentIndex];
-                
+
                 // Set the active subfolder based on the selected save file
                 if (System.Enum.TryParse<SaveFileSubfolders>(selectedSaveFile.LtmSubfolderPath, true, out var subfolder))
                 {
@@ -255,12 +282,62 @@ namespace Turnroot.Demos
                 }
                 else
                 {
-                    Debug.Log("TODO: Load existing save file");
+                    "Load existing save file".LogInfo("GameStartManager");
                 }
 
                 return;
             }
             SaveFileUiManagers[currentIndex].Select();
+        }
+
+        #endregion
+
+        #region Keyboard Input
+
+        public void ReadyKeyboard()
+        {
+            ScreenKeyboard.GetComponent<UIFade>().Show();
+            _keyboard = ScreenKeyboard.GetComponentInChildren<ScreenKeyboard>();
+            _keyboard.OnSubmit = OnKeyboardSubmit;
+            _forwardInputToKeyboard = true;
+            _forwardInputToSaveFiles = false;
+        }
+
+        public void ReadyKeyboard(string defaultText)
+        {
+            ScreenKeyboard.GetComponent<UIFade>().Show();
+            _keyboard = ScreenKeyboard.GetComponentInChildren<ScreenKeyboard>();
+            _keyboard.OnSubmit = OnKeyboardSubmit;
+            _keyboard.SetText(defaultText);
+            _forwardInputToKeyboard = true;
+            _forwardInputToSaveFiles = false;
+        }
+
+        private void OnKeyboardSubmit(string text)
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                saveFileBrain.Brain.PublishUpdateSaveFileName(text);
+            }
+            ScreenKeyboard.GetComponent<UIFade>().Hide();
+            _forwardInputToKeyboard = false;
+        }
+
+        #endregion
+
+        #region Pronouns Selection
+
+        public void ShowAvatarPronounSelection()
+        {
+            "Showing avatar pronoun selection".LogInfo("GameStartManager");
+            
+            // Disable all other input forwarding
+            _forwardInputToKeyboard = false;
+            _forwardInputToSaveFiles = false;
+            _forwardInputToStarGifts = false;
+            
+            _forwardInputToPronouns = true;
+            currentIndex = 0;
         }
 
         private void HandlePronounsInput(string action)
@@ -298,46 +375,55 @@ namespace Turnroot.Demos
                     selectedPronouns
                 );
 
-                PronounsFade.Hide();
                 _forwardInputToPronouns = false;
+                PronounsFade.Hide();
+                return;
             }
             PronounsUiManagers[currentIndex].Select();
         }
 
+        #endregion
+
+        #region StarGift Selection
+
         public void ShowStarGiftSelection()
         {
-            StarGiftsFade.Show();
+            // Disable all other input forwarding
+            _forwardInputToKeyboard = false;
+            _forwardInputToSaveFiles = false;
+            _forwardInputToPronouns = false;
+            
             _forwardInputToStarGifts = true;
             currentIndex = 0;
         }
 
-        private void HandleStarGiftInput(string action)
-        {
-            StarGiftManager?.HandleInput(action);
-        }
+        private void HandleStarGiftInput(string action) => StarGiftManager?.HandleInput(action);
 
         private void OnStarGiftSelected(StarGift starGift)
         {
             selectedStarGift = starGift;
             CreateAndSaveAvatarInstance(starGift);
-            
-            StarGiftsFade.Hide();
+
             _forwardInputToStarGifts = false;
-            
-            Debug.Log($"Applied {starGift.name} star gift to avatar");
+
+            $"Applied {starGift.name} star gift to avatar".LogInfo("GameStartManager");
         }
+
+        #endregion
+
+        #region Avatar Creation & Persistence
 
         private void CreateAndSaveAvatarInstance(StarGift starGift)
         {
             if (AvatarData == null)
             {
-                Debug.LogError("AvatarData is null!");
+                "AvatarData is null!".LogError("GameStartManager");
                 return;
             }
 
             if (saveFileBrain == null)
             {
-                Debug.LogError("SaveFileBrain is null!");
+                "SaveFileBrain is null!".LogError("GameStartManager");
                 return;
             }
 
@@ -345,7 +431,7 @@ namespace Turnroot.Demos
             var ltm = saveFileBrain.Brain.GetComponent<LongTermMemory>();
             if (ltm == null)
             {
-                Debug.LogError("LongTermMemory component not found!");
+                "LongTermMemory component not found!".LogError("GameStartManager");
                 return;
             }
 
@@ -356,34 +442,19 @@ namespace Turnroot.Demos
             var avatarInstance = factory.CreateOrRecall(AvatarData);
             if (avatarInstance == null)
             {
-                Debug.LogError("Failed to create avatar instance!");
+                "Failed to create avatar instance!".LogError("GameStartManager");
                 return;
             }
 
             // Set the base stats on the instance
-            var strength = avatarInstance.GetUnboundedStat(UnboundedStatType.Strength);
-            strength?.SetCurrent(starGift.strength);
-
-            var skill = avatarInstance.GetUnboundedStat(UnboundedStatType.Skill);
-            skill?.SetCurrent(starGift.skill);
-
-            var defense = avatarInstance.GetUnboundedStat(UnboundedStatType.Defense);
-            defense?.SetCurrent(starGift.defense);
-
-            var magic = avatarInstance.GetUnboundedStat(UnboundedStatType.Magic);
-            magic?.SetCurrent(starGift.magic);
-
-            var resistance = avatarInstance.GetUnboundedStat(UnboundedStatType.Resistance);
-            resistance?.SetCurrent(starGift.resistance);
-
-            var speed = avatarInstance.GetUnboundedStat(UnboundedStatType.Speed);
-            speed?.SetCurrent(starGift.speed);
-
-            var luck = avatarInstance.GetUnboundedStat(UnboundedStatType.Luck);
-            luck?.SetCurrent(starGift.luck);
-
-            var dexterity = avatarInstance.GetUnboundedStat(UnboundedStatType.Dexterity);
-            dexterity?.SetCurrent(starGift.dexterity);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Strength)?.SetCurrent(starGift.strength);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Skill)?.SetCurrent(starGift.skill);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Defense)?.SetCurrent(starGift.defense);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Magic)?.SetCurrent(starGift.magic);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Resistance)?.SetCurrent(starGift.resistance);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Speed)?.SetCurrent(starGift.speed);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Luck)?.SetCurrent(starGift.luck);
+            avatarInstance.GetUnboundedStat(UnboundedStatType.Dexterity)?.SetCurrent(starGift.dexterity);
 
             // Set growth rates on the template (runtime only, won't persist to disk)
             AvatarData.PersonalGrowthRates.Clear();
@@ -399,8 +470,10 @@ namespace Turnroot.Demos
 
             // Save the avatar instance to LongTermMemory
             persistence.SaveCharacter(avatarInstance, updateIndex: true);
-            
-            Debug.Log($"Saved avatar instance with {starGift.name} stats to LongTermMemory");
+
+            $"Saved avatar instance with {starGift.name} stats to LongTermMemory".LogInfo("GameStartManager");
         }
+
+        #endregion
     }
 }
