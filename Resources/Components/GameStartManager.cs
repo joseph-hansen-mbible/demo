@@ -216,12 +216,20 @@ namespace Turnroot.Demos
 
                 if (currentIndex >= saveFileBrain.SaveFiles.Count)
                 {
-                    SaveFileSubfolders subfolder = (SaveFileSubfolders)currentIndex;
-                    saveFileBrain.CreateNewSaveFile(subfolder);
+                    SaveFileSubfolders subfolderEnum = (SaveFileSubfolders)currentIndex;
+                    saveFileBrain.CreateNewSaveFile(subfolderEnum);
+                    currentIndex = saveFileBrain.SaveFiles.Count - 1; // Point to newly created save file
                     InitializeSaveFiles();
                 }
 
                 var selectedSaveFile = saveFileBrain.SaveFiles[currentIndex];
+                
+                // Set the active subfolder based on the selected save file
+                if (System.Enum.TryParse<SaveFileSubfolders>(selectedSaveFile.LtmSubfolderPath, true, out var subfolder))
+                {
+                    saveFileBrain.ActiveSaveFileSubfolderPath = subfolder;
+                    saveFileBrain.Brain.PublishLongTermMemorySubfolderSet(selectedSaveFile.LtmSubfolderPath);
+                }
 
                 if (selectedSaveFile.AvatarBodyType == AvatarBody.None ||
                     selectedSaveFile.AvatarPortrait == null ||
