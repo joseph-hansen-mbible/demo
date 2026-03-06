@@ -100,10 +100,10 @@ MonoBehaviour:
       Class: {fileID: 0}
       Loadout: []
   <BoundedStats>k__BackingField:
-  - _current: 100
+  - _current: 10
     _bonus: 0
     _statType: 0
-    _max: 100
+    _max: 10
     _min: 0
   - _current: 1
     _bonus: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   - isBounded: 1
     unboundedStatType: 0
     boundedStatType: 0
-    value: 0
+    value: 90
   <Skills>k__BackingField: []
   <PersonalSkill>k__BackingField: {fileID: 0}
   <ExperienceRanks>k__BackingField:
