@@ -160,7 +160,7 @@ Material:
     - _GlossyReflections: 0
     - _Highlight_Amount: 0.63
     - _Highlight_Mask_Amount: 1
-    - _Highlight_Offset: 0.665
+    - _Highlight_Offset: 0
     - _Highlight_Replace: 0
     - _Highlight_Roughness: 0
     - _Highlight_Saturation: 0

@@ -24,7 +24,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 6022807d56de28543abd535059542339, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - DISTANT_LIGHTNING
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
@@ -54,23 +55,88 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AuroraEnabled: 0
+    - _AuroraHeight: 0.4
+    - _AuroraIntensity: 1
+    - _AuroraSpeed: 0.5
     - _BaseNoiseScale: 0.881
+    - _BaseNoiseScale2: 0.15
     - _Brightness: 2.99
+    - _CelestialGlowIntensity: 0.5
+    - _CelestialGlowSize: 0.8
+    - _CloudCoverage: 0.5
+    - _CloudCoverage2: 0.3
     - _CloudCutoff: 0
+    - _CloudCutoff2: 0.4
     - _CloudEdgeCurve: 0.2
     - _CloudFlatness: 0.8
+    - _CloudLayer2Enabled: 0
+    - _CloudShadowIntensity: 0.3
+    - _DetailSpeed: 1
+    - _DetailSpeed2: 1.5
+    - _DistantLightningBrightness: 1
+    - _DistantLightningEnabled: 1
+    - _DistantLightningGlow: 0.5
+    - _DistantLightningWidth: 1
     - _DistortScale: 0.052
+    - _DistortScale2: 0.04
     - _Distortion: 1
+    - _Distortion2: 0.15
     - _FUZZY: 0
     - _Fuzziness: 0.151
+    - _Fuzziness2: 0.06
     - _FuzzinessUnder: 0
+    - _FuzzinessUnder2: 0.02
+    - _HaloInnerRadius: 0.18
+    - _HaloIntensity: 0.5
+    - _HaloNoiseAmount: 0.3
+    - _HaloNoiseScale: 10
+    - _HaloNoiseSpeed: 0.5
+    - _HaloOuterRadius: 0.35
+    - _HaloSoftness: 0.5
+    - _HazeHeight: 0.3
+    - _HazeIntensity: 0.5
     - _HorizonIntensity: 1.55
+    - _LightningEnabled: 0
+    - _LightningFrequency: 0.5
+    - _LightningIntensity: 0.3
+    - _LightningLocalization: 0.7
+    - _MilkyWayAngle: 0.785
+    - _MilkyWayEnabled: 0
+    - _MilkyWayIntensity: 1
+    - _MilkyWayWidth: 0.4
     - _MoonOffset: 0.018
     - _MoonRadius: 0.035
+    - _MoonTextureContrast: 1
+    - _MoonTextureIntensity: 0.4
+    - _MoonTextureRotation: 0
+    - _MoonTextureScale: 8
+    - _MoonTextureSeed: 0
     - _OffsetHorizon: 0.014
+    - _RainbowAngleOffset: 0
+    - _RainbowEnabled: 0
+    - _RainbowIntensity: 1
+    - _RainbowRadius: 0.5
+    - _RainbowWidth: 0.05
     - _SecNoiseScale: 0.078
+    - _SecNoiseScale2: 0.08
+    - _ShootingStarBrightness: 2
+    - _ShootingStarFrequency: 2
+    - _ShootingStarSize: 2.5
+    - _ShootingStarSpeed: 1
+    - _ShootingStarTrailLength: 0.15
+    - _ShootingStarsEnabled: 0
     - _Speed: 0.12
+    - _Speed2: 2
+    - _StarsAlwaysVisible: 0
+    - _StarsBrightness: 10
+    - _StarsBrightnessVariation: 0.5
+    - _StarsColorVariation: 0.3
     - _StarsCutoff: 0.168
+    - _StarsDensity: 0.5
+    - _StarsMinSize: 0.3
+    - _StarsSize: 0.002
+    - _StarsSizeVariation: 0.5
     - _StarsSpeed: 0.3
     - _SunRadius: 0
     - _SunriseEnd: -0.1
@@ -79,21 +145,33 @@ Material:
     - _SunsetEnd: 0.2
     - _SunsetStart: 0.1
     m_Colors:
+    - _AuroraColor1: {r: 0, g: 1, b: 0.5, a: 1}
+    - _AuroraColor2: {r: 0.29999998, g: 0.5, b: 1, a: 1}
+    - _AuroraColor3: {r: 1, g: 0.19999996, b: 0.8, a: 1}
     - _CloudColorDayEdge: {r: 0.7607843, g: 0.73360735, b: 0.69611764, a: 1}
     - _CloudColorDayMain: {r: 0.46489394, g: 0.49537882, b: 0.503, a: 1}
     - _CloudColorDayUnder: {r: 0.15209414, g: 0.29727894, b: 0.3764706, a: 1}
     - _CloudColorNightEdge: {r: 0.03604486, g: 0.13900095, b: 0.16981131, a: 1}
     - _CloudColorNightMain: {r: 0.13915095, g: 0.4422057, b: 0.5, a: 1}
     - _CloudColorNightUnder: {r: 0.09197104, g: 0.21698111, b: 0.06243324, a: 1}
+    - _CloudDayTint: {r: 1, g: 1, b: 1, a: 1}
+    - _CloudNightTint: {r: 1, g: 1, b: 1, a: 1}
     - _DayBottomColor: {r: 0.6694998, g: 0.7955393, b: 0.8018868, a: 1}
     - _DayTopColor: {r: 0.45512158, g: 0.5970865, b: 0.69803923, a: 1}
+    - _HaloColor: {r: 0.8, g: 0.9, b: 1, a: 1}
+    - _HazeDayColor: {r: 0.8, g: 0.85, b: 1, a: 1}
+    - _HazeNightColor: {r: 0.09999997, g: 0.14999998, b: 0.29999998, a: 1}
     - _HorizonColorDay: {r: 0.29046902, g: 0.52099997, b: 0.52099997, a: 1}
     - _HorizonColorNight: {r: 0.0076984875, g: 0.0076984875, b: 0.009433985, a: 1}
+    - _LightningColor: {r: 0.9, g: 0.95, b: 1, a: 1}
+    - _MilkyWayColor: {r: 0.8, g: 0.85, b: 1, a: 1}
     - _MoonColor: {r: 0.42831078, g: 0.67112094, b: 0.7264151, a: 1}
+    - _MoonGlowColor: {r: 0.7, g: 0.8, b: 1, a: 1}
     - _NightBottomColor: {r: 0.0773407, g: 0.16414501, b: 0.20754719, a: 1}
     - _NightTopColor: {r: 0.019001415, g: 0.053338934, b: 0.066037714, a: 1}
     - _StarsSkyColor: {r: 0.03292984, g: 0.03462514, b: 0.03773582, a: 1}
     - _SunColor: {r: 0.9811321, g: 0.9664011, b: 0.8006408, a: 1}
+    - _SunGlowColor: {r: 1, g: 0.9, b: 0.7, a: 1}
     - _SunSet: {r: 0.38544706, g: 0.48816243, b: 0.6392157, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

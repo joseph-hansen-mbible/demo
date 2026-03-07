@@ -56,22 +56,55 @@ Material:
     m_Ints: []
     m_Floats:
     - _BaseNoiseScale: 0.2
+    - _BaseNoiseScale2: 0.15
     - _Brightness: 2.5
+    - _CloudCoverage: 0.5
+    - _CloudCoverage2: 0.3
     - _CloudCutoff: 0.185
+    - _CloudCutoff2: 0.4
     - _CloudEdgeCurve: 0.2
     - _CloudFlatness: 0.8
+    - _CloudLayer2Enabled: 0
+    - _DetailSpeed: 1
+    - _DetailSpeed2: 1.5
     - _DistortScale: 0.06
+    - _DistortScale2: 0.04
     - _Distortion: 0.1
+    - _Distortion2: 0.15
     - _FUZZY: 1
     - _Fuzziness: 0.343
+    - _Fuzziness2: 0.06
     - _FuzzinessUnder: 0.01
+    - _FuzzinessUnder2: 0.02
+    - _HaloInnerRadius: 0.3
+    - _HaloIntensity: 0.5
+    - _HaloNoiseAmount: 0.3
+    - _HaloNoiseScale: 10
+    - _HaloNoiseSpeed: 0.5
+    - _HaloOuterRadius: 0.8
+    - _HaloSoftness: 0.5
     - _HorizonIntensity: 3.12
     - _MoonOffset: 0.018
     - _MoonRadius: 0.035
     - _OffsetHorizon: 0.064
     - _SecNoiseScale: 0.05
+    - _SecNoiseScale2: 0.08
+    - _ShootingStarBrightness: 2
+    - _ShootingStarFrequency: 2
+    - _ShootingStarSpeed: 1
+    - _ShootingStarTrailLength: 0.15
+    - _ShootingStarsEnabled: 0
     - _Speed: 1.4
+    - _Speed2: 2
+    - _StarsAlwaysVisible: 0
+    - _StarsBrightness: 1.5
+    - _StarsBrightnessVariation: 0.5
+    - _StarsColorVariation: 0.3
     - _StarsCutoff: 0.135
+    - _StarsDensity: 0
+    - _StarsNoisiness: 0.1
+    - _StarsSize: 0.002
+    - _StarsSizeVariation: 0.5
     - _StarsSpeed: 0.3
     - _SunRadius: 0.035
     - _SunriseEnd: -0.1
@@ -86,8 +119,11 @@ Material:
     - _CloudColorNightEdge: {r: 0.03604486, g: 0.13900095, b: 0.16981131, a: 1}
     - _CloudColorNightMain: {r: 0.13915095, g: 0.4422057, b: 0.5, a: 1}
     - _CloudColorNightUnder: {r: 0.09197104, g: 0.21698111, b: 0.06243324, a: 1}
+    - _CloudDayTint: {r: 1, g: 1, b: 1, a: 1}
+    - _CloudNightTint: {r: 1, g: 1, b: 1, a: 1}
     - _DayBottomColor: {r: 0.6694998, g: 0.7955393, b: 0.8018868, a: 1}
     - _DayTopColor: {r: 0.32600567, g: 0.5442025, b: 0.6981132, a: 1}
+    - _HaloColor: {r: 0.8, g: 0.9, b: 1, a: 1}
     - _HorizonColorDay: {r: 0.23633854, g: 0.39849216, b: 0.4433962, a: 1}
     - _HorizonColorNight: {r: 0.0076984875, g: 0.0076984875, b: 0.009433985, a: 1}
     - _MoonColor: {r: 0.42831078, g: 0.67112094, b: 0.7264151, a: 1}

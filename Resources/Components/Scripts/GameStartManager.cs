@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using Turnroot.Characters;
 using Turnroot.Characters.CharacterClass;
@@ -8,6 +9,7 @@ using Turnroot.Gameplay.Brain.Components;
 using Turnroot.Graphics2D;
 using Turnroot.Utilities;
 using Turnroot.Utilities.AbstractScripts;
+using Turnroot.Utilities.SceneFlows;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +17,8 @@ namespace Turnroot.Demos
 {
     public class GameStartManager : MonoBehaviour
     {
+        private SceneFlowBrain sceneFlowBrain;
+        public LoadingController loadingController;
         #region Input Actions
 
         [BoxGroup("Input Actions"), Tooltip("Input action for selecting items")]
@@ -63,6 +67,12 @@ namespace Turnroot.Demos
 
         [BoxGroup("UI Fades")]
         public UIFade StarGiftsFade;
+
+        [BoxGroup("UI Fades")]
+        public UIFade LoadingFade;
+
+        [BoxGroup("UI Fades")]
+        public UiFillDriver LoadingFillDriver;
 
         [BoxGroup("UI Fades")]
         public GameObject ScreenKeyboard;
@@ -148,10 +158,15 @@ namespace Turnroot.Demos
             NavigateLeft.performed += ctx => HandleInput("NavigateLeft");
             NavigateRight.performed += ctx => HandleInput("NavigateRight");
             saveFileBrain = FindFirstObjectByType<SaveFileBrain>();
+            sceneFlowBrain = saveFileBrain.Brain.sceneFlowBrain;
+            loadingController = saveFileBrain.Brain.GetComponent<LoadingController>();
+            
+            sceneFlowBrain.SetCurrentScene("scene_0");
+            
             InitializeSaveFiles();
 
             // Subscribe to StarGift selection event
-            StarGiftManager?.OnStarGiftSelected.AddListener(OnStarGiftSelected);
+            StarGiftManager.OnStarGiftSelected.AddListener(OnStarGiftSelected);
         }
 
         #endregion
@@ -475,5 +490,53 @@ namespace Turnroot.Demos
         }
 
         #endregion
+
+        #region Move to Next Scene
+
+        public void StartLoadingNextScene()
+        {
+            // Show loading screen
+            LoadingFade.Show();
+
+            var availableScenes = sceneFlowBrain.GetAvailableScenes();
+            
+            if (availableScenes == null || availableScenes.Count == 0)
+            {
+                "No available scenes to transition to!".LogError("GameStartManager");
+                LoadingFade.Hide();
+                return;
+            }
+
+            var nextScene = availableScenes[0];
+            
+            $"Starting transition to scene: {nextScene.displayName}".LogInfo("GameStartManager");
+            
+            // Trigger the scene transition via SceneFlowBrain
+            // This will load the scene and publish progress events that DynamicSceneFlow can track
+            sceneFlowBrain.TransitionToScene(nextScene.sceneId);
+        }
+        
+        public void CheckLoadingProgress(float progress)
+        {
+            LoadingFillDriver.SetAmount(progress);
+            
+            if (progress >= 1f)
+            {
+                MoveToNextSceneAndUnloadThisOne();
+            }
+        }
+        
+        public void MoveToNextSceneAndUnloadThisOne()
+        {
+            // Hide the loading screen
+            LoadingFade.Hide();
+            
+            // The scene has already been loaded and transitioned by SceneFlowBrain.TransitionToScene()
+            // This just hides the UI and lets the new scene take over
+            $"Scene transition complete".LogInfo("GameStartManager");
+        }
+        #endregion
+
+
     }
 }
