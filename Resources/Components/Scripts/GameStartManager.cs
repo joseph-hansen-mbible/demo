@@ -18,6 +18,8 @@ namespace Turnroot.Demos
     public class GameStartManager : MonoBehaviour
     {
         private SceneFlowBrain sceneFlowBrain;
+
+        [HideInInspector]
         public LoadingController loadingController;
         #region Input Actions
 
@@ -161,12 +163,29 @@ namespace Turnroot.Demos
             sceneFlowBrain = saveFileBrain.Brain.sceneFlowBrain;
             loadingController = saveFileBrain.Brain.GetComponent<LoadingController>();
             
+            // Subscribe to scene ready event
+            saveFileBrain.Brain.OnSceneReadyToDisplay += HandleSceneReadyToDisplay;
+            
             sceneFlowBrain.SetCurrentScene("scene_0");
             
             InitializeSaveFiles();
 
             // Subscribe to StarGift selection event
             StarGiftManager.OnStarGiftSelected.AddListener(OnStarGiftSelected);
+        }
+
+        private void OnDestroy()
+        {
+            // Unsubscribe from events
+            if (saveFileBrain?.Brain != null)
+            {
+                saveFileBrain.Brain.OnSceneReadyToDisplay -= HandleSceneReadyToDisplay;
+            }
+            
+            if (StarGiftManager != null)
+            {
+                StarGiftManager.OnStarGiftSelected.RemoveListener(OnStarGiftSelected);
+            }
         }
 
         #endregion
@@ -519,11 +538,12 @@ namespace Turnroot.Demos
         public void CheckLoadingProgress(float progress)
         {
             LoadingFillDriver.SetAmount(progress);
-            
-            if (progress >= 1f)
-            {
-                MoveToNextSceneAndUnloadThisOne();
-            }
+        }
+        
+        private void HandleSceneReadyToDisplay(string sceneName, string displayName)
+        {
+            // Scene is ready to display - hide the loading screen
+            MoveToNextSceneAndUnloadThisOne();
         }
         
         public void MoveToNextSceneAndUnloadThisOne()
@@ -533,7 +553,7 @@ namespace Turnroot.Demos
             
             // The scene has already been loaded and transitioned by SceneFlowBrain.TransitionToScene()
             // This just hides the UI and lets the new scene take over
-            $"Scene transition complete".LogInfo("GameStartManager");
+            $"Scene transition complete - hiding loading UI".LogInfo("GameStartManager");
         }
         #endregion
 

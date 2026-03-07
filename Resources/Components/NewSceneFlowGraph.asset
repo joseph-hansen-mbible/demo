@@ -38,12 +38,4 @@ MonoBehaviour:
     unloadPreviousScene: 1
     isReturnTransition: 0
     notes: 
-  - fromSceneId: 
-    toSceneId: scene_0
-    label: Continue
-    isBidirectional: 0
-    conditions: []
-    unloadPreviousScene: 1
-    isReturnTransition: 0
-    notes: 
   _startingSceneId: scene_0

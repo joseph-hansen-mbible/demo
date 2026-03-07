@@ -184,7 +184,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 3
+          m_FloatArgument: 2.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -840,7 +840,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 1
+          m_FloatArgument: 0.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -1618,6 +1618,60 @@ MonoBehaviour:
   - segmentName: 
     defaultProfile: {fileID: 11400000, guid: d6dfe32388e5603419b8468717e765af, type: 2}
     conditionalProfiles: []
+--- !u!21 &152659944
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/TwinkleMask
+  m_Shader: {fileID: 4800000, guid: 47bdf75096d2ec745ad4df3114fea01f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BLENDMODE_BOTH
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 2800000, guid: 4eb8ce13abe1d6a409e64948ddbfdfaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BlendMode: 4
+    - _ColorMask: 15
+    - _DarkenIntensity: 0.678
+    - _DarkenThreshold: 0.182
+    - _Intensity: 0.8241005
+    - _LightenIntensity: 0.826
+    - _LightenThreshold: 0.595
+    - _MaskRotation: 352.20837
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _MaskOffset: {r: 0.8421108, g: 0.8421108, b: 0, a: 0}
+    - _MaskScale: {r: 0.0000000020649091, g: 0.0000000020649091, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1001 &160995100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7280,60 +7334,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360776539}
   m_CullTransparentMesh: 1
---- !u!21 &391002246
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/TwinkleMask
-  m_Shader: {fileID: 4800000, guid: 47bdf75096d2ec745ad4df3114fea01f, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _BLENDMODE_BOTH
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: 4eb8ce13abe1d6a409e64948ddbfdfaa, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _BlendMode: 4
-    - _ColorMask: 15
-    - _DarkenIntensity: 0.678
-    - _DarkenThreshold: 0.182
-    - _Intensity: 0.90700984
-    - _LightenIntensity: 0.826
-    - _LightenThreshold: 0.595
-    - _MaskRotation: 296.4119
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _MaskOffset: {r: 0.21991003, g: 0.21991003, b: 0, a: 0}
-    - _MaskScale: {r: 0.000000024702217, g: 0.000000024702217, b: 0, a: 0}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &460983464
 GameObject:
   m_ObjectHideFlags: 0
@@ -9031,13 +9031,13 @@ MonoBehaviour:
   OnLoadedAmountChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 467174945}
+        m_TargetAssemblyTypeName: Turnroot.Demos.GameStartManager, Assembly-CSharp
+        m_MethodName: CheckLoadingProgress
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11695,7 +11695,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 3
+          m_FloatArgument: 2.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -13328,7 +13328,7 @@ MonoBehaviour:
   DescriptionText: {fileID: 230006386}
   Disk: {fileID: 470498805}
   RotationAmountPer: 30
-  RotationSpeed: 1
+  RotationSpeed: 2
   OnStarGiftSelected:
     m_PersistentCalls:
       m_Calls:
@@ -13962,7 +13962,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 3
+          m_FloatArgument: 2.5
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -14150,7 +14150,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 699c98ce352405849bb9b0c77100c276, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -14359,7 +14359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 391002246}
+  m_Material: {fileID: 152659944}
   m_Color: {r: 1, g: 1, b: 1, a: 0.7490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -14398,14 +14398,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnrootFramework.Graphics2D.UITwinkleMask
   maskTexture: {fileID: 2800000, guid: 4eb8ce13abe1d6a409e64948ddbfdfaa, type: 3}
-  intensity: 0.90700984
+  intensity: 0.8241005
   blendMode: 4
   lightenThreshold: 0.595
   lightenIntensity: 0.826
   darkenThreshold: 0.182
   darkenIntensity: 0.678
-  maskScale: {x: 0.000000024702217, y: 0.000000024702217}
-  maskRotation: 296.4119
+  maskScale: {x: 0.0000000020649091, y: 0.0000000020649091}
+  maskRotation: 352.20837
   animateOffset: 1
   offsetSpeed: {x: 0.06, y: 0.06}
   animateRotation: 1
