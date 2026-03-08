@@ -125,7 +125,7 @@ Material:
     - _SecNoiseScale: 0.073
     - _SecNoiseScale2: 0.145
     - _ShootingStarBrightness: 2.65
-    - _ShootingStarFrequency: 1.63
+    - _ShootingStarFrequency: 2.04
     - _ShootingStarSize: 8.98
     - _ShootingStarSpeed: 0.19
     - _ShootingStarTrailLength: 0.5

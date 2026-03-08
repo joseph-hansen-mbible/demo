@@ -8,6 +8,7 @@ using Turnroot.Gameplay.Brain;
 using Turnroot.Gameplay.Brain.Components;
 using Turnroot.Gameplay.PlayerSettings;
 using Turnroot.Graphics2D;
+using Turnroot.UI;
 using Turnroot.Utilities;
 using Turnroot.Utilities.AbstractScripts;
 using Turnroot.Utilities.SceneFlows;
@@ -53,11 +54,13 @@ namespace Turnroot.Demos
         public UI.SaveFileUiManager[] SaveFileUiManagers;
 
         [BoxGroup("UI Managers")]
-        public UI.PronounsUiManager[] PronounsUiManagers;
+        public UiChoiceWithScaleAndEffect[] PronounsUiManagers;
 
         [BoxGroup("UI Managers")]
+        public UiChoiceWithScaleAndEffect[] DifficultyUiManagers;
 
-        public UI.DifficultyUiManager[] DifficultyUiManagers;
+        [BoxGroup("UI Managers")]
+        public UiChoiceWithScaleAndEffect[] PermadeathUiManagers;
 
         #endregion
 
@@ -80,6 +83,10 @@ namespace Turnroot.Demos
 
         [BoxGroup("UI Fades")]
         public UIFade DifficultyFade;
+
+        
+        [BoxGroup("UI Fades")]
+        public UIFade PermadeathFade;
 
         [BoxGroup("UI Fades")]
         public UiFillDriver LoadingFillDriver;
@@ -120,15 +127,13 @@ namespace Turnroot.Demos
 
         #region Private State
 
-        private enum InputMode { None, Keyboard, SaveFiles, Pronouns, StarGifts, Difficulty }
+        private enum InputMode { None, Keyboard, SaveFiles, Pronouns, StarGifts, Difficulty, Permadeath }
         
         private SaveFileBrain saveFileBrain;
         private ScreenKeyboard _keyboard;
         private int currentIndex = 0;
         private InputMode _currentInputMode = InputMode.None;
-
         private InputAction[] _allInputActions;
-
         private Pronouns selectedPronouns = new();
         private StarGift selectedStarGift;
 
@@ -213,6 +218,9 @@ namespace Turnroot.Demos
                     return;
                 case InputMode.Difficulty:
                     HandleDifficultyInput(action);
+                    return;
+                case InputMode.Permadeath:
+                    HandlePermadeathInput(action);
                     return;
             }
 
@@ -354,6 +362,26 @@ namespace Turnroot.Demos
         {
             "Showing difficulty selection".LogInfo("GameStartManager");
             SetInputMode(InputMode.Difficulty);
+        }
+
+        public void ShowPermadeathSelection()
+        {
+            "Showing permadeath selection".LogInfo("GameStartManager");
+            SetInputMode(InputMode.Permadeath);
+        }
+
+        private void HandlePermadeathInput(string action)
+        {
+            HandleUiNavigation(
+                action,
+                PermadeathUiManagers,
+                2,
+                () =>
+                {
+                    GameplayPlayerSettings.Instance.Permadeath = currentIndex == 0;
+                    PermadeathFade.Hide();
+                    SetInputMode(InputMode.None);
+                });
         }
 
         private void HandlePronounsInput(string action)
