@@ -84,7 +84,6 @@ namespace Turnroot.Demos
         [BoxGroup("UI Fades")]
         public UIFade DifficultyFade;
 
-        
         [BoxGroup("UI Fades")]
         public UIFade PermadeathFade;
 
@@ -93,6 +92,9 @@ namespace Turnroot.Demos
 
         [BoxGroup("UI Fades")]
         public GameObject ScreenKeyboard;
+
+        [BoxGroup("UI Fades")]
+        public GameObject NumberDateKeyboard;
 
         #endregion
 
@@ -127,15 +129,17 @@ namespace Turnroot.Demos
 
         #region Private State
 
-        private enum InputMode { None, Keyboard, SaveFiles, Pronouns, StarGifts, Difficulty, Permadeath }
-        
+        private enum InputMode { None, Keyboard, SaveFiles, Pronouns, StarGifts, Date, Difficulty, Permadeath }
         private SaveFileBrain saveFileBrain;
         private ScreenKeyboard _keyboard;
+
+        private ScreenKeyboard _dateKeyboard;
         private int currentIndex = 0;
         private InputMode _currentInputMode = InputMode.None;
         private InputAction[] _allInputActions;
         private Pronouns selectedPronouns = new();
         private StarGift selectedStarGift;
+        private int selectedBirthdayDay = 1;
 
         #endregion
 
@@ -170,26 +174,19 @@ namespace Turnroot.Demos
             saveFileBrain = FindFirstObjectByType<SaveFileBrain>();
             sceneFlowBrain = saveFileBrain.Brain.sceneFlowBrain;
             loadingController = saveFileBrain.Brain.GetComponent<LoadingController>();
-            
-            // Subscribe to scene ready event
             saveFileBrain.Brain.OnSceneReadyToDisplay += HandleSceneReadyToDisplay;
-            
             sceneFlowBrain.SetCurrentScene("scene_0");
-            
             InitializeSaveFiles();
-
-            // Subscribe to StarGift selection event
             StarGiftManager.OnStarGiftSelected.AddListener(OnStarGiftSelected);
         }
 
         private void OnDestroy()
         {
-            // Unsubscribe from events
             if (saveFileBrain?.Brain != null)
             {
                 saveFileBrain.Brain.OnSceneReadyToDisplay -= HandleSceneReadyToDisplay;
             }
-            
+
             if (StarGiftManager != null)
             {
                 StarGiftManager.OnStarGiftSelected.RemoveListener(OnStarGiftSelected);
@@ -215,6 +212,9 @@ namespace Turnroot.Demos
                     return;
                 case InputMode.StarGifts:
                     HandleStarGiftInput(action);
+                    return;
+                case InputMode.Date when _dateKeyboard != null:
+                    _dateKeyboard.HandleInput(action);
                     return;
                 case InputMode.Difficulty:
                     HandleDifficultyInput(action);
@@ -282,9 +282,10 @@ namespace Turnroot.Demos
 
         private void HandleSaveFileInput(string action)
         {
-            HandleUiNavigation(
+            UiChoiceHandler.HandleNavigation(
                 action,
                 SaveFileUiManagers,
+                ref currentIndex,
                 SaveFileUiManagers.Length,
                 () =>
                 {
@@ -318,7 +319,9 @@ namespace Turnroot.Demos
                     {
                         "Load existing save file".LogInfo("GameStartManager");
                     }
-                });
+                },
+                UiFx,
+                NavigateClip);
         }
 
         #endregion
@@ -348,47 +351,58 @@ namespace Turnroot.Demos
             SetInputMode(InputMode.None);
         }
 
+        public void ReadyDateKeyboard()
+        {
+            NumberDateKeyboard.GetComponent<UIFade>().Show();
+            _dateKeyboard = NumberDateKeyboard.GetComponentInChildren<ScreenKeyboard>();
+            _dateKeyboard.OnSubmit = OnDateKeyboardSubmit;
+            SetInputMode(InputMode.Date);
+        }
+
+        private void OnDateKeyboardSubmit(string text)
+        {
+            if (!string.IsNullOrEmpty(text) && int.TryParse(text, out int day))
+            {
+                selectedBirthdayDay = Mathf.Clamp(day, 1, 31);
+                $"Selected birthday day: {selectedBirthdayDay}".LogInfo("GameStartManager");
+            }
+            NumberDateKeyboard.GetComponent<UIFade>().Hide();
+            SetInputMode(InputMode.None);
+        }
+
         #endregion
 
         #region Pronouns Selection
 
-        public void ShowAvatarPronounSelection()
-        {
-            "Showing avatar pronoun selection".LogInfo("GameStartManager");
-            SetInputMode(InputMode.Pronouns);
-        }
+        public void ShowAvatarPronounSelection() => SetInputMode(InputMode.Pronouns);
 
-        public void ShowDifficultySelection()
-        {
-            "Showing difficulty selection".LogInfo("GameStartManager");
-            SetInputMode(InputMode.Difficulty);
-        }
+        public void ShowDifficultySelection() => SetInputMode(InputMode.Difficulty);
 
-        public void ShowPermadeathSelection()
-        {
-            "Showing permadeath selection".LogInfo("GameStartManager");
-            SetInputMode(InputMode.Permadeath);
-        }
+        public void ShowPermadeathSelection() => SetInputMode(InputMode.Permadeath);
 
         private void HandlePermadeathInput(string action)
         {
-            HandleUiNavigation(
+            UiChoiceHandler.HandleNavigation(
                 action,
                 PermadeathUiManagers,
+                ref currentIndex,
                 2,
                 () =>
                 {
                     GameplayPlayerSettings.Instance.Permadeath = currentIndex == 0;
                     PermadeathFade.Hide();
                     SetInputMode(InputMode.None);
-                });
+                },
+                UiFx,
+                NavigateClip);
         }
 
         private void HandlePronounsInput(string action)
         {
-            HandleUiNavigation(
+            UiChoiceHandler.HandleNavigation(
                 action,
                 PronounsUiManagers,
+                ref currentIndex,
                 3,
                 () =>
                 {
@@ -408,14 +422,17 @@ namespace Turnroot.Demos
 
                     SetInputMode(InputMode.None);
                     PronounsFade.Hide();
-                });
+                },
+                UiFx,
+                NavigateClip);
         }
 
         private void HandleDifficultyInput(string action)
         {
-            HandleUiNavigation(
+            UiChoiceHandler.HandleNavigation(
                 action,
                 DifficultyUiManagers,
+                ref currentIndex,
                 4,
                 () =>
                 {
@@ -429,48 +446,16 @@ namespace Turnroot.Demos
                     };
                     DifficultyFade.Hide();
                     SetInputMode(InputMode.None);
-                });
-        }
-
-        /// <summary>
-        /// Generic UI navigation handler for menu systems with Select/Deselect pattern
-        /// </summary>
-        private void HandleUiNavigation<T>(string action, T[] managers, int maxCount, Action onSelect) where T : MonoBehaviour
-        {
-            // Deselect all using reflection to call Deselect method
-            foreach (var manager in managers)
-            {
-                manager.SendMessage("Deselect");
-            }
-
-            if (action == "NavigateUp" || action == "NavigateLeft")
-            {
-                UiFx.PlayOneShot(NavigateClip);
-                currentIndex = (currentIndex - 1 + maxCount) % maxCount;
-            }
-            else if (action == "NavigateDown" || action == "NavigateRight")
-            {
-                UiFx.PlayOneShot(NavigateClip);
-                currentIndex = (currentIndex + 1) % maxCount;
-            }
-            else if (action == "Select")
-            {
-                onSelect?.Invoke();
-                return;
-            }
-
-            // Select current using reflection to call Select method
-            managers[currentIndex].SendMessage("Select");
+                },
+                UiFx,
+                NavigateClip);
         }
 
         #endregion
 
         #region StarGift Selection
 
-        public void ShowStarGiftSelection()
-        {
-            SetInputMode(InputMode.StarGifts);
-        }
+        public void ShowStarGiftSelection() => SetInputMode(InputMode.StarGifts);
 
         private void HandleStarGiftInput(string action) => StarGiftManager?.HandleInput(action);
 
@@ -490,34 +475,31 @@ namespace Turnroot.Demos
 
         private void CreateAndSaveAvatarInstance(StarGift starGift)
         {
-            if (!ValidateComponent(AvatarData, "AvatarData") ||
-                !ValidateComponent(saveFileBrain, "SaveFileBrain"))
-            {
-                return;
-            }
+            _ = OperationResultGuards.All(
+                OperationResultGuards.RequireNotNull(AvatarData, nameof(AvatarData)),
+                OperationResultGuards.RequireNotNull(saveFileBrain, nameof(saveFileBrain))
+            );
 
             var ltm = saveFileBrain.Brain.GetComponent<LongTermMemory>();
-            if (!ValidateComponent(ltm, "LongTermMemory component"))
-            {
-                return;
-            }
+            _ = OperationResultGuards.RequireNotNull(ltm, "LongTermMemory component");
 
             var factory = new CharacterFactory(ltm);
             var persistence = new CharacterPersistence(saveFileBrain.Brain);
 
             var avatarInstance = factory.CreateOrRecall(AvatarData);
-            if (!ValidateComponent(avatarInstance, "avatar instance"))
-            {
-                return;
-            }
+            _ = OperationResultGuards.RequireNotNull(avatarInstance, "avatar instance");
 
-            // Set the base stats on the instance
             ApplyStarGiftStatsToInstance(avatarInstance, starGift);
-
-            // Set growth rates on the template (runtime only, won't persist to disk)
             ApplyStarGiftGrowthRates(starGift);
-
-            // Save the avatar instance to LongTermMemory
+            
+            // Store birthday using stargift index as month and selected day as date
+            int birthdayMonth = Mathf.Clamp(starGift.index, 1, 12);
+            int birthdayDay = Mathf.Clamp(selectedBirthdayDay, 1, 31);
+            string birthdayKey = $"Avatar/Birthday";
+            string birthdayValue = $"{birthdayMonth}/{birthdayDay}";
+            ltm.Remember(birthdayKey, birthdayValue);
+            $"Set avatar birthday to month {birthdayMonth}, day {birthdayDay}".LogInfo("GameStartManager");
+            
             persistence.SaveCharacter(avatarInstance, updateIndex: true);
 
             $"Saved avatar instance with {starGift.name} stats to LongTermMemory".LogInfo("GameStartManager");
@@ -546,7 +528,6 @@ namespace Turnroot.Demos
         private void ApplyStarGiftGrowthRates(StarGift gift)
         {
             AvatarData.PersonalGrowthRates.Clear();
-            
             var growthMappings = new (UnboundedStatType type, int growth)[]
             {
                 (UnboundedStatType.Strength, gift.strengthGrowth),
@@ -567,28 +548,14 @@ namespace Turnroot.Demos
             AvatarData.PersonalGrowthRates.Add(new UnboundedStatModifier(BoundedStatType.Health, 85f));
         }
 
-        private bool ValidateComponent<T>(T component, string componentName) where T : class
-        {
-            if (component != null)
-            {
-                return true;
-            }
-
-            $"{componentName} is null!".LogError("GameStartManager");
-            return false;
-        }
-
         #endregion
 
         #region Move to Next Scene
-
         public void StartLoadingNextScene()
         {
-            // Show loading screen
             LoadingFade.Show();
 
             var availableScenes = sceneFlowBrain.GetAvailableScenes();
-            
             if (availableScenes == null || availableScenes.Count == 0)
             {
                 "No available scenes to transition to!".LogError("GameStartManager");
@@ -597,29 +564,16 @@ namespace Turnroot.Demos
             }
 
             var nextScene = availableScenes[0];
-            
-            $"Starting transition to scene: {nextScene.displayName}".LogInfo("GameStartManager");
-            
-            // Trigger the scene transition via SceneFlowBrain
-            // This will load the scene and publish progress events that DynamicSceneFlow can track
             sceneFlowBrain.TransitionToScene(nextScene.sceneId);
         }
-        
-        public void CheckLoadingProgress(float progress)
-        {
-            LoadingFillDriver.SetAmount(progress);
-        }
-        
-        private void HandleSceneReadyToDisplay(string sceneName, string displayName)
-        {
+
+        public void CheckLoadingProgress(float progress) => LoadingFillDriver.SetAmount(progress);
+
+        private void HandleSceneReadyToDisplay(string sceneName, string displayName) =>
             // Scene is ready to display - hide the loading screen
             MoveToNextSceneAndUnloadThisOne();
-        }
-        
-        public void MoveToNextSceneAndUnloadThisOne()
-        {
-            LoadingFade.Hide();
-        }
+
+        public void MoveToNextSceneAndUnloadThisOne() => LoadingFade.Hide();
         #endregion
 
 
