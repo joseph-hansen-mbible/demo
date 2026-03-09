@@ -19,6 +19,9 @@ MonoBehaviour:
     displayName: Game Start
     isHub: 0
     persistWhenLeaving: 0
+    SpecificChapter: 1
+    ChapterName: Prologue
+    ChapterNumber: 0
     editorPosition: {x: 161.20003, y: 253.60004}
     notes: 
     TimePasses: 0
@@ -32,7 +35,26 @@ MonoBehaviour:
     displayName: 1  - StartHere
     isHub: 0
     persistWhenLeaving: 0
-    editorPosition: {x: 168, y: 444}
+    SpecificChapter: 0
+    ChapterName: 
+    ChapterNumber: 0
+    editorPosition: {x: 433, y: 255}
+    notes: 
+    TimePasses: 0
+    MonthForThisScene: 0
+    DayForThisScene: 1
+    HasYear: 0
+    YearForThisScene: 1
+  - id: hub
+    sceneAsset: {fileID: 102900000, guid: 30026267140ceb24887be7987f2128e3, type: 3}
+    sceneName: Hub
+    displayName: Hub
+    isHub: 1
+    persistWhenLeaving: 0
+    SpecificChapter: 0
+    ChapterName: 
+    ChapterNumber: 0
+    editorPosition: {x: 172, y: 491}
     notes: 
     TimePasses: 0
     MonthForThisScene: 0
@@ -41,8 +63,8 @@ MonoBehaviour:
     YearForThisScene: 1
   transitions:
   - fromSceneId: scene_0
-    toSceneId: scene_1
-    label: Continue
+    toSceneId: hub
+    label: 
     isBidirectional: 0
     conditions: []
     unloadPreviousScene: 1
