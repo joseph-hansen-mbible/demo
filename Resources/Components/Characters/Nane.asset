@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d531c8bfa9fbd649862bdaaa67913c8, type: 3}
   m_Name: Nane
   m_EditorClassIdentifier: 
-  _: 
   <Which>k__BackingField:
     _value: Ally
   <DisplayName>k__BackingField: Nane
@@ -24,7 +23,7 @@ MonoBehaviour:
     - hers
     - her
   <Height>k__BackingField: 166
-  <BirthdayDay>k__BackingField: 1
+  <BirthdayDay>k__BackingField: 2
   <BirthdayMonth>k__BackingField: 1
   <Species>k__BackingField: {fileID: 0}
   <ShortDescription>k__BackingField: A new unit
@@ -83,7 +82,6 @@ MonoBehaviour:
     preset: 0
   <StartingInventory>k__BackingField: []
   <SupportRelationships>k__BackingField: []
-  <Level>k__BackingField: 1
   <UseClassProgressionLadder>k__BackingField: 0
   ProgressionLadder:
     Starter:
@@ -101,7 +99,6 @@ MonoBehaviour:
     Expert:
       Class: {fileID: 0}
       Loadout: []
-  <Exp>k__BackingField: 0
   <BoundedStats>k__BackingField:
   - _current: 100
     _bonus: 0
@@ -192,7 +189,37 @@ MonoBehaviour:
     value: 0
   <Skills>k__BackingField: []
   <PersonalSkill>k__BackingField: {fileID: 0}
-  <ExperienceRanks>k__BackingField: []
+  <ExperienceRanks>k__BackingField:
+  - _experienceTypeId: Knife (Turnroot.Gameplay.Objects.Components.WeaponType)
+    _rank:
+      _value: E
+  - _experienceTypeId: Ax (Turnroot.Gameplay.Objects.Components.WeaponType)
+    _rank:
+      _value: E
+  - _experienceTypeId: Bow (Turnroot.Gameplay.Objects.Components.WeaponType)
+    _rank:
+      _value: E
+  - _experienceTypeId: Chain (Turnroot.Gameplay.Objects.Components.WeaponType)
+    _rank:
+      _value: E
+  - _experienceTypeId: Polearm (Turnroot.Gameplay.Objects.Components.WeaponType)
+    _rank:
+      _value: E
+  - _experienceTypeId: Sword (Turnroot.Gameplay.Objects.Components.WeaponType)
+    _rank:
+      _value: E
+  - _experienceTypeId: Truncheon (Turnroot.Gameplay.Objects.Components.WeaponType)
+    _rank:
+      _value: E
+  - _experienceTypeId: Riding
+    _rank:
+      _value: E
+  - _experienceTypeId: Flying
+    _rank:
+      _value: E
+  - _experienceTypeId: Armor
+    _rank:
+      _value: E
   references:
     version: 2
     RefIds: []

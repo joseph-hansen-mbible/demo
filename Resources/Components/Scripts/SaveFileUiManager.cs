@@ -36,7 +36,11 @@ namespace Turnroot.Demos.UI
 
         public void UpdateSaveFileInfo(SaveFile saveFile)
         {
-            if (saveFile.AvatarBodyType == AvatarBody.None || saveFile.AvatarPortrait == null || string.IsNullOrEmpty(saveFile.FileName))
+            // treat a slot as "new" only if it lacks a proper name; other fields may not
+            // be populated during early testing and shouldn't hide the rest of the info.
+            // TODO: once portrait/body type are part of the creation flow we can
+            // revisit this logic and possibly show placeholders or warning icons.
+            if (string.IsNullOrEmpty(saveFile.FileName) || saveFile.FileName == "Unnamed")
             {
                 AvatarName.text = "NEW GAME";
                 Chapter.text = "";
@@ -49,7 +53,9 @@ namespace Turnroot.Demos.UI
                 AvatarName.text = saveFile.FileName;
                 Chapter.text = $"Chapter: {saveFile.ChapterNumber} - {saveFile.ChapterName}";
                 PlayTime.text = $"{Converters.SecondsToHoursAndMinutes(saveFile.playTimeSeconds)}";
-                AvatarPortrait.sprite = saveFile.AvatarPortrait;
+
+                // use frame if the portrait isn't set yet
+                AvatarPortrait.sprite = saveFile.AvatarPortrait ?? PortraitFrame;
                 Chapter.gameObject.SetActive(true);
             }
         }

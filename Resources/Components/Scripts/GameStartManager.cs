@@ -13,6 +13,7 @@ using Turnroot.Utilities;
 using Turnroot.Utilities.AbstractScripts;
 using Turnroot.Utilities.SceneFlows;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Turnroot.Demos
@@ -172,11 +173,22 @@ namespace Turnroot.Demos
             NavigateLeft.performed += ctx => HandleInput("NavigateLeft");
             NavigateRight.performed += ctx => HandleInput("NavigateRight");
             saveFileBrain = FindFirstObjectByType<SaveFileBrain>();
+
+            saveFileBrain.LoadSaveFiles();
+
             sceneFlowBrain = saveFileBrain.Brain.sceneFlowBrain;
             loadingController = saveFileBrain.Brain.GetComponent<LoadingController>();
             saveFileBrain.Brain.OnSceneReadyToDisplay += HandleSceneReadyToDisplay;
             sceneFlowBrain.SetCurrentScene("scene_0");
             InitializeSaveFiles();
+
+            // keep the save file list in sync when the filename changes while the
+            // user is still on the title screen
+            saveFileBrain.Brain.OnUpdateSaveFileName += _ => InitializeSaveFiles();
+
+            // also update the UI whenever playtime seconds tick
+            saveFileBrain.OnActiveSaveFilePlaytimeUpdated += _ => InitializeSaveFiles();
+
             StarGiftManager.OnStarGiftSelected.AddListener(OnStarGiftSelected);
         }
 
@@ -185,6 +197,11 @@ namespace Turnroot.Demos
             if (saveFileBrain?.Brain != null)
             {
                 saveFileBrain.Brain.OnSceneReadyToDisplay -= HandleSceneReadyToDisplay;
+            }
+
+            if (saveFileBrain != null)
+            {
+                saveFileBrain.OnActiveSaveFilePlaytimeUpdated -= _ => InitializeSaveFiles();
             }
 
             if (StarGiftManager != null)
@@ -308,16 +325,23 @@ namespace Turnroot.Demos
                         saveFileBrain.Brain.PublishLongTermMemorySubfolderSet(selectedSaveFile.LtmSubfolderPath);
                     }
 
-                    if (selectedSaveFile.AvatarBodyType == AvatarBody.None ||
-                        selectedSaveFile.AvatarPortrait == null ||
-                        string.IsNullOrEmpty(selectedSaveFile.FileName) ||
-                        selectedSaveFile.FileName == "Unnamed")
-                    {
-                        SaveFilesFade.Hide();
-                    }
-                    else
+                    // TODO: once portrait/body type selection is implemented in this flow,
+                    // we should validate them here. For now drop those checks so that
+                    // a new save can be written when `CreateAndSaveAvatarInstance` runs.
+                    //
+                    // Always hide the save selection when one is chosen; further progression
+                    // (either creating a new avatar or loading an existing one) happens
+                    // in later steps.
+                    SaveFilesFade.Hide();
+
+                    // If the slot already contains a valid name (i.e. not the default
+                    // "Unnamed"), treat it as an existing save and jump straight to the
+                    // next scene instead of continuing character creation.
+                    if (!string.IsNullOrEmpty(selectedSaveFile.FileName) &&
+                        selectedSaveFile.FileName != "Unnamed")
                     {
                         "Load existing save file".LogInfo("GameStartManager");
+                        StartLoadingNextScene();
                     }
                 },
                 UiFx,
@@ -551,8 +575,11 @@ namespace Turnroot.Demos
         #endregion
 
         #region Move to Next Scene
+
+        public UnityEvent OnStartLoadingNextScene = new();
         public void StartLoadingNextScene()
         {
+            OnStartLoadingNextScene.Invoke();
             LoadingFade.Show();
 
             var availableScenes = sceneFlowBrain.GetAvailableScenes();
