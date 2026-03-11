@@ -167,9 +167,6 @@ namespace Turnroot.Demos
             }
         }
 
-        private float EaseInOutSine(float t)
-        {
-            return -(Mathf.Cos(Mathf.PI * t) - 1f) * 0.5f;
-        }
+        private float EaseInOutSine(float t) => -(Mathf.Cos(Mathf.PI * t) - 1f) * 0.5f;
     }
 }

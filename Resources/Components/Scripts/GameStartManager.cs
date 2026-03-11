@@ -1,12 +1,7 @@
-using System;
 using NaughtyAttributes;
 using Turnroot.Characters;
-using Turnroot.Characters.CharacterClass;
-using Turnroot.Characters.Stats;
 using Turnroot.Characters.Subclasses;
 using Turnroot.Gameplay.Brain;
-using Turnroot.Gameplay.Brain.Components;
-using Turnroot.Gameplay.PlayerSettings;
 using Turnroot.Graphics2D;
 using Turnroot.UI;
 using Turnroot.Utilities;
@@ -14,40 +9,23 @@ using Turnroot.Utilities.AbstractScripts;
 using Turnroot.Utilities.SceneFlows;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 namespace Turnroot.Demos
 {
-    public class GameStartManager : MonoBehaviour
+    [RequireComponent(typeof(UiInputProvider))]
+    /// <remarks>
+    /// This may need editing for your project, but if you aren't making major logic changes, you should 
+    /// be able to wrangle it to work for you just with UI changes and inspector stuff
+    /// </remarks>
+    public partial class GameStartManager : MonoBehaviour
     {
         private SceneFlowBrain sceneFlowBrain;
 
+        [BoxGroup("Input")]
+        public UiInputProvider InputProvider;
+
         [HideInInspector]
         public LoadingController loadingController;
-        #region Input Actions
-
-        [BoxGroup("Input Actions"), Tooltip("Input action for selecting items")]
-        public InputAction Select;
-
-        [BoxGroup("Input Actions")]
-        public InputAction Back;
-
-        [BoxGroup("Input Actions")]
-        public InputAction StartAction;
-
-        [BoxGroup("Input Actions")]
-        public InputAction NavigateUp;
-
-        [BoxGroup("Input Actions")]
-        public InputAction NavigateDown;
-
-        [BoxGroup("Input Actions")]
-        public InputAction NavigateLeft;
-
-        [BoxGroup("Input Actions")]
-        public InputAction NavigateRight;
-
-        #endregion
 
         #region UI Managers
 
@@ -55,13 +33,13 @@ namespace Turnroot.Demos
         public UI.SaveFileUiManager[] SaveFileUiManagers;
 
         [BoxGroup("UI Managers")]
-        public UiChoiceWithScaleAndEffect[] PronounsUiManagers;
+        public UiChoice[] PronounsUiManagers;
 
         [BoxGroup("UI Managers")]
-        public UiChoiceWithScaleAndEffect[] DifficultyUiManagers;
+        public UiChoice[] DifficultyUiManagers;
 
         [BoxGroup("UI Managers")]
-        public UiChoiceWithScaleAndEffect[] PermadeathUiManagers;
+        public UiChoice[] PermadeathUiManagers;
 
         #endregion
 
@@ -105,13 +83,7 @@ namespace Turnroot.Demos
         public AudioSource StartFx;
 
         [BoxGroup("Audio")]
-        public AudioSource UiFx;
-
-        [BoxGroup("Audio")]
         public AudioClip StartClip;
-
-        [BoxGroup("Audio")]
-        public AudioClip NavigateClip;
 
         #endregion
 
@@ -130,14 +102,12 @@ namespace Turnroot.Demos
 
         #region Private State
 
-        private enum InputMode { None, Keyboard, SaveFiles, Pronouns, StarGifts, Date, Difficulty, Permadeath }
         private SaveFileBrain saveFileBrain;
         private ScreenKeyboard _keyboard;
 
         private ScreenKeyboard _dateKeyboard;
         private int currentIndex = 0;
         private InputMode _currentInputMode = InputMode.None;
-        private InputAction[] _allInputActions;
         private Pronouns selectedPronouns = new();
         private StarGift selectedStarGift;
         private int selectedBirthdayDay = 1;
@@ -146,32 +116,11 @@ namespace Turnroot.Demos
 
         #region Unity Lifecycle
 
-        private void OnEnable()
-        {
-            _allInputActions = new[] { Select, Back, StartAction, NavigateUp, NavigateDown, NavigateLeft, NavigateRight };
-            foreach (var action in _allInputActions)
-            {
-                action.Enable();
-            }
-        }
-
-        private void OnDisable()
-        {
-            foreach (var action in _allInputActions)
-            {
-                action.Disable();
-            }
-        }
-
         private void Start()
         {
-            Select.performed += ctx => HandleInput("Select");
-            Back.performed += ctx => HandleInput("Back");
-            StartAction.performed += ctx => HandleInput("Start");
-            NavigateUp.performed += ctx => HandleInput("NavigateUp");
-            NavigateDown.performed += ctx => HandleInput("NavigateDown");
-            NavigateLeft.performed += ctx => HandleInput("NavigateLeft");
-            NavigateRight.performed += ctx => HandleInput("NavigateRight");
+            if (InputProvider != null)
+                InputProvider.OnInput += HandleInput;
+
             saveFileBrain = FindFirstObjectByType<SaveFileBrain>();
 
             saveFileBrain.LoadSaveFiles();
@@ -184,16 +133,41 @@ namespace Turnroot.Demos
 
             // keep the save file list in sync when the filename changes while the
             // user is still on the title screen
-            saveFileBrain.Brain.OnUpdateSaveFileName += _ => InitializeSaveFiles();
+            // update UI when the filename changes; preserve index if user is actively navigating
+            saveFileBrain.Brain.OnUpdateSaveFileName += _ =>
+            {
+                if (_currentInputMode == InputMode.SaveFiles)
+                {
+                    InitializeSaveFiles(preserveIndex: true);
+                }
+                else
+                {
+                    InitializeSaveFiles();
+                }
+            };
 
-            // also update the UI whenever playtime seconds tick
-            saveFileBrain.OnActiveSaveFilePlaytimeUpdated += _ => InitializeSaveFiles();
+            // also update the UI whenever playtime seconds tick; this fires every second,
+            // so we must not clobber the user's current selection while they're browsing.
+            saveFileBrain.OnActiveSaveFilePlaytimeUpdated += _ =>
+            {
+                if (_currentInputMode == InputMode.SaveFiles)
+                {
+                    InitializeSaveFiles(preserveIndex: true);
+                }
+                else
+                {
+                    InitializeSaveFiles();
+                }
+            };
 
             StarGiftManager.OnStarGiftSelected.AddListener(OnStarGiftSelected);
         }
 
         private void OnDestroy()
         {
+            if (InputProvider != null)
+                InputProvider.OnInput -= HandleInput;
+
             if (saveFileBrain?.Brain != null)
             {
                 saveFileBrain.Brain.OnSceneReadyToDisplay -= HandleSceneReadyToDisplay;
@@ -212,373 +186,14 @@ namespace Turnroot.Demos
 
         #endregion
 
-        #region Input Handling
-
-        private void HandleInput(string action)
-        {
-            switch (_currentInputMode)
-            {
-                case InputMode.Keyboard when _keyboard != null:
-                    _keyboard.HandleInput(action);
-                    return;
-                case InputMode.SaveFiles:
-                    HandleSaveFileInput(action);
-                    return;
-                case InputMode.Pronouns:
-                    HandlePronounsInput(action);
-                    return;
-                case InputMode.StarGifts:
-                    HandleStarGiftInput(action);
-                    return;
-                case InputMode.Date when _dateKeyboard != null:
-                    _dateKeyboard.HandleInput(action);
-                    return;
-                case InputMode.Difficulty:
-                    HandleDifficultyInput(action);
-                    return;
-                case InputMode.Permadeath:
-                    HandlePermadeathInput(action);
-                    return;
-            }
-
-            if (action == "Select" || action == "Start")
-            {
-                if (EntryFade.Visible)
-                {
-                    StartFx.PlayOneShot(StartClip);
-                    EntryFade.Hide();
-
-                    if (saveFileBrain == null)
-                    {
-                        "SaveFileBrain not found!".LogError("GameStartManager");
-                        return;
-                    }
-
-                    SaveFilesFade.Show();
-                    SetInputMode(InputMode.SaveFiles);
-                }
-            }
-        }
-
-        private void SetInputMode(InputMode mode)
-        {
-            _currentInputMode = mode;
-            currentIndex = 0;
-        }
-
-        #endregion
-
-        #region Save File Management
-
-        private void InitializeSaveFiles()
-        {
-            var result = saveFileBrain.SaveFiles;
-            for (int i = 0; i < SaveFileUiManagers.Length; i++)
-            {
-                if (i < result.Count)
-                {
-                    SaveFileUiManagers[i].UpdateSaveFileInfo(result[i]);
-                    if ((int)saveFileBrain.ActiveSaveFileSubfolderPath == i)
-                    {
-                        SaveFileUiManagers[i].Select();
-                        currentIndex = i;
-                    }
-                    else
-                    {
-                        SaveFileUiManagers[i].Deselect();
-                    }
-                }
-                else
-                {
-                    SaveFileUiManagers[i].UpdateSaveFileInfo(new SaveFile());
-                    SaveFileUiManagers[i].Deselect();
-                    SaveFileUiManagers[0].Select();
-                }
-            }
-        }
-
-        private void HandleSaveFileInput(string action)
-        {
-            UiChoiceHandler.HandleNavigation(
-                action,
-                SaveFileUiManagers,
-                ref currentIndex,
-                SaveFileUiManagers.Length,
-                () =>
-                {
-                    UiFx.PlayOneShot(NavigateClip);
-
-                    if (currentIndex >= saveFileBrain.SaveFiles.Count)
-                    {
-                        SaveFileSubfolders subfolderEnum = (SaveFileSubfolders)currentIndex;
-                        saveFileBrain.CreateNewSaveFile(subfolderEnum);
-                        currentIndex = saveFileBrain.SaveFiles.Count - 1;
-                        InitializeSaveFiles();
-                    }
-
-                    var selectedSaveFile = saveFileBrain.SaveFiles[currentIndex];
-
-                    // Set the active subfolder based on the selected save file
-                    if (System.Enum.TryParse<SaveFileSubfolders>(selectedSaveFile.LtmSubfolderPath, true, out var subfolder))
-                    {
-                        saveFileBrain.ActiveSaveFileSubfolderPath = subfolder;
-                        saveFileBrain.Brain.PublishLongTermMemorySubfolderSet(selectedSaveFile.LtmSubfolderPath);
-                    }
-
-                    // TODO: once portrait/body type selection is implemented in this flow,
-                    // we should validate them here. For now drop those checks so that
-                    // a new save can be written when `CreateAndSaveAvatarInstance` runs.
-                    //
-                    // Always hide the save selection when one is chosen; further progression
-                    // (either creating a new avatar or loading an existing one) happens
-                    // in later steps.
-                    SaveFilesFade.Hide();
-
-                    // If the slot already contains a valid name (i.e. not the default
-                    // "Unnamed"), treat it as an existing save and jump straight to the
-                    // next scene instead of continuing character creation.
-                    if (!string.IsNullOrEmpty(selectedSaveFile.FileName) &&
-                        selectedSaveFile.FileName != "Unnamed")
-                    {
-                        "Load existing save file".LogInfo("GameStartManager");
-                        StartLoadingNextScene();
-                    }
-                },
-                UiFx,
-                NavigateClip);
-        }
-
-        #endregion
-
-        #region Keyboard Input
-
-        public void ReadyKeyboard(string defaultText = null)
-        {
-            ScreenKeyboard.GetComponent<UIFade>().Show();
-            _keyboard = ScreenKeyboard.GetComponentInChildren<ScreenKeyboard>();
-            _keyboard.OnSubmit = OnKeyboardSubmit;
-            if (!string.IsNullOrEmpty(defaultText))
-            {
-                _keyboard.SetText(defaultText);
-            }
-
-            SetInputMode(InputMode.Keyboard);
-        }
-
-        private void OnKeyboardSubmit(string text)
-        {
-            if (!string.IsNullOrEmpty(text))
-            {
-                saveFileBrain.Brain.PublishUpdateSaveFileName(text);
-            }
-            ScreenKeyboard.GetComponent<UIFade>().Hide();
-            SetInputMode(InputMode.None);
-        }
-
-        public void ReadyDateKeyboard()
-        {
-            NumberDateKeyboard.GetComponent<UIFade>().Show();
-            _dateKeyboard = NumberDateKeyboard.GetComponentInChildren<ScreenKeyboard>();
-            _dateKeyboard.OnSubmit = OnDateKeyboardSubmit;
-            SetInputMode(InputMode.Date);
-        }
-
-        private void OnDateKeyboardSubmit(string text)
-        {
-            if (!string.IsNullOrEmpty(text) && int.TryParse(text, out int day))
-            {
-                selectedBirthdayDay = Mathf.Clamp(day, 1, 31);
-                $"Selected birthday day: {selectedBirthdayDay}".LogInfo("GameStartManager");
-            }
-            NumberDateKeyboard.GetComponent<UIFade>().Hide();
-            SetInputMode(InputMode.None);
-        }
-
-        #endregion
-
-        #region Pronouns Selection
-
-        public void ShowAvatarPronounSelection() => SetInputMode(InputMode.Pronouns);
-
-        public void ShowDifficultySelection() => SetInputMode(InputMode.Difficulty);
-
-        public void ShowPermadeathSelection() => SetInputMode(InputMode.Permadeath);
-
-        private void HandlePermadeathInput(string action)
-        {
-            UiChoiceHandler.HandleNavigation(
-                action,
-                PermadeathUiManagers,
-                ref currentIndex,
-                2,
-                () =>
-                {
-                    GameplayPlayerSettings.Instance.Permadeath = currentIndex == 0;
-                    PermadeathFade.Hide();
-                    SetInputMode(InputMode.None);
-                },
-                UiFx,
-                NavigateClip);
-        }
-
-        private void HandlePronounsInput(string action)
-        {
-            UiChoiceHandler.HandleNavigation(
-                action,
-                PronounsUiManagers,
-                ref currentIndex,
-                3,
-                () =>
-                {
-                    selectedPronouns = currentIndex switch
-                    {
-                        0 => new Pronouns("she"),
-                        1 => new Pronouns("he"),
-                        2 => new Pronouns("they"),
-                        _ => selectedPronouns
-                    };
-
-                    AvatarData.SetAvatarNameAndPronouns(
-                        saveFileBrain.ActiveSaveFile.FileName,
-                        saveFileBrain.ActiveSaveFile.FileName + " " + LastName,
-                        selectedPronouns
-                    );
-
-                    SetInputMode(InputMode.None);
-                    PronounsFade.Hide();
-                },
-                UiFx,
-                NavigateClip);
-        }
-
-        private void HandleDifficultyInput(string action)
-        {
-            UiChoiceHandler.HandleNavigation(
-                action,
-                DifficultyUiManagers,
-                ref currentIndex,
-                4,
-                () =>
-                {
-                    GameplayPlayerSettings.Instance.GameDifficulty = currentIndex switch
-                    {
-                        0 => GameplayPlayerSettings.DifficultyLevel.Easy,
-                        1 => GameplayPlayerSettings.DifficultyLevel.Normal,
-                        2 => GameplayPlayerSettings.DifficultyLevel.Hard,
-                        3 => GameplayPlayerSettings.DifficultyLevel.Extreme,
-                        _ => GameplayPlayerSettings.Instance.GameDifficulty
-                    };
-                    DifficultyFade.Hide();
-                    SetInputMode(InputMode.None);
-                },
-                UiFx,
-                NavigateClip);
-        }
-
-        #endregion
-
-        #region StarGift Selection
-
-        public void ShowStarGiftSelection() => SetInputMode(InputMode.StarGifts);
-
-        private void HandleStarGiftInput(string action) => StarGiftManager?.HandleInput(action);
-
-        private void OnStarGiftSelected(StarGift starGift)
-        {
-            selectedStarGift = starGift;
-            CreateAndSaveAvatarInstance(starGift);
-
-            SetInputMode(InputMode.None);
-
-            $"Applied {starGift.name} star gift to avatar".LogInfo("GameStartManager");
-        }
-
-        #endregion
-
-        #region Avatar Creation & Persistence
-
-        private void CreateAndSaveAvatarInstance(StarGift starGift)
-        {
-            _ = OperationResultGuards.All(
-                OperationResultGuards.RequireNotNull(AvatarData, nameof(AvatarData)),
-                OperationResultGuards.RequireNotNull(saveFileBrain, nameof(saveFileBrain))
-            );
-
-            var ltm = saveFileBrain.Brain.GetComponent<LongTermMemory>();
-            _ = OperationResultGuards.RequireNotNull(ltm, "LongTermMemory component");
-
-            var factory = new CharacterFactory(ltm);
-            var persistence = new CharacterPersistence(saveFileBrain.Brain);
-
-            var avatarInstance = factory.CreateOrRecall(AvatarData);
-            _ = OperationResultGuards.RequireNotNull(avatarInstance, "avatar instance");
-
-            ApplyStarGiftStatsToInstance(avatarInstance, starGift);
-            ApplyStarGiftGrowthRates(starGift);
-            
-            // Store birthday using stargift index as month and selected day as date
-            int birthdayMonth = Mathf.Clamp(starGift.index, 1, 12);
-            int birthdayDay = Mathf.Clamp(selectedBirthdayDay, 1, 31);
-            string birthdayKey = $"Avatar/Birthday";
-            string birthdayValue = $"{birthdayMonth}/{birthdayDay}";
-            ltm.Remember(birthdayKey, birthdayValue);
-            $"Set avatar birthday to month {birthdayMonth}, day {birthdayDay}".LogInfo("GameStartManager");
-            
-            persistence.SaveCharacter(avatarInstance, updateIndex: true);
-
-            $"Saved avatar instance with {starGift.name} stats to LongTermMemory".LogInfo("GameStartManager");
-        }
-
-        private void ApplyStarGiftStatsToInstance(CharacterInstance instance, StarGift gift)
-        {
-            var statMappings = new (UnboundedStatType type, int value)[]
-            {
-                (UnboundedStatType.Strength, gift.strength),
-                (UnboundedStatType.Skill, gift.skill),
-                (UnboundedStatType.Defense, gift.defense),
-                (UnboundedStatType.Magic, gift.magic),
-                (UnboundedStatType.Resistance, gift.resistance),
-                (UnboundedStatType.Speed, gift.speed),
-                (UnboundedStatType.Luck, gift.luck),
-                (UnboundedStatType.Dexterity, gift.dexterity)
-            };
-
-            foreach (var (type, value) in statMappings)
-            {
-                instance.GetUnboundedStat(type)?.SetCurrent(value);
-            }
-        }
-
-        private void ApplyStarGiftGrowthRates(StarGift gift)
-        {
-            AvatarData.PersonalGrowthRates.Clear();
-            var growthMappings = new (UnboundedStatType type, int growth)[]
-            {
-                (UnboundedStatType.Strength, gift.strengthGrowth),
-                (UnboundedStatType.Skill, gift.skillGrowth),
-                (UnboundedStatType.Defense, gift.defenseGrowth),
-                (UnboundedStatType.Magic, gift.magicGrowth),
-                (UnboundedStatType.Resistance, gift.resistanceGrowth),
-                (UnboundedStatType.Speed, gift.speedGrowth),
-                (UnboundedStatType.Luck, gift.luckGrowth),
-                (UnboundedStatType.Dexterity, gift.dexterityGrowth)
-            };
-
-            foreach (var (type, growth) in growthMappings)
-            {
-                AvatarData.PersonalGrowthRates.Add(new UnboundedStatModifier(type, growth));
-            }
-
-            AvatarData.PersonalGrowthRates.Add(new UnboundedStatModifier(BoundedStatType.Health, 85f));
-        }
-
-        #endregion
-
         #region Move to Next Scene
 
         public UnityEvent OnStartLoadingNextScene = new();
         public void StartLoadingNextScene()
         {
+            // once we start the transition, this manager should stop processing input
+            enabled = false;
+
             OnStartLoadingNextScene.Invoke();
             LoadingFade.Show();
 
@@ -597,12 +212,9 @@ namespace Turnroot.Demos
         public void CheckLoadingProgress(float progress) => LoadingFillDriver.SetAmount(progress);
 
         private void HandleSceneReadyToDisplay(string sceneName, string displayName) =>
-            // Scene is ready to display - hide the loading screen
             MoveToNextSceneAndUnloadThisOne();
 
         public void MoveToNextSceneAndUnloadThisOne() => LoadingFade.Hide();
         #endregion
-
-
     }
 }

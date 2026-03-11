@@ -2723,6 +2723,7 @@ GameObject:
   - component: {fileID: 467174944}
   - component: {fileID: 467174945}
   - component: {fileID: 467174946}
+  - component: {fileID: 467174947}
   m_Layer: 0
   m_Name: GameStartManager
   m_TagString: Untagged
@@ -2757,262 +2758,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe79c5fe5b758f468b8d71dbfba3a35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameStartManager
+  InputProvider: {fileID: 467174947}
   loadingController: {fileID: 0}
-  Select:
-    m_Name: Select
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 87a3d5bd-3781-4dbe-b924-194da8149f4f
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 18101872-f3ac-4fea-a7ce-f70f8b7a19f8
-      m_Path: <Gamepad>/buttonEast
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 050be387-a98e-472a-90cb-718960fe5723
-      m_Path: <Keyboard>/enter
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 3cc675c6-2d6c-4224-b92e-5cf8b503e1ec
-      m_Path: <Gamepad>/leftStickPress
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Select
-      m_Flags: 0
-    m_Flags: 0
-  Back:
-    m_Name: Back
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ef0041d6-84b6-4d29-ba8b-f41c0c20788b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 215d7e40-18f0-454c-b36c-add6bf3e9fa9
-      m_Path: <Gamepad>/buttonSouth
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Back
-      m_Flags: 0
-    - m_Name: 
-      m_Id: cd828536-1013-4372-8a77-ed064e8c19d4
-      m_Path: <Keyboard>/escape
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Back
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 73cc709e-e962-418b-a89e-6f100b6f0ab8
-      m_Path: <Keyboard>/backspace
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Back
-      m_Flags: 0
-    m_Flags: 0
-  StartAction:
-    m_Name: Start
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: c860229e-f8aa-43b6-bb34-f57cff1eaf8a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: d5af2938-9745-42b8-a227-c55fe3acf35f
-      m_Path: <Gamepad>/start
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Start
-      m_Flags: 0
-    - m_Name: 
-      m_Id: ae09bc47-e0c3-47e6-b296-1eaefa5ad596
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Start
-      m_Flags: 0
-    m_Flags: 0
-  NavigateUp:
-    m_Name: Navigate Up
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: b9675308-b53e-482f-927d-7c148984a926
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 406431f0-6830-453f-806e-108ab71a698a
-      m_Path: <Keyboard>/upArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Up
-      m_Flags: 0
-    - m_Name: 
-      m_Id: fd82b082-48bd-4079-84c7-b629be08f5b6
-      m_Path: <Gamepad>/dpad/up
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Up
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 24df7cf1-b06b-41e2-aa77-083b4a878a63
-      m_Path: <Gamepad>/leftStick/up
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Up
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 2e711dae-a33f-4bcf-b6b6-4be691d7bc0c
-      m_Path: <Keyboard>/w
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Up
-      m_Flags: 0
-    m_Flags: 0
-  NavigateDown:
-    m_Name: Navigate Down
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ef7519e4-1965-47d2-adcf-9d4f35ac885b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: c36f8f63-0c29-49fd-8351-c5e4ca7e9aab
-      m_Path: <Keyboard>/downArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Down
-      m_Flags: 0
-    - m_Name: 
-      m_Id: b3b6b1ae-0bb6-41a3-a431-2fef36a0a07f
-      m_Path: <Gamepad>/dpad/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Down
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 52e095f4-d5da-4be3-83a0-3df8c26be9d0
-      m_Path: <Gamepad>/leftStick/down
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Down
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 634cd612-f702-4d10-a508-6ea75ca40e63
-      m_Path: <Keyboard>/s
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Down
-      m_Flags: 0
-    m_Flags: 0
-  NavigateLeft:
-    m_Name: Navigate Left
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: fe15d39f-7c5e-48b9-b5f8-019e67c1df53
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 6a0fb299-35f6-4a68-91c2-a1fd5d656bff
-      m_Path: <Gamepad>/leftStick/left
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Left
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 560871ac-bb32-4cc7-a37b-7b1e5de80dbc
-      m_Path: <Keyboard>/leftArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Left
-      m_Flags: 0
-    - m_Name: 
-      m_Id: e48acc1d-afc8-4c20-ab5d-68ae2e5a46e8
-      m_Path: <Gamepad>/dpad/left
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Left
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 6d6b9148-55ac-4a85-afaf-45215e3e6804
-      m_Path: <Keyboard>/a
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Left
-      m_Flags: 0
-    m_Flags: 0
-  NavigateRight:
-    m_Name: Navigate Right
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a45969d1-e1ca-4095-bd8c-d87e889f4b07
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 41851845-033c-4843-8e85-43b3f339bfa3
-      m_Path: <Keyboard>/rightArrow
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Right
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 94c62b91-e11c-457c-a6ad-f06846239607
-      m_Path: <Gamepad>/dpad/right
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Right
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 35f8c331-417b-497e-a16e-60bbd01318bc
-      m_Path: <Gamepad>/leftStick/right
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Right
-      m_Flags: 0
-    - m_Name: 
-      m_Id: 7fd2b630-dbb1-49f9-b19c-92b94809f6b4
-      m_Path: <Keyboard>/d
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Navigate Right
-      m_Flags: 0
-    m_Flags: 0
   SaveFileUiManagers:
   - {fileID: 946013397464161881}
   - {fileID: 1260477088}
@@ -3043,9 +2790,7 @@ MonoBehaviour:
   ScreenKeyboard: {fileID: 125342041}
   NumberDateKeyboard: {fileID: 4643268149689784489}
   StartFx: {fileID: 1804569913}
-  UiFx: {fileID: 467174946}
   StartClip: {fileID: 8300000, guid: 5a3a1389f2498cb47850eed12db18afc, type: 3}
-  NavigateClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   AvatarData: {fileID: 11400000, guid: 494fcbf1744964f44b4aa78e6d9f0c54, type: 2}
   StarGiftManager: {fileID: 1553694114}
   LastName: Lastname
@@ -3161,6 +2906,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &467174947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467174943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd61dda9c7a1b7d4885971e6cc949f4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiInputProvider
+  UiFx: {fileID: 467174946}
+  NavigateClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
 --- !u!1 &470498805
 GameObject:
   m_ObjectHideFlags: 0
@@ -4045,6 +3804,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 584043511}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &594806714
 GameObject:
   m_ObjectHideFlags: 0
@@ -6260,6 +6025,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 801644196}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &822055144
 GameObject:
   m_ObjectHideFlags: 0
@@ -7777,6 +7548,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971214965}
   m_CullTransparentMesh: 1
+--- !u!21 &990112574
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UI/TwinkleMask
+  m_Shader: {fileID: 4800000, guid: 47bdf75096d2ec745ad4df3114fea01f, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _BLENDMODE_BOTH
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 2800000, guid: 4eb8ce13abe1d6a409e64948ddbfdfaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BlendMode: 4
+    - _ColorMask: 15
+    - _DarkenIntensity: 0.678
+    - _DarkenThreshold: 0.182
+    - _Intensity: 1.4690018
+    - _LightenIntensity: 0.826
+    - _LightenThreshold: 0.595
+    - _MaskRotation: 194.13245
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _MaskOffset: {r: 0.23155594, g: 0.23155594, b: 0, a: 0}
+    - _MaskScale: {r: 8.8031625e-17, g: 8.8031625e-17, b: 0, a: 0}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!224 &1027097272 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3658650906287697318, guid: 304f74c0616082942aa60b98f6cd61d6, type: 3}
@@ -9093,6 +8918,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 1371875898}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1373216396
 GameObject:
   m_ObjectHideFlags: 0
@@ -9509,6 +9340,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 1411006032}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &1421210280 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3717480070408197101, guid: 304f74c0616082942aa60b98f6cd61d6, type: 3}
@@ -10672,6 +10509,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 1575676892}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1601250881
 GameObject:
   m_ObjectHideFlags: 0
@@ -10968,60 +10811,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1618816501}
   m_CullTransparentMesh: 1
---- !u!21 &1640843811
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UI/TwinkleMask
-  m_Shader: {fileID: 4800000, guid: 47bdf75096d2ec745ad4df3114fea01f, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _BLENDMODE_BOTH
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: 4eb8ce13abe1d6a409e64948ddbfdfaa, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats:
-    - _BlendMode: 4
-    - _ColorMask: 15
-    - _DarkenIntensity: 0.678
-    - _DarkenThreshold: 0.182
-    - _Intensity: 0.93530655
-    - _LightenIntensity: 0.826
-    - _LightenThreshold: 0.595
-    - _MaskRotation: 306.60223
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UseUIAlphaClip: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _MaskOffset: {r: 0.08461358, g: 0.08461358, b: 0, a: 0}
-    - _MaskScale: {r: 1.9557515e-14, g: 1.9557515e-14, b: 0, a: 0}
-  m_BuildTextureStacks: []
-  m_AllowLocking: 1
 --- !u!1 &1646101190
 GameObject:
   m_ObjectHideFlags: 0
@@ -12189,6 +11978,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 1881749070}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1895881651
 GameObject:
   m_ObjectHideFlags: 0
@@ -12431,6 +12226,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 1895881654}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1909868506
 GameObject:
   m_ObjectHideFlags: 0
@@ -12618,7 +12419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 1640843811}
+  m_Material: {fileID: 990112574}
   m_Color: {r: 1, g: 1, b: 1, a: 0.7490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -12657,14 +12458,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TurnrootFramework.Graphics2D.UITwinkleMask
   maskTexture: {fileID: 2800000, guid: 4eb8ce13abe1d6a409e64948ddbfdfaa, type: 3}
-  intensity: 0.93530655
+  intensity: 1.4690018
   blendMode: 4
   lightenThreshold: 0.595
   lightenIntensity: 0.826
   darkenThreshold: 0.182
   darkenIntensity: 0.678
-  maskScale: {x: 1.9557515e-14, y: 1.9557515e-14}
-  maskRotation: 306.60223
+  maskScale: {x: 8.8031625e-17, y: 8.8031625e-17}
+  maskRotation: 194.13245
   animateOffset: 1
   offsetSpeed: {x: 0.06, y: 0.06}
   animateRotation: 1
@@ -12917,6 +12718,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 1923669531}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &1955877004
 GameObject:
   m_ObjectHideFlags: 0
@@ -13448,6 +13255,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiChoice
   Effect: {fileID: 1970499222}
+  UseScale: 1
+  ChangeTextColor: 0
+  TextToChangeColor: {fileID: 0}
+  TextHighlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  CanBeSelected: 1
+  TextColorIfDisabled: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!114 &1977856751 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3717480070408197101, guid: 304f74c0616082942aa60b98f6cd61d6, type: 3}

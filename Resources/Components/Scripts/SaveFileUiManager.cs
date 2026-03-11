@@ -36,6 +36,12 @@ namespace Turnroot.Demos.UI
 
         public void UpdateSaveFileInfo(SaveFile saveFile)
         {
+            // guard against calls after the UI element has been destroyed
+            if (this == null || gameObject == null || AvatarName == null)
+            {
+                return;
+            }
+
             // treat a slot as "new" only if it lacks a proper name; other fields may not
             // be populated during early testing and shouldn't hide the rest of the info.
             // TODO: once portrait/body type are part of the creation flow we can

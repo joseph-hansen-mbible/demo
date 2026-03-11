@@ -11,10 +11,7 @@ public class BoatSway : MonoBehaviour
 
     private Quaternion _initialRotation;
 
-    private void Start()
-    {
-        _initialRotation = transform.rotation;
-    }
+    private void Start() => _initialRotation = transform.rotation;
 
     private void Update()
     {
