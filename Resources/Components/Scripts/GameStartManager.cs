@@ -119,7 +119,9 @@ namespace Turnroot.Demos
         private void Start()
         {
             if (InputProvider != null)
+            {
                 InputProvider.OnInput += HandleInput;
+            }
 
             saveFileBrain = FindFirstObjectByType<SaveFileBrain>();
 
@@ -166,7 +168,9 @@ namespace Turnroot.Demos
         private void OnDestroy()
         {
             if (InputProvider != null)
+            {
                 InputProvider.OnInput -= HandleInput;
+            }
 
             if (saveFileBrain?.Brain != null)
             {

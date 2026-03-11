@@ -25,7 +25,10 @@ Shader "Joseph&Minions/StylizedSkybox"
          [Header(Horizon Settings)]
         _OffsetHorizon("Horizon Offset",  Range(-1, 1)) = 0
         _HorizonIntensity("Horizon Intensity",  Range(0, 10)) = 3.3
-        _SunSet("Sunset/Rise Color", Color) = (1,0.8,1,1)
+        // two colors to interpolate between as sun moves off the horizon
+        _SunsetColorStart("Sunset/Rise Color (horizon)", Color) = (1,0.8,1,1)
+        _SunsetColorEnd("Sunset/Rise Color (above)", Color) = (1,0.5,0.2,1)
+        _ZenithFade("Zenith Fade", Range(0,1)) = 1
         _HorizonColorDay("Day Horizon Color", Color) = (0,0.8,1,1)
         _HorizonColorNight("Night Horizon Color", Color) = (0,0.8,1,1)
  
@@ -91,7 +94,8 @@ Shader "Joseph&Minions/StylizedSkybox"
         _CloudColorDayMain("Clouds Main Day", Color) = (0.8,0.9,0.8,1)
         _CloudColorDayUnder("Clouds Under Day", Color) = (0.6,0.7,0.6,1)
         _CloudDayTint("Cloud Day Tint", Color) = (1,1,1,1)
-        _Brightness("Cloud Brightness",  Range(1, 10)) = 2.5
+        _Brightness("Cloud Brightness (noon)",  Range(1, 10)) = 2.5
+        _BrightnessSunrise("Cloud Brightness (sunrise)",  Range(1, 10)) = 1.5
         
         [Header(Night Sky Settings)]
         _NightTopColor("Night Sky Color Top", Color) = (0,0,0,1)
@@ -192,7 +196,9 @@ Shader "Joseph&Minions/StylizedSkybox"
                 float4 _SunColor, _MoonColor;
                 float _MoonTextureIntensity, _MoonTextureScale, _MoonTextureContrast, _MoonTextureRotation, _MoonTextureSeed;
                 float4 _DayTopColor, _DayBottomColor, _NightBottomColor, _NightTopColor;
-                float4 _HorizonColorDay, _HorizonColorNight, _SunSet;
+                float4 _HorizonColorDay, _HorizonColorNight;
+                float4 _SunsetColorStart, _SunsetColorEnd;
+                float _ZenithFade;
                 
                 // Procedural stars
                 float _StarsDensity, _StarsSize, _StarsBrightness, _StarsColorVariation;
@@ -210,7 +216,8 @@ Shader "Joseph&Minions/StylizedSkybox"
                 
                 // Cloud layer 1
                 float _BaseNoiseScale, _DistortScale, _SecNoiseScale, _Distortion;
-                float _Speed, _DetailSpeed, _CloudCutoff, _CloudCoverage, _Fuzziness, _FuzzinessUnder, _Brightness;
+                float _Speed, _DetailSpeed, _CloudCutoff, _CloudCoverage, _Fuzziness, _FuzzinessUnder;
+                float _BrightnessSunrise, _Brightness; // sunrise and noon brightness
                 float4 _CloudColorDayEdge, _CloudColorDayMain, _CloudColorDayUnder, _CloudDayTint;
                 float4 _CloudColorNightEdge, _CloudColorNightMain, _CloudColorNightUnder, _CloudNightTint;
                 
@@ -759,7 +766,10 @@ Shader "Joseph&Minions/StylizedSkybox"
                 cloudsColoredNight *= _CloudNightTint.rgb;
                 
                 cloudsColored = lerp(cloudsColoredNight, cloudsColored, dayAmount);
-                cloudsColored += (_Brightness * cloudsColored * horizon);
+                // cloud brightness transitions between sunrise and noon values
+                float sunHeight = saturate(lightDir.y);
+                float cloudBright = lerp(_BrightnessSunrise, _Brightness, sunHeight);
+                cloudsColored += (cloudBright * cloudsColored * horizon);
                 
                 // Cloud Layer 2 (Parallax)
                 float clouds2 = 0;
@@ -789,7 +799,7 @@ Shader "Joseph&Minions/StylizedSkybox"
                     cloudsColored2Night *= _CloudNightTint.rgb;
                     
                     cloudsColored2 = lerp(cloudsColored2Night, cloudsColored2Day, dayAmount);
-                    cloudsColored2 += (_Brightness * cloudsColored2 * horizon * 0.7);
+                    cloudsColored2 += (cloudBright * cloudsColored2 * horizon * 0.7);
                 }
                 #endif
                 
@@ -985,7 +995,12 @@ Shader "Joseph&Minions/StylizedSkybox"
 
                 // Sunset/rise
                 float sunset = saturate((1 - horizon) * saturate(lightDir.y * 5));
-                float3 sunsetColoured = sunset * _SunSet.rgb;
+                // interpolate between start and end colors based on how high above the horizon the sun is
+                float tColor = saturate(lightDir.y * 2.0);
+                float3 sunsetColor = lerp(_SunsetColorStart.rgb, _SunsetColorEnd.rgb, tColor);
+                // zenith slider smoothly fades out sunrise colors as sun rises
+                float zenithFactor = 1.0 - saturate(lightDir.y * _ZenithFade);
+                float3 sunsetColoured = sunset * sunsetColor * zenithFactor;
                 
                 // Rainbow
                 float3 rainbow = float3(0, 0, 0);
