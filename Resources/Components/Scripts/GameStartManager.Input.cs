@@ -69,6 +69,11 @@ namespace Turnroot.Demos
 
         private void HandlePermadeathInput(string action)
         {
+            if (_currentInputMode != InputMode.Permadeath || !enabled)
+            {
+                return;
+            }
+
             if (InputProvider != null)
             {
                 InputProvider.Navigate(
@@ -79,8 +84,10 @@ namespace Turnroot.Demos
                     () =>
                     {
                         GameplayPlayerSettings.Instance.Permadeath = currentIndex == 0;
-                        PermadeathFade.Hide();
+                        // disable further input while fade is happening
                         SetInputMode(InputMode.None);
+                        enabled = false;
+                        PermadeathFade.Hide();
                     });
             }
             else
@@ -93,14 +100,21 @@ namespace Turnroot.Demos
                     () =>
                     {
                         GameplayPlayerSettings.Instance.Permadeath = currentIndex == 0;
-                        PermadeathFade.Hide();
+                        // disable further input while fade is happening
                         SetInputMode(InputMode.None);
+                        enabled = false;
+                        PermadeathFade.Hide();
                     });
             }
         }
 
         private void HandlePronounsInput(string action)
         {
+            if (_currentInputMode != InputMode.Pronouns || !enabled)
+            {
+                return;
+            }
+
             if (InputProvider != null)
             {
                 InputProvider.Navigate(
@@ -125,6 +139,7 @@ namespace Turnroot.Demos
                     );
 
                     SetInputMode(InputMode.None);
+                    enabled = false;
                     PronounsFade.Hide();
                 });
             }
@@ -152,6 +167,7 @@ namespace Turnroot.Demos
                     );
 
                     SetInputMode(InputMode.None);
+                    enabled = false;
                     PronounsFade.Hide();
                 });
             }
@@ -159,6 +175,11 @@ namespace Turnroot.Demos
 
         private void HandleDifficultyInput(string action)
         {
+            if (_currentInputMode != InputMode.Difficulty || !enabled)
+            {
+                return;
+            }
+
             if (InputProvider != null)
             {
                 InputProvider.Navigate(
@@ -176,8 +197,9 @@ namespace Turnroot.Demos
                         3 => GameplayPlayerSettings.DifficultyLevel.Extreme,
                         _ => GameplayPlayerSettings.Instance.GameDifficulty
                     };
-                    DifficultyFade.Hide();
                     SetInputMode(InputMode.None);
+                    enabled = false;
+                    DifficultyFade.Hide();
                 });
             }
             else
@@ -197,15 +219,24 @@ namespace Turnroot.Demos
                         3 => GameplayPlayerSettings.DifficultyLevel.Extreme,
                         _ => GameplayPlayerSettings.Instance.GameDifficulty
                     };
-                    DifficultyFade.Hide();
                     SetInputMode(InputMode.None);
+                    enabled = false;
+                    DifficultyFade.Hide();
                 });
             }
         }
 
         public void ShowStarGiftSelection() => SetInputMode(InputMode.StarGifts);
 
-        private void HandleStarGiftInput(string action) => StarGiftManager?.HandleInput(action);
+        private void HandleStarGiftInput(string action)
+        {
+            if (_currentInputMode != InputMode.StarGifts || !enabled)
+            {
+                return;
+            }
+
+            StarGiftManager?.HandleInput(action);
+        }
 
         private void OnStarGiftSelected(StarGift starGift)
         {

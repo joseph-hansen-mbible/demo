@@ -73,6 +73,12 @@ namespace Turnroot.Demos
 
         private void HandleSaveFileInput(string action)
         {
+            // ignore stray input once we've left the save-files state
+            if (_currentInputMode != InputMode.SaveFiles || !enabled)
+            {
+                return;
+            }
+
             if (InputProvider != null)
             {
                 InputProvider.Navigate(
@@ -105,6 +111,14 @@ namespace Turnroot.Demos
                         // we should validate them here. For now drop those checks so that
                         // a new save can be written when `CreateAndSaveAvatarInstance` runs.
                         //
+                        // once a slot is chosen we no longer accept more navigation input
+                        // – canceling the mode prevents further calls to Navigate after the
+                        // UI disappears, which was crashing when users mashed Select.
+                        SetInputMode(InputMode.None);
+                        // disable this manager like StartLoadingNextScene does; avoids any
+                        // stray input while fade/scene transition occurs
+                        enabled = false;
+
                         // Always hide the save selection when one is chosen; further progression
                         // (either creating a new avatar or loading an existing one) happens
                         // in later steps.
