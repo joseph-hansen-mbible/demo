@@ -4847,6 +4847,8 @@ GameObject:
   - component: {fileID: 1657661032832371223}
   - component: {fileID: 2420444467235725198}
   - component: {fileID: 2465104787104711261}
+  - component: {fileID: 7464454706555829771}
+  - component: {fileID: 4372561659773372892}
   m_Layer: 8
   m_Name: Shop with POI
   m_TagString: Untagged
@@ -4868,6 +4870,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4706482191240037824}
+  - {fileID: 4936202544619310442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 25.96, z: 0}
 --- !u!65 &2420444467235725198
@@ -4889,7 +4892,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.76, y: 2.15, z: 2.08}
+  m_Size: {x: 3.76, y: 4, z: 2.82}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2465104787104711261
 MonoBehaviour:
@@ -4903,15 +4906,201 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21f8d04749dd38b4097240eb0ebeaa06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubPoiUi
+  Type: 0
   poiVisual: {fileID: 6474218464739636926}
-  fadeDuration: 0.25
+  CameraPoint: {fileID: 4936202544619310442}
+  fadeDuration: 0.35
+  UiFx: {fileID: 4372561659773372892}
+  PoiShowSound: {fileID: 0}
+  PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 488924306457063649}
   LabelText: Fish Market
   Badge: {fileID: 8867842720651234449}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
-  BadgeTexture: {fileID: 0}
+  BadgeTexture: {fileID: 2800000, guid: 22695f6609206364d8648250eee292e8, type: 3}
+  ForbiddenBadgeTexture: {fileID: 2800000, guid: 592c9a2993e80254b8e62389785ef6ee, type: 3}
   Particles: {fileID: 1145288706055509426}
-  ShowBadge: 0
+  ShowBadge: 1
+  CanSelect: 1
+--- !u!114 &7464454706555829771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963629762775724502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
+  ItemsStocked:
+  - Item: {fileID: 11400000, guid: 5d11b0082e3710449a8af1c99b24dd81, type: 2}
+    MaxQuantity: 8
+    RestockAtIntervals: 1
+    RestockIntervalDays: 4
+    RestockQuantityPerDay: 2
+    CanGoOnSale: 1
+    SalePrice: 10
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0.1
+    RareItem: 0
+    ChanceToAppearInShop: 0
+  - Item: {fileID: 11400000, guid: 8ad131f977bd8e74fae6debaa29edb8a, type: 2}
+    MaxQuantity: 5
+    RestockAtIntervals: 1
+    RestockIntervalDays: 6
+    RestockQuantityPerDay: 1
+    CanGoOnSale: 1
+    SalePrice: 15
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0.3
+    RareItem: 0
+    ChanceToAppearInShop: 0
+  - Item: {fileID: 11400000, guid: 9b2c438ca14449d40a008b41bc5f2192, type: 2}
+    MaxQuantity: 6
+    RestockAtIntervals: 0
+    RestockIntervalDays: 0
+    RestockQuantityPerDay: 0
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 1
+    ChanceToAppearInShop: 0.5
+  ShopDescription: Sells common fish
+  Shopkeeper: {fileID: 0}
+  ShopReadyForBusiness: 1
+  DaysOpenCycle: 01010101010101
+  WillBuy: 1
+--- !u!82 &4372561659773372892
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963629762775724502}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.8
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &2118820939134981602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4936202544619310442}
+  m_Layer: 0
+  m_Name: CameraPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4936202544619310442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118820939134981602}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1657661032832371223}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6474218464739636926
 GameObject:
   m_ObjectHideFlags: 0

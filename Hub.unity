@@ -293,8 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubSubLocation
   LocationName: 4
   tutorialPrefab: {fileID: 0}
-  InputModeForThisLocation: 0
-  cameraPoints: []
+  cameraPoint: {fileID: 0}
   CharactersPresent: []
   GeneralCamera: {fileID: 961739752}
   FadeToBlack: {fileID: 0}
@@ -373,6 +372,34 @@ PrefabInstance:
       propertyPath: BadgeTexture
       value: 
       objectReference: {fileID: 2800000, guid: 23ea9a619180b304c9f6fefe23732553, type: 3}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.9213105
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.38354856
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.6231945
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.31956342
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.00095903693
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9475602
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.002842906
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -458,6 +485,34 @@ PrefabInstance:
       propertyPath: BadgeTexture
       value: 
       objectReference: {fileID: 2800000, guid: 6f0f2a51556f5e546bd0a96de1cea94e, type: 3}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.185895
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.18861789
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.6867623
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.97923654
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.023506552
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.20129591
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0048318338
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -535,8 +590,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1202457283}
   - {fileID: 1020849400}
-  - {fileID: 1115622101}
   - {fileID: 805109833}
   m_Father: {fileID: 471516800}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -554,9 +609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubSubLocation
   LocationName: 0
   tutorialPrefab: {fileID: 0}
-  InputModeForThisLocation: 2
-  cameraPoints:
-  - {fileID: 1202457283}
+  cameraPoint: {fileID: 1202457283}
   CharactersPresent: []
   GeneralCamera: {fileID: 961739752}
   FadeToBlack: {fileID: 1931766790}
@@ -1050,7 +1103,7 @@ RectTransform:
   m_GameObject: {fileID: 337646965}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1758768772}
@@ -1058,7 +1111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -816.8, y: -456.7}
+  m_AnchoredPosition: {x: -877.9, y: -484}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &372254135
@@ -2013,8 +2066,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubSubLocation
   LocationName: 2
   tutorialPrefab: {fileID: 0}
-  InputModeForThisLocation: 0
-  cameraPoints: []
+  cameraPoint: {fileID: 0}
   CharactersPresent: []
   GeneralCamera: {fileID: 961739752}
   FadeToBlack: {fileID: 0}
@@ -2184,8 +2236,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.024858765, y: 0.9128264, z: -0.056209322, w: -0.40369615}
-  m_LocalPosition: {x: -7.0466576, y: 5.4594274, z: 31.921495}
+  m_LocalRotation: {x: 0.02062736, y: 0.5109041, z: 0.012264442, w: -0.8593027}
+  m_LocalPosition: {x: -33.104263, y: 0.60138214, z: -6.9690003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2421,6 +2473,34 @@ PrefabInstance:
       propertyPath: BadgeTexture
       value: 
       objectReference: {fileID: 2800000, guid: 65c03787ff68ece43bc00a7ee1e9ff59, type: 3}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.4170488
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.19891149
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.3195097
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99760723
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0044895485
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.068989664
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000310726
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2505,38 +2585,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099316166}
   m_CullTransparentMesh: 1
---- !u!1 &1115622100
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1115622101}
-  m_Layer: 0
-  m_Name: CameraPoints
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1115622101
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115622100}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1202457283}
-  m_Father: {fileID: 178546950}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1123228510
 GameObject:
   m_ObjectHideFlags: 0
@@ -2583,8 +2631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubSubLocation
   LocationName: 3
   tutorialPrefab: {fileID: 0}
-  InputModeForThisLocation: 0
-  cameraPoints: []
+  cameraPoint: {fileID: 0}
   CharactersPresent: []
   GeneralCamera: {fileID: 961739752}
   FadeToBlack: {fileID: 0}
@@ -3229,7 +3276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1202457283}
   m_Layer: 0
-  m_Name: Market
+  m_Name: CameraPoint
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -3248,7 +3295,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1115622101}
+  m_Father: {fileID: 178546950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1225881523
 GameObject:
@@ -4177,15 +4224,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1122610501002807105, guid: 561170e155380c94c862b31f0927a936, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.977934
+      value: -35.17017
       objectReference: {fileID: 0}
     - target: {fileID: 1122610501002807105, guid: 561170e155380c94c862b31f0927a936, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2140503
+      value: 0.6973469
       objectReference: {fileID: 0}
     - target: {fileID: 1122610501002807105, guid: 561170e155380c94c862b31f0927a936, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 27.796286
+      value: -6.5865126
       objectReference: {fileID: 0}
     - target: {fileID: 1122610501002807105, guid: 561170e155380c94c862b31f0927a936, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4617,8 +4664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubSubLocation
   LocationName: 1
   tutorialPrefab: {fileID: 0}
-  InputModeForThisLocation: 0
-  cameraPoints: []
+  cameraPoint: {fileID: 0}
   CharactersPresent: []
   GeneralCamera: {fileID: 961739752}
   FadeToBlack: {fileID: 0}
@@ -4887,6 +4933,34 @@ PrefabInstance:
       propertyPath: BadgeTexture
       value: 
       objectReference: {fileID: 2800000, guid: f84c4f52474443843934f8e9b061c139, type: 3}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.9928993
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.009427667
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.23144
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.93637025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.06188996
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.3447624
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.022787593
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5161,7 +5235,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901321654}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -6634,6 +6708,34 @@ PrefabInstance:
       propertyPath: BadgeTexture
       value: 
       objectReference: {fileID: 2800000, guid: 8a8d14591132495428c493680f9ae018, type: 3}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.0073537
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.48722363
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.8135629
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.98264456
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.010317803
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.18520127
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.001944876
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6939,6 +7041,7 @@ GameObject:
   - component: {fileID: 2099476411}
   - component: {fileID: 2099476412}
   - component: {fileID: 2099476413}
+  - component: {fileID: 2099476414}
   m_Layer: 0
   m_Name: HubManager
   m_TagString: Untagged
@@ -6967,6 +7070,11 @@ MonoBehaviour:
   - {fileID: 639278577}
   - {fileID: 1139019123}
   InputProvider: {fileID: 2099476411}
+  CurrentInputMode: 0
+  HubFadeToBlack: {fileID: 1931766790}
+  HubActionsFade: {fileID: 2110243765}
+  BackButtonFade: {fileID: 1901321656}
+  HubMainFov: 60
   notifications: {fileID: 1282866920}
   subLocations:
   - {fileID: 1123228512}
@@ -6976,6 +7084,10 @@ MonoBehaviour:
   - {fileID: 39186454}
   ChapterNumberAndNameText: {fileID: 1345152568}
   ChapterNumberAndNameFormat: 'Chapter {0}: {1}'
+  gameDate:
+    year: 0
+    month: 0
+    day: 0
   cameraPoints:
   - {fileID: 1553223630}
   - {fileID: 1187781264}
@@ -7066,7 +7178,19 @@ MonoBehaviour:
   normalFov: 50
   zoomedFov: 50
   fovSmoothTime: 0.15
-  zoomCastRadius: 0.35
+  zoomCastRadius: 0.55
+--- !u!114 &2099476414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099476408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853a4c5f19c7eec43a135fbbee95b9b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.SpecificUiHandler
 --- !u!1 &2101234052
 GameObject:
   m_ObjectHideFlags: 0
@@ -7414,15 +7538,15 @@ PrefabInstance:
       objectReference: {fileID: 961739753}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.515086
+      value: -37.036377
       objectReference: {fileID: 0}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2140484
+      value: 0.697349
       objectReference: {fileID: 0}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30.586016
+      value: -10.01903
       objectReference: {fileID: 0}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7497,15 +7621,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.515086
+      value: -37.167614
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2140484
+      value: 0.2248542
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30.586016
+      value: -10.212894
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7592,83 +7716,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fish Market
       objectReference: {fileID: 0}
-    - target: {fileID: 2420444467235725198, guid: fc063f94f9707934388e8adc41366beb, type: 3}
-      propertyPath: m_Size.y
-      value: 4
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.4291043
       objectReference: {fileID: 0}
-    - target: {fileID: 2420444467235725198, guid: fc063f94f9707934388e8adc41366beb, type: 3}
-      propertyPath: m_Size.z
-      value: 2.82
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.091006756
       objectReference: {fileID: 0}
-    - target: {fileID: 2465104787104711261, guid: fc063f94f9707934388e8adc41366beb, type: 3}
-      propertyPath: ShowBadge
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.5548058
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.24252176
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.009462817
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9693622
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.037824064
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ShopReadyForBusiness
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2465104787104711261, guid: fc063f94f9707934388e8adc41366beb, type: 3}
-      propertyPath: BadgeTexture
-      value: 
-      objectReference: {fileID: 2800000, guid: 22695f6609206364d8648250eee292e8, type: 3}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: 'DaysOpenCycle.Array.data[3]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: 'DaysOpenCycle.Array.data[4]'
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1963629762775724502, guid: fc063f94f9707934388e8adc41366beb, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8687414109390329703}
     - targetCorrespondingSourceObject: {fileID: 7800378162243911674, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: fc063f94f9707934388e8adc41366beb, type: 3}
---- !u!1 &8687414109390329702 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1963629762775724502, guid: fc063f94f9707934388e8adc41366beb, type: 3}
-  m_PrefabInstance: {fileID: 8687414109390329701}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8687414109390329703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8687414109390329702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
-  ItemsStocked:
-  - Item: {fileID: 11400000, guid: 5d11b0082e3710449a8af1c99b24dd81, type: 2}
-    AvailableQuantity: 4
-    MaxQuantity: 8
-    RestockAtIntervals: 1
-    RestockIntervalDays: 4
-    RestockQuantityPerDay: 2
-    SalePrice: 10
-    SpecificSaleDays: []
-    SaleChanceOnRandomDays: 0.1
-  - Item: {fileID: 11400000, guid: 8ad131f977bd8e74fae6debaa29edb8a, type: 2}
-    AvailableQuantity: 3
-    MaxQuantity: 5
-    RestockAtIntervals: 1
-    RestockIntervalDays: 6
-    RestockQuantityPerDay: 1
-    SalePrice: 15
-    SpecificSaleDays: []
-    SaleChanceOnRandomDays: 0.3
-  - Item: {fileID: 11400000, guid: 9b2c438ca14449d40a008b41bc5f2192, type: 2}
-    AvailableQuantity: 6
-    MaxQuantity: 6
-    RestockAtIntervals: 1
-    RestockIntervalDays: 3
-    RestockQuantityPerDay: 4
-    SalePrice: 20
-    SpecificSaleDays: []
-    SaleChanceOnRandomDays: 0
-  ShopDescription: Sells common fish
-  Shopkeeper: {fileID: 0}
-  ShopkeeperWillGamble: 0
-  ShopOpen: 1
-  WillBuy: 1
 --- !u!4 &9052104872413692810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 728311453384614995, guid: 7bf763f2bd6f88049a4a3f6e3db77eca, type: 3}
