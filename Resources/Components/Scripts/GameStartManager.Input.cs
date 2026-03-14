@@ -11,6 +11,7 @@ namespace Turnroot.Demos
 
         private void HandleInput(string action)
         {
+
             switch (_currentInputMode)
             {
                 case InputMode.Keyboard when _keyboard != null:
@@ -69,7 +70,7 @@ namespace Turnroot.Demos
 
         private void HandlePermadeathInput(string action)
         {
-            if (_currentInputMode != InputMode.Permadeath || !enabled)
+            if (_currentInputMode != InputMode.Permadeath)
             {
                 return;
             }
@@ -110,7 +111,7 @@ namespace Turnroot.Demos
 
         private void HandlePronounsInput(string action)
         {
-            if (_currentInputMode != InputMode.Pronouns || !enabled)
+            if (_currentInputMode != InputMode.Pronouns)
             {
                 return;
             }
@@ -124,24 +125,24 @@ namespace Turnroot.Demos
                     3,
                     () =>
                     {
-                    selectedPronouns = currentIndex switch
-                    {
-                        0 => new Pronouns("she"),
-                        1 => new Pronouns("he"),
-                        2 => new Pronouns("they"),
-                        _ => selectedPronouns
-                    };
+                        selectedPronouns = currentIndex switch
+                        {
+                            0 => new Pronouns("she"),
+                            1 => new Pronouns("he"),
+                            2 => new Pronouns("they"),
+                            _ => selectedPronouns
+                        };
 
-                    AvatarData.SetAvatarNameAndPronouns(
-                        saveFileBrain.ActiveSaveFile.FileName,
-                        saveFileBrain.ActiveSaveFile.FileName + " " + LastName,
-                        selectedPronouns
-                    );
+                        AvatarData.SetAvatarNameAndPronouns(
+                            saveFileBrain.ActiveSaveFile.FileName,
+                            saveFileBrain.ActiveSaveFile.FileName + " " + LastName,
+                            selectedPronouns
+                        );
 
-                    SetInputMode(InputMode.None);
-                    enabled = false;
-                    PronounsFade.Hide();
-                });
+                        SetInputMode(InputMode.None);
+                        enabled = false;
+                        PronounsFade.Hide();
+                    });
             }
             else
             {
@@ -152,30 +153,30 @@ namespace Turnroot.Demos
                     3,
                     () =>
                     {
-                    selectedPronouns = currentIndex switch
-                    {
-                        0 => new Pronouns("she"),
-                        1 => new Pronouns("he"),
-                        2 => new Pronouns("they"),
-                        _ => selectedPronouns
-                    };
+                        selectedPronouns = currentIndex switch
+                        {
+                            0 => new Pronouns("she"),
+                            1 => new Pronouns("he"),
+                            2 => new Pronouns("they"),
+                            _ => selectedPronouns
+                        };
 
-                    AvatarData.SetAvatarNameAndPronouns(
-                        saveFileBrain.ActiveSaveFile.FileName,
-                        saveFileBrain.ActiveSaveFile.FileName + " " + LastName,
-                        selectedPronouns
-                    );
+                        AvatarData.SetAvatarNameAndPronouns(
+                            saveFileBrain.ActiveSaveFile.FileName,
+                            saveFileBrain.ActiveSaveFile.FileName + " " + LastName,
+                            selectedPronouns
+                        );
 
-                    SetInputMode(InputMode.None);
-                    enabled = false;
-                    PronounsFade.Hide();
-                });
+                        SetInputMode(InputMode.None);
+                        enabled = false;
+                        PronounsFade.Hide();
+                    });
             }
         }
 
         private void HandleDifficultyInput(string action)
         {
-            if (_currentInputMode != InputMode.Difficulty || !enabled)
+            if (_currentInputMode != InputMode.Difficulty)
             {
                 return;
             }
@@ -189,18 +190,18 @@ namespace Turnroot.Demos
                     4,
                     () =>
                     {
-                    GameplayPlayerSettings.Instance.GameDifficulty = currentIndex switch
-                    {
-                        0 => GameplayPlayerSettings.DifficultyLevel.Easy,
-                        1 => GameplayPlayerSettings.DifficultyLevel.Normal,
-                        2 => GameplayPlayerSettings.DifficultyLevel.Hard,
-                        3 => GameplayPlayerSettings.DifficultyLevel.Extreme,
-                        _ => GameplayPlayerSettings.Instance.GameDifficulty
-                    };
-                    SetInputMode(InputMode.None);
-                    enabled = false;
-                    DifficultyFade.Hide();
-                });
+                        GameplayPlayerSettings.Instance.GameDifficulty = currentIndex switch
+                        {
+                            0 => GameplayPlayerSettings.DifficultyLevel.Easy,
+                            1 => GameplayPlayerSettings.DifficultyLevel.Normal,
+                            2 => GameplayPlayerSettings.DifficultyLevel.Hard,
+                            3 => GameplayPlayerSettings.DifficultyLevel.Extreme,
+                            _ => GameplayPlayerSettings.Instance.GameDifficulty
+                        };
+                        SetInputMode(InputMode.None);
+                        enabled = false;
+                        DifficultyFade.Hide();
+                    });
             }
             else
             {
@@ -211,18 +212,18 @@ namespace Turnroot.Demos
                     4,
                     () =>
                     {
-                    GameplayPlayerSettings.Instance.GameDifficulty = currentIndex switch
-                    {
-                        0 => GameplayPlayerSettings.DifficultyLevel.Easy,
-                        1 => GameplayPlayerSettings.DifficultyLevel.Normal,
-                        2 => GameplayPlayerSettings.DifficultyLevel.Hard,
-                        3 => GameplayPlayerSettings.DifficultyLevel.Extreme,
-                        _ => GameplayPlayerSettings.Instance.GameDifficulty
-                    };
-                    SetInputMode(InputMode.None);
-                    enabled = false;
-                    DifficultyFade.Hide();
-                });
+                        GameplayPlayerSettings.Instance.GameDifficulty = currentIndex switch
+                        {
+                            0 => GameplayPlayerSettings.DifficultyLevel.Easy,
+                            1 => GameplayPlayerSettings.DifficultyLevel.Normal,
+                            2 => GameplayPlayerSettings.DifficultyLevel.Hard,
+                            3 => GameplayPlayerSettings.DifficultyLevel.Extreme,
+                            _ => GameplayPlayerSettings.Instance.GameDifficulty
+                        };
+                        SetInputMode(InputMode.None);
+                        enabled = false;
+                        DifficultyFade.Hide();
+                    });
             }
         }
 
@@ -230,7 +231,7 @@ namespace Turnroot.Demos
 
         private void HandleStarGiftInput(string action)
         {
-            if (_currentInputMode != InputMode.StarGifts || !enabled)
+            if (_currentInputMode != InputMode.StarGifts)
             {
                 return;
             }
