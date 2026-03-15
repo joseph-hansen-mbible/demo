@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
-  m_Name: Butter
+  m_Name: Grasshopper
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
-  _name: Butter
-  _flavorText: A common cooking ingredient
-  <BasePrice>k__BackingField: 5
-  <Sellable>k__BackingField: 1
+  _name: Grasshopper
+  _flavorText: A grasshopper for fishing. Strong chance of catching anything unusual
+  <BasePrice>k__BackingField: 15
+  <Sellable>k__BackingField: 0
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 0
   <Repairable>k__BackingField: 1

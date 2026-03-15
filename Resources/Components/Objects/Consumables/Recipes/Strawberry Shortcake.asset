@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8819bb94143090740931a623215b5050, type: 3}
+  m_Name: Strawberry Shortcake
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.Recipes.Recipe
+  RecipeName: Strawberry Shortcake
+  Description: Strawberries and cream, served with biscuits. A sweet and popular
+    meal that fortifies the spirit. +1 Charm and Resistance
+  SkillBonus: 0
+  StrengthBonus: 0
+  MagicBonus: 0
+  DefenseBonus: 0
+  ResistanceBonus: 1
+  SpeedBonus: 0
+  LuckBonus: 9
+  DexterityBonus: 0
+  MovementBonus: 0
+  CharmBonus: 1
+  Ingredients:
+  - {fileID: 11400000, guid: 637287273350ba9429739da74b73e90d, type: 2}
+  - {fileID: 11400000, guid: bb528c225d345184ea7a3e53864fc397, type: 2}
+  UnitsLove: {fileID: 0}
+  UnitsHate: {fileID: 0}

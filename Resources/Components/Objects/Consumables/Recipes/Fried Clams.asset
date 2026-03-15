@@ -27,5 +27,7 @@ MonoBehaviour:
   CharmBonus: 0
   Ingredients:
   - {fileID: 11400000, guid: c4ba2d64121e4f94dbc3f94a22e7377c, type: 2}
-  - {fileID: 11400000, guid: 5d11b0082e3710449a8af1c99b24dd81, type: 2}
+  - {fileID: 11400000, guid: 54c5d90c539aa654eb4a6fb022298cfa, type: 2}
   - {fileID: 11400000, guid: 9b2c438ca14449d40a008b41bc5f2192, type: 2}
+  UnitsLove: {fileID: 0}
+  UnitsHate: {fileID: 0}

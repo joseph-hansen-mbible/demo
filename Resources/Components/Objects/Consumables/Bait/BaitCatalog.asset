@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad551417b60746a4d9a8ebf3150f43b2, type: 3}
+  m_Name: BaitCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.Bait.BaitCatalog
+  AllBaits:
+  - Strength: 0
+    BaitItem: {fileID: 11400000, guid: 5f2402a8cfa195a40a0d9585c806d8b1, type: 2}
+  - Strength: 1
+    BaitItem: {fileID: 11400000, guid: 7b1a2e403c381034cbdf680caa535577, type: 2}
+  - Strength: 2
+    BaitItem: {fileID: 11400000, guid: d85ec828ce2beb749adde160e37c95d2, type: 2}
+  - Strength: 3
+    BaitItem: {fileID: 11400000, guid: b2533b4263c78c9489ca863da2bfb8a1, type: 2}

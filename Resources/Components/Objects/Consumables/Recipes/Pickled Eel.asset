@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8819bb94143090740931a623215b5050, type: 3}
+  m_Name: Pickled Eel
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.Recipes.Recipe
+  RecipeName: Pickled Eel
+  Description: A Iyri dish enjoyed by locals, others may find this sour and slimy
+    combination hard to swallow. Grants +1 Defense and +1 Speed
+  SkillBonus: 0
+  StrengthBonus: 0
+  MagicBonus: 0
+  DefenseBonus: 1
+  ResistanceBonus: 0
+  SpeedBonus: 1
+  LuckBonus: 0
+  DexterityBonus: 0
+  MovementBonus: 0
+  CharmBonus: 0
+  Ingredients:
+  - {fileID: 11400000, guid: 5e7feb662c2655a4e82ea2cd31b8e699, type: 2}
+  - {fileID: 11400000, guid: 667540b9982e55a4da564329f789c0df, type: 2}
+  UnitsLove: {fileID: 0}
+  UnitsHate: {fileID: 0}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5286788bae60aa747ac07b96282d50b8, type: 3}
+  m_Name: RecipeCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.Recipes.RecipeCatalog
+  AllRecipes:
+  - {fileID: 11400000, guid: 8b8857a248248d5438838ea40ff088af, type: 2}
+  - {fileID: 11400000, guid: 8057d4abf84bb0749a1ebdf255311b7b, type: 2}
+  - {fileID: 11400000, guid: 36c65735fd453bc41b3d9be1f5bfb35e, type: 2}
+  - {fileID: 11400000, guid: edd466c95343e70429b76eb50c5ac3a0, type: 2}
+  - {fileID: 11400000, guid: 96f9f6760eb96444d980d38c69ffafee, type: 2}
+  - {fileID: 11400000, guid: 35fc411a5a14faa4c923d7b8d4300261, type: 2}

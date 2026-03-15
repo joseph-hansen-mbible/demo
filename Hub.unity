@@ -418,6 +418,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1657661032832371223, guid: fc063f94f9707934388e8adc41366beb, type: 3}
   m_PrefabInstance: {fileID: 105477562}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &105477564 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+  m_PrefabInstance: {fileID: 105477562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
 --- !u!1001 &124866545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -531,6 +542,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1657661032832371223, guid: fc063f94f9707934388e8adc41366beb, type: 3}
   m_PrefabInstance: {fileID: 124866545}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &124866547 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+  m_PrefabInstance: {fileID: 124866545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
 --- !u!1 &154995913
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,6 +651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 178546950}
   - component: {fileID: 178546951}
+  - component: {fileID: 178546952}
   m_Layer: 0
   m_Name: Market
   m_TagString: Untagged
@@ -675,6 +698,25 @@ MonoBehaviour:
   LocationsFade: {fileID: 2110243765}
   BackButtonFade: {fileID: 1901321656}
   NotificationFade: {fileID: 499217094}
+--- !u!114 &178546952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178546949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1156fbfa5174f44caae8cec8b814447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.ShopsManager
+  AllShops:
+  - {fileID: 8687414109390329702}
+  - {fileID: 1785941277}
+  - {fileID: 2011902938}
+  - {fileID: 1080475171}
+  - {fileID: 105477564}
+  - {fileID: 124866547}
 --- !u!1 &197862996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,6 +3602,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1657661032832371223, guid: fc063f94f9707934388e8adc41366beb, type: 3}
   m_PrefabInstance: {fileID: 1080475169}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1080475171 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+  m_PrefabInstance: {fileID: 1080475169}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
 --- !u!1 &1099316166
 GameObject:
   m_ObjectHideFlags: 0
@@ -4647,7 +4700,29 @@ MonoBehaviour:
   MinimumAtSeaTime: 16
   MaximumAtSeaTime: 24
   DaysDockedAtATime: 3
-  NormalGoodsForSale: []
+  NormalGoodsForSale:
+  - Item: {fileID: 11400000, guid: e163d42d39b92d94aa6f8c2cdf846be2, type: 2}
+    MaxQuantity: 5
+    RestockAtIntervals: 1
+    RestockIntervalDays: 16
+    RestockQuantityPerDay: 5
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 0
+    ChanceToAppearInShop: 0
+  - Item: {fileID: 11400000, guid: 54c5d90c539aa654eb4a6fb022298cfa, type: 2}
+    MaxQuantity: 5
+    RestockAtIntervals: 1
+    RestockIntervalDays: 16
+    RestockQuantityPerDay: 5
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 0
+    ChanceToAppearInShop: 0
 --- !u!1 &1272956518
 GameObject:
   m_ObjectHideFlags: 0
@@ -4992,7 +5067,62 @@ MonoBehaviour:
   MinimumAtSeaTime: 5
   MaximumAtSeaTime: 10
   DaysDockedAtATime: 2
-  NormalGoodsForSale: []
+  NormalGoodsForSale:
+  - Item: {fileID: 11400000, guid: 9b2c438ca14449d40a008b41bc5f2192, type: 2}
+    MaxQuantity: 1
+    RestockAtIntervals: 0
+    RestockIntervalDays: 1
+    RestockQuantityPerDay: 3
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 1
+    ChanceToAppearInShop: 0.3
+  - Item: {fileID: 11400000, guid: 5d11b0082e3710449a8af1c99b24dd81, type: 2}
+    MaxQuantity: 1
+    RestockAtIntervals: 1
+    RestockIntervalDays: 5
+    RestockQuantityPerDay: 1
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 0
+    ChanceToAppearInShop: 0.25
+  - Item: {fileID: 11400000, guid: 8ad131f977bd8e74fae6debaa29edb8a, type: 2}
+    MaxQuantity: 1
+    RestockAtIntervals: 1
+    RestockIntervalDays: 5
+    RestockQuantityPerDay: 1
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 0
+    ChanceToAppearInShop: 0.25
+  - Item: {fileID: 11400000, guid: a02fa1f310128934e83fc7031f51f458, type: 2}
+    MaxQuantity: 1
+    RestockAtIntervals: 0
+    RestockIntervalDays: 5
+    RestockQuantityPerDay: 1
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 1
+    ChanceToAppearInShop: 0.3
+  - Item: {fileID: 11400000, guid: 5e7feb662c2655a4e82ea2cd31b8e699, type: 2}
+    MaxQuantity: 1
+    RestockAtIntervals: 0
+    RestockIntervalDays: 5
+    RestockQuantityPerDay: 1
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 1
+    ChanceToAppearInShop: 0.3
 --- !u!4 &1287372646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4936202544619310442, guid: fc063f94f9707934388e8adc41366beb, type: 3}
@@ -5427,7 +5557,18 @@ MonoBehaviour:
   MinimumAtSeaTime: 3
   MaximumAtSeaTime: 6
   DaysDockedAtATime: 3
-  NormalGoodsForSale: []
+  NormalGoodsForSale:
+  - Item: {fileID: 11400000, guid: c4ba2d64121e4f94dbc3f94a22e7377c, type: 2}
+    MaxQuantity: 2
+    RestockAtIntervals: 1
+    RestockIntervalDays: 3
+    RestockQuantityPerDay: 2
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 0
+    ChanceToAppearInShop: 0
 --- !u!1 &1345152566
 GameObject:
   m_ObjectHideFlags: 0
@@ -7037,6 +7178,146 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.022787593
       objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ShopDescription
+      value: Sells bait for fishing
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: DaysOpenCycle.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: 'DaysOpenCycle.Array.data[5]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 5f2402a8cfa195a40a0d9585c806d8b1, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b1a2e403c381034cbdf680caa535577, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: d85ec828ce2beb749adde160e37c95d2, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: b2533b4263c78c9489ca863da2bfb8a1, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RareItem
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RareItem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].SalePrice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].SalePrice
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].SalePrice
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].CanGoOnSale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].MaxQuantity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].CanGoOnSale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].MaxQuantity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].MaxQuantity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].CanGoOnSale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].MaxQuantity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RestockAtIntervals
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].RestockIntervalDays
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].RestockIntervalDays
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RestockIntervalDays
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].ChanceToAppearInShop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].RestockQuantityPerDay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].RestockQuantityPerDay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RestockQuantityPerDay
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].SaleChanceOnRandomDays
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].SaleChanceOnRandomDays
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].SaleChanceOnRandomDays
+      value: 0.22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7050,6 +7331,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1657661032832371223, guid: fc063f94f9707934388e8adc41366beb, type: 3}
   m_PrefabInstance: {fileID: 1785941275}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1785941277 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+  m_PrefabInstance: {fileID: 1785941275}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
 --- !u!1 &1809517220
 GameObject:
   m_ObjectHideFlags: 0
@@ -9026,6 +9318,134 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.001944876
       objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ShopDescription
+      value: Sells common ingredients
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: bb528c225d345184ea7a3e53864fc397, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 667540b9982e55a4da564329f789c0df, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 637287273350ba9429739da74b73e90d, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 637287273350ba9429739da74b73e90d, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RareItem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RareItem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].SalePrice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].SalePrice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].CanGoOnSale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].MaxQuantity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].CanGoOnSale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].MaxQuantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].MaxQuantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].MaxQuantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RestockAtIntervals
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RestockAtIntervals
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].RestockIntervalDays
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].RestockIntervalDays
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RestockIntervalDays
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RestockIntervalDays
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].ChanceToAppearInShop
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[0].SaleChanceOnRandomDays
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].SaleChanceOnRandomDays
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9039,6 +9459,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1657661032832371223, guid: fc063f94f9707934388e8adc41366beb, type: 3}
   m_PrefabInstance: {fileID: 2011902936}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2011902938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+  m_PrefabInstance: {fileID: 2011902936}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
 --- !u!1 &2042979239
 GameObject:
   m_ObjectHideFlags: 0
@@ -9373,6 +9804,7 @@ MonoBehaviour:
   - {fileID: 1713137591}
   - {fileID: 945594557}
   - {fileID: 39186454}
+  shopsManager: {fileID: 178546952}
   ChapterNumberAndNameText: {fileID: 1345152568}
   ChapterNumberAndNameFormat: 'Chapter {0}: {1}'
   gameDate:
@@ -10269,6 +10701,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+--- !u!114 &8687414109390329702 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+  m_PrefabInstance: {fileID: 8687414109390329701}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c52653a14eea1429f50110eab18e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
 --- !u!4 &9052104872413692810 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 728311453384614995, guid: 7bf763f2bd6f88049a4a3f6e3db77eca, type: 3}

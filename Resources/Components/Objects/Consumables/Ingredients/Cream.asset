@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
-  m_Name: Lemon
+  m_Name: Cream
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
-  _name: Lemon
-  _flavorText: A bright and zesty fruit imported from tropical shores
-  <BasePrice>k__BackingField: 30
+  _name: Cream
+  _flavorText: Thick and rich, fresh from a farm
+  <BasePrice>k__BackingField: 5
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 0
