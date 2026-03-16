@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: Fast Eel
   _flavorText: A rare agile fish with a slimy texture that some find off-putting
-  <BasePrice>k__BackingField: 40
+  <BasePrice>k__BackingField: 45
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 0

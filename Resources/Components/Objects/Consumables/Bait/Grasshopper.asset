@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: Grasshopper
   _flavorText: A grasshopper for fishing. Strong chance of catching anything unusual
-  <BasePrice>k__BackingField: 15
+  <BasePrice>k__BackingField: 20
   <Sellable>k__BackingField: 0
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 0

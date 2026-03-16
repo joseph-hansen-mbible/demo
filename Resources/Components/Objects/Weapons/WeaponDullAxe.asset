@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
-  m_Name: Lemon
+  m_Name: WeaponDullAxe
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
-  _name: Lemon
-  _flavorText: A bright and zesty fruit imported from tropical shores
-  <BasePrice>k__BackingField: 30
-  <Sellable>k__BackingField: 1
-  <Buyable>k__BackingField: 1
-  <SellPriceDeductedPerUse>k__BackingField: 0
+  _name: Dull Axe
+  _flavorText: A worn but sturdy axe showing signs of age
+  <BasePrice>k__BackingField: 70
+  <Sellable>k__BackingField: 0
+  <Buyable>k__BackingField: 0
+  <SellPriceDeductedPerUse>k__BackingField: 2
   <Repairable>k__BackingField: 1
   _repairPricePerUse: 10
   <RepairNeedsItems>k__BackingField: 1
@@ -28,12 +28,12 @@ MonoBehaviour:
   _giftRank: 1
   _unitsLove: []
   _unitsHate: []
-  <LowerRange>k__BackingField: 0
-  <UpperRange>k__BackingField: 0
+  <LowerRange>k__BackingField: 1
+  <UpperRange>k__BackingField: 1
   _rangeAdjustedByStat: 0
   _rangeAdjustedByStatName: 0
   _rangeAdjustedByStatAmount: 0
-  <MaxUses>k__BackingField: 100
+  <MaxUses>k__BackingField: 60
   _replenishUsesAfterBattle: 0
   _replenishUsesAfterBattleAmount: 0
   <SpeciesEffectiveAgainst>k__BackingField: []
@@ -42,8 +42,8 @@ MonoBehaviour:
   <StatBonuses>k__BackingField:
     _keys: 
     _values: []
-  <Might>k__BackingField: 0
-  <Hit>k__BackingField: 0
+  <Might>k__BackingField: 4
+  <Hit>k__BackingField: 65
   <Critical>k__BackingField: 0
   _minWeaponTypeAptitude:
     _value: E
@@ -52,7 +52,7 @@ MonoBehaviour:
   <BelongsTo>k__BackingField: {fileID: 0}
   <Weight>k__BackingField: 1
   <Subtype>k__BackingField:
-    _value: Consumable
-  <WeaponType>k__BackingField: {fileID: 0}
+    _value: Weapon
+  <WeaponType>k__BackingField: {fileID: 11400000, guid: 1265787936baf2a4da7e7a1898d11264, type: 2}
   <IsUnequippable>k__BackingField: 1
   <EquipableType>k__BackingField: 0

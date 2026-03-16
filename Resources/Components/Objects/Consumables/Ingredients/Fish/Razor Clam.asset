@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: Razor Clam
   _flavorText: A sharp-shelled shellfish, exquisite with lemons
-  <BasePrice>k__BackingField: 25
+  <BasePrice>k__BackingField: 30
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 0

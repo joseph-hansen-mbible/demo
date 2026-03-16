@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: Depths Squid
   _flavorText: Rare and exquisite seafood that is very hard to catch
-  <BasePrice>k__BackingField: 50
+  <BasePrice>k__BackingField: 60
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 0
