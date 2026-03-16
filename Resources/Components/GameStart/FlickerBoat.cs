@@ -1,9 +1,11 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Flicker : MonoBehaviour
+public class FlickerBoat : MonoBehaviour
 {
     public Material mat;
+    private Material _matInstance;
+
     public Color emissionColor = Color.white;
     public float minIntensity = 1f;
     public float maxIntensity = 5f;
@@ -16,15 +18,28 @@ public class Flicker : MonoBehaviour
     {
         if (mat == null)
         {
-            mat.SetColor("_EmissionColor", Color.white);
+            return;
         }
+
+        _matInstance = Instantiate(mat);
+        mat = _matInstance;
+
+        // If attached to a Renderer, ensure it uses the instance so changes don't affect other objects.
+        if (TryGetComponent<Renderer>(out var rend))
+        {
+            rend.material = _matInstance;
+        }
+
+        _matInstance.SetColor("_EmissionColor", Color.white);
     }
 
     private void OnDestroy()
     {
-        if (mat != null)
+        if (_matInstance != null)
         {
-            mat.SetColor("_EmissionColor", Color.white);
+            _matInstance.SetColor("_EmissionColor", Color.white);
+            Destroy(_matInstance);
+            _matInstance = null;
         }
     }
 
@@ -32,12 +47,12 @@ public class Flicker : MonoBehaviour
     // material is a URP Lit default with emission enabled
     private void Update()
     {
-        if (mat != null)
+        if (_matInstance != null)
         {
             float noise = Mathf.PerlinNoise(Time.time * 4f, 0f);
             float intensity = Mathf.Lerp(minIntensity, maxIntensity, noise);
             Color finalEmission = emissionColor * intensity;
-            mat.SetColor("_EmissionColor", finalEmission);
+            _matInstance.SetColor("_EmissionColor", finalEmission);
         }
 
         if (decalProjectors != null)
