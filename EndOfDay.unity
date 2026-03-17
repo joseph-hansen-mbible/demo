@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 999b65eb0ad98ac4fab2312d414112d8, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1808607284}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -375,6 +375,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 248461282}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &214475949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 214475950}
+  - component: {fileID: 214475951}
+  m_Layer: 0
+  m_Name: EndOfDay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &214475950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214475949}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2117262353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &214475951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214475949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2089a6aa399ccaf49b0c71e7ab496e2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.EndOfDay
+  Weather: {fileID: 241282199}
 --- !u!1001 &215000449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -398,6 +443,10 @@ PrefabInstance:
     - target: {fileID: 6366013596992102909, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_Name
       value: heavy rain
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366013596992102909, guid: a257d76651101d342972ce34c750d4f3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -494,7 +543,8 @@ MonoBehaviour:
   SnowySkyboxes: []
   StormySkyboxes:
   - {fileID: 2100000, guid: 3d3f3cc9de18bfe4dae19d856f8a6fa0, type: 2}
-  VolcanicSkyboxes: []
+  VolcanicSkyboxes:
+  - {fileID: 2100000, guid: 4d413fc059018da4c97b83bbaf6b00eb, type: 2}
   SkyboxCaptureTexture: {fileID: 8400000, guid: 41d1144b7971ebd4b947bbc8e936ad6c, type: 2}
   SkyboxTintSaturationBoost: 2.5
   NightTintColor: {r: 0.19011767, g: 0.19791299, b: 0.404, a: 1}
@@ -511,7 +561,7 @@ MonoBehaviour:
   - {fileID: 1458509297}
   VolcanicAshParticles: []
   SnowsHere: 1
-  WaterMaterial: {fileID: 2100000, guid: 85cfb5f1e5be83d46a4118fa91b77228, type: 2}
+  WaterMaterial: {fileID: 0}
   WaterShallowSunrise: {r: 0.9622642, g: 0.45843717, b: 0.7413366, a: 1}
   WaterDeepSunrise: {r: 0.256464, g: 0.26406002, b: 0.41099998, a: 1}
   WaterShallowNoon: {r: 0.32941177, g: 0.53333336, b: 0.6313726, a: 1}
@@ -555,18 +605,16 @@ MonoBehaviour:
   OvercastLightIntensity: 0.3
   SunnySpecularStrength: 1.2
   OvercastSpecularStrength: 0.4
-  CelMaterials:
-  - {fileID: 2100000, guid: 306adab93cc626445bb3f2beb5d9e545, type: 2}
-  - {fileID: 2100000, guid: 51bae4c5c3f47e549b06518f3a93dbf6, type: 2}
-  GrassMaterial: {fileID: 2100000, guid: f4f5394e733b25c4ba3c84da75927018, type: 2}
-  CurrentWeatherType: 4
-  PossibleWeatherTypes: 04000000000000000100000002000000
+  CelMaterials: []
+  GrassMaterial: {fileID: 0}
+  CurrentWeatherType: 0
+  PossibleWeatherTypes: 00000000010000000200000004000000
   RandomizeStartTimeOfDay: 1
-  StartTimeOfDayMin: 2
-  StartTimeOfDayMax: 7
+  StartTimeOfDayMin: 7
+  StartTimeOfDayMax: 10
   TimeOfDay: 2.5
   ProgressTimeOfDay: 1
-  DayLength: 600
+  DayLength: 300
   CelBlendFactor: 0.1
 --- !u!4 &241282200
 Transform:
@@ -583,7 +631,7 @@ Transform:
   m_Children:
   - {fileID: 1930332067}
   - {fileID: 300455906}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 531825568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &248461277
 GameObject:
@@ -738,7 +786,7 @@ Transform:
   - {fileID: 654843472}
   - {fileID: 121272107}
   - {fileID: 95703878}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 531825568}
   m_LocalEulerAnglesHint: {x: 0.69, y: -177.148, z: 0}
 --- !u!1 &300455903
 GameObject:
@@ -1028,6 +1076,42 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &531825567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 531825568}
+  m_Layer: 0
+  m_Name: Rendering
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &531825568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531825567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 241282200}
+  - {fileID: 2069717657}
+  - {fileID: 248461282}
+  - {fileID: 1808607285}
+  - {fileID: 1549019331}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &654843471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1042,7 +1126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 554776821461792478, guid: 561170e155380c94c862b31f0927a936, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1122610501002807105, guid: 561170e155380c94c862b31f0927a936, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1184,7 +1268,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2117262353}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1159923913
 GameObject:
@@ -1245,7 +1329,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2117262353}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1458509295
 PrefabInstance:
@@ -1258,6 +1342,10 @@ PrefabInstance:
     - target: {fileID: 400337913261673586, guid: 7bf763f2bd6f88049a4a3f6e3db77eca, type: 3}
       propertyPath: m_Name
       value: snow
+      objectReference: {fileID: 0}
+    - target: {fileID: 400337913261673586, guid: 7bf763f2bd6f88049a4a3f6e3db77eca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 728311453384614995, guid: 7bf763f2bd6f88049a4a3f6e3db77eca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1366,7 +1454,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2117262353}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1549019330
 GameObject:
@@ -1400,7 +1488,7 @@ Transform:
   - {fileID: 215000450}
   - {fileID: 2074476593}
   - {fileID: 507001885}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 531825568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1733343876
 GameObject:
@@ -1602,7 +1690,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 531825568}
   m_LocalEulerAnglesHint: {x: 47.17, y: -57.8, z: 0}
 --- !u!1 &1930332064
 GameObject:
@@ -1804,7 +1892,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 531825568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2074476592
 PrefabInstance:
@@ -1817,6 +1905,10 @@ PrefabInstance:
     - target: {fileID: 2293420020697417154, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_Name
       value: light rain
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293420020697417154, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2295429638372338754, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_Sources.Array.data[0].sourceTransform
@@ -1885,15 +1977,44 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2293420020697417154, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
   m_PrefabInstance: {fileID: 2074476592}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2117262352
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2117262353}
+  m_Layer: 0
+  m_Name: Functionals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2117262353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117262352}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 797623164}
+  - {fileID: 1477207676}
+  - {fileID: 1159923915}
+  - {fileID: 214475950}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 241282200}
-  - {fileID: 1549019331}
-  - {fileID: 2069717657}
-  - {fileID: 797623164}
-  - {fileID: 1477207676}
-  - {fileID: 248461282}
-  - {fileID: 1159923915}
-  - {fileID: 1808607285}
+  - {fileID: 531825568}
+  - {fileID: 2117262353}
