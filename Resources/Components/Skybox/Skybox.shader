@@ -135,6 +135,10 @@ Shader "Joseph&Minions/StylizedSkybox"
         _LightningIntensity("Lightning Intensity",  Range(0, 1)) = 0.3
         _LightningLocalization("Lightning Localization",  Range(0, 1)) = 0.7
         _LightningColor("Lightning Color", Color) = (0.9,0.95,1.0,1)
+        _LightningEventStartTime("Lightning Event Start Time", Float) = 0
+        _LightningEventDuration("Lightning Event Duration", Float) = 0.4
+        _LightningEventIntensity("Lightning Event Intensity", Float) = 1
+        _LightningEventDirection("Lightning Event Direction", Vector) = (0,1,0,0)
         [Toggle(DISTANT_LIGHTNING)] _DistantLightningEnabled("Enable Distant Lightning Bolts", Float) = 1
         _DistantLightningBrightness("Distant Lightning Brightness",  Range(0, 2)) = 1.0
         _DistantLightningWidth("Distant Lightning Width",  Range(0.1, 1.0)) = 1.0
@@ -242,6 +246,12 @@ Shader "Joseph&Minions/StylizedSkybox"
                 float _LightningFrequency, _LightningIntensity, _LightningLocalization, _DistantLightningBrightness;
                 float _DistantLightningWidth, _DistantLightningGlow;
                 float4 _LightningColor;
+
+                // Lightning event (script-driven)
+                float _LightningEventStartTime;
+                float _LightningEventDuration;
+                float _LightningEventIntensity;
+                float4 _LightningEventDirection;
                 
                 // Atmospheric effects
                 float _HazeIntensity, _HazeHeight, _CloudShadowIntensity;
@@ -504,11 +514,22 @@ Shader "Joseph&Minions/StylizedSkybox"
             // Lightning flash effect - Returns intensity and position
             void generateLightning(float time, out float intensity, out float3 position)
             {
-                float lightningCycle = time * _LightningFrequency * 0.2; // Slowed down for photosensitivity
-                float flashChance = hash(float2(floor(lightningCycle), 0.123));
-                
                 intensity = 0.0;
                 position = float3(0, 0, 0);
+
+                // Script-driven lightning event (overrides procedural lightning)
+                float eventAge = time - _LightningEventStartTime;
+                if (_LightningEventIntensity > 0.001 && eventAge >= 0.0 && eventAge < _LightningEventDuration)
+                {
+                    float t = saturate(eventAge / max(0.0001, _LightningEventDuration));
+                    float flash = smoothstep(0.0, 0.2, t) * smoothstep(1.0, 0.8, t);
+                    intensity = flash * _LightningEventIntensity;
+                    position = normalize(_LightningEventDirection.xyz);
+                    return;
+                }
+
+                float lightningCycle = time * _LightningFrequency * 0.2; // Slowed down for photosensitivity
+                float flashChance = hash(float2(floor(lightningCycle), 0.123));
                 
                 // Only flash occasionally (reduced frequency)
                 if(flashChance < 0.85)
