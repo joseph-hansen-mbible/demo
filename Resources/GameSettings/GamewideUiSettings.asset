@@ -12,77 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c583338e71983104d95054f99e91658a, type: 3}
   m_Name: GamewideUiSettings
   m_EditorClassIdentifier: 
-  allPossibleMenuLocations:
-  - parentMenuName: 0
-    menuName: 1
-    style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 1
-    menuName: 2
-    style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 1
-    menuName: 3
+  MenuPrefabs:
+  - menuName: 4
     style: 1
     prefab: {fileID: 2599841781435253208, guid: 2fc7a3f1a9ba23d48ad0c45435a5aee2, type: 3}
-  - parentMenuName: 3
-    menuName: 4
-    style: 1
-    prefab: {fileID: 25012695618156106, guid: afc2e0d0bc0da824eb4f3edbd9467c70, type: 3}
-  - parentMenuName: 3
-    menuName: 5
-    style: 1
-    prefab: {fileID: 25012695618156106, guid: 18dc77b31d1e6e0468f31649be0a8f45, type: 3}
-  - parentMenuName: 3
-    menuName: 6
-    style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 3
-    menuName: 7
-    style: 1
-    prefab: {fileID: 25012695618156106, guid: 08294e0d8f33d514895d7c3eee16b741, type: 3}
-  - parentMenuName: 2
-    menuName: 8
-    style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 8
-    menuName: 9
-    style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 0
-    menuName: 10
+  - menuName: 4
     style: 0
     prefab: {fileID: 312688979984975295, guid: ce54cc1f4ce2a624f8d2665af9d2b92a, type: 3}
-  - parentMenuName: 10
-    menuName: 11
-    style: 3
+  - menuName: 5
+    style: 1
+    prefab: {fileID: 25012695618156106, guid: afc2e0d0bc0da824eb4f3edbd9467c70, type: 3}
+  - menuName: 6
+    style: 1
+    prefab: {fileID: 25012695618156106, guid: 18dc77b31d1e6e0468f31649be0a8f45, type: 3}
+  - menuName: 8
+    style: 1
+    prefab: {fileID: 25012695618156106, guid: 08294e0d8f33d514895d7c3eee16b741, type: 3}
+  - menuName: 12
+    style: 1
     prefab: {fileID: 7814703603592663220, guid: 1258ee1acde92134ba8f47618d89a204, type: 3}
-  - parentMenuName: 10
-    menuName: 12
+  - menuName: 15
     style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 10
-    menuName: 13
+    prefab: {fileID: 2599841781435253208, guid: 2fc7a3f1a9ba23d48ad0c45435a5aee2, type: 3}
+  - menuName: 16
     style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 10
-    menuName: 15
-    style: 2
     prefab: {fileID: 25012695618156106, guid: f62aebd898aee8f4ab1084d09a36ea18, type: 3}
-  - parentMenuName: 10
-    menuName: 16
+  - menuName: 18
     style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 10
-    menuName: 14
-    style: 1
-    prefab: {fileID: 0}
-  - parentMenuName: 10
-    menuName: 17
-    style: 4
     prefab: {fileID: 7814703603592663220, guid: 5a2f7039a843fa64397c2dec257e515d, type: 3}
-  - parentMenuName: 0
-    menuName: 18
+  - menuName: 19
     style: 1
     prefab: {fileID: 3469738985604321751, guid: eeb7fd29110d47d4986bc9d3c6fea815, type: 3}
   NoPortraitSprite: {fileID: 21300000, guid: 2b3e6b0026eb3524b888ae7aef53a633, type: 3}
@@ -111,12 +69,6 @@ MonoBehaviour:
   MenuCanvasPrefab: {fileID: 6717558390753289932, guid: 015cf6f2a44a8fd48872b6635c3ca360, type: 3}
   ModelsScale: 1.3
   PassiveSkillOverlayPrefab: {fileID: 2933932380230726828, guid: 8a2a25d9fdbe37349ab0d1b260f444be, type: 3}
-  PathTipSprite: {fileID: 585487291, guid: 55938e87ee80ffa4fa46d8e00d3564f7, type: 3}
-  PathPreTipSprite: {fileID: 1325149353, guid: 55938e87ee80ffa4fa46d8e00d3564f7, type: 3}
-  PathStraightSprite: {fileID: 158355938, guid: 55938e87ee80ffa4fa46d8e00d3564f7, type: 3}
-  PathCornerSprite: {fileID: 267533991, guid: 55938e87ee80ffa4fa46d8e00d3564f7, type: 3}
-  PathStartSprite: {fileID: -238641338, guid: 55938e87ee80ffa4fa46d8e00d3564f7, type: 3}
-  CursorSprite: {fileID: -1492100927, guid: 55938e87ee80ffa4fa46d8e00d3564f7, type: 3}
   BattleCursorPrefab: {fileID: 4417507937948770518, guid: 862fd89fc081b064794294287187cae4, type: 3}
   BattleCursorOffset: {x: 0, y: 0.3, z: 0}
   CameraPanSafeZone: {x: 0.25, y: 0.25}

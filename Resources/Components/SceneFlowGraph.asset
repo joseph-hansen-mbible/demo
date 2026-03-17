@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4d468d3eaaa32742af67bb2921e283e, type: 3}
-  m_Name: NewSceneFlowGraph
+  m_Name: SceneFlowGraph
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.SceneFlows.SceneFlowGraph
   scenes:
   - id: scene_0
@@ -61,15 +61,57 @@ MonoBehaviour:
     DayForThisScene: 1
     HasYear: 0
     YearForThisScene: 1
+  - id: EndOfDay
+    sceneAsset: {fileID: 102900000, guid: b49898884e78ce245a329e74f7f6415f, type: 3}
+    sceneName: EndOfDay
+    displayName: EndOfDay
+    isHub: 0
+    persistWhenLeaving: 0
+    SpecificChapter: 0
+    ChapterName: 
+    ChapterNumber: 0
+    editorPosition: {x: 710, y: 493}
+    notes: 
+    TimePasses: 0
+    MonthForThisScene: 0
+    DayForThisScene: 1
+    HasYear: 0
+    YearForThisScene: 1
   transitions:
   - fromSceneId: scene_0
     toSceneId: hub
     label: 
     isBidirectional: 0
     conditions: []
+    reverseConditions: []
     unloadPreviousScene: 1
     isReturnTransition: 0
     targetBrainState: 
     targetBrainStateReverse: 
     notes: 
+  - fromSceneId: hub
+    toSceneId: EndOfDay
+    label: End non-battle day
+    isBidirectional: 1
+    conditions:
+    - conditionType: 1
+      conditionKey: EndHubDay
+      expectedBoolValue: 1
+      expectedIntValue: 0
+      comparisonOperator: 3
+      expectedStringValue: 
+    reverseConditions:
+    - conditionType: 1
+      conditionKey: ReturnToHub
+      expectedBoolValue: 1
+      expectedIntValue: 0
+      comparisonOperator: 3
+      expectedStringValue: 
+    unloadPreviousScene: 1
+    isReturnTransition: 0
+    targetBrainState: 
+    targetBrainStateReverse: 
+    notes: 'Hub -> EndOfDay: EndHubDay is true
+
+      EndOfDay -> Hub: ReturnToHub'
   _startingSceneId: scene_0

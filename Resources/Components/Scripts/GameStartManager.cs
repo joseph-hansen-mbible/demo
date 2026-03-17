@@ -27,6 +27,10 @@ namespace Turnroot.Demos
         [HideInInspector]
         public LoadingController loadingController;
 
+        [BoxGroup("Loading")]
+        [Tooltip("Optional shared loading screen controller that can be reused across scenes.")]
+        public LoadingScreenController LoadingScreen;
+
         #region UI Managers
 
         [BoxGroup("UI Managers"), HorizontalLine(color: EColor.Blue)]
@@ -129,6 +133,21 @@ namespace Turnroot.Demos
 
             sceneFlowBrain = saveFileBrain.Brain.sceneFlowBrain;
             loadingController = saveFileBrain.Brain.GetComponent<LoadingController>();
+
+            if (LoadingScreen == null)
+            {
+                LoadingScreen = FindFirstObjectByType<LoadingScreenController>();
+            }
+
+            // If the project uses the legacy loading UI (fade + fill driver) but doesn't
+            // have a dedicated controller, create one at runtime to keep behavior consistent.
+            if (LoadingScreen == null && (LoadingFade != null || LoadingFillDriver != null))
+            {
+                LoadingScreen = gameObject.AddComponent<LoadingScreenController>();
+                LoadingScreen.Fade = LoadingFade;
+                LoadingScreen.FillDriver = LoadingFillDriver;
+            }
+
             saveFileBrain.Brain.OnSceneReadyToDisplay += HandleSceneReadyToDisplay;
             sceneFlowBrain.SetCurrentScene("scene_0");
             InitializeSaveFiles();
@@ -199,7 +218,14 @@ namespace Turnroot.Demos
             enabled = false;
 
             OnStartLoadingNextScene.Invoke();
-            LoadingFade.Show();
+            if (LoadingScreen != null)
+            {
+                LoadingScreen.Show();
+            }
+            else
+            {
+                LoadingFade.Show();
+            }
 
             var availableScenes = sceneFlowBrain.GetAvailableScenes();
             if (availableScenes == null || availableScenes.Count == 0)
@@ -213,7 +239,17 @@ namespace Turnroot.Demos
             sceneFlowBrain.TransitionToScene(nextScene.sceneId);
         }
 
-        public void CheckLoadingProgress(float progress) => LoadingFillDriver.SetAmount(progress);
+        public void CheckLoadingProgress(float progress)
+        {
+            if (LoadingScreen != null)
+            {
+                LoadingScreen.SetProgress(progress);
+            }
+            else
+            {
+                LoadingFillDriver?.SetAmount(progress);
+            }
+        }
 
         private void HandleSceneReadyToDisplay(string sceneName, string displayName) =>
             MoveToNextSceneAndUnloadThisOne();
