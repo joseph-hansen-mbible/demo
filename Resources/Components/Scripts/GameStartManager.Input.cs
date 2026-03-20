@@ -36,7 +36,10 @@ namespace Turnroot.Demos
                     return;
             }
 
-            if (action is "Select" or "Start")
+            if (action is InputActionConstants.Select
+                or InputActionConstants.Start
+                or InputActionConstants.Submit
+                or InputActionConstants.Confirm)
             {
                 if (EntryFade.Visible)
                 {

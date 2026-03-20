@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using Turnroot.Utilities;
 
 namespace Turnroot.Demos
 {
@@ -71,17 +72,20 @@ namespace Turnroot.Demos
                 return;
             }
 
-            if (action == "NavigateUp" || action == "NavigateLeft")
+            if (action == InputActionConstants.NavigateUp || action == InputActionConstants.NavigateLeft)
             {
                 UiFx.PlayOneShot(NavigateClip);
                 NavigatePrevious();
             }
-            else if (action == "NavigateDown" || action == "NavigateRight")
+            else if (action == InputActionConstants.NavigateDown || action == InputActionConstants.NavigateRight)
             {
                 UiFx.PlayOneShot(NavigateClip);
                 NavigateNext();
             }
-            else if (action == "Select" || action == "Start")
+            else if (action == InputActionConstants.Select
+                || action == InputActionConstants.Start
+                || action == InputActionConstants.Submit
+                || action == InputActionConstants.Confirm)
             {
                 SelectCurrentStarGift();
             }
