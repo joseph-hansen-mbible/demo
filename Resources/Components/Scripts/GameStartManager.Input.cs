@@ -11,7 +11,6 @@ namespace Turnroot.Demos
 
         private void HandleInput(string action)
         {
-
             switch (_currentInputMode)
             {
                 case InputMode.Keyboard when _keyboard != null:
@@ -37,7 +36,7 @@ namespace Turnroot.Demos
                     return;
             }
 
-            if (action == "Select" || action == "Start")
+            if (action is "Select" or "Start")
             {
                 if (EntryFade.Visible)
                 {

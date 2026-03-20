@@ -124,7 +124,12 @@ namespace Turnroot.Demos
         {
             if (InputProvider != null)
             {
+                "GameStartManager: subscribing to InputProvider.OnInput".LogInfo("GameStartManager");
                 InputProvider.OnInput += HandleInput;
+            }
+            else
+            {
+                "GameStartManager: InputProvider reference is null".LogWarning("GameStartManager");
             }
 
             saveFileBrain = FindFirstObjectByType<SaveFileBrain>();
@@ -140,7 +145,7 @@ namespace Turnroot.Demos
             }
 
             // If the project uses the legacy loading UI (fade + fill driver) but doesn't
-            // have a dedicated controller, create one at runtime to keep behavior consistent.
+            // have a dedicated controller, create one at runtime to keep behavior consistent
             if (LoadingScreen == null && (LoadingFade != null || LoadingFillDriver != null))
             {
                 LoadingScreen = gameObject.AddComponent<LoadingScreenController>();
@@ -167,8 +172,6 @@ namespace Turnroot.Demos
                 }
             };
 
-            // also update the UI whenever playtime seconds tick; this fires every second,
-            // so we must not clobber the user's current selection while they're browsing.
             saveFileBrain.OnActiveSaveFilePlaytimeUpdated += _ =>
             {
                 if (_currentInputMode == InputMode.SaveFiles)

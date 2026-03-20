@@ -44,6 +44,26 @@ MonoBehaviour:
     style: 1
     prefab: {fileID: 3469738985604321751, guid: eeb7fd29110d47d4986bc9d3c6fea815, type: 3}
   NoPortraitSprite: {fileID: 21300000, guid: 2b3e6b0026eb3524b888ae7aef53a633, type: 3}
+  ItemTypeIcons:
+  - Subtype:
+      _value: Ingredient
+    Icon: {fileID: 21300000, guid: 8a8d14591132495428c493680f9ae018, type: 3}
+  - Subtype:
+      _value: Bait
+    Icon: {fileID: 21300000, guid: f84c4f52474443843934f8e9b061c139, type: 3}
+  - Subtype:
+      _value: ForgeRepair
+    Icon: {fileID: 21300000, guid: 23ea9a619180b304c9f6fefe23732553, type: 3}
+  - Subtype:
+      _value: Gift
+    Icon: {fileID: 21300000, guid: 1e027bab81996934da8078ff091b205e, type: 3}
+  LetterIcons:
+    S: {fileID: 21300000, guid: 54a8529085c35df4086da2582f5138c5, type: 3}
+    A: {fileID: 21300000, guid: ff2c1e462b929ed429a1dc9675b9592a, type: 3}
+    B: {fileID: 21300000, guid: eaf999ec5b23b394ba72483f8d545d8d, type: 3}
+    C: {fileID: 21300000, guid: e9abb07c92a4cb44d81be219142fdedb, type: 3}
+    D: {fileID: 21300000, guid: f224236129544474aa7e05c4a8818cb1, type: 3}
+    E: {fileID: 21300000, guid: b4dd0313f56239f48a4273f9232f1d5f, type: 3}
   MenuButtonSpacing: 2
   MenuFadeTime: 0.75
   MenuInternalTransitionTime: 0.15

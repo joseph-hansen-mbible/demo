@@ -45,14 +45,14 @@ MonoBehaviour:
   <Might>k__BackingField: 0
   <Hit>k__BackingField: 0
   <Critical>k__BackingField: 0
-  _minWeaponTypeAptitude:
+  MinWeaponTypeAptitude:
     _value: E
   Prefab: {fileID: 0}
   InventoryIcon: {fileID: 0}
   <BelongsTo>k__BackingField: {fileID: 0}
   <Weight>k__BackingField: 1
   <Subtype>k__BackingField:
-    _value: Consumable
+    _value: Bait
   <WeaponType>k__BackingField: {fileID: 0}
   <IsUnequippable>k__BackingField: 1
   <EquipableType>k__BackingField: 0

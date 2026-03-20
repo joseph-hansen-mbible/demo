@@ -4849,6 +4849,7 @@ GameObject:
   - component: {fileID: 2465104787104711261}
   - component: {fileID: 7464454706555829771}
   - component: {fileID: 4372561659773372892}
+  - component: {fileID: 4563450998486439083}
   m_Layer: 8
   m_Name: Shop with POI
   m_TagString: Untagged
@@ -4909,6 +4910,7 @@ MonoBehaviour:
   Type: 0
   poiVisual: {fileID: 6474218464739636926}
   CameraPoint: {fileID: 4936202544619310442}
+  MoveCameraOnSelect: 1
   fadeDuration: 0.35
   UiFx: {fileID: 4372561659773372892}
   PoiShowSound: {fileID: 0}
@@ -4935,7 +4937,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.Shop
   ItemsStocked:
-  - Item: {fileID: 11400000, guid: 5d11b0082e3710449a8af1c99b24dd81, type: 2}
+  - UiRefs: {fileID: 0}
+    Item: {fileID: 11400000, guid: 5d11b0082e3710449a8af1c99b24dd81, type: 2}
     MaxQuantity: 8
     RestockAtIntervals: 1
     RestockIntervalDays: 4
@@ -4946,7 +4949,8 @@ MonoBehaviour:
     SaleChanceOnRandomDays: 0.1
     RareItem: 0
     ChanceToAppearInShop: 0
-  - Item: {fileID: 11400000, guid: 8ad131f977bd8e74fae6debaa29edb8a, type: 2}
+  - UiRefs: {fileID: 0}
+    Item: {fileID: 11400000, guid: 8ad131f977bd8e74fae6debaa29edb8a, type: 2}
     MaxQuantity: 5
     RestockAtIntervals: 1
     RestockIntervalDays: 6
@@ -4957,7 +4961,8 @@ MonoBehaviour:
     SaleChanceOnRandomDays: 0.3
     RareItem: 0
     ChanceToAppearInShop: 0
-  - Item: {fileID: 11400000, guid: 9b2c438ca14449d40a008b41bc5f2192, type: 2}
+  - UiRefs: {fileID: 0}
+    Item: {fileID: 11400000, guid: 9b2c438ca14449d40a008b41bc5f2192, type: 2}
     MaxQuantity: 6
     RestockAtIntervals: 0
     RestockIntervalDays: 0
@@ -4970,6 +4975,10 @@ MonoBehaviour:
     ChanceToAppearInShop: 0.5
   ShopDescription: Sells common fish
   Shopkeeper: {fileID: 0}
+  WelcomeDialogues: []
+  ShopKeeperSellsDialogues: []
+  ShopKeeperBuysDialogues: []
+  FarewellDialogues: []
   ShopReadyForBusiness: 1
   DaysOpenCycle: 01010101010101
   WillBuy: 1
@@ -5070,6 +5079,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4563450998486439083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963629762775724502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a348883fdcda3449406a12bebec5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Shop.ShopUi
+  ItemUiRefs: []
+  ItemPrefab: {fileID: 3263827923378807549, guid: 62931ce9ea9518f4aa3cc3306ef6ec1b, type: 3}
+  ShopNameText: {fileID: 0}
+  ShopBadgeImage: {fileID: 0}
+  ItemDescriptionText: {fileID: 0}
+  TotalGoldText: {fileID: 0}
+  ItemsParentContainer: {fileID: 0}
+  WeaponExtraDetails: {fileID: 0}
+  WeaponMightText: {fileID: 0}
+  WeaponHitText: {fileID: 0}
+  WeaponCritText: {fileID: 0}
+  PageIndicatorContainer: {fileID: 0}
+  InactivePageIndicatorSprite: {fileID: 21300000, guid: d10042fef9bb3ad40919531d2ef315cb, type: 3}
+  ActivePageIndicatorSprite: {fileID: 21300000, guid: aa83791a25c6fe645bf93332a74c703d, type: 3}
+  PageIndicatorSize: 30
+  ItemsPerPage: 6
 --- !u!1 &2118820939134981602
 GameObject:
   m_ObjectHideFlags: 0
