@@ -10359,6 +10359,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1838084107}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: TotalGoldScroll
+      value: 
+      objectReference: {fileID: 3091804462599517359}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
       objectReference: {fileID: 1716235705}
@@ -10542,6 +10546,10 @@ PrefabInstance:
       propertyPath: WeaponCritText
       value: 
       objectReference: {fileID: 1838084107}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: TotalGoldScroll
+      value: 
+      objectReference: {fileID: 3091804462599517359}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
@@ -46787,6 +46795,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1838084107}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: TotalGoldScroll
+      value: 
+      objectReference: {fileID: 3091804462599517359}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
       objectReference: {fileID: 1716235705}
@@ -66448,6 +66460,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1838084107}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: TotalGoldScroll
+      value: 
+      objectReference: {fileID: 3091804462599517359}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
       objectReference: {fileID: 1716235705}
@@ -69704,6 +69720,10 @@ PrefabInstance:
       propertyPath: WeaponCritText
       value: 
       objectReference: {fileID: 1838084107}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: TotalGoldScroll
+      value: 
+      objectReference: {fileID: 3091804462599517359}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
@@ -86346,7 +86366,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2909084029368269719, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3091804462599517359}
   m_SourcePrefab: {fileID: 100100000, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
 --- !u!114 &3091804462599517357 stripped
 MonoBehaviour:
@@ -86359,6 +86382,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e098fbdb6ab736f4d894bc75743cfe7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.AbstractScripts.UIFade
+--- !u!1 &3091804462599517358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2909084029368269719, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 3091804462599517356}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3091804462599517359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3091804462599517358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86bf415ed1c1a49419d270ebf9a8a923, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.Ui.ScrollDownNumber
+  NumberText: {fileID: 225805628}
+  StartNumber: 0
+  EndNumber: 100
+  Suffix: G
+  Prefix: 
+  ScrollDuration: 0.4
+  EaseOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  Audio: {fileID: 1965627328}
+  ScrollSound: {fileID: 8300000, guid: 215cb32ad6e13fd4bb0dfa64b92c2174, type: 3}
 --- !u!4 &3494593284164994193 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 269220514333358895, guid: 7254e217a62166b4a8fe0569a44a9d47, type: 3}
@@ -87188,6 +87260,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1838084107}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: TotalGoldScroll
+      value: 
+      objectReference: {fileID: 3091804462599517359}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
       objectReference: {fileID: 1716235705}
@@ -87211,6 +87287,10 @@ PrefabInstance:
       propertyPath: WeaponDurabilityText
       value: 
       objectReference: {fileID: 1250300557}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: PageChangeAudioSource
+      value: 
+      objectReference: {fileID: 1965627328}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: PageIndicatorContainer
       value: 
