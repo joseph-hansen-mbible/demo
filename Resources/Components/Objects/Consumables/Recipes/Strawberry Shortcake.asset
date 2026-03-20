@@ -21,7 +21,7 @@ MonoBehaviour:
   DefenseBonus: 0
   ResistanceBonus: 1
   SpeedBonus: 0
-  LuckBonus: 9
+  LuckBonus: 0
   DexterityBonus: 0
   MovementBonus: 0
   CharmBonus: 1

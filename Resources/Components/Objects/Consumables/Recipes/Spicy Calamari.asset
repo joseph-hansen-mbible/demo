@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8819bb94143090740931a623215b5050, type: 3}
   m_Name: Spicy Calamari
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.Recipes.Recipe
-  RecipeName: Spciy Calamari
+  RecipeName: Spicy Calamari
   Description: A powerful seafood delicacy, not for the faint of heart. Gives +1
-    Luck and +2 +2 Dexterity
+    Luck and +2 Dexterity
   SkillBonus: 0
   StrengthBonus: 0
   MagicBonus: 0
