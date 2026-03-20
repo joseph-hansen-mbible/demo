@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Mackerel
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: Mackerel
-  _flavorText: A amall speedy fish with a strong flavor
+  _flavorText: A common speedy fish with a strong flavor
   <BasePrice>k__BackingField: 20
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1

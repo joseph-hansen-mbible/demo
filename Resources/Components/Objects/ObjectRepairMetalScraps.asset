@@ -13,46 +13,46 @@ MonoBehaviour:
   m_Name: ObjectRepairMetalScraps
   m_EditorClassIdentifier: 
   _name: Metal Scraps
-  _flavorText: Small refuse from blacksmith shops, useful for repairing simple weapons
-  _isUnequippable: 1
-  _subtype:
-    _value: Consumable
-  _equipableType: 0
-  _weaponType: {fileID: 0}
-  _basePrice: 15
-  _sellable: 1
-  _buyable: 1
-  _sellPriceDeductedPerUse: 0
-  _repairable: 1
+  _flavorText: Discarded metal chunks, useful for repairing simple weapons
+  <BasePrice>k__BackingField: 2
+  <Sellable>k__BackingField: 1
+  <Buyable>k__BackingField: 1
+  <SellPriceDeductedPerUse>k__BackingField: 0
+  <Repairable>k__BackingField: 1
   _repairPricePerUse: 10
-  _repairNeedsItems: 1
-  _repairItem: {fileID: 0}
-  _repairItemAmountPerUse: 1
-  _forgeable: 1
-  _forgeInto: []
-  _forgePrices: 
-  _forgeNeedsItems: 0
-  _forgeItems: []
-  _forgeItemAmountPerUse: 1
-  _belongsTo: {fileID: 0}
+  <RepairNeedsItems>k__BackingField: 1
+  <RepairItem>k__BackingField: {fileID: 0}
+  <RepairItemAmountPerUse>k__BackingField: 1
+  <Forgeable>k__BackingField: 1
+  <ForgeOptions>k__BackingField: []
   _giftRank: 1
   _unitsLove: []
   _unitsHate: []
-  _lowerRange: 0
-  _upperRange: 0
+  <LowerRange>k__BackingField: 0
+  <UpperRange>k__BackingField: 0
   _rangeAdjustedByStat: 0
   _rangeAdjustedByStatName: 0
   _rangeAdjustedByStatAmount: 0
-  _durability: 1
-  _maxUses: 100
+  <MaxUses>k__BackingField: 100
   _replenishUsesAfterBattle: 0
   _replenishUsesAfterBattleAmount: 0
-  _weight: 1
-  _might: 0
-  _hit: 0
-  _critical: 0
-  _StatBonuses:
+  <SpeciesEffectiveAgainst>k__BackingField: []
+  <WeaponTypesEffectiveAgainst>k__BackingField: []
+  _weaponEffect: {fileID: 0}
+  <StatBonuses>k__BackingField:
     _keys: 
     _values: []
-  _minWeaponTypeAptitude:
+  <Might>k__BackingField: 0
+  <Hit>k__BackingField: 0
+  <Critical>k__BackingField: 0
+  MinWeaponTypeAptitude:
     _value: E
+  Prefab: {fileID: 0}
+  InventoryIcon: {fileID: 0}
+  <BelongsTo>k__BackingField: {fileID: 0}
+  <Weight>k__BackingField: 1
+  <Subtype>k__BackingField:
+    _value: ForgeRepair
+  <WeaponType>k__BackingField: {fileID: 0}
+  <IsUnequippable>k__BackingField: 1
+  <EquipableType>k__BackingField: 0

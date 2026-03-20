@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
   m_Name: Magic Bait
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
-  _name: Grasshopper
+  _name: Magic Bait
   _flavorText: Magically crafted bait with an exceptional chance of catching rare
     fish
   <BasePrice>k__BackingField: 30

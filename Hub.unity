@@ -69761,12 +69761,16 @@ PrefabInstance:
       value: -0.001944876
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ShopName
+      value: Groceries
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopDescription
-      value: Sells common ingredients
+      value: Sells common ingredients and supplies
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].Item
@@ -69783,14 +69787,14 @@ PrefabInstance:
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].Item
       value: 
-      objectReference: {fileID: 11400000, guid: 637287273350ba9429739da74b73e90d, type: 2}
+      objectReference: {fileID: 11400000, guid: 87e2f8cd4f716cb4989c491ddc545243, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].RareItem
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RareItem
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].SalePrice
@@ -69822,7 +69826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].MaxQuantity
-      value: 1
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockAtIntervals
@@ -69838,7 +69842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RestockAtIntervals
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockIntervalDays
@@ -69854,7 +69858,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RestockIntervalDays
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].ChanceToAppearInShop
@@ -69862,7 +69866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].ChanceToAppearInShop
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockQuantityPerDay
@@ -69878,7 +69882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RestockQuantityPerDay
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].SaleChanceOnRandomDays
