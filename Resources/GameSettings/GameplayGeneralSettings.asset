@@ -33,7 +33,7 @@ MonoBehaviour:
   CustomSpeedMultiplierForAvoid: 2
   CustomLuckMultiplierForAvoid: 1
   WeaponTriangleHitBonus: 15
-  EffectivenessMultiplier: 1.5
+  EffectivenessMultiplier: 2
   DoubleAttackSpeedThreshold: 4
   SupportBonusC:
     Hit: 2

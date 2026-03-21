@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: Hunting Bow
   _flavorText: A simple bow
-  <BasePrice>k__BackingField: 80
+  <BasePrice>k__BackingField: 150
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
-  <SellPriceDeductedPerUse>k__BackingField: 2
+  <SellPriceDeductedPerUse>k__BackingField: 5
   <Repairable>k__BackingField: 1
-  _repairPricePerUse: 1
+  <RepairPricePerUse>k__BackingField: 4
   <RepairNeedsItems>k__BackingField: 1
   <RepairItem>k__BackingField: {fileID: 11400000, guid: 1de39de0518ad044ea25575eb2c72aa0, type: 2}
   <RepairItemAmountPerUse>k__BackingField: 1
+  OneRepairItemCoversFullRepair: 1
   <Forgeable>k__BackingField: 1
   <ForgeOptions>k__BackingField: []
   _giftRank: 1

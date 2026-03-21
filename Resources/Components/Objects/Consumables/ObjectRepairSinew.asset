@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: ObjectRepairSinew
   _flavorText: Carefully dried animal sinew. Used for repairing bows
-  <BasePrice>k__BackingField: 20
+  <BasePrice>k__BackingField: 30
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
-  <SellPriceDeductedPerUse>k__BackingField: 2
+  <SellPriceDeductedPerUse>k__BackingField: 0
   <Repairable>k__BackingField: 1
-  _repairPricePerUse: 10
+  <RepairPricePerUse>k__BackingField: 10
   <RepairNeedsItems>k__BackingField: 1
   <RepairItem>k__BackingField: {fileID: 0}
   <RepairItemAmountPerUse>k__BackingField: 1
+  OneRepairItemCoversFullRepair: 0
   <Forgeable>k__BackingField: 1
   <ForgeOptions>k__BackingField: []
   _giftRank: 1

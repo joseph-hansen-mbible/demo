@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ax
   m_EditorClassIdentifier: 
   _name: Ax
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 65c03787ff68ece43bc00a7ee1e9ff59, type: 3}
   _id: ax
   _isMagic: 0
   _trianglePosition:

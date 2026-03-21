@@ -57,6 +57,7 @@ MonoBehaviour:
   - Subtype:
       _value: Gift
     Icon: {fileID: 21300000, guid: 1e027bab81996934da8078ff091b205e, type: 3}
+  MagicTypeIcon: {fileID: 21300000, guid: 7be1f41cd8ddd7f4dacb6a7dd79aa613, type: 3}
   LetterIcons:
     S: {fileID: 21300000, guid: 54a8529085c35df4086da2582f5138c5, type: 3}
     A: {fileID: 21300000, guid: ff2c1e462b929ed429a1dc9675b9592a, type: 3}

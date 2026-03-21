@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: 
   _name: Bow
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 22046e7c1799c294db392b8c1da44c78, type: 3}
   _id: Bow
   _isMagic: 0
   _trianglePosition:
