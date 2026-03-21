@@ -10353,7 +10353,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponHitText
       value: 
-      objectReference: {fileID: 1144928737}
+      objectReference: {fileID: 1185484165}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopBadgeImage
       value: 
@@ -10361,7 +10361,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponCritText
       value: 
-      objectReference: {fileID: 1838084107}
+      objectReference: {fileID: 1463274840}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
@@ -10369,7 +10369,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
-      objectReference: {fileID: 1716235705}
+      objectReference: {fileID: 1000037739}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: NavigateAudioClip
       value: 
@@ -10434,6 +10434,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.002842906
       objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ShopName
+      value: Blacksmith
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: Shopkeeper
+      value: 
+      objectReference: {fileID: 11400000, guid: c83f04c84e202fb45aab89052c1e9c7f, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopDescription
       value: Repairs and forges weapons
@@ -10557,7 +10565,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponHitText
       value: 
-      objectReference: {fileID: 1144928737}
+      objectReference: {fileID: 1185484165}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopBadgeImage
       value: 
@@ -10565,7 +10573,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponCritText
       value: 
-      objectReference: {fileID: 1838084107}
+      objectReference: {fileID: 1463274840}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
@@ -10573,7 +10581,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
-      objectReference: {fileID: 1716235705}
+      objectReference: {fileID: 1000037739}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: NavigateAudioClip
       value: 
@@ -10638,6 +10646,14 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.0048318338
       objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ShopName
+      value: Pharmacy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: Shopkeeper
+      value: 
+      objectReference: {fileID: 11400000, guid: c84b13d9f56bbff4288e8ca362e81a70, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopDescription
       value: Sells common remedies and potions
@@ -41085,6 +41101,17 @@ Transform:
   - {fileID: 1748570923}
   m_Father: {fileID: 1458499080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1000037739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3541748970850809650, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 3091804462599517356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1008427482
 GameObject:
   m_ObjectHideFlags: 0
@@ -46821,7 +46848,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponHitText
       value: 
-      objectReference: {fileID: 1144928737}
+      objectReference: {fileID: 1185484165}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopBadgeImage
       value: 
@@ -46829,7 +46856,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponCritText
       value: 
-      objectReference: {fileID: 1838084107}
+      objectReference: {fileID: 1463274840}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
@@ -46837,7 +46864,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
-      objectReference: {fileID: 1716235705}
+      objectReference: {fileID: 1000037739}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: NavigateAudioClip
       value: 
@@ -46903,17 +46930,25 @@ PrefabInstance:
       value: -0.000310726
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ShopName
+      value: Weapons
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: Shopkeeper
+      value: 
+      objectReference: {fileID: 11400000, guid: e6efda2ac9d5ecc4d97ce32952c28495, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopDescription
       value: Sells common weapons
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.size
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].Item
       value: 
-      objectReference: {fileID: 11400000, guid: 18c28f887826b0d4389fb021663c5146, type: 2}
+      objectReference: {fileID: 11400000, guid: eb81c60e19c405f4ba5d794d4b48b9a4, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].Item
       value: 
@@ -46922,6 +46957,22 @@ PrefabInstance:
       propertyPath: ItemsStocked.Array.data[2].Item
       value: 
       objectReference: {fileID: 11400000, guid: b2bbcd2f42817844c93b9ba8676a01ce, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 090bdeea0526ec641a26c4f110e7ff53, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 271a5647fbc289440a3274b774ac361d, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d0af70eae3111949afe42cf38d29d5d, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 3208bec3025f1154fb5d2386221eae41, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].RareItem
       value: 0
@@ -46935,12 +46986,16 @@ PrefabInstance:
       value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].SalePrice
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].CanGoOnSale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].MaxQuantity
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].CanGoOnSale
@@ -46948,10 +47003,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].MaxQuantity
-      value: 3
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].CanGoOnSale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].MaxQuantity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].MaxQuantity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].MaxQuantity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].MaxQuantity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].MaxQuantity
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
@@ -46967,19 +47042,67 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockIntervalDays
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].RestockIntervalDays
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].RestockIntervalDays
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RestockIntervalDays
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].RestockIntervalDays
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].RestockIntervalDays
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].RestockIntervalDays
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].ChanceToAppearInShop
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
@@ -46995,11 +47118,31 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].SaleChanceOnRandomDays
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].SaleChanceOnRandomDays
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[2].SaleChanceOnRandomDays
       value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -48013,17 +48156,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1143394584}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1144928737 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 151075052840092818, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
-  m_PrefabInstance: {fileID: 3091804462599517356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1163150130
 GameObject:
   m_ObjectHideFlags: 0
@@ -48342,6 +48474,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173788589}
   m_CullTransparentMesh: 1
+--- !u!114 &1185484165 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1125478446839984154, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 3091804462599517356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1187781263
 GameObject:
   m_ObjectHideFlags: 0
@@ -59713,6 +59856,17 @@ Transform:
   - {fileID: 2024757862}
   m_Father: {fileID: 2042979240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1463274840 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8800197439660631866, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 3091804462599517356}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1468072539
 GameObject:
   m_ObjectHideFlags: 0
@@ -65666,17 +65820,6 @@ MonoBehaviour:
   LocationsFade: {fileID: 0}
   BackButtonFade: {fileID: 0}
   NotificationFade: {fileID: 0}
---- !u!114 &1716235705 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7603862988513694540, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
-  m_PrefabInstance: {fileID: 3091804462599517356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1729987466
 GameObject:
   m_ObjectHideFlags: 0
@@ -66502,7 +66645,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponHitText
       value: 
-      objectReference: {fileID: 1144928737}
+      objectReference: {fileID: 1185484165}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopBadgeImage
       value: 
@@ -66510,7 +66653,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponCritText
       value: 
-      objectReference: {fileID: 1838084107}
+      objectReference: {fileID: 1463274840}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
@@ -66518,7 +66661,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
-      objectReference: {fileID: 1716235705}
+      objectReference: {fileID: 1000037739}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: NavigateAudioClip
       value: 
@@ -66587,6 +66730,10 @@ PrefabInstance:
       propertyPath: ShopName
       value: Bait
       objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: Shopkeeper
+      value: 
+      objectReference: {fileID: 11400000, guid: b62f117d86f490b4f8da587154c392ca, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopDescription
       value: Sells bait for fishing
@@ -66912,17 +67059,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827536999}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1838084107 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6046375002928634845, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
-  m_PrefabInstance: {fileID: 3091804462599517356}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1839066615
 GameObject:
   m_ObjectHideFlags: 0
@@ -69779,7 +69915,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponHitText
       value: 
-      objectReference: {fileID: 1144928737}
+      objectReference: {fileID: 1185484165}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopBadgeImage
       value: 
@@ -69787,7 +69923,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponCritText
       value: 
-      objectReference: {fileID: 1838084107}
+      objectReference: {fileID: 1463274840}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
@@ -69795,7 +69931,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
-      objectReference: {fileID: 1716235705}
+      objectReference: {fileID: 1000037739}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: NavigateAudioClip
       value: 
@@ -69865,12 +70001,16 @@ PrefabInstance:
       value: Groceries
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: Shopkeeper
+      value: 
+      objectReference: {fileID: 11400000, guid: e6efda2ac9d5ecc4d97ce32952c28495, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopDescription
       value: Sells common ingredients and supplies
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].Item
@@ -69889,12 +70029,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 87e2f8cd4f716cb4989c491ddc545243, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 1de39de0518ad044ea25575eb2c72aa0, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].RareItem
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RareItem
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].RareItem
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].SalePrice
@@ -69929,6 +70077,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].MaxQuantity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockAtIntervals
       value: 1
       objectReference: {fileID: 0}
@@ -69943,6 +70095,10 @@ PrefabInstance:
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RestockAtIntervals
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].RestockAtIntervals
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockIntervalDays
@@ -69961,11 +70117,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].RestockIntervalDays
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].ChanceToAppearInShop
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].ChanceToAppearInShop
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
@@ -69982,6 +70146,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RestockQuantityPerDay
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].RestockQuantityPerDay
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
@@ -86439,6 +86607,10 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 9054891999095365717, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9101123538081494077, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -87346,7 +87518,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponHitText
       value: 
-      objectReference: {fileID: 1144928737}
+      objectReference: {fileID: 1185484165}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ShopBadgeImage
       value: 
@@ -87354,7 +87526,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponCritText
       value: 
-      objectReference: {fileID: 1838084107}
+      objectReference: {fileID: 1463274840}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
@@ -87362,7 +87534,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
-      objectReference: {fileID: 1716235705}
+      objectReference: {fileID: 1000037739}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: NavigateAudioClip
       value: 
