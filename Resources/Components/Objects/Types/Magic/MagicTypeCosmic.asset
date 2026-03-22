@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc81b5fae4a59f43995f036de239801, type: 3}
   m_Name: MagicTypeCosmic
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.Components.WeaponType
-  _name: Cosmic
-  _icon: {fileID: 21300000, guid: 7be1f41cd8ddd7f4dacb6a7dd79aa613, type: 3}
+  _name: Cosmic Magic
+  _icon: {fileID: 21300000, guid: 8fce90b43d85c3c4a83860a43981f3e6, type: 3}
   _id: 
   _isMagic: 1
   _trianglePosition:

@@ -15,14 +15,14 @@ MonoBehaviour:
   _name: Succor
   _flavorText: 'Heals an ally by 20% of max HP.
 
-    Replenishes 1 use between battle.
+    Replenishes 1 use between battles.
 
     <b>Range
     1-3</b>'
   <BasePrice>k__BackingField: 150
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
-  <SellPriceDeductedPerUse>k__BackingField: 5
+  <SellPriceDeductedPerUse>k__BackingField: 12
   <Repairable>k__BackingField: 0
   <RepairPricePerUse>k__BackingField: 10
   <RepairNeedsItems>k__BackingField: 1
