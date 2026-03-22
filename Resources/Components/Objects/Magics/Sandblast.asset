@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
-  m_Name: Lightning
+  m_Name: Sandblast
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
-  _name: Lightning
-  _flavorText: "Brings down a striking bolt onto an enemy. \n<b>Effective against
-    armor</b>\n<b>Range 2-3</b>"
-  <BasePrice>k__BackingField: 280
+  _name: Sandblast
+  _flavorText: 'Disturbs the ground under an enemy and shower them with sharp debris.
+
+    <b>Range
+    1-2</b>'
+  <BasePrice>k__BackingField: 160
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
-  <SellPriceDeductedPerUse>k__BackingField: 7
+  <SellPriceDeductedPerUse>k__BackingField: 6
   <Repairable>k__BackingField: 0
   <RepairPricePerUse>k__BackingField: 10
   <RepairNeedsItems>k__BackingField: 1
@@ -30,26 +32,26 @@ MonoBehaviour:
   _giftRank: 1
   _unitsLove: []
   _unitsHate: []
-  <LowerRange>k__BackingField: 2
-  <UpperRange>k__BackingField: 3
+  <LowerRange>k__BackingField: 1
+  <UpperRange>k__BackingField: 2
   _rangeAdjustedByStat: 0
   _rangeAdjustedByStatName: 0
   _rangeAdjustedByStatAmount: 0
-  <MaxUses>k__BackingField: 40
+  <MaxUses>k__BackingField: 30
   _replenishUsesAfterBattle: 0
   _replenishUsesAfterBattleAmount: 0
   <SpeciesEffectiveAgainst>k__BackingField: []
   <WeaponTypesEffectiveAgainst>k__BackingField: []
   <EffectiveAgainstFlying>k__BackingField: 0
-  <EffectiveAgainstArmored>k__BackingField: 1
+  <EffectiveAgainstArmored>k__BackingField: 0
   <EffectiveAgainstRiding>k__BackingField: 0
   _weaponEffect: {fileID: 0}
   <StatBonuses>k__BackingField:
     _keys: 
     _values: []
-  <Might>k__BackingField: 4
-  <Hit>k__BackingField: 75
-  <Critical>k__BackingField: 5
+  <Might>k__BackingField: 3
+  <Hit>k__BackingField: 95
+  <Critical>k__BackingField: 0
   MinWeaponTypeAptitude:
     _value: E
   Prefab: {fileID: 0}
@@ -58,6 +60,6 @@ MonoBehaviour:
   <Weight>k__BackingField: 1
   <Subtype>k__BackingField:
     _value: Magic
-  <WeaponType>k__BackingField: {fileID: 11400000, guid: a915b92e90240f04898c773c34360ab6, type: 2}
+  <WeaponType>k__BackingField: {fileID: 11400000, guid: b395fabd14f262540bdfa173064e82a7, type: 2}
   <IsUnequippable>k__BackingField: 1
   <EquipableType>k__BackingField: 0

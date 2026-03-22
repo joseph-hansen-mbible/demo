@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Fire
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
   _name: Fire
-  _flavorText: Basic fire magic
+  _flavorText: 'Blasts an enemy with fire.
+
+    <b>Range 1-2</b>'
   <BasePrice>k__BackingField: 220
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
-  <SellPriceDeductedPerUse>k__BackingField: 2
+  <SellPriceDeductedPerUse>k__BackingField: 4
   <Repairable>k__BackingField: 0
   <RepairPricePerUse>k__BackingField: 10
   <RepairNeedsItems>k__BackingField: 1
@@ -57,6 +59,6 @@ MonoBehaviour:
   <Weight>k__BackingField: 1
   <Subtype>k__BackingField:
     _value: Magic
-  <WeaponType>k__BackingField: {fileID: 11400000, guid: b395fabd14f262540bdfa173064e82a7, type: 2}
+  <WeaponType>k__BackingField: {fileID: 11400000, guid: c49ccdb4ffc8caf4e8cdbddfc507f228, type: 2}
   <IsUnequippable>k__BackingField: 1
   <EquipableType>k__BackingField: 0

@@ -327,6 +327,89 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &3843118736275446439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1323824813087834604}
+  - component: {fileID: 5277962968120107385}
+  - component: {fileID: 7466459396623921661}
+  m_Layer: 8
+  m_Name: POI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1323824813087834604
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843118736275446439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3745388293747527714}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5277962968120107385
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843118736275446439}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 23.1, y: 33.2, z: 9.72}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7466459396623921661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3843118736275446439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f8d04749dd38b4097240eb0ebeaa06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubPoiUi
+  Type: 3
+  poiVisual: {fileID: 843716284561155889}
+  CameraPoint: {fileID: 5816883376836472729}
+  MoveCameraOnSelect: 0
+  fadeDuration: 0.35
+  UiFx: {fileID: 6004556572667611499}
+  PoiShowSound: {fileID: 8300000, guid: df6f8ab42de5afd4397df5d992ed3a24, type: 3}
+  PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
+  Label: {fileID: 76831284625381336}
+  LabelText: FGI Indigo
+  Badge: {fileID: 5235720677948676119}
+  BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
+  BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
+  ForbiddenBadgeTexture: {fileID: 2800000, guid: 592c9a2993e80254b8e62389785ef6ee, type: 3}
+  Particles: {fileID: 7611427785426612335}
+  ShowBadge: 1
+  CanSelect: 1
 --- !u!1 &4354139893700084416
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +443,7 @@ Transform:
   m_Children:
   - {fileID: 2228393435684516479}
   - {fileID: 5816883376836472729}
-  - {fileID: 52446530765041406}
+  - {fileID: 1323824813087834604}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 95.3, z: 0}
 --- !u!82 &6004556572667611499
@@ -5488,86 +5571,3 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!1 &8848664455351526824
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 52446530765041406}
-  - component: {fileID: 2236068782222204377}
-  - component: {fileID: 272196007450493451}
-  m_Layer: 8
-  m_Name: POI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &52446530765041406
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8848664455351526824}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3745388293747527714}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2236068782222204377
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8848664455351526824}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 23.1, y: 33.2, z: 9.72}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &272196007450493451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8848664455351526824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21f8d04749dd38b4097240eb0ebeaa06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubPoiUi
-  Type: 3
-  poiVisual: {fileID: 843716284561155889}
-  CameraPoint: {fileID: 5816883376836472729}
-  MoveCameraOnSelect: 0
-  fadeDuration: 0.35
-  UiFx: {fileID: 6004556572667611499}
-  PoiShowSound: {fileID: 0}
-  PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
-  Label: {fileID: 76831284625381336}
-  LabelText: FGI Rosie Mercedes
-  Badge: {fileID: 5235720677948676119}
-  BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
-  BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
-  ForbiddenBadgeTexture: {fileID: 2800000, guid: 592c9a2993e80254b8e62389785ef6ee, type: 3}
-  Particles: {fileID: 7611427785426612335}
-  ShowBadge: 1
-  CanSelect: 1
