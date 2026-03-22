@@ -14,14 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GenericEnemySkewAdjustmentRange: {x: -0.15, y: 0.2}
   MaxEquippedSkills: 5
-  WeaponTriangle: 1
   WeaponTriangleAffectsDamage: 1
   WeaponTriangleAffectsHit: 1
   WeaponTriangleAdvantage: 20
   WeaponTriangleDisadvantage: -20
-  MagicTriangle: 0
-  MagicTriangleAdvantage: 20
-  MagicTriangleDisadvantage: -20
   HitFormula: 2
   CustomSkillMultiplierForHit: 2
   CustomDexMultiplierForHit: 1
@@ -159,6 +155,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0ede2b92cf21934ebffa93a639fc302, type: 2}
   - {fileID: 11400000, guid: f91e43ae58a43334eb51bb18455be802, type: 2}
   - {fileID: 11400000, guid: e8c10a69257127942adff5d215b043bb, type: 2}
+  - {fileID: 11400000, guid: a915b92e90240f04898c773c34360ab6, type: 2}
+  MagicTypes: []
   WeaponTriangleIsActive: 1
   TopTriangleWeaponTypes:
   - {fileID: 11400000, guid: f91e43ae58a43334eb51bb18455be802, type: 2}
@@ -170,6 +168,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 030efab55c186fa4ead5d556dc84fdd5, type: 2}
   - {fileID: 11400000, guid: e8c10a69257127942adff5d215b043bb, type: 2}
   - {fileID: 11400000, guid: f57201b01d7550048977555038d4509a, type: 2}
+  - {fileID: 11400000, guid: a915b92e90240f04898c773c34360ab6, type: 2}
   SpeciesTypes:
   - {fileID: 11400000, guid: 6b6a40766f8c5d843ba98e8e51603c6e, type: 2}
   LevelUpExtraGrowthChance: 1

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
-  m_Name: WeaponIronAxe
+  m_Name: WeaponHeavyShovel
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
-  _name: Iron Axe
-  _flavorText: A simple but effective weapon
-  <BasePrice>k__BackingField: 115
+  _name: Heavy Shovel
+  _flavorText: An unwieldy tool that is <b>effective against armor</b>
+  <BasePrice>k__BackingField: 70
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 2
@@ -24,7 +24,7 @@ MonoBehaviour:
   <RepairItem>k__BackingField: {fileID: 11400000, guid: 87e2f8cd4f716cb4989c491ddc545243, type: 2}
   <RepairItemAmountPerUse>k__BackingField: 1
   OneRepairItemCoversFullRepair: 0
-  <Forgeable>k__BackingField: 1
+  <Forgeable>k__BackingField: 0
   <ForgeOptions>k__BackingField: []
   _giftRank: 1
   _unitsLove: []
@@ -34,29 +34,29 @@ MonoBehaviour:
   _rangeAdjustedByStat: 0
   _rangeAdjustedByStatName: 0
   _rangeAdjustedByStatAmount: 0
-  <MaxUses>k__BackingField: 50
+  <MaxUses>k__BackingField: 35
   _replenishUsesAfterBattle: 0
   _replenishUsesAfterBattleAmount: 0
   <SpeciesEffectiveAgainst>k__BackingField: []
   <WeaponTypesEffectiveAgainst>k__BackingField: []
   <EffectiveAgainstFlying>k__BackingField: 0
-  <EffectiveAgainstArmored>k__BackingField: 0
+  <EffectiveAgainstArmored>k__BackingField: 1
   <EffectiveAgainstRiding>k__BackingField: 0
   _weaponEffect: {fileID: 0}
   <StatBonuses>k__BackingField:
     _keys: 
     _values: []
-  <Might>k__BackingField: 7
-  <Hit>k__BackingField: 60
+  <Might>k__BackingField: 9
+  <Hit>k__BackingField: 40
   <Critical>k__BackingField: 0
   MinWeaponTypeAptitude:
-    _value: E
+    _value: D
   Prefab: {fileID: 0}
   InventoryIcon: {fileID: 0}
   <BelongsTo>k__BackingField: {fileID: 0}
   <Weight>k__BackingField: 1
   <Subtype>k__BackingField:
     _value: Weapon
-  <WeaponType>k__BackingField: {fileID: 11400000, guid: 1265787936baf2a4da7e7a1898d11264, type: 2}
+  <WeaponType>k__BackingField: {fileID: 11400000, guid: e8c10a69257127942adff5d215b043bb, type: 2}
   <IsUnequippable>k__BackingField: 1
   <EquipableType>k__BackingField: 0

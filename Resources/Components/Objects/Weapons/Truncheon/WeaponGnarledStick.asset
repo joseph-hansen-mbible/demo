@@ -19,13 +19,13 @@ MonoBehaviour:
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 5
-  <Repairable>k__BackingField: 1
+  <Repairable>k__BackingField: 0
   <RepairPricePerUse>k__BackingField: 10
   <RepairNeedsItems>k__BackingField: 1
   <RepairItem>k__BackingField: {fileID: 11400000, guid: 87e2f8cd4f716cb4989c491ddc545243, type: 2}
   <RepairItemAmountPerUse>k__BackingField: 1
   OneRepairItemCoversFullRepair: 0
-  <Forgeable>k__BackingField: 1
+  <Forgeable>k__BackingField: 0
   <ForgeOptions>k__BackingField: []
   _giftRank: 1
   _unitsLove: []

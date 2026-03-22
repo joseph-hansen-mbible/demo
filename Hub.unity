@@ -46943,7 +46943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.size
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].Item
@@ -46952,19 +46952,19 @@ PrefabInstance:
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].Item
       value: 
-      objectReference: {fileID: 11400000, guid: 090391e591100b940bb3cbd84fabfbb2, type: 2}
+      objectReference: {fileID: 11400000, guid: 090bdeea0526ec641a26c4f110e7ff53, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].Item
       value: 
-      objectReference: {fileID: 11400000, guid: b2bbcd2f42817844c93b9ba8676a01ce, type: 2}
+      objectReference: {fileID: 11400000, guid: 271a5647fbc289440a3274b774ac361d, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].Item
       value: 
-      objectReference: {fileID: 11400000, guid: 090bdeea0526ec641a26c4f110e7ff53, type: 2}
+      objectReference: {fileID: 11400000, guid: 090391e591100b940bb3cbd84fabfbb2, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[4].Item
       value: 
-      objectReference: {fileID: 11400000, guid: 271a5647fbc289440a3274b774ac361d, type: 2}
+      objectReference: {fileID: 11400000, guid: d4d3f596dfdcc4548b8890668829c409, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[5].Item
       value: 
@@ -46974,7 +46974,31 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 3208bec3025f1154fb5d2386221eae41, type: 2}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: b2bbcd2f42817844c93b9ba8676a01ce, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 1316234bb5bdf6d4ba97551633def8a8, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 1d27a4e454b3f684394186ee3bdf7bb5, type: 2}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].RareItem
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].RareItem
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].RareItem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].RareItem
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
@@ -46983,11 +47007,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].SalePrice
-      value: 80
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].SalePrice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].SalePrice
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].SalePrice
       value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].SalePrice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].SalePrice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].SalePrice
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].SalePrice
+      value: 210
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].SalePrice
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].CanGoOnSale
@@ -46999,7 +47051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].CanGoOnSale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].MaxQuantity
@@ -47007,27 +47059,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].CanGoOnSale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].MaxQuantity
-      value: 3
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].CanGoOnSale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].MaxQuantity
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].CanGoOnSale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[4].MaxQuantity
-      value: 4
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].CanGoOnSale
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[5].MaxQuantity
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].CanGoOnSale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[6].MaxQuantity
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].CanGoOnSale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].MaxQuantity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].MaxQuantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].CanGoOnSale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].MaxQuantity
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockAtIntervals
@@ -47058,6 +47146,18 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].RestockAtIntervals
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockIntervalDays
       value: 2
       objectReference: {fileID: 0}
@@ -47067,7 +47167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].RestockIntervalDays
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].RestockIntervalDays
@@ -47075,7 +47175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[4].RestockIntervalDays
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[5].RestockIntervalDays
@@ -47086,16 +47186,32 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].RestockIntervalDays
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].RestockIntervalDays
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].RestockIntervalDays
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[1].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].ChanceToAppearInShop
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[3].ChanceToAppearInShop
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[4].ChanceToAppearInShop
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[5].ChanceToAppearInShop
@@ -47104,6 +47220,18 @@ PrefabInstance:
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[6].ChanceToAppearInShop
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].ChanceToAppearInShop
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].ChanceToAppearInShop
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].ChanceToAppearInShop
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].RestockQuantityPerDay
@@ -47134,15 +47262,55 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[0].SaleChanceOnRandomDays
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[1].SaleChanceOnRandomDays
-      value: 0.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].SaleChanceOnRandomDays
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[3].SaleChanceOnRandomDays
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[4].SaleChanceOnRandomDays
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[5].SaleChanceOnRandomDays
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[6].SaleChanceOnRandomDays
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[7].SaleChanceOnRandomDays
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[8].SaleChanceOnRandomDays
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: ItemsStocked.Array.data[9].SaleChanceOnRandomDays
       value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -86511,6 +86679,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6472065388923243223, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7.699951
+      objectReference: {fileID: 0}
     - target: {fileID: 7050117361439966188, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -86917,6 +87089,42 @@ PrefabInstance:
       propertyPath: Ship
       value: 
       objectReference: {fileID: 7518584317959767057}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 18c28f887826b0d4389fb021663c5146, type: 2}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].SalePrice
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].CanGoOnSale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].MaxQuantity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].RestockAtIntervals
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].RestockIntervalDays
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].RestockQuantityPerDay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 445860793298354948, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
+      propertyPath: NormalGoodsForSale.Array.data[1].SaleChanceOnRandomDays
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 3745388293747527714, guid: a4ea5f72d5a61bf4a97bd90351a7652a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.54
@@ -87166,6 +87374,46 @@ PrefabInstance:
     - target: {fileID: 2258886058366371348, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
       propertyPath: m_Name
       value: dahlia
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652693947995294576, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: Trust
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: SmuggledGoodsForSale.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: SmuggledGoodsForSale.Array.data[0].Item.Item
+      value: 
+      objectReference: {fileID: 11400000, guid: 878fda6f9b1d79b43b32e068a62a6b51, type: 2}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: SmuggledGoodsForSale.Array.data[0].Item.RareItem
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: SmuggledGoodsForSale.Array.data[0].Item.MaxQuantity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: SmuggledGoodsForSale.Array.data[0].MinimumTrustRequired
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: SmuggledGoodsForSale.Array.data[0].Item.RestockAtIntervals
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914660932069722462, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: SmuggledGoodsForSale.Array.data[0].Item.ChanceToAppearInShop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670555174189244880, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7670555174189244880, guid: 1e4cfda8634fd674b967224f72702dbc, type: 3}

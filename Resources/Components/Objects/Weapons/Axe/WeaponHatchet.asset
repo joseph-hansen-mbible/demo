@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
-  m_Name: WeaponIronAxe
+  m_Name: WeaponHatchet
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
-  _name: Iron Axe
-  _flavorText: A simple but effective weapon
-  <BasePrice>k__BackingField: 115
+  _name: Hatchet
+  _flavorText: "A simple axe that can be thrown a short distance. \n<b>Range 1-2</b>"
+  <BasePrice>k__BackingField: 130
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 2
@@ -30,11 +30,11 @@ MonoBehaviour:
   _unitsLove: []
   _unitsHate: []
   <LowerRange>k__BackingField: 1
-  <UpperRange>k__BackingField: 1
+  <UpperRange>k__BackingField: 2
   _rangeAdjustedByStat: 0
   _rangeAdjustedByStatName: 0
   _rangeAdjustedByStatAmount: 0
-  <MaxUses>k__BackingField: 50
+  <MaxUses>k__BackingField: 30
   _replenishUsesAfterBattle: 0
   _replenishUsesAfterBattleAmount: 0
   <SpeciesEffectiveAgainst>k__BackingField: []

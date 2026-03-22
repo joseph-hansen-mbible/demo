@@ -17,15 +17,16 @@ MonoBehaviour:
     and lightning fast. Can be thrown a short distance.
 
     <b>+1 Luck | Range 1-2</b>'
-  <BasePrice>k__BackingField: 60
+  <BasePrice>k__BackingField: 130
   <Sellable>k__BackingField: 1
   <Buyable>k__BackingField: 1
   <SellPriceDeductedPerUse>k__BackingField: 3
   <Repairable>k__BackingField: 1
-  _repairPricePerUse: 5
+  <RepairPricePerUse>k__BackingField: 10
   <RepairNeedsItems>k__BackingField: 1
   <RepairItem>k__BackingField: {fileID: 11400000, guid: 87e2f8cd4f716cb4989c491ddc545243, type: 2}
   <RepairItemAmountPerUse>k__BackingField: 0
+  OneRepairItemCoversFullRepair: 0
   <Forgeable>k__BackingField: 1
   <ForgeOptions>k__BackingField: []
   _giftRank: 1
@@ -41,6 +42,9 @@ MonoBehaviour:
   _replenishUsesAfterBattleAmount: 0
   <SpeciesEffectiveAgainst>k__BackingField: []
   <WeaponTypesEffectiveAgainst>k__BackingField: []
+  <EffectiveAgainstFlying>k__BackingField: 0
+  <EffectiveAgainstArmored>k__BackingField: 0
+  <EffectiveAgainstRiding>k__BackingField: 0
   _weaponEffect: {fileID: 0}
   <StatBonuses>k__BackingField:
     _keys: 06000000
@@ -49,8 +53,8 @@ MonoBehaviour:
   <Might>k__BackingField: 3
   <Hit>k__BackingField: 80
   <Critical>k__BackingField: 15
-  _minWeaponTypeAptitude:
-    _value: D
+  MinWeaponTypeAptitude:
+    _value: E
   Prefab: {fileID: 919132149155446097, guid: 1caa149bf5e4e564d940ba6cdb0e7352, type: 3}
   InventoryIcon: {fileID: 0}
   <BelongsTo>k__BackingField: {fileID: 0}

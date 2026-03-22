@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Truncheon
   m_EditorClassIdentifier: 
   _name: Truncheon
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 8a54db77f2cfc5d488475756b4bd780a, type: 3}
   _id: Truncheon
   _isMagic: 0
   _trianglePosition:
