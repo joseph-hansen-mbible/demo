@@ -47598,7 +47598,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 199701359300508412, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
       propertyPath: m_text
-      value: Test your luck for this item
+      value: Smuggled items
       objectReference: {fileID: 0}
     - target: {fileID: 199701359300508412, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
       propertyPath: m_margin.x
@@ -100748,7 +100748,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a22b497d9f08aa43b983ab84504f28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
-  DockShipUiFade: {fileID: 0}
+  ItemUiRefs: []
+  VendorUiFade: {fileID: 0}
+  ItemPrefab: {fileID: 0}
+  ShopNameText: {fileID: 0}
+  ShopDescriptionText: {fileID: 0}
+  ItemDescriptionText: {fileID: 0}
+  TotalGoldText: {fileID: 0}
+  TotalGoldScroll: {fileID: 0}
+  ItemsParentContainer: {fileID: 0}
+  WeaponExtraDetails: {fileID: 0}
+  WeaponMightText: {fileID: 0}
+  WeaponHitText: {fileID: 0}
+  WeaponCritText: {fileID: 0}
+  WeaponDurabilityText: {fileID: 0}
+  PageIndicatorContainer: {fileID: 0}
+  InactivePageIndicatorSprite: {fileID: 0}
+  ActivePageIndicatorSprite: {fileID: 0}
+  PageIndicatorSize: 30
+  ItemsPerPage: 6
+  AudioPlayer: {fileID: 0}
+  PageChangeAudioClip: {fileID: 0}
+  NavigateAudioClip: {fileID: 0}
 --- !u!1 &4294610766801343259
 GameObject:
   m_ObjectHideFlags: 0
@@ -107381,7 +107402,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a22b497d9f08aa43b983ab84504f28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
-  DockShipUiFade: {fileID: 0}
+  ItemUiRefs: []
+  VendorUiFade: {fileID: 0}
+  ItemPrefab: {fileID: 0}
+  ShopNameText: {fileID: 0}
+  ShopDescriptionText: {fileID: 0}
+  ItemDescriptionText: {fileID: 0}
+  TotalGoldText: {fileID: 0}
+  TotalGoldScroll: {fileID: 0}
+  ItemsParentContainer: {fileID: 0}
+  WeaponExtraDetails: {fileID: 0}
+  WeaponMightText: {fileID: 0}
+  WeaponHitText: {fileID: 0}
+  WeaponCritText: {fileID: 0}
+  WeaponDurabilityText: {fileID: 0}
+  PageIndicatorContainer: {fileID: 0}
+  InactivePageIndicatorSprite: {fileID: 0}
+  ActivePageIndicatorSprite: {fileID: 0}
+  PageIndicatorSize: 30
+  ItemsPerPage: 6
+  AudioPlayer: {fileID: 0}
+  PageChangeAudioClip: {fileID: 0}
+  NavigateAudioClip: {fileID: 0}
 --- !u!82 &6004556572123962133
 AudioSource:
   m_ObjectHideFlags: 0
@@ -107491,7 +107533,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a22b497d9f08aa43b983ab84504f28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
-  DockShipUiFade: {fileID: 0}
+  ItemUiRefs: []
+  VendorUiFade: {fileID: 0}
+  ItemPrefab: {fileID: 0}
+  ShopNameText: {fileID: 0}
+  ShopDescriptionText: {fileID: 0}
+  ItemDescriptionText: {fileID: 0}
+  TotalGoldText: {fileID: 0}
+  TotalGoldScroll: {fileID: 0}
+  ItemsParentContainer: {fileID: 0}
+  WeaponExtraDetails: {fileID: 0}
+  WeaponMightText: {fileID: 0}
+  WeaponHitText: {fileID: 0}
+  WeaponCritText: {fileID: 0}
+  WeaponDurabilityText: {fileID: 0}
+  PageIndicatorContainer: {fileID: 0}
+  InactivePageIndicatorSprite: {fileID: 0}
+  ActivePageIndicatorSprite: {fileID: 0}
+  PageIndicatorSize: 30
+  ItemsPerPage: 6
+  AudioPlayer: {fileID: 0}
+  PageChangeAudioClip: {fileID: 0}
+  NavigateAudioClip: {fileID: 0}
 --- !u!82 &6004556572747532104
 AudioSource:
   m_ObjectHideFlags: 0
@@ -107601,7 +107664,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a22b497d9f08aa43b983ab84504f28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
-  DockShipUiFade: {fileID: 0}
+  ItemUiRefs: []
+  VendorUiFade: {fileID: 0}
+  ItemPrefab: {fileID: 0}
+  ShopNameText: {fileID: 0}
+  ShopDescriptionText: {fileID: 0}
+  ItemDescriptionText: {fileID: 0}
+  TotalGoldText: {fileID: 0}
+  TotalGoldScroll: {fileID: 0}
+  ItemsParentContainer: {fileID: 0}
+  WeaponExtraDetails: {fileID: 0}
+  WeaponMightText: {fileID: 0}
+  WeaponHitText: {fileID: 0}
+  WeaponCritText: {fileID: 0}
+  WeaponDurabilityText: {fileID: 0}
+  PageIndicatorContainer: {fileID: 0}
+  InactivePageIndicatorSprite: {fileID: 0}
+  ActivePageIndicatorSprite: {fileID: 0}
+  PageIndicatorSize: 30
+  ItemsPerPage: 6
+  AudioPlayer: {fileID: 0}
+  PageChangeAudioClip: {fileID: 0}
+  NavigateAudioClip: {fileID: 0}
 --- !u!4 &6024909037086176137
 Transform:
   m_ObjectHideFlags: 0
@@ -113458,7 +113542,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a22b497d9f08aa43b983ab84504f28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
-  DockShipUiFade: {fileID: 0}
+  ItemUiRefs: []
+  VendorUiFade: {fileID: 0}
+  ItemPrefab: {fileID: 0}
+  ShopNameText: {fileID: 0}
+  ShopDescriptionText: {fileID: 0}
+  ItemDescriptionText: {fileID: 0}
+  TotalGoldText: {fileID: 0}
+  TotalGoldScroll: {fileID: 0}
+  ItemsParentContainer: {fileID: 0}
+  WeaponExtraDetails: {fileID: 0}
+  WeaponMightText: {fileID: 0}
+  WeaponHitText: {fileID: 0}
+  WeaponCritText: {fileID: 0}
+  WeaponDurabilityText: {fileID: 0}
+  PageIndicatorContainer: {fileID: 0}
+  InactivePageIndicatorSprite: {fileID: 0}
+  ActivePageIndicatorSprite: {fileID: 0}
+  PageIndicatorSize: 30
+  ItemsPerPage: 6
+  AudioPlayer: {fileID: 0}
+  PageChangeAudioClip: {fileID: 0}
+  NavigateAudioClip: {fileID: 0}
 --- !u!114 &7344602804831842359
 MonoBehaviour:
   m_ObjectHideFlags: 0
