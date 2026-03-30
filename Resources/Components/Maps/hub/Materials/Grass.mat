@@ -111,7 +111,7 @@ Material:
     - _CelTintIntensity: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _ColorVariance: 0.03
+    - _ColorVariance: 0.05
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -123,7 +123,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _HueVariance: 0.13
+    - _HueVariance: 0.1
     - _MaxDistance: 100
     - _Metallic: 0
     - _NightTintIntensity: 0
@@ -131,7 +131,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShadowStrength: 0.35
+    - _ShadowStrength: 0.1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -140,7 +140,7 @@ Material:
     - _Surface: 0
     - _TipTaper: 0.1
     - _Translucency: 0
-    - _UnderlyingMix: 0.3
+    - _UnderlyingMix: 0.35
     - _WindSpeed: 2
     - _WindStrength: 0.28
     - _WindTurbulence: 0.5
@@ -148,7 +148,7 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.22349998, g: 0.29799998, b: 0.25578332, a: 1}
+    - _BaseColor: {r: 0.2925, g: 0.39, b: 0.33355263, a: 1}
     - _CameraPosition: {r: 19.748066, g: 2.9117227, b: 37.57495, a: 0}
     - _CelTintColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -156,7 +156,7 @@ Material:
     - _NightTintColor: {r: 0.19011767, g: 0.19791299, b: 0.404, a: 1}
     - _ShadowColor: {r: 0.35822597, g: 0.320188, b: 0.41799998, a: 0.6666667}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _TipColor: {r: 0.337392, g: 0.426, b: 0.371472, a: 1}
+    - _TipColor: {r: 0.370214, g: 0.491, b: 0.41747808, a: 1}
     - _WindDirection: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
