@@ -10357,6 +10357,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1107682206}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: VendorUiFade
+      value: 
+      objectReference: {fileID: 3091804462599517357}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldText
       value: 
       objectReference: {fileID: 225805628}
@@ -10375,7 +10379,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
-      objectReference: {fileID: 3091804462599517359}
+      objectReference: {fileID: 3091804462599517364}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
@@ -26536,6 +26540,17 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &374318806 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8892818151421179270, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &400860848
 GameObject:
   m_ObjectHideFlags: 0
@@ -27561,6 +27576,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1711287665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522666391 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3541748970850809650, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &528873468
 GameObject:
   m_ObjectHideFlags: 0
@@ -27817,7 +27843,6 @@ MonoBehaviour:
   CurrentDockShipShopType: 0
   ShipName: FGI Abigail
   Side: 0
-  Crew: []
   IsSmuggler: 1
   Trust: 0
   SmuggledGoodsForSale: []
@@ -39267,6 +39292,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5686943563965451055, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
   m_PrefabInstance: {fileID: 3091804462599517356}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &783917478 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2546123269115310240, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &785485810
 GameObject:
   m_ObjectHideFlags: 0
@@ -46158,6 +46188,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1107682206}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: VendorUiFade
+      value: 
+      objectReference: {fileID: 3091804462599517357}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldText
       value: 
       objectReference: {fileID: 225805628}
@@ -46176,7 +46210,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
-      objectReference: {fileID: 3091804462599517359}
+      objectReference: {fileID: 3091804462599517364}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
@@ -48154,7 +48188,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2909084029368269719, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1141744199}
+      addedObject: {fileID: 1141744206}
   m_SourcePrefab: {fileID: 100100000, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
 --- !u!224 &1141744196 stripped
 RectTransform:
@@ -48177,7 +48211,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2909084029368269719, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
   m_PrefabInstance: {fileID: 1141744195}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1141744199
+--- !u!114 &1141744206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48186,14 +48220,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1141744198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86bf415ed1c1a49419d270ebf9a8a923, type: 3}
+  m_Script: {fileID: 11500000, guid: db0a5d1c885057947ad92041bd5a0598, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.Ui.ScrollDownNumber
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.Ui.ScrollDownGold
   NumberText: {fileID: 1141744197}
   StartNumber: 0
   EndNumber: 100
-  Suffix: G
-  Prefix: 
+  prefix: 
+  suffix: 
   ScrollDuration: 0.4
   EaseOutCurve:
     serializedVersion: 2
@@ -48629,6 +48663,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173788589}
   m_CullTransparentMesh: 1
+--- !u!114 &1182931404 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1125478446839984154, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &1185484165 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1125478446839984154, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
@@ -59305,6 +59350,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1426523058}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1429100932 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4977176060786342194, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1431761136
 GameObject:
   m_ObjectHideFlags: 0
@@ -60125,6 +60175,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 817478769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1490460615 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8834429494853414108, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e098fbdb6ab736f4d894bc75743cfe7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.AbstractScripts.UIFade
 --- !u!1001 &1506913517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65865,6 +65926,17 @@ MonoBehaviour:
   LocationsFade: {fileID: 0}
   BackButtonFade: {fileID: 0}
   NotificationFade: {fileID: 0}
+--- !u!114 &1722215938 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9138531901999820570, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1729987466
 GameObject:
   m_ObjectHideFlags: 0
@@ -66692,6 +66764,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1107682206}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: VendorUiFade
+      value: 
+      objectReference: {fileID: 3091804462599517357}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldText
       value: 
       objectReference: {fileID: 225805628}
@@ -66710,7 +66786,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
-      objectReference: {fileID: 3091804462599517359}
+      objectReference: {fileID: 3091804462599517364}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
@@ -67395,6 +67471,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1849508735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8887022186557602267, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1852743446
 GameObject:
   m_ObjectHideFlags: 0
@@ -67813,6 +67894,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872202526}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1901087835 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5885774412214122295, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1901321654
 GameObject:
   m_ObjectHideFlags: 0
@@ -70088,6 +70180,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1107682206}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: VendorUiFade
+      value: 
+      objectReference: {fileID: 3091804462599517357}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldText
       value: 
       objectReference: {fileID: 225805628}
@@ -70106,7 +70202,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
-      objectReference: {fileID: 3091804462599517359}
+      objectReference: {fileID: 3091804462599517364}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
@@ -81297,6 +81393,17 @@ MonoBehaviour:
   OnHidden:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2123494513 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2207765992055673949, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &2123505906
 GameObject:
   m_ObjectHideFlags: 0
@@ -81335,6 +81442,17 @@ Transform:
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7481821936371279539, guid: 15adbead1b9617445a67c0997408c38b, type: 3}
   m_PrefabInstance: {fileID: 3550709067334085082}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &2136966313 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8800197439660631866, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -86871,7 +86989,6 @@ MonoBehaviour:
   CurrentDockShipShopType: 0
   ShipName: FGI Indigo
   Side: 1
-  Crew: []
   IsSmuggler: 0
   Trust: 0
   SmuggledGoodsForSale: []
@@ -87177,7 +87294,6 @@ MonoBehaviour:
   CurrentDockShipShopType: 0
   ShipName: FGI Dahlia
   Side: 0
-  Crew: []
   IsSmuggler: 1
   Trust: 0
   SmuggledGoodsForSale:
@@ -87839,7 +87955,6 @@ MonoBehaviour:
   CurrentDockShipShopType: 0
   ShipName: SFK Larilel
   Side: 1
-  Crew: []
   IsSmuggler: 0
   Trust: 0
   SmuggledGoodsForSale: []
@@ -88005,7 +88120,6 @@ MonoBehaviour:
   CurrentDockShipShopType: 0
   ShipName: Go Fishing
   Side: 0
-  Crew: []
   IsSmuggler: 0
   Trust: 0
   SmuggledGoodsForSale: []
@@ -94336,7 +94450,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2909084029368269719, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3091804462599517359}
+      addedObject: {fileID: 3091804462599517364}
   m_SourcePrefab: {fileID: 100100000, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
 --- !u!114 &3091804462599517357 stripped
 MonoBehaviour:
@@ -94354,7 +94468,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2909084029368269719, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
   m_PrefabInstance: {fileID: 3091804462599517356}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3091804462599517359
+--- !u!114 &3091804462599517364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94363,14 +94477,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3091804462599517358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86bf415ed1c1a49419d270ebf9a8a923, type: 3}
+  m_Script: {fileID: 11500000, guid: db0a5d1c885057947ad92041bd5a0598, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.Ui.ScrollDownNumber
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.Ui.ScrollDownGold
   NumberText: {fileID: 225805628}
   StartNumber: 0
   EndNumber: 100
-  Suffix: G
-  Prefix: 
+  prefix: 
+  suffix: 
   ScrollDuration: 0.4
   EaseOutCurve:
     serializedVersion: 2
@@ -95094,7 +95208,6 @@ MonoBehaviour:
   CurrentDockShipShopType: 0
   ShipName: FGI Rosie Mercedes
   Side: 1
-  Crew: []
   IsSmuggler: 0
   Trust: 0
   SmuggledGoodsForSale: []
@@ -100749,27 +100862,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
   ItemUiRefs: []
-  VendorUiFade: {fileID: 0}
-  ItemPrefab: {fileID: 0}
-  ShopNameText: {fileID: 0}
-  ShopDescriptionText: {fileID: 0}
-  ItemDescriptionText: {fileID: 0}
-  TotalGoldText: {fileID: 0}
-  TotalGoldScroll: {fileID: 0}
-  ItemsParentContainer: {fileID: 0}
-  WeaponExtraDetails: {fileID: 0}
-  WeaponMightText: {fileID: 0}
-  WeaponHitText: {fileID: 0}
-  WeaponCritText: {fileID: 0}
-  WeaponDurabilityText: {fileID: 0}
-  PageIndicatorContainer: {fileID: 0}
-  InactivePageIndicatorSprite: {fileID: 0}
-  ActivePageIndicatorSprite: {fileID: 0}
+  VendorUiFade: {fileID: 1490460615}
+  ItemPrefab: {fileID: 3263827923378807549, guid: 62931ce9ea9518f4aa3cc3306ef6ec1b, type: 3}
+  ShopNameText: {fileID: 2123494513}
+  ShopDescriptionText: {fileID: 1901087835}
+  ItemDescriptionText: {fileID: 374318806}
+  TotalGoldText: {fileID: 1141744197}
+  TotalGoldScroll: {fileID: 1141744206}
+  ItemsParentContainer: {fileID: 783917478}
+  WeaponExtraDetails: {fileID: 1849508735}
+  WeaponMightText: {fileID: 522666391}
+  WeaponHitText: {fileID: 1182931404}
+  WeaponCritText: {fileID: 2136966313}
+  WeaponDurabilityText: {fileID: 1722215938}
+  PageIndicatorContainer: {fileID: 1429100932}
+  InactivePageIndicatorSprite: {fileID: 21300000, guid: d10042fef9bb3ad40919531d2ef315cb, type: 3}
+  ActivePageIndicatorSprite: {fileID: 21300000, guid: aa83791a25c6fe645bf93332a74c703d, type: 3}
   PageIndicatorSize: 30
   ItemsPerPage: 6
-  AudioPlayer: {fileID: 0}
-  PageChangeAudioClip: {fileID: 0}
-  NavigateAudioClip: {fileID: 0}
+  AudioPlayer: {fileID: 1965627328}
+  PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
+  NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
 --- !u!1 &4294610766801343259
 GameObject:
   m_ObjectHideFlags: 0
@@ -107403,27 +107516,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
   ItemUiRefs: []
-  VendorUiFade: {fileID: 0}
-  ItemPrefab: {fileID: 0}
-  ShopNameText: {fileID: 0}
-  ShopDescriptionText: {fileID: 0}
-  ItemDescriptionText: {fileID: 0}
-  TotalGoldText: {fileID: 0}
-  TotalGoldScroll: {fileID: 0}
-  ItemsParentContainer: {fileID: 0}
-  WeaponExtraDetails: {fileID: 0}
-  WeaponMightText: {fileID: 0}
-  WeaponHitText: {fileID: 0}
-  WeaponCritText: {fileID: 0}
-  WeaponDurabilityText: {fileID: 0}
-  PageIndicatorContainer: {fileID: 0}
-  InactivePageIndicatorSprite: {fileID: 0}
-  ActivePageIndicatorSprite: {fileID: 0}
+  VendorUiFade: {fileID: 1490460615}
+  ItemPrefab: {fileID: 3263827923378807549, guid: 62931ce9ea9518f4aa3cc3306ef6ec1b, type: 3}
+  ShopNameText: {fileID: 2123494513}
+  ShopDescriptionText: {fileID: 1901087835}
+  ItemDescriptionText: {fileID: 374318806}
+  TotalGoldText: {fileID: 1141744197}
+  TotalGoldScroll: {fileID: 1141744206}
+  ItemsParentContainer: {fileID: 783917478}
+  WeaponExtraDetails: {fileID: 1849508735}
+  WeaponMightText: {fileID: 522666391}
+  WeaponHitText: {fileID: 1182931404}
+  WeaponCritText: {fileID: 2136966313}
+  WeaponDurabilityText: {fileID: 1722215938}
+  PageIndicatorContainer: {fileID: 1429100932}
+  InactivePageIndicatorSprite: {fileID: 21300000, guid: d10042fef9bb3ad40919531d2ef315cb, type: 3}
+  ActivePageIndicatorSprite: {fileID: 21300000, guid: aa83791a25c6fe645bf93332a74c703d, type: 3}
   PageIndicatorSize: 30
   ItemsPerPage: 6
-  AudioPlayer: {fileID: 0}
-  PageChangeAudioClip: {fileID: 0}
-  NavigateAudioClip: {fileID: 0}
+  AudioPlayer: {fileID: 1965627328}
+  PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
+  NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
 --- !u!82 &6004556572123962133
 AudioSource:
   m_ObjectHideFlags: 0
@@ -107534,27 +107647,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
   ItemUiRefs: []
-  VendorUiFade: {fileID: 0}
-  ItemPrefab: {fileID: 0}
-  ShopNameText: {fileID: 0}
-  ShopDescriptionText: {fileID: 0}
-  ItemDescriptionText: {fileID: 0}
-  TotalGoldText: {fileID: 0}
-  TotalGoldScroll: {fileID: 0}
-  ItemsParentContainer: {fileID: 0}
-  WeaponExtraDetails: {fileID: 0}
-  WeaponMightText: {fileID: 0}
-  WeaponHitText: {fileID: 0}
-  WeaponCritText: {fileID: 0}
-  WeaponDurabilityText: {fileID: 0}
-  PageIndicatorContainer: {fileID: 0}
-  InactivePageIndicatorSprite: {fileID: 0}
-  ActivePageIndicatorSprite: {fileID: 0}
+  VendorUiFade: {fileID: 1490460615}
+  ItemPrefab: {fileID: 3263827923378807549, guid: 62931ce9ea9518f4aa3cc3306ef6ec1b, type: 3}
+  ShopNameText: {fileID: 2123494513}
+  ShopDescriptionText: {fileID: 1901087835}
+  ItemDescriptionText: {fileID: 374318806}
+  TotalGoldText: {fileID: 1141744197}
+  TotalGoldScroll: {fileID: 1141744206}
+  ItemsParentContainer: {fileID: 783917478}
+  WeaponExtraDetails: {fileID: 1849508735}
+  WeaponMightText: {fileID: 522666391}
+  WeaponHitText: {fileID: 1182931404}
+  WeaponCritText: {fileID: 2136966313}
+  WeaponDurabilityText: {fileID: 1722215938}
+  PageIndicatorContainer: {fileID: 1429100932}
+  InactivePageIndicatorSprite: {fileID: 21300000, guid: d10042fef9bb3ad40919531d2ef315cb, type: 3}
+  ActivePageIndicatorSprite: {fileID: 21300000, guid: aa83791a25c6fe645bf93332a74c703d, type: 3}
   PageIndicatorSize: 30
   ItemsPerPage: 6
-  AudioPlayer: {fileID: 0}
-  PageChangeAudioClip: {fileID: 0}
-  NavigateAudioClip: {fileID: 0}
+  AudioPlayer: {fileID: 1965627328}
+  PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
+  NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
 --- !u!82 &6004556572747532104
 AudioSource:
   m_ObjectHideFlags: 0
@@ -107665,27 +107778,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
   ItemUiRefs: []
-  VendorUiFade: {fileID: 0}
-  ItemPrefab: {fileID: 0}
-  ShopNameText: {fileID: 0}
-  ShopDescriptionText: {fileID: 0}
-  ItemDescriptionText: {fileID: 0}
-  TotalGoldText: {fileID: 0}
-  TotalGoldScroll: {fileID: 0}
-  ItemsParentContainer: {fileID: 0}
-  WeaponExtraDetails: {fileID: 0}
-  WeaponMightText: {fileID: 0}
-  WeaponHitText: {fileID: 0}
-  WeaponCritText: {fileID: 0}
-  WeaponDurabilityText: {fileID: 0}
-  PageIndicatorContainer: {fileID: 0}
-  InactivePageIndicatorSprite: {fileID: 0}
-  ActivePageIndicatorSprite: {fileID: 0}
+  VendorUiFade: {fileID: 1490460615}
+  ItemPrefab: {fileID: 3263827923378807549, guid: 62931ce9ea9518f4aa3cc3306ef6ec1b, type: 3}
+  ShopNameText: {fileID: 2123494513}
+  ShopDescriptionText: {fileID: 1901087835}
+  ItemDescriptionText: {fileID: 374318806}
+  TotalGoldText: {fileID: 1141744197}
+  TotalGoldScroll: {fileID: 1141744206}
+  ItemsParentContainer: {fileID: 783917478}
+  WeaponExtraDetails: {fileID: 1849508735}
+  WeaponMightText: {fileID: 522666391}
+  WeaponHitText: {fileID: 1182931404}
+  WeaponCritText: {fileID: 2136966313}
+  WeaponDurabilityText: {fileID: 1722215938}
+  PageIndicatorContainer: {fileID: 1429100932}
+  InactivePageIndicatorSprite: {fileID: 21300000, guid: d10042fef9bb3ad40919531d2ef315cb, type: 3}
+  ActivePageIndicatorSprite: {fileID: 21300000, guid: aa83791a25c6fe645bf93332a74c703d, type: 3}
   PageIndicatorSize: 30
   ItemsPerPage: 6
-  AudioPlayer: {fileID: 0}
-  PageChangeAudioClip: {fileID: 0}
-  NavigateAudioClip: {fileID: 0}
+  AudioPlayer: {fileID: 1965627328}
+  PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
+  NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
 --- !u!4 &6024909037086176137
 Transform:
   m_ObjectHideFlags: 0
@@ -107755,14 +107868,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4777504521111743732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86bf415ed1c1a49419d270ebf9a8a923, type: 3}
+  m_Script: {fileID: 11500000, guid: db0a5d1c885057947ad92041bd5a0598, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.Ui.ScrollDownNumber
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Utilities.Ui.ScrollDownGold
   NumberText: {fileID: 6848201387650080384}
   StartNumber: 0
   EndNumber: 100
-  Suffix: G
-  Prefix: 
+  prefix: 
+  suffix: 
   ScrollDuration: 0.4
   EaseOutCurve:
     serializedVersion: 2
@@ -113543,27 +113656,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Docks.DockShipUi
   ItemUiRefs: []
-  VendorUiFade: {fileID: 0}
-  ItemPrefab: {fileID: 0}
-  ShopNameText: {fileID: 0}
-  ShopDescriptionText: {fileID: 0}
-  ItemDescriptionText: {fileID: 0}
-  TotalGoldText: {fileID: 0}
-  TotalGoldScroll: {fileID: 0}
-  ItemsParentContainer: {fileID: 0}
-  WeaponExtraDetails: {fileID: 0}
-  WeaponMightText: {fileID: 0}
-  WeaponHitText: {fileID: 0}
-  WeaponCritText: {fileID: 0}
-  WeaponDurabilityText: {fileID: 0}
-  PageIndicatorContainer: {fileID: 0}
-  InactivePageIndicatorSprite: {fileID: 0}
-  ActivePageIndicatorSprite: {fileID: 0}
+  VendorUiFade: {fileID: 1490460615}
+  ItemPrefab: {fileID: 3263827923378807549, guid: 62931ce9ea9518f4aa3cc3306ef6ec1b, type: 3}
+  ShopNameText: {fileID: 2123494513}
+  ShopDescriptionText: {fileID: 1901087835}
+  ItemDescriptionText: {fileID: 374318806}
+  TotalGoldText: {fileID: 1141744197}
+  TotalGoldScroll: {fileID: 1141744206}
+  ItemsParentContainer: {fileID: 783917478}
+  WeaponExtraDetails: {fileID: 1849508735}
+  WeaponMightText: {fileID: 522666391}
+  WeaponHitText: {fileID: 1182931404}
+  WeaponCritText: {fileID: 2136966313}
+  WeaponDurabilityText: {fileID: 1722215938}
+  PageIndicatorContainer: {fileID: 1429100932}
+  InactivePageIndicatorSprite: {fileID: 21300000, guid: d10042fef9bb3ad40919531d2ef315cb, type: 3}
+  ActivePageIndicatorSprite: {fileID: 21300000, guid: aa83791a25c6fe645bf93332a74c703d, type: 3}
   PageIndicatorSize: 30
   ItemsPerPage: 6
-  AudioPlayer: {fileID: 0}
-  PageChangeAudioClip: {fileID: 0}
-  NavigateAudioClip: {fileID: 0}
+  AudioPlayer: {fileID: 1965627328}
+  PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
+  NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
 --- !u!114 &7344602804831842359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129023,6 +129136,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1107682206}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
+      propertyPath: VendorUiFade
+      value: 
+      objectReference: {fileID: 3091804462599517357}
+    - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldText
       value: 
       objectReference: {fileID: 225805628}
@@ -129041,7 +129158,7 @@ PrefabInstance:
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: TotalGoldScroll
       value: 
-      objectReference: {fileID: 3091804462599517359}
+      objectReference: {fileID: 3091804462599517364}
     - target: {fileID: 4563450998486439083, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WeaponMightText
       value: 
