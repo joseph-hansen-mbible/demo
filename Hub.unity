@@ -5231,6 +5231,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1440702164}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 2068858103}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -20191,6 +20192,7 @@ Transform:
   m_Children:
   - {fileID: 1569715725}
   - {fileID: 2099476410}
+  - {fileID: 906855658}
   m_Father: {fileID: 656715617}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &168066427
@@ -20251,6 +20253,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1090052632}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 2063337952}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -20334,14 +20337,22 @@ MonoBehaviour:
   cameraPoint: {fileID: 1202457283}
   CharactersPresent: []
   UnitSpawnPoints:
-  - {fileID: 2042979240}
-  - {fileID: 1692304290}
-  - {fileID: 1941721726}
-  - {fileID: 1986922420}
-  - {fileID: 1071082040}
-  - {fileID: 1310293658}
-  - {fileID: 367466369}
-  - {fileID: 323452618}
+  - UnitSpawnPoint: {fileID: 2042979240}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 1692304290}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 1941721726}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 1986922420}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 1071082040}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 1310293658}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 367466369}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 323452618}
+    AvatarPoint: {fileID: 0}
   GeneralCamera: {fileID: 961739752}
   FadeToBlack: {fileID: 1931766790}
   LocationsFade: {fileID: 2110243765}
@@ -25671,6 +25682,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 339584423}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1954847960}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -25927,6 +25939,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 506494862}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 532858765}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -26203,6 +26216,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 501921317}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 15128603}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -27278,6 +27292,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1769272644}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1989320030}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -28616,7 +28631,7 @@ MonoBehaviour:
   SmuggledGoodsForSale: []
   Ship: {fileID: 3067715646633264251}
   AlwaysDocked: 0
-  IsDocked: 0
+  IsDocked: 1
   MinimumAtSeaTime: 14
   MaximumAtSeaTime: 18
   DaysDockedAtATime: 2
@@ -45548,7 +45563,7 @@ MonoBehaviour:
   SmuggledGoodsForSale: []
   Ship: {fileID: 963244556}
   AlwaysDocked: 0
-  IsDocked: 0
+  IsDocked: 1
   MinimumAtSeaTime: 28
   MaximumAtSeaTime: 36
   DaysDockedAtATime: 7
@@ -46002,6 +46017,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 339394976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &906855657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 906855658}
+  - component: {fileID: 906855660}
+  - component: {fileID: 906855659}
+  m_Layer: 0
+  m_Name: HubInteractions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &906855658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906855657}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 154995914}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &906855659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906855657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c6cceadce4537488d9513d5f5433f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Character.HubCharacterManager
+  ChapterOneshots: []
+  CharacterInteraction: {fileID: 906855660}
+--- !u!114 &906855660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906855657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593d4510a83dee64faeb21e1019e71d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.Character.HubCharacterInteraction
+  ActionsMenuFade: {fileID: 0}
 --- !u!1 &925167656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8887022186557602267, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
@@ -54762,6 +54837,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 700051345}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1781330632}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -56759,6 +56835,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1067160825}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1656957779}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -56853,12 +56930,18 @@ MonoBehaviour:
   cameraPoint: {fileID: 1385184121}
   CharactersPresent: []
   UnitSpawnPoints:
-  - {fileID: 1107391058}
-  - {fileID: 250248699}
-  - {fileID: 168066428}
-  - {fileID: 30899509}
-  - {fileID: 1223481792}
-  - {fileID: 335129846}
+  - UnitSpawnPoint: {fileID: 1107391058}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 250248699}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 168066428}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 30899509}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 1223481792}
+    AvatarPoint: {fileID: 0}
+  - UnitSpawnPoint: {fileID: 335129846}
+    AvatarPoint: {fileID: 0}
   GeneralCamera: {fileID: 961739752}
   FadeToBlack: {fileID: 1931766790}
   LocationsFade: {fileID: 2110243765}
@@ -63604,6 +63687,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1852743448}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 808327210}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -66410,6 +66494,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 706892987}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1143394584}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -78705,6 +78790,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 718824826}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1827536999}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -86329,6 +86415,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1965714645}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1872202526}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -87506,6 +87593,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1748570924}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 400860848}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -98253,6 +98341,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 601045129}
   LabelText: IMS Splendor
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1489105088}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
@@ -98362,6 +98451,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 1163150132}
   LabelText: 
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 1426523058}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 0}
@@ -106012,7 +106102,7 @@ MonoBehaviour:
   SmuggledGoodsForSale: []
   Ship: {fileID: 8341279893940779948}
   AlwaysDocked: 0
-  IsDocked: 0
+  IsDocked: 1
   MinimumAtSeaTime: 16
   MaximumAtSeaTime: 24
   DaysDockedAtATime: 3
@@ -111597,6 +111687,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 488924306552915291}
   LabelText: Blacksmith
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 8867842720748157227}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 23ea9a619180b304c9f6fefe23732553, type: 3}
@@ -113085,6 +113176,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 3131325957295513297}
   LabelText: SFK Larilel
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 6245738103052509857}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
@@ -125338,6 +125430,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 4021749633713465871}
   LabelText: FGI Rosie Mercedes
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 9109073859679331776}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
@@ -131757,6 +131850,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 4688679289414369931}
   LabelText: Fishing
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 4379870554570129147}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 22695f6609206364d8648250eee292e8, type: 3}
@@ -131788,6 +131882,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 36354450899636059}
   LabelText: FGI Dahlia
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 5276206365748445332}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
@@ -132149,6 +132244,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 76831284076414374}
   LabelText: FGI Abigail
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 5235720677422844521}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
@@ -132180,6 +132276,7 @@ MonoBehaviour:
   PoiSelectSound: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   Label: {fileID: 76831284436277755}
   LabelText: FGI Indigo
+  AvatarPoint: {fileID: 0}
   Badge: {fileID: 5235720677868295732}
   BadgeMaterial: {fileID: 2100000, guid: ae7d7621e6abf2c44baa1e2ea245f56a, type: 2}
   BadgeTexture: {fileID: 2800000, guid: 37352c0dcacfe724dbb714ea55b48a44, type: 3}
