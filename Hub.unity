@@ -20541,6 +20541,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1075487645}
   m_LocalEulerAnglesHint: {x: 47.17, y: -57.8, z: 0}
+--- !u!1 &220002080 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6108535943797317006, guid: f9b0f7f86efeec949a4156cef1555606, type: 3}
+  m_PrefabInstance: {fileID: 1141744195}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &222614740
 GameObject:
   m_ObjectHideFlags: 0
@@ -45539,6 +45544,7 @@ MonoBehaviour:
   PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
   NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   MainOverlayUiFade: {fileID: 1081596429}
+  SmuggleButtonUi: {fileID: 220002080}
 --- !u!114 &799512582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119036,6 +119042,7 @@ MonoBehaviour:
   PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
   NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   MainOverlayUiFade: {fileID: 1081596429}
+  SmuggleButtonUi: {fileID: 220002080}
 --- !u!1 &4294610766801343259
 GameObject:
   m_ObjectHideFlags: 0
@@ -125691,6 +125698,7 @@ MonoBehaviour:
   PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
   NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   MainOverlayUiFade: {fileID: 1081596429}
+  SmuggleButtonUi: {fileID: 220002080}
 --- !u!82 &6004556572123962133
 AudioSource:
   m_ObjectHideFlags: 0
@@ -125823,6 +125831,7 @@ MonoBehaviour:
   PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
   NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   MainOverlayUiFade: {fileID: 1081596429}
+  SmuggleButtonUi: {fileID: 220002080}
 --- !u!82 &6004556572747532104
 AudioSource:
   m_ObjectHideFlags: 0
@@ -125955,6 +125964,7 @@ MonoBehaviour:
   PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
   NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   MainOverlayUiFade: {fileID: 1081596429}
+  SmuggleButtonUi: {fileID: 220002080}
 --- !u!4 &6024909037086176137
 Transform:
   m_ObjectHideFlags: 0
@@ -131834,6 +131844,7 @@ MonoBehaviour:
   PageChangeAudioClip: {fileID: 8300000, guid: 3116847a5362b98479f06b38b3f232ae, type: 3}
   NavigateAudioClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
   MainOverlayUiFade: {fileID: 1081596429}
+  SmuggleButtonUi: {fileID: 220002080}
 --- !u!114 &7344602804831842359
 MonoBehaviour:
   m_ObjectHideFlags: 0
