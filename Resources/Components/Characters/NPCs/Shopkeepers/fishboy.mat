@@ -91,7 +91,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Shadow_Noise_Tex:
-        m_Texture: {fileID: 2800000, guid: c30cb911b4484c34ca18b837c1333689, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -151,7 +151,7 @@ Material:
     - _Highlight_Replace: 0
     - _Highlight_Roughness: 0
     - _Highlight_Saturation: 0
-    - _Highlight_Smoothness: 0.25
+    - _Highlight_Smoothness: 0.182
     - _Main_Emissve_power: 1
     - _MatcapIntensity: 1
     - _MatcapObjectSpace: 0
@@ -166,7 +166,7 @@ Material:
     - _Shadow_Offset: 0.456
     - _Shadow_Replace: 0
     - _Shadow_Roughness: 0
-    - _Shadow_Smoothness: 0.055
+    - _Shadow_Smoothness: 0.13
     - _Shadow_Strength: 0.218
     - _Show_Masks: 0
     - _Smoothness: 0.5
