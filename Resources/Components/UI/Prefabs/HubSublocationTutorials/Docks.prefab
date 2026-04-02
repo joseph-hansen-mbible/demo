@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8625802636050762931
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 623570500292232469, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_text
+      value: "<b><size=42><align=center>DOCKS</align></size></b>\n\nSome ships are
+        crewed by smugglers. They will sell you <b>extremely valuable or rare goods</b>
+        once they trust you. Build trust by spending time on ships and buying their
+        goods. \n\nYou can test your luck for smuggled goods with a dice game. If
+        you <color=#00aa00><b>win</b></color> against the crew, you pay half price.
+        If you  <color=#aa0000><b>lose</b></color>, you forfeit the half price."
+      objectReference: {fileID: 0}
+    - target: {fileID: 623570500292232469, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_lineSpacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 623570500292232469, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_text
+      value: "<b><size=42><align=center>DOCKS</align></size></b>\n\nShips have <b>rare
+        and unusual</b> goods for sale you can't buy at the shops. Ships dock for
+        a few days, then go to sea to visit other lands and restock. \n\nIf a specific
+        ship you want to visit isn't docked, check again another day.\n\nLook around
+        with <b>Left/Right/Up/Down</b>. \n\n\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_lineSpacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Name
+      value: Docks Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4642997643725860774, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.01432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.34478
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.3827
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585295389564876759, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
