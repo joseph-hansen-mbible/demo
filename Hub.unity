@@ -16005,7 +16005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubSubLocation
   LocationName: 0
-  tutorialPrefab: {fileID: 0}
+  tutorialPrefab: {fileID: 187742470}
   cameraPoint: {fileID: 1202457283}
   CharactersPresent: []
   UnitSpawnPoints:
@@ -16044,6 +16044,16 @@ MonoBehaviour:
   - {fileID: 2011902938}
   - {fileID: 1080475171}
   - {fileID: 124866547}
+--- !u!1 &187742470 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+  m_PrefabInstance: {fileID: 3367122987818032383}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &187742471 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+  m_PrefabInstance: {fileID: 3367122987818032383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &199879595
 GameObject:
   m_ObjectHideFlags: 0
@@ -46960,7 +46970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubSubLocation
   LocationName: 3
-  tutorialPrefab: {fileID: 0}
+  tutorialPrefab: {fileID: 1730072070}
   cameraPoint: {fileID: 1385184121}
   CharactersPresent: []
   UnitSpawnPoints:
@@ -48780,6 +48790,39 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 817478769}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1190348772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1190348773}
+  m_Layer: 0
+  m_Name: Tutorials
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1190348773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190348772}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 187742471}
+  - {fileID: 1730072069}
+  m_Father: {fileID: 1965627325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1191824184
 GameObject:
@@ -64853,6 +64896,114 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1508553663}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1730072068
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1190348773}
+    m_Modifications:
+    - target: {fileID: 623570500292232469, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_text
+      value: "<b><size=42><align=center>DOCKS</align></size></b>\n\nSome ships are
+        crewed by smugglers. They will sell you <b>extremely valuable or rare goods</b>
+        once they trust you. Build trust by spending time on ships and buying their
+        goods. \n\nYou can test your luck for smuggled goods with a dice game. If
+        you <color=#00aa00><b>win</b></color> against the crew, you pay half price.
+        If you  <color=#aa0000><b>lose</b></color>, you forfeit the half price."
+      objectReference: {fileID: 0}
+    - target: {fileID: 623570500292232469, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_lineSpacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 623570500292232469, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_text
+      value: "<b><size=42><align=center>DOCKS</align></size></b>\n\nShips have <b>rare
+        and unusual</b> goods for sale you can't buy at the shops. Ships dock for
+        a few days, then go to sea to visit other lands and restock. \n\nIf a specific
+        ship you want to visit isn't docked, check again another day.\n\nLook around
+        with <b>Left/Right/Up/Down</b>. \n\n\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_lineSpacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Name
+      value: Docks
+      objectReference: {fileID: 0}
+    - target: {fileID: 4642997643725860774, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.01432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.34478
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.3827
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585295389564876759, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+--- !u!4 &1730072069 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+  m_PrefabInstance: {fileID: 1730072068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1730072070 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+  m_PrefabInstance: {fileID: 1730072068}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1749019444
 GameObject:
   m_ObjectHideFlags: 0
@@ -81794,6 +81945,7 @@ Transform:
   - {fileID: 776468801}
   - {fileID: 2665614783896296524}
   - {fileID: 1141744196}
+  - {fileID: 1190348773}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1965627326
@@ -102896,6 +103048,109 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!1001 &3367122987818032383
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1190348773}
+    m_Modifications:
+    - target: {fileID: 623570500292232469, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_text
+      value: '<b><size=42><align=center>SHOPS</align></size></b>
+
+
+        You may
+        see your teammates, friends, or interesting strangers hanging around the
+        shops. You can interact with them to learn about the world, build relationships,
+        or recruit new allies. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_text
+      value: "<b><size=42><align=center>SHOPS</align></size></b>\n\nAt shops, you
+        can buy and sell items. \n\nSome shops offer <b>special services</b>, like
+        repairing weapons.\n\nLook around with <b>Left/Right/Up/Down</b>. \n\nWhen
+        you see a point of interest, press <b>Select/Enter</b> to visit.  Press <b>Back/Escape</b>
+        to exit."
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_fontSize
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_lineSpacing
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1108484171940093416, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Name
+      value: Market
+      objectReference: {fileID: 0}
+    - target: {fileID: 4642997643725860774, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5699450785492790450, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7585295389564876759, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
 --- !u!1 &3386782573388541521
 GameObject:
   m_ObjectHideFlags: 0
