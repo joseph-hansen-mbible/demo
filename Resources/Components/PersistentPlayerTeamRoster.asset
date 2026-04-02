@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51f897b0f1d9c1347a13bf2985792c47, type: 3}
-  m_Name: NewPlayerTeamRoster
+  m_Name: PersistentPlayerTeamRoster
   m_EditorClassIdentifier: 
   _id: e7a59c644c09640438ca3f4e86016523
   _playerCharacters:
+  - CharacterData: {fileID: 11400000, guid: 494fcbf1744964f44b4aa78e6d9f0c54, type: 2}
+    SpawnPosition: {x: 0, y: 0}
+    Order: 0
   - CharacterData: {fileID: 11400000, guid: 0f8b79eeaffbfbc4aab491112cae2ddd, type: 2}
     SpawnPosition: {x: 0, y: 0}
     Order: 0

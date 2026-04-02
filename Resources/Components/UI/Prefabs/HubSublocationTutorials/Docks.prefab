@@ -43,11 +43,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
       propertyPath: m_Name
-      value: Docks Variant
+      value: Docks
       objectReference: {fileID: 0}
     - target: {fileID: 2765143769714720981, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4642997643725860774, guid: c5d26d9f9395dfd4a875f483172f25c8, type: 3}
       propertyPath: m_Alpha
