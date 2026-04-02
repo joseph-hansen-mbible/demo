@@ -39,6 +39,23 @@ namespace Turnroot.Demos
 
             persistence.SaveCharacter(avatarInstance, updateIndex: true);
 
+            // Instantiate and persist the player roster so it is ready when the hub loads.
+            var gamewideContext = saveFileBrain.Brain.gamewideContextBrain;
+            if (gamewideContext != null)
+            {
+                gamewideContext.CreateOrRecallGamewidePersistentPlayerRoster();
+                var rosterInstance = gamewideContext.GetPersistentPlayerTeamRosterInstance();
+                if (rosterInstance != null)
+                {
+                    gamewideContext.SavePlayerRoster(lastSavedBattleTurn: 0);
+                    "GameStartManager: Player roster instantiated and saved for new game.".LogInfo("GameStartManager");
+                }
+                else
+                {
+                    "GameStartManager: Could not instantiate player roster — roster will be created on first hub load.".LogWarning("GameStartManager");
+                }
+            }
+
             $"Saved avatar instance with {starGift.name} stats to LongTermMemory".LogInfo("GameStartManager");
         }
 
