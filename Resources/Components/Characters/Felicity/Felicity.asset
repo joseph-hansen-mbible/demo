@@ -45,7 +45,7 @@ MonoBehaviour:
   <UseRecruitmentChance>k__BackingField: 1
   <RecruitmentChance>k__BackingField: 25
   <RecruitmentChanceIncreasePerConversation>k__BackingField: 15
-  <IsUnique>k__BackingField: 1
+  _isUnique: 1
   <StartingClass>k__BackingField: {fileID: 0}
   <BadgeText>k__BackingField: Fishing Guild
   <BadgeIcon>k__BackingField: {fileID: 21300000, guid: 9f2c2612454aeb040bb1ab262a1e7c5f, type: 3}
@@ -61,8 +61,28 @@ MonoBehaviour:
   <AccentColor2>k__BackingField: {r: 0.38392156, g: 0.44, b: 0.2890196, a: 0}
   <AccentColor3>k__BackingField: {r: 0.45686275, g: 0.65015084, b: 0.9137255, a: 0}
   <Portraits>k__BackingField:
-    _keys: []
-    _values: []
+  - Key: 
+    Portrait:
+      _owner: {fileID: 0}
+      _layers: []
+      _key: stackedImage_093242b6-c417-4812-9feb-27d1d691068d
+      _savedSprite: {fileID: 0}
+      _idString: 093242b6-c417-4812-9feb-27d1d691068d
+      _tintColors:
+      - {r: 1, g: 1, b: 1, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
+  - Key: 
+    Portrait:
+      _owner: {fileID: 0}
+      _layers: []
+      _key: stackedImage_7c99f855-753d-428b-b293-c8004dc4e207
+      _savedSprite: {fileID: 0}
+      _idString: 7c99f855-753d-428b-b293-c8004dc4e207
+      _tintColors:
+      - {r: 1, g: 1, b: 1, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
+      - {r: 1, g: 1, b: 1, a: 1}
   <HeadAndHandsPrefab>k__BackingField: {fileID: 3543047472321258223, guid: 629a90daf18e7c841a080be4f2e74842, type: 3}
   <HairPrefab>k__BackingField: {fileID: 4682962753272150353, guid: 075bbe65445b1ab4f8d8ccda0e63ad31, type: 3}
   <NonBattleOutfitPrefab>k__BackingField: {fileID: 4517500799786329980, guid: bb19045ff93efe64ba934bb1c87e31ee, type: 3}
@@ -73,6 +93,9 @@ MonoBehaviour:
   <DefaultWalkingAnimation>k__BackingField: {fileID: -7081863182781396754, guid: 49455e1c9c4801b418f9c8f4ae2061d7, type: 3}
   <DefaultRunningAnimation>k__BackingField: {fileID: 0}
   <DefaultIdleAnimations>k__BackingField: []
+  <IdleNonBattleAnimations>k__BackingField:
+  - {fileID: 8747809877983195973, guid: bc0674f19b81f6845b995b84dc7a97da, type: 3}
+  <HubTurnAnimation>k__BackingField: {fileID: 0}
   <HasExtraBoneLayer>k__BackingField: 0
   <CustomAvatar>k__BackingField: {fileID: 0}
   <AdditionalBonesMask>k__BackingField: {fileID: 0}
@@ -198,25 +221,25 @@ MonoBehaviour:
   <Skills>k__BackingField: []
   <PersonalSkill>k__BackingField: {fileID: 11400000, guid: 99f09bf75af3b064ea95ba36451474a7, type: 2}
   <ExperienceRanks>k__BackingField:
-  - _experienceTypeId: Knife (Turnroot.Gameplay.Objects.Components.WeaponType)
-    _rank:
-      _value: D
-  - _experienceTypeId: Ax (Turnroot.Gameplay.Objects.Components.WeaponType)
+  - _experienceTypeId: Knife
     _rank:
       _value: E
-  - _experienceTypeId: Bow (Turnroot.Gameplay.Objects.Components.WeaponType)
+  - _experienceTypeId: Ax
     _rank:
       _value: E
-  - _experienceTypeId: Chain (Turnroot.Gameplay.Objects.Components.WeaponType)
+  - _experienceTypeId: Bow
     _rank:
       _value: E
-  - _experienceTypeId: Polearm (Turnroot.Gameplay.Objects.Components.WeaponType)
+  - _experienceTypeId: Polearm
     _rank:
       _value: E
-  - _experienceTypeId: Sword (Turnroot.Gameplay.Objects.Components.WeaponType)
+  - _experienceTypeId: Sword
     _rank:
       _value: E
-  - _experienceTypeId: Truncheon (Turnroot.Gameplay.Objects.Components.WeaponType)
+  - _experienceTypeId: Truncheon
+    _rank:
+      _value: E
+  - _experienceTypeId: Cosmic Magic
     _rank:
       _value: E
   - _experienceTypeId: Riding
@@ -228,6 +251,3 @@ MonoBehaviour:
   - _experienceTypeId: Armor
     _rank:
       _value: E
-  references:
-    version: 2
-    RefIds: []
