@@ -36,8 +36,6 @@ MonoBehaviour:
   - Horses
   - Hot weather
   <Notes>k__BackingField: Take private notes (only in the editor) about this unit
-  <CanSSupport>k__BackingField: 1
-  <CanSSupportAvatar>k__BackingField: 1
   <IsRecruitable>k__BackingField: 0
   <RequiresMinSupportLevel>k__BackingField: 1
   <SupportRelationshipMinRank>k__BackingField:
@@ -92,9 +90,11 @@ MonoBehaviour:
   <UseDefaultAnimationsAlways>k__BackingField: 0
   <DefaultWalkingAnimation>k__BackingField: {fileID: -7081863182781396754, guid: 49455e1c9c4801b418f9c8f4ae2061d7, type: 3}
   <DefaultRunningAnimation>k__BackingField: {fileID: 0}
-  <DefaultIdleAnimations>k__BackingField: []
+  <DefaultIdleAnimations>k__BackingField:
+  - {fileID: 8129062161287757915, guid: 1ab7e10eae03e9843a8e342438c01f2b, type: 3}
   <IdleNonBattleAnimations>k__BackingField:
   - {fileID: 8747809877983195973, guid: bc0674f19b81f6845b995b84dc7a97da, type: 3}
+  - {fileID: 8129062161287757915, guid: 1ab7e10eae03e9843a8e342438c01f2b, type: 3}
   <HubTurnAnimation>k__BackingField: {fileID: 0}
   <HasExtraBoneLayer>k__BackingField: 0
   <CustomAvatar>k__BackingField: {fileID: 0}
@@ -112,7 +112,6 @@ MonoBehaviour:
   <StartingInventory>k__BackingField:
   - _item: {fileID: 11400000, guid: 18c28f887826b0d4389fb021663c5146, type: 2}
     _slotIndex: 0
-  <SupportRelationships>k__BackingField: []
   <UseClassProgressionLadder>k__BackingField: 0
   ProgressionLadder:
     Starter:
@@ -239,7 +238,16 @@ MonoBehaviour:
   - _experienceTypeId: Truncheon
     _rank:
       _value: E
+  - _experienceTypeId: Alchemic Magic
+    _rank:
+      _value: E
   - _experienceTypeId: Cosmic Magic
+    _rank:
+      _value: E
+  - _experienceTypeId: Tellurian Magic
+    _rank:
+      _value: E
+  - _experienceTypeId: Transcendent Magic
     _rank:
       _value: E
   - _experienceTypeId: Riding

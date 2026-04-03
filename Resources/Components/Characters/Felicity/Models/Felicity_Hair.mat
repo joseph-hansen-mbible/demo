@@ -30,7 +30,6 @@ Material:
   - _USE_OUTLINES_ON
   m_InvalidKeywords:
   - _USE_HIGHLIGHT_MASK_ON
-  - _USE_SHADOW_NOISE_ON
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -131,11 +130,11 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Shadow_Noise_Amount: 0.338
-    - _Shadow_Offset: 0.221
+    - _Shadow_Offset: 0.442
     - _Shadow_Replace: 0
     - _Shadow_Roughness: 0.936
     - _Shadow_Smoothness: 0.215
-    - _Shadow_Strength: 0.28
+    - _Shadow_Strength: 0.446
     - _Show_Masks: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
@@ -160,7 +159,7 @@ Material:
     - _use_matcap_reflection: 1
     - _use_matcat: 0
     - _use_outlines: 1
-    - _use_shadow_noise: 1
+    - _use_shadow_noise: 0
     m_Colors:
     - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _Main_Emissve_color: {r: 1, g: 1, b: 1, a: 0}

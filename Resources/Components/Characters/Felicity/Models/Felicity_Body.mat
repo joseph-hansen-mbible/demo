@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Felicity_Body
-  m_Shader: {fileID: 4800000, guid: 3fbff0cf306f16e438a583391308232a, type: 3}
+  m_Shader: {fileID: 4800000, guid: 87480c90398cfea48803d30987d041a9, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -173,7 +173,7 @@ Material:
     - _GlossyReflections: 0
     - _Highlight_Amount: 0.2
     - _Highlight_Mask_Amount: 1
-    - _Highlight_Offset: 1
+    - _Highlight_Offset: 0.8
     - _Highlight_Replace: 0
     - _Highlight_Roughness: 0.402
     - _Highlight_Saturation: 1.863
@@ -183,6 +183,7 @@ Material:
     - _MatcapObjectSpace: 0
     - _Matcap_Emissve_power: 0
     - _Metallic: 0
+    - _NightTintIntensity: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -190,11 +191,11 @@ Material:
     - _ReceiveShadows: 1
     - _Second_Emissve_power: 0
     - _Shadow_Noise_Amount: 0
-    - _Shadow_Offset: 0.435
+    - _Shadow_Offset: 0.455
     - _Shadow_Replace: 0
     - _Shadow_Roughness: 1
     - _Shadow_Smoothness: 0.088
-    - _Shadow_Strength: 0.358
+    - _Shadow_Strength: 0.403
     - _Show_Masks: 0
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -234,10 +235,12 @@ Material:
     m_Colors:
     - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseTint: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Main_Emissve_color: {r: 1, g: 1, b: 1, a: 0}
     - _Matcap_Emissve_color: {r: 0, g: 0, b: 0, a: 0}
+    - _NightTintColor: {r: 0.09999997, g: 0.12999997, b: 0.24999997, a: 1}
     - _Second_Emissve_color: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _dark: {r: 0.39607844, g: 0.1909098, b: 0.33932373, a: 0}

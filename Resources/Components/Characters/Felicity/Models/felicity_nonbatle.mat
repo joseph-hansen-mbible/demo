@@ -210,7 +210,7 @@ Material:
     - _Shadow_Offset: 0.478
     - _Shadow_Replace: 0
     - _Shadow_Roughness: 0
-    - _Shadow_Smoothness: 0.245
+    - _Shadow_Smoothness: 0.144
     - _Shadow_Strength: 0.5
     - _Show_Masks: 0
     - _Smoothness: 0.5

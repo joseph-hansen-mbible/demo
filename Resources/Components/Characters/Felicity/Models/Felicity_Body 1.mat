@@ -189,7 +189,7 @@ Material:
     - _ReceiveShadows: 1
     - _Second_Emissve_power: 0
     - _Shadow_Noise_Amount: 0
-    - _Shadow_Offset: 0.321
+    - _Shadow_Offset: 0.32
     - _Shadow_Replace: 0
     - _Shadow_Roughness: 0
     - _Shadow_Smoothness: 0.186
