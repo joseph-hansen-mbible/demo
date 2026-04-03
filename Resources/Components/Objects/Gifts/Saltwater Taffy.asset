@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61eeff3113f83684e8e6d3c5224a0ac2, type: 3}
+  m_Name: Saltwater Taffy
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.Objects.ObjectItem
+  _name: Saltwater Taffy
+  _flavorText: Homemade candy popular in coastal regions. Enjoyed by people who like
+    <b>sweet things</b>.
+  <BasePrice>k__BackingField: 30
+  <Sellable>k__BackingField: 0
+  <Buyable>k__BackingField: 1
+  <SellPriceDeductedPerUse>k__BackingField: 0
+  <Repairable>k__BackingField: 1
+  <RepairPricePerUse>k__BackingField: 10
+  <RepairNeedsItems>k__BackingField: 1
+  <RepairItem>k__BackingField: {fileID: 0}
+  <RepairItemAmountPerUse>k__BackingField: 1
+  OneRepairItemCoversFullRepair: 0
+  <Forgeable>k__BackingField: 1
+  <ForgeOptions>k__BackingField: []
+  _giftRank: 1
+  _unitsLove:
+  - {fileID: 11400000, guid: 0f8b79eeaffbfbc4aab491112cae2ddd, type: 2}
+  - {fileID: 11400000, guid: a53a4ecdb913d9944b06166e1bc35ca6, type: 2}
+  _unitsHate:
+  - {fileID: 11400000, guid: 4cb76f6227e612d438e92ecba6bc83b0, type: 2}
+  <LowerRange>k__BackingField: 0
+  <UpperRange>k__BackingField: 0
+  _rangeAdjustedByStat: 0
+  _rangeAdjustedByStatName: 0
+  _rangeAdjustedByStatAmount: 0
+  <MaxUses>k__BackingField: 100
+  _replenishUsesAfterBattle: 0
+  _replenishUsesAfterBattleAmount: 0
+  <SpeciesEffectiveAgainst>k__BackingField: []
+  <WeaponTypesEffectiveAgainst>k__BackingField: []
+  <EffectiveAgainstFlying>k__BackingField: 0
+  <EffectiveAgainstArmored>k__BackingField: 0
+  <EffectiveAgainstRiding>k__BackingField: 0
+  _weaponEffect: {fileID: 0}
+  <StatBonuses>k__BackingField:
+    _keys: 
+    _values: []
+  <Might>k__BackingField: 0
+  <Hit>k__BackingField: 0
+  <Critical>k__BackingField: 0
+  MinWeaponTypeAptitude:
+    _value: E
+  Prefab: {fileID: 0}
+  InventoryIcon: {fileID: 0}
+  <BelongsTo>k__BackingField: {fileID: 0}
+  <Weight>k__BackingField: 1
+  <Subtype>k__BackingField:
+    _value: Gift
+  <WeaponType>k__BackingField: {fileID: 0}
+  <TeamSupportMagic>k__BackingField: 0
+  <IsUnequippable>k__BackingField: 1
+  <SupportHealing>k__BackingField: 0
+  <HealingAmountPercent>k__BackingField: 50
+  <SupportSkill>k__BackingField: {fileID: 0}
+  <EquipableType>k__BackingField: 0

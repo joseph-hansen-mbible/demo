@@ -42707,7 +42707,6 @@ MonoBehaviour:
   InputProvider: {fileID: 2099476411}
   BackButtonFade: {fileID: 1901321656}
   CanTrain: 1
-  CanSupport: 0
   CanGoToMeal: 0
   CanGoToSpa: 0
   CanGoToDance: 0
@@ -105721,6 +105720,18 @@ MonoBehaviour:
     RestockAtIntervals: 1
     RestockIntervalDays: 3
     RestockQuantityPerDay: 2
+    CanGoOnSale: 0
+    SalePrice: 0
+    SpecificSaleDays: []
+    SaleChanceOnRandomDays: 0
+    RareItem: 0
+    ChanceToAppearInShop: 0
+  - UiRefs: {fileID: 0}
+    Item: {fileID: 11400000, guid: 11c8f9959a231b646923d1b82962a1ac, type: 2}
+    MaxQuantity: 1
+    RestockAtIntervals: 1
+    RestockIntervalDays: 3
+    RestockQuantityPerDay: 1
     CanGoOnSale: 0
     SalePrice: 0
     SpecificSaleDays: []

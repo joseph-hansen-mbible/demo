@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54046c4a808095a44ba33c0557dcc41d, type: 3}
+  m_Name: SupportRelationshipTable
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Characters.SupportRelationshipTable
+  Pairings:
+  - CharacterA: {fileID: 11400000, guid: a53a4ecdb913d9944b06166e1bc35ca6, type: 2}
+    CharacterB: {fileID: 11400000, guid: 494fcbf1744964f44b4aa78e6d9f0c54, type: 2}
+    MaxSupportLevel:
+      _value: 
+    SupportGainMultiplier: 1
+  - CharacterA: {fileID: 11400000, guid: 0f8b79eeaffbfbc4aab491112cae2ddd, type: 2}
+    CharacterB: {fileID: 11400000, guid: 494fcbf1744964f44b4aa78e6d9f0c54, type: 2}
+    MaxSupportLevel:
+      _value: 
+    SupportGainMultiplier: 1
+  - CharacterA: {fileID: 11400000, guid: 4cb76f6227e612d438e92ecba6bc83b0, type: 2}
+    CharacterB: {fileID: 11400000, guid: 494fcbf1744964f44b4aa78e6d9f0c54, type: 2}
+    MaxSupportLevel:
+      _value: 
+    SupportGainMultiplier: 1
+  - CharacterA: {fileID: 11400000, guid: a53a4ecdb913d9944b06166e1bc35ca6, type: 2}
+    CharacterB: {fileID: 11400000, guid: 0f8b79eeaffbfbc4aab491112cae2ddd, type: 2}
+    MaxSupportLevel:
+      _value: A
+    SupportGainMultiplier: 1
+  - CharacterA: {fileID: 11400000, guid: a53a4ecdb913d9944b06166e1bc35ca6, type: 2}
+    CharacterB: {fileID: 11400000, guid: 4cb76f6227e612d438e92ecba6bc83b0, type: 2}
+    MaxSupportLevel:
+      _value: B
+    SupportGainMultiplier: 1
