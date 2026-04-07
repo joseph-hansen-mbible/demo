@@ -140191,7 +140191,7 @@ PrefabInstance:
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: WelcomeDialogues.Array.data[0].Portrait
       value: 
-      objectReference: {fileID: 21300000, guid: 2b3e6b0026eb3524b888ae7aef53a633, type: 3}
+      objectReference: {fileID: 21300000, guid: 5ac9e425311fc4048a3e9c9c1198f13a, type: 3}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: FarewellDialogues.Array.data[0].Dialogue
       value: Have a fishy day!
@@ -140199,7 +140199,7 @@ PrefabInstance:
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: FarewellDialogues.Array.data[0].Portrait
       value: 
-      objectReference: {fileID: 21300000, guid: 2b3e6b0026eb3524b888ae7aef53a633, type: 3}
+      objectReference: {fileID: 21300000, guid: 5ac9e425311fc4048a3e9c9c1198f13a, type: 3}
     - target: {fileID: 7464454706555829771, guid: fc063f94f9707934388e8adc41366beb, type: 3}
       propertyPath: ItemsStocked.Array.data[2].ChanceToAppearInShop
       value: 0.25

@@ -30,8 +30,6 @@ MonoBehaviour:
   <Likes>k__BackingField: []
   <Dislikes>k__BackingField: []
   <Notes>k__BackingField: Take private notes (only in the editor) about this unit
-  <CanSSupport>k__BackingField: 0
-  <CanSSupportAvatar>k__BackingField: 0
   <IsRecruitable>k__BackingField: 0
   <RequiresMinSupportLevel>k__BackingField: 1
   <SupportRelationshipMinRank>k__BackingField:
@@ -39,7 +37,7 @@ MonoBehaviour:
   <UseRecruitmentChance>k__BackingField: 1
   <RecruitmentChance>k__BackingField: 25
   <RecruitmentChanceIncreasePerConversation>k__BackingField: 15
-  <IsUnique>k__BackingField: 0
+  _isUnique: 0
   <StartingClass>k__BackingField: {fileID: 0}
   <BadgeText>k__BackingField: 
   <BadgeIcon>k__BackingField: {fileID: 0}
@@ -54,7 +52,149 @@ MonoBehaviour:
   <AccentColor1>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <AccentColor2>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <AccentColor3>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <Portraits>k__BackingField: []
+  <Portraits>k__BackingField:
+  - Key: Fish Market Shopkeeper_Portrait
+    Portrait:
+      _owner: {fileID: 11400000}
+      _layers:
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 1
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Face and Shoulders
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 2
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Nose
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 3
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Face and Shoulders
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 4
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Mouth
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 5
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Nose
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 6
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Right Eye
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 7
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Left Eye
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 8
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Mouth
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 9
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Right Eyebrow
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 10
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Left Eyebrow
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 11
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Right Eye
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 12
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Hair
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 13
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Left Eye
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 14
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Right Eyebrow
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 15
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Left Eyebrow
+      - Sprite: {fileID: 0}
+        Mask: {fileID: 0}
+        Offset: {x: 0, y: 0}
+        Scale: 1
+        Rotation: 0
+        Order: 16
+        Tint: {r: 1, g: 1, b: 1, a: 1}
+        Tag: Hair
+      _key: Fish Market Shopkeeper_Portrait
+      _savedSprite: {fileID: 0}
+      _idString: f82f7731-30e9-470e-b02b-b591ff660040
+      _tintColors:
+      - {r: 0, g: 0, b: 0, a: 0}
+      - {r: 0, g: 0, b: 0, a: 0}
+      - {r: 0, g: 0, b: 0, a: 0}
+      _spriteOverride: 1
+      _overrideRuntimeSprite: {fileID: 21300000, guid: 5ac9e425311fc4048a3e9c9c1198f13a, type: 3}
+      _overrideSavedSprite: {fileID: 21300000, guid: 5ac9e425311fc4048a3e9c9c1198f13a, type: 3}
   <HeadAndHandsPrefab>k__BackingField: {fileID: 0}
   <HairPrefab>k__BackingField: {fileID: 0}
   <NonBattleOutfitPrefab>k__BackingField: {fileID: 0}
@@ -65,6 +205,8 @@ MonoBehaviour:
   <DefaultWalkingAnimation>k__BackingField: {fileID: 0}
   <DefaultRunningAnimation>k__BackingField: {fileID: 0}
   <DefaultIdleAnimations>k__BackingField: []
+  <IdleNonBattleAnimations>k__BackingField: []
+  <HubTurnAnimation>k__BackingField: {fileID: 0}
   <HasExtraBoneLayer>k__BackingField: 0
   <CustomAvatar>k__BackingField: {fileID: 0}
   <AdditionalBonesMask>k__BackingField: {fileID: 0}
@@ -79,7 +221,6 @@ MonoBehaviour:
     BloodthirstGreed: 0
     preset: 0
   <StartingInventory>k__BackingField: []
-  <SupportRelationships>k__BackingField: []
   <UseClassProgressionLadder>k__BackingField: 0
   ProgressionLadder:
     Starter:
@@ -152,27 +293,36 @@ MonoBehaviour:
   <Skills>k__BackingField: []
   <PersonalSkill>k__BackingField: {fileID: 0}
   <ExperienceRanks>k__BackingField:
-  - _experienceTypeId: Knife (Turnroot.Gameplay.Objects.Components.WeaponType)
+  - _experienceTypeId: Knife
     _rank:
-      _value: 
-  - _experienceTypeId: Ax (Turnroot.Gameplay.Objects.Components.WeaponType)
+      _value: E
+  - _experienceTypeId: Ax
     _rank:
-      _value: 
-  - _experienceTypeId: Bow (Turnroot.Gameplay.Objects.Components.WeaponType)
+      _value: E
+  - _experienceTypeId: Bow
     _rank:
-      _value: 
-  - _experienceTypeId: Chain (Turnroot.Gameplay.Objects.Components.WeaponType)
+      _value: E
+  - _experienceTypeId: Polearm
     _rank:
-      _value: 
-  - _experienceTypeId: Polearm (Turnroot.Gameplay.Objects.Components.WeaponType)
+      _value: E
+  - _experienceTypeId: Sword
     _rank:
-      _value: 
-  - _experienceTypeId: Sword (Turnroot.Gameplay.Objects.Components.WeaponType)
+      _value: E
+  - _experienceTypeId: Truncheon
     _rank:
-      _value: 
-  - _experienceTypeId: Truncheon (Turnroot.Gameplay.Objects.Components.WeaponType)
+      _value: E
+  - _experienceTypeId: Alchemic Magic
     _rank:
-      _value: 
+      _value: E
+  - _experienceTypeId: Cosmic Magic
+    _rank:
+      _value: E
+  - _experienceTypeId: Tellurian Magic
+    _rank:
+      _value: E
+  - _experienceTypeId: Transcendent Magic
+    _rank:
+      _value: E
   - _experienceTypeId: Riding
     _rank:
       _value: 
