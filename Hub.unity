@@ -43002,8 +43002,8 @@ MonoBehaviour:
   GiftItemRowPrefab: {fileID: 3263827923378807549, guid: 9c2158639cfcda047a6568863601a9f8, type: 3}
   GiftChoiceMenuFade: {fileID: 1521050798}
   MaxVisibleGiftChoices: 8
-  SupportUpTimeline: {fileID: 0}
-  SupportDownTimeline: {fileID: 0}
+  SupportUpTimeline: {fileID: 548848970}
+  SupportDownTimeline: {fileID: 477334409}
   CanTrain: 1
   CanGoToMeal: 0
   CanGoToSpa: 0
