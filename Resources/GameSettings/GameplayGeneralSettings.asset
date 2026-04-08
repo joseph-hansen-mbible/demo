@@ -134,9 +134,9 @@ MonoBehaviour:
   SupportGrowthSpeed: 2.4
   HubInteractionSupportPoints: 0.25
   UseCharmMultiplierForNegativePoints: 0
-  HubInteractionTalkSupportPoints: 0.5
+  HubInteractionTalkSupportPoints: 0.75
   GiftSupportPointsUnitLikes: 1
-  GiftSupportPointsUnitDislikes: 0.1
+  GiftSupportPointsUnitDislikes: 0.25
   OneOnOneMealSupportPointsUnitLikes: 1.5
   OneOnOneMealSupportPointsUnitDislikes: 0.5
   GroupMealSupportPointsUnitLikes: 1
@@ -150,7 +150,9 @@ MonoBehaviour:
   RecruitSuccessSupportPoints: 5
   RecruitFailureSupportPoints: 1
   GoodConversationChoiceSupportPoints: 1
+  BadConversationChoiceSupportPoints: -1
   TradeWithAllySupportPoints: 0.5
+  SupportConversationSupportPoints: 2
   GoldDisplayNames:
     OneLetter: G
     FullName: gold
