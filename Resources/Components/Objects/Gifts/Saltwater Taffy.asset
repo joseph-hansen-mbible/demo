@@ -27,12 +27,10 @@ MonoBehaviour:
   OneRepairItemCoversFullRepair: 0
   <Forgeable>k__BackingField: 1
   <ForgeOptions>k__BackingField: []
-  _giftRank: 1
-  _unitsLove:
-  - {fileID: 11400000, guid: 0f8b79eeaffbfbc4aab491112cae2ddd, type: 2}
+  GiftRank: 1
+  UnitsLove:
   - {fileID: 11400000, guid: a53a4ecdb913d9944b06166e1bc35ca6, type: 2}
-  _unitsHate:
-  - {fileID: 11400000, guid: 4cb76f6227e612d438e92ecba6bc83b0, type: 2}
+  UnitsHate: []
   <LowerRange>k__BackingField: 0
   <UpperRange>k__BackingField: 0
   _rangeAdjustedByStat: 0
