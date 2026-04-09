@@ -72,20 +72,20 @@ namespace Turnroot.Demos
                 return;
             }
 
-            if (action == InputActionConstants.NavigateUp || action == InputActionConstants.NavigateLeft)
+            if (action is InputActionConstants.NavigateUp or InputActionConstants.NavigateLeft)
             {
                 UiFx.PlayOneShot(NavigateClip);
                 NavigatePrevious();
             }
-            else if (action == InputActionConstants.NavigateDown || action == InputActionConstants.NavigateRight)
+            else if (action is InputActionConstants.NavigateDown or InputActionConstants.NavigateRight)
             {
                 UiFx.PlayOneShot(NavigateClip);
                 NavigateNext();
             }
-            else if (action == InputActionConstants.Select
-                || action == InputActionConstants.Start
-                || action == InputActionConstants.Submit
-                || action == InputActionConstants.Confirm)
+            else if (action is InputActionConstants.Select
+                or InputActionConstants.Start
+                or InputActionConstants.Submit
+                or InputActionConstants.Confirm)
             {
                 SelectCurrentStarGift();
             }
@@ -167,7 +167,6 @@ namespace Turnroot.Demos
             {
                 var selectedGift = StarGifts[currentIndex];
                 OnStarGiftSelected?.Invoke(selectedGift);
-                Debug.Log($"Selected Star Gift: {selectedGift.name}");
             }
         }
 

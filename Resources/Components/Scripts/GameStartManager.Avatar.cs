@@ -48,15 +48,12 @@ namespace Turnroot.Demos
                 if (rosterInstance != null)
                 {
                     gamewideContext.SavePlayerRoster(lastSavedBattleTurn: 0);
-                    "GameStartManager: Player roster instantiated and saved for new game.".LogInfo("GameStartManager");
                 }
                 else
                 {
                     "GameStartManager: Could not instantiate player roster — roster will be created on first hub load.".LogWarning("GameStartManager");
                 }
             }
-
-            $"Saved avatar instance with {starGift.name} stats to LongTermMemory".LogInfo("GameStartManager");
         }
 
         private void ApplyStarGiftStatsToInstance(CharacterInstance instance, StarGift gift)
