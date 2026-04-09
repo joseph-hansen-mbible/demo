@@ -67268,7 +67268,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!1 &1667003074 stripped
 GameObject:
@@ -97415,7 +97415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd61dda9c7a1b7d4885971e6cc949f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.UI.UiInputProvider
-  LogInputActions: 0
   UiFx: {fileID: 1965627328}
   NavigateClip: {fileID: 8300000, guid: 3acaf4b74e62c20498949cb9c1c1bc92, type: 3}
 --- !u!114 &2099476412
@@ -97430,7 +97429,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c85be35c45b398479ca999e0d2ba117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Turnroot.Gameplay.NonCombatScenes.Hub.HubTeamLocations
-  NonRosterUnitsInHub: []
+  NonRosterUnitsInHub:
+  - character: {fileID: 0}
+    location: 0
   LocationLayouts:
   - location: 3
     layoutObject: {fileID: 1448876643}
