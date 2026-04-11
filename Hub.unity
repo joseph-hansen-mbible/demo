@@ -28695,8 +28695,9 @@ MonoBehaviour:
     OptionType: 8
   InputProvider: {fileID: 2099476411}
   BackButtonFade: {fileID: 1499677553}
-  GiftChoiceParentContainer: {fileID: 1141342340}
+  ItemChoiceParentContainer: {fileID: 1141342340}
   GiftItemRowPrefab: {fileID: 3263827923378807549, guid: 9c2158639cfcda047a6568863601a9f8, type: 3}
+  LostItemRowPrefab: {fileID: 0}
   GiftChoiceMenuFade: {fileID: 1521050798}
   MaxVisibleGiftChoices: 8
   SupportUpTimeline: {fileID: 548848970}
@@ -40408,7 +40409,7 @@ GameObject:
   - component: {fileID: 1141342341}
   - component: {fileID: 1141342342}
   m_Layer: 5
-  m_Name: Gifts
+  m_Name: RowsParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61707,7 +61708,7 @@ GameObject:
   - component: {fileID: 1521050799}
   - component: {fileID: 1521050798}
   m_Layer: 5
-  m_Name: Gifts
+  m_Name: Items
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
