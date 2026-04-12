@@ -31,6 +31,8 @@ namespace Turnroot.Demos
         [Tooltip("Optional shared loading screen controller that can be reused across scenes.")]
         public LoadingScreenController LoadingScreen;
 
+        public AudioClip TitleMusic;
+
         #region UI Managers
 
         [BoxGroup("UI Managers"), HorizontalLine(color: EColor.Blue)]
@@ -184,6 +186,8 @@ namespace Turnroot.Demos
             };
 
             StarGiftManager.OnStarGiftSelected.AddListener(OnStarGiftSelected);
+
+            saveFileBrain.Brain.audioBrain.SetMusic(TitleMusic);
         }
 
         private void OnDestroy()
@@ -193,7 +197,7 @@ namespace Turnroot.Demos
                 InputProvider.OnInput -= HandleInput;
             }
 
-            if (saveFileBrain?.Brain != null)
+            if (saveFileBrain.Brain != null)
             {
                 saveFileBrain.Brain.OnSceneReadyToDisplay -= HandleSceneReadyToDisplay;
             }

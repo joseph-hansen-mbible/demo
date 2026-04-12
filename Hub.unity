@@ -553,6 +553,7 @@ MonoBehaviour:
   CharactersPresent: []
   UnitSpawnPoints: []
   GeneralCamera: {fileID: 961739752}
+  SublocationMusic: {fileID: 0}
   FadeToBlack: {fileID: 0}
   LocationsFade: {fileID: 0}
   BackButtonFade: {fileID: 0}
@@ -6585,6 +6586,7 @@ MonoBehaviour:
   - UnitSpawnPoint: {fileID: 845744562}
     AvatarPoint: {fileID: 1437321080}
   GeneralCamera: {fileID: 961739752}
+  SublocationMusic: {fileID: 0}
   FadeToBlack: {fileID: 1931766790}
   LocationsFade: {fileID: 2110243765}
   BackButtonFade: {fileID: 1901321656}
@@ -33803,6 +33805,7 @@ MonoBehaviour:
   CharactersPresent: []
   UnitSpawnPoints: []
   GeneralCamera: {fileID: 961739752}
+  SublocationMusic: {fileID: 0}
   FadeToBlack: {fileID: 0}
   LocationsFade: {fileID: 0}
   BackButtonFade: {fileID: 0}
@@ -39576,6 +39579,7 @@ MonoBehaviour:
   - UnitSpawnPoint: {fileID: 1577126508}
     AvatarPoint: {fileID: 406935290}
   GeneralCamera: {fileID: 961739752}
+  SublocationMusic: {fileID: 0}
   FadeToBlack: {fileID: 1931766790}
   LocationsFade: {fileID: 2110243765}
   BackButtonFade: {fileID: 1901321656}
@@ -68681,6 +68685,7 @@ MonoBehaviour:
   CharactersPresent: []
   UnitSpawnPoints: []
   GeneralCamera: {fileID: 961739752}
+  SublocationMusic: {fileID: 0}
   FadeToBlack: {fileID: 0}
   LocationsFade: {fileID: 0}
   BackButtonFade: {fileID: 0}
@@ -85872,7 +85877,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -97998,6 +98003,7 @@ MonoBehaviour:
   LoadingScreen: {fileID: 845151816}
   InputProvider: {fileID: 2099476411}
   MenuCanvasPrefab: {fileID: 6717558390753289932, guid: 015cf6f2a44a8fd48872b6635c3ca360, type: 3}
+  HubBackgroundMusic: {fileID: 0}
   HubFadeToBlack: {fileID: 1931766790}
   MainOverlayUiFade: {fileID: 1081596429}
   HubActionsFade: {fileID: 2110243765}
