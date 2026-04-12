@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f953402574cb4a247b15b4d3e3fc12f6, type: 3}
+  m_Name: GameplayInputSettings
+  m_EditorClassIdentifier: Assembly-CSharp::Turnroot.GameSettings.GameplayInputSettings
+  Select: {fileID: 2033726153967148330, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  Back: {fileID: -8619626377133356767, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  NavigateUp: {fileID: -9118109209242674938, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  NavigateDown: {fileID: -7002231937099001039, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  NavigateLeft: {fileID: 170035112579692444, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  NavigateRight: {fileID: -3676630026911591939, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  ScrollLeft: {fileID: -6046010991758052016, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  ScrollRight: {fileID: 5465184582192424060, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  Navigate: {fileID: -4771218353558461949, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  Confirm: {fileID: 2033726153967148330, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  Cancel: {fileID: -8619626377133356767, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  Menu: {fileID: 0}
+  RotateCamera: {fileID: -2722128851559306023, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  Start: {fileID: -472219190135712309, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  ToggleDetails: {fileID: 3236334046250011413, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
