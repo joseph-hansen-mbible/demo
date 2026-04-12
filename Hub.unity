@@ -8349,7 +8349,7 @@ Transform:
   m_GameObject: {fileID: 340967474}
   serializedVersion: 2
   m_LocalRotation: {x: -0.016336823, y: -0.9263011, z: 0.016321406, w: -0.37607577}
-  m_LocalPosition: {x: -0.662, y: 0.15, z: 1.343}
+  m_LocalPosition: {x: -0.44, y: 0.14, z: 1.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -33973,8 +33973,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961739749}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.012571744, y: 0.96210027, z: 0.04502081, w: 0.26866007}
-  m_LocalPosition: {x: 11.755667, y: 3.1023326, z: 23.636692}
+  m_LocalRotation: {x: 0.0024072772, y: 0.8231728, z: -0.0034901556, w: 0.56777513}
+  m_LocalPosition: {x: 4.8936367, y: 2.6919875, z: 23.073206}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -92687,8 +92687,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2059643038}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.01438945, y: 0.6608821, z: -0.06246529, w: -0.7477472}
-  m_LocalPosition: {x: 3.3839517, y: 1.1531702, z: 0.24056613}
+  m_LocalRotation: {x: -0.00971962, y: 0.9554945, z: -0.039903797, w: 0.29213625}
+  m_LocalPosition: {x: -2.7380068, y: 1.7549846, z: 3.7111597}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -93064,22 +93064,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GrassRenderer
   computeShader: {fileID: 7200000, guid: 5b8dc719ee0b72e4f9250d4deac054a4, type: 3}
   grassMaterial: {fileID: 2100000, guid: f4f5394e733b25c4ba3c84da75927018, type: 2}
-  targetCamera: {fileID: 961739752}
+  targetCamera: {fileID: 0}
   maskTexture: {fileID: 2800000, guid: 1e61aea698ec60749b4ea6caeee5c09a, type: 3}
-  maskFloor: 0.1
-  density: 200
-  maxBlades: 2500000
+  maskFloor: 0.2
+  density: 350
+  maxBlades: 4000000
   minHeight: 0.2
-  maxHeight: 0.6
+  maxHeight: 0.5
   minWidth: 0.03
-  maxWidth: 0.06
+  maxWidth: 0.07
   maxDistance: 100
-  fadeStartDistance: 80
+  fadeStartDistance: 60
   grassEnabled: 1
   shadowCasting: 0
-  extraMaterials: []
-  unmaskedExtraDensity: 0
-  unmaskedExtraSize: {x: 0.4, y: 0.4}
+  extraMaterials:
+  - {fileID: 2100000, guid: c4fabfca17a24884eb48fc11ccf2136a, type: 2}
+  - {fileID: 2100000, guid: c4fabfca17a24884eb48fc11ccf2136a, type: 2}
+  - {fileID: 2100000, guid: c4fabfca17a24884eb48fc11ccf2136a, type: 2}
+  - {fileID: 2100000, guid: 3fa6c5aaf1226094287d3bf69f46a22e, type: 2}
+  - {fileID: 2100000, guid: 3fa6c5aaf1226094287d3bf69f46a22e, type: 2}
+  - {fileID: 2100000, guid: 3fa6c5aaf1226094287d3bf69f46a22e, type: 2}
+  - {fileID: 2100000, guid: df56886c512ff4945a3dc0d5e3508624, type: 2}
+  - {fileID: 2100000, guid: e3fa2dacabf39e5469d321c915f54d64, type: 2}
+  unmaskedExtraDensity: 0.11
+  unmaskedExtraSize: {x: 0.52, y: 0.52}
   maskedExtraMaterial: {fileID: 0}
   maskedExtraMask: {fileID: 0}
   maskedExtraThreshold: 0.198
@@ -114227,15 +114235,15 @@ PrefabInstance:
       objectReference: {fileID: 961739753}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.576778
+      value: 6.7705793
       objectReference: {fileID: 0}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.9679127
+      value: 2.65076
       objectReference: {fileID: 0}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.636623
+      value: 22.38296
       objectReference: {fileID: 0}
     - target: {fileID: 4185193786772812572, guid: 8910b70c5fab37d4fb98fa387658306b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -120870,15 +120878,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.836136
+      value: 13.346262
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1336863
+      value: -35.017307
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.857096
+      value: 40.58466
       objectReference: {fileID: 0}
     - target: {fileID: 9052104872630343459, guid: a257d76651101d342972ce34c750d4f3, type: 3}
       propertyPath: m_LocalRotation.w

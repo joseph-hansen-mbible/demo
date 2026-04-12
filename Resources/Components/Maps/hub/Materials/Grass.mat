@@ -119,7 +119,7 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _FadeStartDistance: 80
+    - _FadeStartDistance: 60
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -131,7 +131,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShadowStrength: 0.1
+    - _ShadowStrength: 0.4
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -140,7 +140,7 @@ Material:
     - _Surface: 0
     - _TipTaper: 0.1
     - _Translucency: 0
-    - _UnderlyingMix: 0.35
+    - _UnderlyingMix: 0.4
     - _WindSpeed: 2
     - _WindStrength: 0.28
     - _WindTurbulence: 0.5
@@ -149,7 +149,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.2925, g: 0.39, b: 0.33355263, a: 1}
-    - _CameraPosition: {r: -30.91, g: 1.1708056, b: 3.024, a: 0}
+    - _CameraPosition: {r: 4.8936367, g: 2.6919875, b: 23.073206, a: 0}
     - _CelTintColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

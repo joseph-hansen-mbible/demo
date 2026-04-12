@@ -27,3 +27,5 @@ MonoBehaviour:
   RotateCamera: {fileID: -2722128851559306023, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
   Start: {fileID: -472219190135712309, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
   ToggleDetails: {fileID: 3236334046250011413, guid: 2125a052b6e49e44bb3f730c582036c4, type: 3}
+  InitialRepeatDelay: 0.3
+  RepeatInterval: 0.1

@@ -22,5 +22,5 @@ public class BoatSway : MonoBehaviour
 
         transform.position += moveForwardOnZSpeed * Time.deltaTime * transform.forward;
         transform.position += 0.01f * Mathf.Sin(Time.time * swaySpeed) * moveForwardOnZSpeed * swayAmount * Time.deltaTime * transform.right;
-}
+    }
 }

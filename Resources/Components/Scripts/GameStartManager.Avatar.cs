@@ -36,7 +36,7 @@ namespace Turnroot.Demos
             string birthdayKey = $"Avatar/Birthday";
             string birthdayValue = $"{birthdayMonth}/{birthdayDay}";
             ltm.Remember(birthdayKey, birthdayValue);
-            $"Set avatar birthday to month {birthdayMonth}, day {birthdayDay}".LogInfo("GameStartManager");
+            $"Set avatar birthday to month {birthdayMonth}".LogInfo("GameStartManager");
 
             // Persist name and pronouns so they can be restored to the ScriptableObject
             // on subsequent sessions (SO mutations are in-memory only).

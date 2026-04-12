@@ -127,10 +127,10 @@ namespace Turnroot.Demos
             {
                 elapsed += Time.deltaTime;
                 var t = Mathf.Clamp01(elapsed / duration);
-                
+
                 // Apply easing
                 var easedT = EaseInOutSine(t);
-                
+
                 var newRot = Quaternion.Slerp(startRot, endRot, easedT);
                 Disk.transform.rotation = newRot;
 
@@ -154,10 +154,10 @@ namespace Turnroot.Demos
             }
 
             var currentGift = StarGifts[currentIndex];
-            
+
             // Format: "The <color={color}>{NAME}</color>'s Gift"
             NameText.text = $"The <color={currentGift.nameColor}>{currentGift.name}</color>'s Gift";
-            
+
             DescriptionText.text = currentGift.descriptionText;
         }
 
