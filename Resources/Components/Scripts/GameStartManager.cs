@@ -124,7 +124,6 @@ namespace Turnroot.Demos
         {
             if (InputProvider != null)
             {
-                "GameStartManager: subscribing to InputProvider.OnInput".LogInfo("GameStartManager");
                 InputProvider.OnInput += HandleInput;
             }
             else

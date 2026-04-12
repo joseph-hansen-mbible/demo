@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using UnityEngine;
 using Turnroot.Characters;
 using Turnroot.Gameplay.Brain.Components;
@@ -37,6 +38,15 @@ namespace Turnroot.Demos
             ltm.Remember(birthdayKey, birthdayValue);
             $"Set avatar birthday to month {birthdayMonth}, day {birthdayDay}".LogInfo("GameStartManager");
 
+            // Persist name and pronouns so they can be restored to the ScriptableObject
+            // on subsequent sessions (SO mutations are in-memory only).
+            ltm.Remember("Avatar/DisplayName", AvatarData.DisplayName);
+            ltm.Remember("Avatar/FullName", AvatarData.FullName);
+            ltm.Remember("Avatar/Pronouns", AvatarData.CharacterPronouns.Singular);
+
+            // Persist growth rates (also on the SO — resets to asset defaults without explicit save).
+            ltm.Remember("Avatar/GrowthRates", JsonConvert.SerializeObject(AvatarData.PersonalGrowthRates));
+
             persistence.SaveCharacter(avatarInstance, updateIndex: true);
 
             // Instantiate and persist the player roster so it is ready when the hub loads.
@@ -53,6 +63,10 @@ namespace Turnroot.Demos
                 {
                     "GameStartManager: Could not instantiate player roster — roster will be created on first hub load.".LogWarning("GameStartManager");
                 }
+
+                // Persist difficulty and permadeath — GameplayPlayerSettings is a SO and resets
+                // to asset defaults without an explicit save through PlayerSettingsPersistence.
+                gamewideContext.SavePlayerSettings();
             }
         }
 
