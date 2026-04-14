@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Demos/EndOfDay.unity
     guid: b49898884e78ce245a329e74f7f6415f
   - enabled: 1
-    path: Assets/TurnrootFramework/Brain/TurnrootBrain.unity
+    path: Packages/com.turnroot.framework/Brain/TurnrootBrain.unity
     guid: aeb2cafeecbb76b42b345e9cd1fbb188
   - enabled: 1
     path: Assets/Demos/1  - StartHere.unity
