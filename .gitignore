@@ -104,6 +104,8 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 Packages/UnityMarkdownViewer/
+# Never lock git URL packages to a specific commit — always resolve from manifest
+/Packages/packages-lock.json
 /.github/instructions
 .vscode/settings.json
 .editorconfig
