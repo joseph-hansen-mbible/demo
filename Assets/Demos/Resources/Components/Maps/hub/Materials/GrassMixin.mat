@@ -146,7 +146,7 @@ Material:
     - _DstBlend: 10
     - _DstBlendAlpha: 10
     - _EnvironmentReflections: 1
-    - _FadeStartDistance: 60
+    - _FadeStartDistance: 10
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -161,7 +161,7 @@ Material:
     - _MatcapIntensity: 1
     - _MatcapObjectSpace: 0
     - _Matcap_Emissve_power: 0
-    - _MaxDistance: 100
+    - _MaxDistance: 60
     - _Metallic: 0
     - _NightTintIntensity: 0
     - _OcclusionStrength: 1
@@ -208,7 +208,7 @@ Material:
     - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseTint: {r: 1, g: 1, b: 1, a: 0}
-    - _CameraPosition: {r: 1.2652626, g: 2.2932136, b: 94.78903, a: 0}
+    - _CameraPosition: {r: 4.5679474, g: 3.5583713, b: 91.41102, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Main_Emissve_color: {r: 1, g: 1, b: 1, a: 0}

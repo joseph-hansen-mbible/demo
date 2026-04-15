@@ -125,7 +125,7 @@ Material:
     - _FoamDistortion: 1.1
     - _FoamNoiseStrength: 0.682
     - _FoamSharpness: 33.3
-    - _FoamThickness: 0.2
+    - _FoamThickness: 0.4
     - _FresnelPower: 12
     - _FresnelStrength: 0.591
     - _GlossMapScale: 0
@@ -169,7 +169,7 @@ Material:
     - _WaveDirectionX: 1
     - _WaveDirectionZ: 0.3
     - _WaveFrequency: 3.35
-    - _WaveHeight: 0.2
+    - _WaveHeight: 0.25
     - _WaveNoiseScale: 2
     - _WaveNoiseStrength: 0.173
     - _WaveSmoothness: 0.7
