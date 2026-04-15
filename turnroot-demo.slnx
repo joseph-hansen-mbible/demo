@@ -7,6 +7,7 @@
   <Project Path="Unity.Timeline.Editor.csproj" />
   <Project Path="Unity.Splines.Editor.csproj" />
   <Project Path="Unity.Mathematics.csproj" />
+  <Project Path="TurnrootFramework.Editor.GraphicPacks.DefaultShaders.csproj" />
   <Project Path="Unity.Collections.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Editor.csproj" />
   <Project Path="Unity.Splines.csproj" />
@@ -38,6 +39,7 @@
   <Project Path="TurnrootFramework.Editor.Utilities.csproj" />
   <Project Path="Unity.Collections.CodeGen.csproj" />
   <Project Path="Unity.Mathematics.Editor.csproj" />
+  <Project Path="TurnrootFramework.Editor.Core.FolderIcons.csproj" />
   <Project Path="TurnrootFramework.Editor.Gameplay.csproj" />
   <Project Path="UIEffect.csproj" />
   <Project Path="TurnrootFramework.Editor.Skills.Nodes.csproj" />
