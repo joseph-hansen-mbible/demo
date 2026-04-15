@@ -110,7 +110,4 @@ Packages/UnityMarkdownViewer/
 .vscode/settings.json
 .editorconfig
 .config/dotnet-tools.json
-/Assets/Demos
-/Resources/Components/VFX/External VFX/Free but Single User Licensed
-/Plugins/Paid
 /.vscode
