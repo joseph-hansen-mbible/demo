@@ -74,6 +74,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e9422d613ea85f142863b1b2a2005795, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6631154974434991403}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e9422d613ea85f142863b1b2a2005795, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1746158335675338329}
   m_SourcePrefab: {fileID: 100100000, guid: e9422d613ea85f142863b1b2a2005795, type: 3}
 --- !u!1 &2672056905620789251 stripped
 GameObject:
@@ -90,8 +93,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: -1372625422
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 2.5
+  m_Acceleration: 6
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -100,8 +103,8 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_WalkableMask: 1
+  m_ObstacleAvoidanceType: 3
 --- !u!95 &1968071590030227657
 Animator:
   serializedVersion: 7
@@ -138,18 +141,120 @@ MonoBehaviour:
   m_EditorClassIdentifier: TurnrootFramework.Runtime::Turnroot.Graphics3D.EnvironmentalNavAgent
   agent: {fileID: 6276743805019683668}
   animator: {fileID: 1968071590030227657}
+  neutralSounds:
+  - {fileID: 8300000, guid: fed775eaedada3a4a9064fd00d91ddb8, type: 3}
+  - {fileID: 8300000, guid: 83596931e0cf2ac48abbd908cc6b3206, type: 3}
   walkClip: {fileID: 3020053729742939080, guid: e9422d613ea85f142863b1b2a2005795, type: 3}
-  idleClips: []
-  blendDuration: 0.25
+  idleClips:
+  - {fileID: 6984315941375823903, guid: c59d08156f7a6db4dbabd38445da3ccd, type: 3}
+  walkAnimationSpeedMultiplier: 2
+  blendDuration: 1
   minWalkSpeed: 0.3
   maxWalkSpeed: 0.5
   minIdleTime: 2
   maxIdleTime: 12
   minWalkTime: 2
-  maxWalkTime: 8
+  maxWalkTime: 9
   minDestinationChangeInterval: 10
   maxDestinationChangeInterval: 20
   noiseAmount: 4
   noiseFrequency: 0.8
   noiseSpeed: 0.15
   wanderRadius: 14
+--- !u!82 &1746158335675338329
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2672056905620789251}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3266926618678506625, guid: 1fa69398bd5e53d4d8f757c10e00911c, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.75
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

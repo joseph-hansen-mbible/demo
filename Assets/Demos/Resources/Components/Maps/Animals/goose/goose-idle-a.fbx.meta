@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e9422d613ea85f142863b1b2a2005795
+guid: c59d08156f7a6db4dbabd38445da3ccd
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -14,7 +14,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    removeConstantScaleCurves: 0
+    removeConstantScaleCurves: 1
     motionNodeName: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: goose-rig|walk
-      takeName: goose-rig|walk
-      internalID: 3020053729742939080
+      name: goose-rig|idle_lookaround
+      takeName: goose-rig|idle_lookaround
+      internalID: 6984315941375823903
       firstFrame: 0
-      lastFrame: 108
+      lastFrame: 300
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -54,7 +54,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.5630625
+        functionName: EmitSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8113318
+        functionName: EmitSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

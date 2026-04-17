@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e9422d613ea85f142863b1b2a2005795
+guid: d99ba3b3a088c41409ea728f945787f3
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,18 +31,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: goose-rig|walk
-      takeName: goose-rig|walk
-      internalID: 3020053729742939080
+      name: goose-rig|idle-forage
+      takeName: goose-rig|idle-forage
+      internalID: -8957243041884338483
       firstFrame: 0
-      lastFrame: 108
+      lastFrame: 294
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
