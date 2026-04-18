@@ -196,7 +196,7 @@ Material:
     - _use_outlines: 1
     - _use_shadow_noise: 0
     m_Colors:
-    - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ASEOutlineColor: {r: 0.24528301, g: 0.16313635, b: 0.16313635, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseTint: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

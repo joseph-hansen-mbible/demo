@@ -138,7 +138,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _ASEOutalpha: 0
-    - _ASEOutlineWidth: 0.002
+    - _ASEOutlineWidth: 0.0054
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -209,7 +209,7 @@ Material:
     - _use_outlines: 1
     - _use_shadow_noise: 0
     m_Colors:
-    - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ASEOutlineColor: {r: 0.27450982, g: 0.20392157, b: 0.20392157, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseTint: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

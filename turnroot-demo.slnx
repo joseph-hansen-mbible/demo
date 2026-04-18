@@ -7,7 +7,6 @@
   <Project Path="Unity.Timeline.Editor.csproj" />
   <Project Path="Unity.Splines.Editor.csproj" />
   <Project Path="Unity.Mathematics.csproj" />
-  <Project Path="TurnrootFramework.Editor.GraphicPacks.DefaultShaders.csproj" />
   <Project Path="Unity.Collections.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Editor.csproj" />
   <Project Path="Unity.Splines.csproj" />
@@ -23,6 +22,7 @@
   <Project Path="Unity.PerformanceTesting.csproj" />
   <Project Path="Unity.AI.Navigation.csproj" />
   <Project Path="NaughtyAttributes.Test.csproj" />
+  <Project Path="TurnrootFramework.Editor.GraphicPacks.DefaultShaders.csproj" />
   <Project Path="XNodeEditor.csproj" />
   <Project Path="Unity.Burst.Editor.csproj" />
   <Project Path="TurnrootFramework.Editor.Characters.Components.csproj" />
