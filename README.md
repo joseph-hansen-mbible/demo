@@ -1,7 +1,7 @@
 # Turnroot Framework Demo
 
-## Attributions
-**All assets have been heavily modified from their original form. Original assets are listed here for attribution purposes, but may not be recognizable in the final product**
+## Creative Commons Attributions
+**All assets have been modified from their original form**
 
 - "Canada Goose" (https://skfb.ly/oSVXV) by Oregon State University | Ecampus is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 - "Flying Seagull" (https://skfb.ly/p7CQt) by The lighthouse keeper is licensed under Creative Commons Attribution-ShareAlike (http://creativecommons.org/licenses/by-sa/4.0/).
@@ -10,3 +10,6 @@
 "Antique Book Set" (https://skfb.ly/oFYn6) by FrodoUndead is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 "Study Desk" (https://skfb.ly/oDQ6V) by draakon_4d is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 "Old_Desk" (https://skfb.ly/pvNUA) by b0ho is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+"Apothecary Cabinet" (https://skfb.ly/pIDXV) by A9908244 is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+"Old Clock" (https://skfb.ly/6WpRy) by Mandrake is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+"Broadbill Swordfish" (https://skfb.ly/6FVEY) by c0smic is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
