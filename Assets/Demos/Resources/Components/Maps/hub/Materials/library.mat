@@ -164,7 +164,7 @@ Material:
     - _Highlight_Replace: 0
     - _Highlight_Roughness: 0
     - _Highlight_Saturation: 0
-    - _Highlight_Smoothness: 0.635
+    - _Highlight_Smoothness: 0.176
     - _Main_Emissve_power: 1
     - _MatcapIntensity: 1
     - _MatcapObjectSpace: 0
@@ -181,7 +181,7 @@ Material:
     - _Shadow_Roughness: 0
     - _Shadow_Smoothness: 0.24
     - _Shadow_Strength: 0.575
-    - _Show_Masks: -0.33
+    - _Show_Masks: -0.97
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
